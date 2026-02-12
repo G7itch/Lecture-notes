@@ -1,0 +1,453 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float}
+\title{\textbf{MATH1101 Linear Algebra Lecture Notes}}
+\author{Thomas Piercy}
+\date{\today{}}
+
+\newcommand{\df}[2]{\frac{\text{d}#1}{\text{d}#2}}
+\newcommand{\mat}[3]{\text{Mat}_{#1\times#2}(\mathbb{#3})}
+\newcommand{\arbvec}[2]{\ensuremath{\textbf{#1}_1,\textbf{#1}_2,\dots,\textbf{#1}_{#2}}}
+\newcommand{\arbreal}[2]{{#1}_1,{#1}_2,\dots,{#1}_{#2}}
+
+\begin{document}
+\maketitle
+\hrulefill
+\setstretch{1.5}
+\section{Module Notation}
+\begin{table}[h]
+    \begin{tabular}{|c|c|}
+    \hline
+       Definition & Notation \\ \hline
+       Add row \(j\), \(\lambda\) times to row \(i\)  & \(A_{ij}(\lambda)\) \\ \hline
+       \("\) & \(r_i\rightsquigarrow r_i+\lambda r_j\) \\ \hline
+       Multiply row \(i\) by non-zero scalar \(\lambda\) & \(M_i(\lambda)\) \\ \hline
+       \("\) & \(r_i\rightsquigarrow\lambda r_i\) \\ \hline
+       Swap rows \(i\) and \(j\) & \(S_{ij}\) \\ \hline
+       \("\) & \(r_i\leftrightsquigarrow r_j\) \\ \hline
+       \(n\times n\) Identity matrix & \(I_n\) \\ \hline
+       \(m\times n\) Zero matrix & \(0_{m\times n}\) \\ \hline
+       Real row vectors of length \(n\) & \(\mathbb{R}^n_{\text{row}}\) \\ \hline
+       Real column vectors of length \(n\) & \(\mathbb{R}^n_{\text{col}}\) \\ \hline
+       Set of all real \(m\times n\) matrices & \(\mat{m}{n}{R}\) \\ \hline
+       \("\) & \(M_{m,n}(\mathbb{R})\) \\ \hline
+       Matrix inverse & \(A^{-1}\) \\ \hline
+       Matrix transpose & \(A^T\) \\ \hline
+       Diagonal matrix of entries \(c_n\) & diag\((c_1,c_2,...,c_n)\) \\ \hline
+    \end{tabular}
+\end{table}
+\section{Vectors in \(\mathbb{R}^n\)}
+Given an integer \(n\geq1\) we have:
+\[\mathbb{R}^n=\{(a_1,a_2,a_3,\dots,a_n)\;\vert\;a_1,a_2,a_3,\dots,a_n\in\mathbb{R}\}\]
+We call \(\mathbb{R}^n\) a real vector space. The elements of \(\mathbb{R}^n\) are called vectors and we write the elements as row vectors. If we encounter \(\mathbb{R}^0\) we treat is as \(\{0\}\). 
+\subsection*{Operations on vectors}
+Vectors in \(\mathbb{R}^n\) have some additional structure because you can add them and multiply by scalars component-wise and still have another vector in \(\mathbb{R}^n\). Every vector also has an additive inverse. There exists a 0 vector. When writing out vectors in \(\mathbb{R}^n\) we usually bold them to remind us that they are vectors of real numbers. All of the vector rules are given below where \(\textbf{u},\textbf{v},\textbf{w}\in\mathbb{R}^n\) and \(\lambda,\mu\in\mathbb{R}\):
+\begin{itemize}
+    \item \(\textbf{v}+\textbf{w}=\textbf{w}+\textbf{v}\)
+    \item \(\lambda(\textbf{v}+\textbf{w})=\lambda\textbf{v}+\lambda\textbf{w}\)
+    \item \((\lambda+\mu)\textbf{v}=\lambda\textbf{v}+\mu\textbf{v}\)
+    \item \(\lambda(\mu\textbf{v})=(\lambda\mu)\textbf{v}\)
+    \item \(0\textbf{v}=\textbf{0},\quad 1\textbf{v}=\textbf{v},\quad(-1)\textbf{v}=-\textbf{v},\quad \textbf{v}+(-\textbf{v})=\textbf{0}\)
+    \item \(\textbf{u}+(\textbf{v}+\textbf{w})=(\textbf{u}+\textbf{v})+\textbf{w}\)
+\end{itemize}
+\(\mathbb{R}^n\) along with the \(+\) operation is said to be an Abelian group with identity element \(\textbf{0}\). This is also known as a commutative ring because it obeys the above rules.
+\subsection*{Linear combinations}
+Two vectors are said to be collinear if either \(\textbf{v}=\lambda\textbf{w}\) or \(\textbf{w}=\lambda\textbf{v}\). The reason for the two way definition is that either or both of our vectors could be the zero vector. This notion of collinearity only applies to vectors that go through the origin. For any vectors \(\textbf{v}_1,\textbf{v}_2,\dots,\textbf{v}_s\in\mathbb{R}^n\) and scalars \(\lambda_1,\lambda_2,\dots,\lambda_s\in\mathbb{R}\) the expression:
+\[\lambda_1\textbf{v}_1+\lambda_2\textbf{v}_2+\cdots+\lambda_s\textbf{v}_s\in\mathbb{R}^n\]
+is called a linear combination, we call these expressions non-trivial if at least one of the scalars is non-zero and when they are all zero we call it the trivial linear combination.
+\subsection*{Solutions of linear combinations}
+Given some vectors in \(\mathbb{R}^n\) and a target vector \(\textbf{b}\), can you find scalars such that you can reach the target vector from some linear combination of the given vectors? This problem is solved by simultaneous equations for the unknown scalars, we can then see if all of our equations are consistent.
+\subsection*{Geometry of lines and planes}
+It is often helpful when trying to solve a linear combination problem to look at the structure of the object you are solving for. Given a line \(L\) in \(\mathbb{R}^2\) we know we can write:
+\[L:\{(x,y)\;\vert\;ax+by = c\}\subset\mathbb{R}^2\]
+where \(a,b,c\in\mathbb{R}\) and \((a,b)\ne(0,0)\). The line passes through the origin only if \(c=0\). We can have the exact same thing in \(\mathbb{R}^3\):
+\[\Pi: \{(x,y,z)\;\vert\;ax+by+cz=d\}\subset\mathbb{R}^3\]
+Once again, where \(a,b,c,d\in\mathbb{R}\) and \((a,b,c)\ne(0,0,0)\). Lines in \(\mathbb{R}^3\) are given by two independent linear equations: When we are given two points to pass through these equations will be an equation of a plane and an equation of a line.
+\section{Linear systems}
+\subsection*{Elementary row operations}
+To solve linear systems of equations we can write the augmented matrix and then perform Gaussian elimination on it. We can do this by performing a sequence of elementary row operations. The elementary row operations are as follows:
+\begin{itemize}
+    \item \(A_{ij}(\lambda)\) - Add \(\lambda\) copies of row \(j\) to \(i\)
+    \item \(M_i(\lambda)\) - Multiply row \(i\) by non-zero scalar \(\lambda\)
+    \item \(S_{ij}\) - Swap rows \(i\) and \(j\)
+\end{itemize}
+\subsection*{Gaussian elimination}
+The general method for Gaussian elimination is as follows:
+\begin{enumerate}
+    \item Find the lower triangle of 0's
+    \item Find the leading diagonal of 1's
+    \item Find the upper 0's
+    \item Read off the solution
+\end{enumerate}
+This method is greatly preferred to other methods such as Cramer's rule and inverse matrix solution due to the reduced computational complexity. Calculating determinants for matrices can be very computationally expensive so we try to avoid any method that requires us to calculate it.
+\section{Matrices and Matrix Algebra}
+\subsection*{Definitions}
+We defined the set of real row vectors of length \(n\) and the set of real column vectors of length \(m\) as:
+\[\mathbb{R}^n_{\text{row}}\text{ and }\mathbb{R}^n_{\text{col}}\]
+respectively. We define the set of all real \(m\times n\) matrices as follows:
+\[M_{m,n}(\mathbb{R})\]
+or more commonly:
+\[\text{Mat}_{m\times n}(\mathbb{R})\]
+We may omit the field when it is clear from context.There are 3 important operations we are allowed to do with matrices:
+\begin{itemize}
+    \item matrix addition
+    \item scalar multiplication
+    \item matrix multiplication
+\end{itemize}
+We can see that \(\mat{m}{n}{R}\) is an example of a real vector space. This is because all of the following identities hold given \(A,B,C\in\mat{m}{n}{R}\) and \(k,s\in\mathbb{R}\):
+\begin{enumerate}
+    \item \(A + 0_{m\times n}=A\)
+    \item \(A+B=B+A\)
+    \item \(0A=0_{m\times n}\)
+    \item \(A + (-A)=0_{m\times n}\)
+    \item \(A+ (B+C)=(A+B)+C\)
+    \item \(I_mA=A\)
+    \item \((k+s)A=kA+sA\)
+    \item \(k(A+B)=kA+kB\)
+    \item \(k(sA)=(ks)A\)
+\end{enumerate}
+\subsection*{Matrix multiplication}
+Matrix multiplication can be done in exactly the same way as before, with a few additional bits. Note that \(AB=0_{m\times n}\) does not imply that either \(A=0_{m\times n}\) or \(B=0_{m\times n}\). Matrix multiplication can be thought of as the composition of linear maps. The expression "Pre-multiply \(B\) by \(A\)" means to perform \(AB\), to postmultiply in this case would be: \(BA\). We can take powers of square matrices:
+\[A^n=\underbrace{AA...A}_{\text{n times}}\]
+\[A^0=I_m\]
+\subsection*{The identity matrix}
+The \((i,j)^{th}\) entry of the identity matrix is given by the Kronecker delta at \(i,j\):
+\[\delta_{ij}=\begin{cases}
+    1,\quad i=j \\
+    0,\quad i\ne j
+\end{cases}\]
+\subsection*{Inverse matrices}
+If you have two square matrices such that \(A,B\in\mat{m}{n}{R}\), if \(AB=BA=I_n\) then we call \(B\) the "inverse" of \(A\) and we say that \(A\) is "invertible", otherwise we say \(A\) is "singular".
+\subsubsection*{Properties of inverses}
+\begin{itemize}
+    \item If \(A\) has an inverse, then the inverse is unique
+    \item If \(A\) and \(B\) are invertible then \(AB\) is invertible: \((AB)^{-1}=B^{-1}A^{-1}\)
+    \item If \(A\) is invertible then \(A^{-1}\) is invertible
+    \item In general \(A\) is only invertible if \(\det(A)\ne 0\)
+\end{itemize}
+\subsection*{Standard basis}
+The basis matrix \(E_{IJ}\) is the \(n\times m\) matrix such that the \((I,J)^{th}\) entry is 1 and all others are 0. All of these matrices together form the standard basis for \(n\times m\) matrices. E.g the standard basis for \(2\times2\) matrices is:
+\[E_{11},E_{12},E_{21},E_{22}\]
+\[\begin{pmatrix}
+    1 & 0 \\
+    0 & 0
+\end{pmatrix},\begin{pmatrix}
+    0 & 1 \\
+    0 & 0 
+\end{pmatrix},\begin{pmatrix}
+    0 & 0 \\
+    1 & 0
+\end{pmatrix},\begin{pmatrix}
+    0 & 0 \\
+    0 & 1
+\end{pmatrix}\]
+This is the standard basis because we can form any matrix in \(\mat{2}{2}{R}\) using linear combinations of them. You can also define these matrices using the Kronecker delta.
+\[1\leq I\leq m,\quad1\leq J\leq n\]
+\[\text{The }(i,j)^{th} \text{ entry of } E_{IJ} \text{ is }\delta_{Ii}\delta_{Jj}\]
+\subsubsection*{Commuting the identity matrix}
+Note that if we have \(AB=BA\) for all \(B\in\mat{m}{n}{R}\) we must have that \(A=\lambda I_n\)
+\subsection*{Elementary matrices}
+We can construct the so called "elementary matrices" by applying an elementary row operation to an identity matrix. Hence we can consider elementary row operations as multiplication by these elementary matrices. Because these row operations are reversible, all elementary matrices are invertible.
+\begin{itemize}
+    \item \((S_{ij})^{-1}=S_{ji}\)
+    \item \((M_i(\lambda))^{-1}=M_i(\frac{1}{\lambda})\)
+    \item \((A_{ij}(\lambda))^{-1}=A_{ij}(-\lambda)\)
+\end{itemize}
+\subsection*{Row reduced echelon form}
+A matrix is said to be in row reduced echelon form if all of the following apply:
+\begin{enumerate}
+    \item The first entry in every non-zero row is a 1 which is known as the "leading 1" or the "pivot" of that row
+    \item The leading 1 of a non-zero row is strictly to the right of any previous leading ones
+    \item Any zero rows are at the bottom of the matrix, below any non-zero rows
+    \item If a column contains a pivot then all other entries in that column must be 0
+\end{enumerate}
+Row reduced echelon form is really useful because it allows us to read off information about linear systems really easily for example if the last non-zero row is \((0\;0\;0\dots\;1)\) then the system is inconsistent and has no solutions. The system has exactly one solution if the non-zero rows form the identity matrix. and you can just read off the solution directly from the augmented matrix. The zero rows do not matter in this case as they contain no information. 
+\subsubsection*{Systems with infinite solutions}
+A linear system has infinite solutions if the system is consistent but not every column contains a pivot. In this case we assign each column without a pivot a free parameter and then solve our system in terms of those parameters. This leads us to having infinite solutions. If the rows are treated as each individual equation in our system, then the columns are each individual variable/parameter.
+\subsection*{An important theorem}
+Every matrix can be reduced by elementary row operations to a matrix that is in reduced row echelon form. This is proved by a proof by induction with a strong hypothesis. It is trivial to show that a \(1\times n\) matrix can be written in reduced row echelon form, hence we induct on the number of rows of our matrix. We can split the matrix into quadrants by swapping so that the first pivot is in the first row, the furthest left, and then scaling it so that it is 1. We can then use our inductive hypothesis that the new matrix formed in the lower quadrant of the original matrix can be written in RRE form. It follows from there.
+\section{Inverses and transposes}
+\subsection*{An efficient way to calculate the inverse}
+Since applying a matrix to a unit vector tells you information about that column of the matrix, and where the unit vector ends up after the transformation, we can calculate the inverse using row reduction.
+\[(A\mid I_n)\]
+Solving the above system gives us the inverse matrix, provided that the matrix \(A\) in RRE form is the identity matrix. Solving this system is essentially shorthand for solving:
+\[AA^{-1}=A^{-1}A=I_n\]
+This is the most efficient way to calculate an inverse matrix, although it doesn't work all of the time because not all matrices are invertible. For the curious the "big O" complexity for this method of calculating the inverse is \(O(n^3)\), compared to the determinant method which is \(O((n+1)!)\) so you can see it is much more efficient.
+\subsection*{Diagonal matrices}
+The diagonal of a square matrices are its entries \(a_{i,j}\) for \(i=j\). A diagonal matrix is a square matrix where all entries not on the leading diagonal are 0. We write:
+\[\text{diag}(c_1,c_2,c_3)\]
+for the matrix:
+\[\begin{pmatrix}
+    c_1 & 0 & 0\\
+    0 & c_2 & 0\\
+    0 & 0 & c_3 \\
+\end{pmatrix}\]
+\subsection*{Properties of the transpose}
+The transpose of a matrix \(A\) is such that all of the rows of \(A\) become the columns of \(A^T\) and all of the columns of \(A\) become the rows of \(A^T\). The transpose has some key properties that make it easier to work with:
+\begin{itemize}
+    \item \((A+B)^T=A^T+B^T\)
+    \item \((\lambda A)^T=\lambda(A^T)\)
+    \item \((AB)^T=B^TA^T\)
+    \item \((A^T)^T=A\)
+    \item \((I_n)^T=I_n\)
+\end{itemize}
+The transpose also respects the inverses of matrices. If you have a matrix which is invertible then its transpose is also invertible with:
+\[(A^{-1})^T=(A^T)^{-1}\]
+The map that the transpose gives is known as an involution (a self-inverse).
+\subsection*{Definitions of square matrices}
+There are lots of names we can give to classify square matrices:
+\begin{enumerate}
+    \item Symmetric if \(A^T=A\)
+    \item Skew-symmetric or antisymmetric if \(A^T=-A\)
+    \item Upper triangular if all elements above (not inc.) the leading diagonal are 0
+    \item Strictly upper triangular if all elements above and including the leading diagonal are 0
+    \item Lower triangular/Strictly lower triangular if all elements below (or including) the leading diagonal are 0
+    \item Triangular if it is upper or lower triangular
+\end{enumerate}
+\subsection*{Orthogonal matrices}
+A matrix is said to be orthogonal if \(A^T=A^{-1}\). We have \(I_n\) be orthogonal trivially. It is worth knowing that the set of all orthogonal matrices forms a group under addition. We have that \(A\) is an orthogonal matrix if and only if its columns or rows form a set of \(n\), unit length mutually perpendicular vectors. You can calculate this by considering each column (or row) as its own vector, calculating if it has length 1 and then taking its dot product with each individual other vector. What this means in mathematical notation is that for columns of \(A\):
+\[\underline{c}_i\cdot\underline{c}_j=\delta_{ij}\]
+We say that an \(n\times n\) orthogonal matrix is in the set \(O_n\). 
+\subsubsection*{Acting on the dot product}
+If you have an orthogonal matrix \(A\), then \(A\) preserves the dot product such that \(Ax\cdot Ay=x\cdot y\) for all \(x,y\in\mathbb{R}^n\). As it turns out a matrix \(A\) is orthogonal if and only if it has this property. This gives us three ways of calculating if the matrix is orthogonal: With its transpose and inverse, with its column vectors and with its dot product. When we say that we preserve the dot product we also have by extension that it preserves distance and angles, this means that the \(O_2\subseteq \mat{2}{2}{R}\) is comprised of rotation and translation matrices only.
+
+\hrulefill
+\begin{center}
+End of content for January exams
+\end{center}
+\hrulefill
+\section{Subspaces and bases of \(\mathbb{R}^n\)}
+\subsection*{Subspaces}
+Recall from before that we can define the space \(\mathbb{R}^3\) as a set of vectors with components that exist in \(\mathbb{R}\) and a distinguished vector \(\textbf{0}\) known as the origin. We also introduced 2 natural operations: addition of vectors and multiplication by a scalar. It was also convenient to identify \(\textbf{e}_1,\textbf{e}_2,\textbf{e}_3\) to give meaning to coordinates.
+\subsubsection*{Definition}
+A non-empty set \(W\subseteq \mathbb{R}^n\) is called a subspace of \(\mathbb{R}^n\) if \(\forall\,\textbf{v},\textbf{w}\in W\) and \(\forall\lambda\in\mathbb{R}\) we also have \(\textbf{v}+\textbf{w}\in W\) and \(\lambda \textbf{v}\in W\). We denote the subspace \(W\leqslant \mathbb{R}^n\).
+\subsection*{Trivial subspaces}
+Applying the definition above it can be easy to see that some examples of subspaces do not give us any additional information and so are not very useful, we call these the trivial subspaces. For \(\mathbb{R}^n\) the trivial subspaces are:
+\begin{itemize}
+    \item \(\mathbb{R}^n\leqslant \mathbb{R}^n\)
+    \item \(\{\textbf{0}\}\leqslant \mathbb{R}^n\)
+\end{itemize}
+\subsection*{Linear Combinations}
+It can be seen that from this definition of a subspace, if \(W\leqslant\mathbb{R}^n\), then any linear combination of the vectors in \(W\) is still in \(W\). This is useful because it lets us interact with \(W\) like we would any other vector space.
+\subsection*{Span}
+Let \(\textbf{v}_1,\textbf{v}_2,\dots\textbf{v}_m\in\mathbb{R}^n\). Then their span is the set:
+\[\langle\textbf{v}_1,\textbf{v}_2,\dots\textbf{v}_m\rangle\;=\{\lambda_1\textbf{v}_1+\lambda_2\textbf{v}_2+\cdots\lambda_m\textbf{v}_m: \lambda_i\in\mathbb{R},\,i\in\{1,\dots,m\}\}\]
+This set consists of all linear combinations of the vectors \(\textbf{v}_1,\dots\textbf{v}_m\). We say that \(\textbf{v}_1,\textbf{v}_2\dots\textbf{v}_m\) are the generators of span\{\(\textbf{v}_1,\dots\textbf{v}_m\)\}.
+\subsection*{Properties of span}
+Consider \(W=\mathbb{R}^3\) and \(\textbf{v},\textbf{w}\in W\). Then:
+\begin{itemize}
+    \item If \(\textbf{v},\textbf{w}\) are non-zero and not collinear then \(\langle\textbf{v},\textbf{w}\rangle\) forms a 2D plane through the origin \(\textbf{0}\).
+    \item If \(\textbf{v},\textbf{w}\) are distinct but collinear then \(\langle\textbf{v},\textbf{w}\rangle\) forms a 1D line through the origin \(\textbf{0}\).
+    \item If \(\textbf{v}=\textbf{w}=\textbf{0}\) then \(\langle\textbf{v},\textbf{w}\rangle=\{\textbf{0}\}\)
+\end{itemize}
+Consider a set of vectors \(\textbf{v}_1,\textbf{v}_2,...,\textbf{v}_n\in\mathbb{R}^n\): their span is a subspace of \(\mathbb{R}^n\).
+\subsection*{Row and column span}
+Let \(A=(a_{ij})\in M_{m,n}(\mathbb{R})\), then the row span of \(A\) is denoted:
+\[\text{Rowspan}(A)=\langle\textbf{r}_1,\textbf{r}_2,...,\textbf{r}_m\rangle\leqslant\mathbb{R}^n\]
+Similarly, the column span is:
+\[\text{Colspan}(A)=\langle\textbf{c}_1,\textbf{c}_2,...,\textbf{c}_m\rangle\leqslant \mathbb{R}^n\]
+\subsection*{Spanning sets}
+A subset \(S\subseteq\mathbb{R}^n\), spans \(\mathbb{R}^n\) if and only if \(\langle S\rangle=\mathbb{R}^n\). In this case we describe \(S\) as a "spanning set" of \(\mathbb{R}^n\). There is an infinite number of spanning sets, there are two examples below:
+\begin{itemize}
+    \item \(\langle\mathbb{R}^n\rangle=\mathbb{R}^n\implies S=\mathbb{R}^n\)
+    \item \(\langle \textbf{e}_1,\textbf{e}_2,...,\textbf{e}_n\rangle=\mathbb{R}^n\implies S=\{\textbf{e}_i:1\leq i \leq n\}\)
+\end{itemize}
+Suppose \(S\subseteq\mathbb{R}^n\) spans \(\mathbb{R}^n\). Then \(S\) must have at least \(n\) elements. I will add the proof of this later but for now just take my word for it.
+\subsection*{Linear dependence}
+In the case where we have a linear relationship between elements in a set of vectors we say that they are linearly dependant. Vectors \(\arbvec{v}{m}\in\mathbb{R}^n\) are said to be linearly dependant if \(\exists\arbreal{\lambda}{m}\in\mathbb{R}\) that are not all \(0\) such that \(\lambda_1\textbf{v}_1+\lambda_2\textbf{v}_2+\dots+\lambda_m\textbf{v}_m=\textbf{0}\). If vectors are not linearly dependent they are called linearly independent. Two vectors are linearly dependent if and only if they are collinear.
+\subsection*{Dependence of sets}
+Sets of vectors can also have the dependence property. Note that any set with \(\textbf{0}\) in it is necessarily linearly dependent since we can have \(1\cdot\textbf{0}=\textbf{0}\). For a set, \(S\subseteq\mathbb{R}^n\) to be linearly independent then necessarily \(|S|\leq n\).
+\subsection*{Basis}
+A sequence of vectors \(\arbvec{v}{s}\in\mathbb{R}^n\) is a basis of \(\mathbb{R}^n\) if and only if it is linearly independent and spans \(\mathbb{R}^n\). If \(S\) is a basis of \(\mathbb{R}^n\) then it must have exactly \(n\) elements.
+\subsubsection*{Uniqueness in basis}
+Let \(\arbvec{w}{n}\) be a basis of \(\mathbb{R}^n\). Then for any \(\textbf{w}\in\mathbb{R}^n\):
+\[\exists!\ \arbreal{a}{n}\in\mathbb{R}:\textbf{w}=a_1\textbf{w}_1+a_2\textbf{w}_2+\dots+a_n\textbf{w}_n\]
+This means that every vector can be made from a unique linear combination.
+\subsection*{Change of basis}
+Suppose we have two different bases of \(\mathbb{R}^n:\arbvec{f}{n}\) and \(\arbvec{e}{n}\). Then given a vector \(\textbf{w}\in\mathbb{R}^n\) with coordinates \(\textbf{w}=(\arbreal{\lambda}{n})\) there are unique numbers \(\arbreal{\mu}{n}\in\mathbb{R}\) such that \(\textbf{w}=\mu_1\textbf{f}_1+...+\mu_n\textbf{f}_n\). The question which then naturally arises is given \(\textbf{w}=(\arbreal{\lambda}{n})\) how can we find \((\arbreal{\mu}{n})\)?
+\subsubsection*{Derivation}
+We know that there are some coefficients that can be used to represent the basis vectors \(\arbvec{f}{n}\) with the basis vectors \(\arbvec{e}{n}\):
+\[\forall\,1\leq j\leq n,\ \exists!\,a_{ij}:\textbf{f}_j=\sum^n_{i=1}a_{ij}\textbf{e}_i\]
+Evaluating this leads us the the set of equations:
+\[\begin{cases}
+    \textbf{f}_1=a_{11}\textbf{e}_1+a_{21}\textbf{e}_2+\cdots+a_{n1}\textbf{e}_n \\
+    \textbf{f}_1=a_{12}\textbf{e}_1+a_{22}\textbf{e}_2+\cdots+a_{n2}\textbf{e}_n \\
+    \vdots \\
+    \textbf{f}_n=a_{1n}\textbf{e}_1+a_{2n}\textbf{e}_2+\cdots+a_{nn}\textbf{e}_n \\
+\end{cases}\]
+Which can neatly be represented in matrix form:
+\[\begin{pmatrix}
+    \textbf{f}_1 \\
+    \textbf{f}_2 \\
+    \vdots \\
+    \textbf{f}_n
+\end{pmatrix}=\underbrace{\begin{pmatrix}
+    a_{11} & a_{21} & \cdots & a_{n1} \\
+    \vdots & \ddots &  & \vdots \\
+    a_{1n} & \cdots & \cdots & a_{nn}
+\end{pmatrix}}_{A}\begin{pmatrix}
+    \textbf{e}_1 \\
+    \textbf{e}_2 \\
+    \vdots \\
+    \textbf{e}_n
+\end{pmatrix}\]
+As \(\arbvec{f}{n}\) form a basis for \(\mathbb{R}^n\) and \(\textbf{e}_i\in\mathbb{R}^n\) we know we can write:
+\[\begin{cases}
+    \textbf{e}_1=b_{11}\textbf{f}_1+\cdots+b_{n1}\textbf{f}_n \\
+    \textbf{e}_2=b_{12}\textbf{f}_1+\cdots+b_{n2}\textbf{f}_n \\
+    \vdots \\
+    \textbf{e}_n=b_{1n}\textbf{f}_1+\cdots+b_{nn}\textbf{f}_n
+\end{cases}\]
+Similar to before we can construct the matrix equation:
+\[\begin{pmatrix}
+    \textbf{e}_1 \\
+    \textbf{e}_2 \\
+    \vdots \\
+    \textbf{e}_n
+\end{pmatrix}=\underbrace{\begin{pmatrix}
+    b_{11} & b_{21} & \cdots & b_{n1} \\
+    \vdots & \ddots &  & \vdots \\
+    b_{1n} & \cdots & \cdots & b_{nn}
+\end{pmatrix}}_{B}\begin{pmatrix}
+    \textbf{f}_1 \\
+    \textbf{f}_2 \\
+    \vdots \\
+    \textbf{f}_n
+\end{pmatrix}\]
+Then by some multiplication trickery we can see that \(B=A^{-1}\)
+\subsubsection*{Result}
+With this newfound knowledge we can start to approach our original problem. We know \(\textbf{w}=\lambda_1\textbf{e}_1+\lambda_2\textbf{e}_2+\cdots+\lambda_n\textbf{e}_n\) and we wish to find \(\arbreal{\mu}{n}\) such that \(\textbf{w}=\mu_1\textbf{f}_1+\mu_2\textbf{f}_2+\cdots+\mu_n\textbf{f}_n\). It makes sense to write this as a matrix equation:
+\[(\arbreal{\lambda}{n})=(\arbreal{\mu}{n})\begin{pmatrix}
+    \textbf{f}_1 \\
+    \textbf{f}_2 \\
+    \vdots \\
+    \textbf{f}_n
+\end{pmatrix}=(\arbreal{\mu}{n})A\]
+We can then do some rearranging:
+\[\begin{pmatrix}
+    \lambda_1 \\
+    \lambda_2 \\
+    \vdots \\
+    \lambda_n
+\end{pmatrix}=A^T\begin{pmatrix}
+    \mu_1 \\
+    \mu_2 \\
+    \vdots \\
+    \mu_n
+\end{pmatrix}\]
+\[B^T\begin{pmatrix}
+    \lambda_1 \\
+    \lambda_2 \\
+    \vdots \\
+    \lambda_n
+\end{pmatrix}=\begin{pmatrix}
+    \mu_1 \\
+    \mu_2 \\
+    \vdots \\
+    \mu_n
+\end{pmatrix}=(A^T)^{-1}\begin{pmatrix}
+    \lambda_1 \\
+    \lambda_2 \\
+    \vdots \\
+    \lambda_n
+\end{pmatrix}\]
+This means to perform a change of basis with the standard basis of \(\mathbb{R}^n\) by writing our our new basis vectors as columns of a matrix, taking the inverse and then post multiplying by whatever vector we wish to translate.
+\subsubsection*{Example}
+\[\textbf{f}_1=(0,1,2)\qquad \textbf{f}_2=(1,2,3)\qquad\textbf{f}_3=(2,3,0)\]
+Given \(\textbf{w}=(5,-7,11)\) using the standard basis, how can we rewrite \(\textbf{w}\) in terms of our new basis.
+\[\begin{pmatrix}
+    \mu_1 \\
+    \mu_2 \\
+    \mu_3
+\end{pmatrix}=\begin{pmatrix}
+    0 & 1 & 2 \\
+    1 & 2 & 3 \\
+    2 & 3 & 0 
+\end{pmatrix}^{-1}\begin{pmatrix}
+    5 \\
+    -7 \\
+    11
+\end{pmatrix}\]
+\[\begin{pmatrix}
+    0 & 1 & 2 \\
+    1 & 2 & 3 \\
+    2 & 3 & 0 
+\end{pmatrix}^{-1}=\begin{pmatrix}
+    -\frac{9}{4} & \frac{3}{2} & -\frac{1}{4} \\
+    \frac{3}{2} & -1 & \frac{1}{2} \\
+    -\frac{1}{4} & \frac{1}{2} & -\frac{1}{4} 
+\end{pmatrix}\]
+\[\begin{pmatrix}
+    \mu_1 \\
+    \mu_2 \\
+    \mu_3
+\end{pmatrix}=\begin{pmatrix}
+    -\frac{9}{4} & \frac{3}{2} & -\frac{1}{4} \\
+    \frac{3}{2} & -1 & \frac{1}{2} \\
+    -\frac{1}{4} & \frac{1}{2} & -\frac{1}{4} 
+\end{pmatrix}\begin{pmatrix}
+    5 \\
+    -7 \\
+    11
+\end{pmatrix}=\begin{pmatrix}
+    -\frac{49}{2} \\
+    20 \\
+    -\frac{15}{2}
+\end{pmatrix}\]
+\subsection*{General change of basis}
+Often when we want to perform a change of basis we are not working with the standard basis or \(\mathbb{R}^n\) but rather two random other bases. We can still perform a change of basis when we have this setup although the formula is slightly more complicated. Let \(\arbvec{f}{n}\) and \(\arbvec{g}{n}\) both be bases of \(\mathbb{R}^n\). We are working with the same question as before, if we have \(\textbf{w}=\mu_1\textbf{f}_1+\dots+\mu_n\textbf{f}_n\) we want to find \(\arbreal{\alpha}{n}\in\mathbb{R}\) such that \(\textbf{w}=\alpha_1\textbf{g}_1+\dots+\alpha_n\textbf{g}_n\). We have:
+\[\begin{pmatrix}
+    \alpha_1 \\
+    \vdots \\
+    \alpha_n
+\end{pmatrix}=(B^T)^{-1}A^T\begin{pmatrix}
+    \mu_1 \\
+    \vdots \\
+    \mu_n
+\end{pmatrix}\]
+Where:
+\[A=\begin{pmatrix}
+    \textbf{f}_1 \\
+    \vdots \\
+    \textbf{f}_n
+\end{pmatrix},\qquad B=\begin{pmatrix}
+    \textbf{g}_1 \\
+    \vdots \\
+    \textbf{g}_n
+\end{pmatrix}\]
+What we are essentially doing is the same as before except this time we need to convert from our provided basis into the standard basis and then from the standard basis into our new basis as normal. Consider that under the standard basis \(\arbvec{e}{n}\) then \(A^T=I\) and so it is not present in our equation since it has no effect.
+\section{Vector spaces}
+\subsubsection*{Definition}
+A vector space \(V\) is a set along with two operations: A binary operations known as addition such that \(\forall u,v,w\in V\)
+\begin{itemize}
+    \item \(u+v=v+u\)
+    \item \(u+(v+w)=(u+v)+w\)
+    \item \(\exists\, 0\in V:0+v=v\)
+    \item \(\exists\,(-v)\in V:v+(-v)=0\)
+\end{itemize}
+And an operation called scalar multiplication such that \(\forall\,\lambda,\mu\in\mathbb{R}\) and \(v,u\in V\)
+\begin{itemize}
+    \item \(\lambda(v+w)=\lambda v+\lambda w\)
+    \item \(v(\lambda+\mu)=\lambda v + \mu v\)
+    \item \(\lambda\cdot(\mu\cdot v)=(\lambda\mu)\cdot v\)
+    \item \(\exists\,1\in V:1\cdot v=v\)
+\end{itemize}
+Elements of \(V\) are called vectors. \(\mathbb{R}\) is referred to as the field of scalars (or the base field) and the elements of \(\mathbb{R}\) are called scalars.
+\subsubsection*{Examples of vector spaces}
+\begin{itemize}
+    \item \(\mathbb{R}^n\)
+    \item \(M_{m\times n}(\mathbb{R})\)
+    \item \(\mathbb{R}[x]\)
+    \item \(\mathbb{R}[x]_{\leq d}\)
+    \item \(\mathbb{R}[[x]]\)
+    \item \(V=\{f:\mathbb{R}\to\mathbb{R}\mid f\text{ is differentiable}\}\)
+    \item \(C(\mathbb{R})\)
+    \item \(C^\infty(\mathbb{R})\)
+    \item \(\mathbb{R}^\mathbb{N}\)
+\end{itemize}
+\subsubsection*{Examples of fields}
+\begin{itemize}
+    \item \((\mathbb{R},+,\times)\)
+    \item \((\mathbb{C},+,\times)\)
+    \item \((\mathbb{F}_2,+,\times)\)
+\end{itemize}
+\end{document}

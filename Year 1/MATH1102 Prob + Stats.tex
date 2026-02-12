@@ -1,0 +1,665 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float}
+\title{\textbf{MATH1102 Personal Lecture Notes}}
+\author{Thomas Piercy}
+\date{\today{}}
+
+\newcommand*{\Perm}[2]{{}^{#1}\!P_{#2}}%
+\newcommand*{\Comb}[2]{{}^{#1}C_{#2}}%
+\newcommand{\Var}[1]{\text{Var}[#1]}
+\begin{document}
+\maketitle
+\hrulefill
+\setstretch{1.5}
+\section{Introduction to Probability}
+\subsection*{Notation}
+\begin{table}[H]
+    \begin{tabular}{|l|l|}
+        \hline
+        \(\Omega\) & Sample Space, The certain event \\ \hline
+        \(\emptyset\) & Empty set, the impossible event \\ \hline
+        \(\{\omega\}\) & An elementary event \\ \hline
+        \(\omega_a\) & Actual outcome \\ \hline
+        \(E\) & The set of events \\ \hline
+        \(E^c\) & All states in \(\Omega\) not in \(E\) \\ \hline      
+        \(E\cap F\) & \(\{\omega\in\Omega:\omega\in E\;\text{and}\;\omega\in F\}\) \\ \hline
+        \(E\cup F\) & \(\{\omega\in\Omega:\omega\in E\;\text{or}\;\omega\in F\}\) \\ \hline
+        \(P[E]\) & Probability measure if event E \\ \hline
+        \(\#(E),\vert E\vert\) & number of elements in E \\ \hline
+        \(\Perm{n}{r}\) & Ordered Permutations \\  \hline
+        \(\Comb{n}{r}\) & Unordered Combinations \\  \hline
+        \(\Perm{n}{n}\) & \(n!\) \\  \hline
+        \(\iff\) & If and only if \\ \hline
+        \(P[E\mid F]\) & \(P[E]\) given \(P[F]\) \\ \hline
+        \(P_F[E]\) & Probability measure of E given F \\ \hline
+        \(\sqrt{s^2}\) & Sample standard deviation \\ \hline
+        \(\overline{x}\) & Sample mean \\ \hline
+        \(g\) & Skewness, measure of asymmetry \\ \hline
+        \(E[X]\) & Expectation of random variable \(X\) \\ \hline
+        \(\Var{X}\) & Variance of random variable \(X\) \\ \hline
+        \(p_X(x)\) & Probability mass function of random variable \(X\) \\ \hline
+        \(F_X(x)\) & Cumulative distribution function of random variable \(X\) \\ \hline
+        \(f_X(x)\) & Probability density function of random variable \(X\) \\ \hline
+        Sensitivity & The probability of true positive \\ \hline
+        Specificity & The probability of true negatives \\ \hline
+    \end{tabular}
+\end{table}
+\subsection*{Important laws}
+\begin{itemize}
+    \item \(E\) is said to occur if \(\omega_a\in E\) and E does not occur if \(\omega_a\notin E\)
+    \item \(\forall E,\;\emptyset\subseteq E\subseteq \Omega\)
+    \item If \(E\cap F=\emptyset\) then \(E\) and \(F\) are said to be disjoint
+    \item If \(E\cap F=\emptyset\) and \(E\cup F=\Omega\) then \(E\) and \(F\) are said to be exclusive and exhaustive
+    \item \(E\cap(F\cup G)=(E\cap F)\cup(E\cap G)\)
+    \item \(E\cup(F\cap G)=(E\cup F)\cap(E\cup G)\)
+\end{itemize}
+For the last two rules its important to note that the position of the parenthesis do matter.
+\subsection*{Events}
+Probability and Statistics cares about quantifying the likelihood of events occurring. It is assigning a numerical value to the physical notion of an event happening. It can be useful to do this to provide an objective view of the world when human judgement can often be misled: A good example of this is the birthday paradox.
+\subsection*{Probability measures}
+A probability measure is a real-valued set function, (a function that takes a set as an argument and returns a real number) \(p\) of the sample space \(\Omega\) that satisfies the following axioms:
+\begin{itemize}
+    \item \(P[E]\geq0,\;\text{for any event E}\) 
+    \item \(P[\Omega]=1\)
+    \item If \(E_1,E_2,...\) are disjoint then: \(P[E_1\cup E_2\cup...]=P[E_1]+P[E_2]+...\)
+\end{itemize}
+The intuitive understanding of the last axiom comes from the geometric view: if you have a Venn diagram representing the sample space and two disjoint events then the sum of their areas will equal the sum of the area of their union.
+\subsubsection*{A word on notation}
+It is personal notation whether or not to use square brackets or regular parenthesis to represent the probability measure of an event. In this course, we will use square brackets as is common when discussing operators. What is not personal notation is the inclusion of curly braces in the probability measure of a single outcome. This is because a probability measure is defined above as a set function, hence it must act upon a set.
+\[\omega\in E,\;E\subseteq\Omega\]
+\[P[E] -\text{Valid notation}\]
+\[P[\{\omega\}] -\text{Valid notation}\]
+\[P[\omega] -\text{Invalid notation (nonsensical)}\]
+This will be something that gets assessed and you will be marked down for not using the correct notation. Additionally, some authors will use a double-stroked blackboard \(\mathbb{P}[x]\) for probability which is good on paper but gets quite confusing in print where its use is not necessary. Bolding, double-stroking or double-bracketing (such as with \(P[[X]]\)) are all valid notation, however we will only use the most basic form \(P[X]\).
+\subsection*{Proof using probability measures}
+When working from axioms, they are the only thing that we can assume to be true, everything else must be deducted from these known truths until you arrive at a significant result, which then (under the condition that the proof of said statement follows entirely and only from the original axioms) you can use without further demonstrations.
+\subsubsection*{Example proof}
+We want to prove that \(P[E^c]=1-P[E]\)
+\[\text{Let}\;E\subseteq\Omega\]
+We have \(E\) and \(E^c\) disjoint by definition:
+\[E\cap E^c=\emptyset\]
+We also have \(E\cup E^c=\Omega\) by definition. Because \(E\) and \(E^c\) are disjoint:
+\[P[E\cup E^c]=P[E]+P[E^c]\]
+\[1=P[E]+P[E^c]\]
+\[P[E^c]=1-P[E]\]
+\[\qed\]
+\subsection*{Counting problems}
+In many cases \(\Omega\) consists of \(N\) equally likely events:
+\[\Omega=\{\omega_1,\omega_2,...,\omega_N\},\qquad P[\{\omega_i\}]=\frac{1}{N}\]
+Then for any event E:
+\[P[E]=\frac{\vert E\vert}{N}\]
+\subsubsection*{Combinations and permutations}
+Sometimes we want to pick a certain amount of elements out of a sample space, the way we do this is with permutations or combinations. Permutations are used when the order of selection is important such as choosing raffle tickets for a prize. Combinations are used when the order does not matter, such as picking members of the public for jury duty. A key fact to remember about combinatorics is the multiplicative rule, that is to say the ways to pick one item from \(n\) is \(n\), and the ways to pick 1 item from \(n\) and 1 from \(m\) is \(n\cdot m\). The ways to order \(n\) items will be a factor of \(n!\) depending on external conditions.
+\[0!=1\]
+\[\Perm{n}{r}=\frac{n!}{(n-r)!},\;\text{Pick r ordered objects from n}\]
+\[\Comb{n}{r}=\begin{pmatrix}
+    n\\
+    r
+\end{pmatrix}=\frac{n!}{(n-r)!\,r!},\;\text{Pick r unordered objects from n}\]
+All combination notation is identically but has to be used consistently.
+\subsection*{Conditional probabilities}
+Sometimes we care about the probability of an event occurring given that another event has also occurred. The probability of any event \(E\) given event \(F\) is given as:
+\[P[E\mid F]=\frac{P[E\cap F]}{F}\]
+Provided \(P[F]>0\). This rule has some nice symmetry properties because of the intersection:
+\[P[E\cap F]=P[E\mid F]\cdot P[F]=P[F\mid E]\cdot P[E]\]
+\subsubsection*{Conditional probability measure}
+Let \(F\) be a fixed subset of \(\Omega\) with \(P[F]>0\). Then the real valued set function \(P_F[E]\) for any set \(E\) in the sample space \(\Omega\) is defined as \(P_F[E]=P[E\mid F]\).
+
+It can be verified that this is a probability measure as it obeys all 3 axioms
+\begin{itemize}
+    \item \(P_F[E]\geq 0\;\forall E\)
+    \item \(P_F[\Omega]=1\)
+    \item \(P_F[E_1\cup E_2\cup ...]=P[E_1\mid F]+P[E_2\mid F]+...\)
+\end{itemize}
+This is super useful when we have an experiment and a partial observation or just a small amount of knowledge.
+
+Two events are independent if:
+\[P[E\mid F]=P[E]\]
+\[P[E\cap F]=P[E]\cdot P[F]\]
+\subsection*{Theorem of total probability}
+The motivating example is when we are want to calculate the probability of a specific event given a pass and fail selection condition. For example a manager hiring for a job must decide after each interview if they want to offer the job or not, what would be the probability that the best candidate gets selected. We first define a partition.
+
+A partition of the sample space \(\Omega\) is a collection of events \(E_1,E_2,...,E_n\) such that:
+\[E_i\cap E_j=\emptyset,\;\forall i\ne j\]
+\[E_1\cup E_2\cup ...E_n=\Omega\]
+For example, let \(\Omega=\{1,2,3,4,5,6\}\):
+\[E_1:=\{1,2,3\},\; E_2:=\{4,5,6\}\]
+\[E_1,E_2\;\text{is a partition of}\;\Omega\]
+This motivates the theorem of total probability:
+\\
+let \(E_1,E_2,...,E_n\) be a partition of \(\Omega\) and let \(F\subseteq\Omega\) be an event,
+\[P[F]=\sum_{i=1}^nP[F\mid E_i]\cdot P[E_i]\]
+\subsection*{The separation problem}
+Let \(F\) be the event that the best candidate is selected for the job. Let \(E_k\) be the event that the \(k^{th}\) best candidate is interviewed first.
+\[P[E_1]=P[E_2]=P[E_3]=P[E_4]=\frac{1}{4}\]
+\[P[F\mid E_1]=\frac{0}{6},\;\text{Because we always reject the first candidate}\]
+\[P[F\mid E_2]=\frac{6}{6},\;\text{Because there is only one candidate better than the first}\]
+\[P[F\mid E_3]=\frac{3}{6}\]
+\[P[F\mid E_4]=\frac{2}{6}\]
+So the best candidate is selected with probability \(\frac{11}{24}\) with the current acceptance method.
+\subsubsection*{The general solution}
+Some mathematicians much smarter than me found the best solution given this method of acceptance for large \(n\). You take the first \(\frac{n}{e}\) eligible events (could be candidates for a job, romantic partners etc.) and reject them but take note of the average, highest and lowest quality event in this sample. From the \(\frac{n}{e+1}\) case onwards, you accept the first event that is better than anyone you have seen before. This gives you a \(\frac{1}{e}\) chance of selecting the best event or roughly 36\%. This is currently the best known solution to this problem. 
+\subsection*{Bayes' Theorem}
+\[P[F\mid E]=\frac{P[E\mid F]\cdot P[F]}{P[E]}\]
+Or in a more general form:
+\[P[E_i\mid F]=\frac{P[F\mid E_i]\cdot P[E_i]}{\sum_{j=1}^nP[F\mid E_j]\cdot P[E_j]}\]
+\subsection*{Mutual Independence}
+Sometimes we are talking about more than two groups at a time and we care about their independence. It is important to note that pairwise independence does not imply mutual independence.
+\[P\left[\bigcup_{i=1}^FE_i\right]=\prod_{i=1}^F P[E_i]\]
+\section{Introduction to Statistics}
+\subsection*{Types of data}
+We have a few different types of data that we care about in statistics:
+\begin{itemize}
+    \item Categorical
+    \begin{itemize}
+        \item Nominal, a set of values without ordering.
+        \item Ordinal, a set of values with ordering.
+        \item Binary, two possible values.
+        \item Grouped numbers, sets of values.
+    \end{itemize}
+    \item Numerical
+    \begin{itemize}
+        \item Discrete, data takes on one of a discrete set of values
+        \item Continuous, data takes one a range 
+    \end{itemize}
+\end{itemize}
+\subsection*{Standard statistical measures}
+We can define the sample mean as a way of measuring the average of a group of data:
+\[\overline{x}=\frac{1}{n}\sum_{i=1}^nx_i\]
+We define the sample variance as a way of measuring central tendency of a group of data:
+\[s^2=\frac{1}{n-1}\sum_{i=1}^n(x_i-\overline{x})^2=\frac{1}{n-1}\left(\sum_{i=1}^nx_i^2-n\overline{x}^2\right)\]
+Another measure of central tendency of interest for us is the sample standard deviation, which is derived from the sample variance but importantly has the same units as the original dataset:
+\[s=\sqrt{s^2}\]
+We can also measure how symmetrical the data set is using the skewness. A perfectly symmetrical dataset has no skew.
+\[g=\frac{1}{n}\sum_{i=1}^n\left(\frac{x_i-\overline{x}}{s}\right)^3\]
+\section{Discrete Random Variables and Expectation}
+When talking about discrete random variables we are looking at a quantity we wish to measure (our variable), given it is non-deterministic (random) and can only hold from a set of values (discrete). We define our random variable \(X\) on the sample space \(\Omega\) as follows:
+\[X:\Omega\to\mathbb{R}\]
+or similarly you could say:
+\[\forall\omega\in\Omega,\quad X(\omega)\in\mathbb{R}\]
+This shows us that our random variable is actually a mapping from our sample space to some measure on the real line.
+\subsection*{Probability mass function}
+Suppose we wish to assign a probability to a particular value of a random variable. We do so using a probability mass function. The P.M.F of \(X\) is:
+\[p_X(x)=P[\{\omega:X(\omega)=x\}]=P[X=x]\]
+Note that it is only correct to say:
+\[p_X(x)=P[X=x]\]
+When we have first introduced \(X\) as a random variable.
+\subsection*{Cumulative distribution function}
+Suppose we wish to know how likely it is to select from a range of values in \(X\). We do so with a cumulative distribution function:
+\[F_X(x)=P[X\leq x]=\sum_{y\leq x}p_X(y)\qquad x\in\mathbb{R}\]
+We can perform operations on the cumulative distribution function to find other probabilities such as \(P[X>x]\) and \(P[x<X\leq y]\).
+\subsubsection*{The modal value}
+With a little thought, it is not difficult to see that the modal value \(z\) of \(X\) satisfies:
+\[p_X(x)\leq p_X(z)\]
+for all \(x\in\mathbb{R}\).
+\subsection*{Expectation}
+The expectation is a measure of the location of a random variable. It is also known as the average or the mean of the random variable. We have:
+\[E[X]=\sum_{y:p_X(y)>0}y\cdot P[X=y]\]
+for an arbitrary function acting on \(X\), \(g:\mathbb{R}\to\mathbb{R}\), we can see that \(g\circ X:\Omega\to\mathbb{R}\), so \(G(X)\) is also a random variable. This means that we can write:
+\[E[G(X)]=\sum_{y:p_X(y)>0}g(y)\cdot p_X(y)\].
+An important note is that the domain and co-domain of \(E[X]\) need not be in the codomain of \(X\). What this means is that our expectation does not have to be a value that \(X\) can take, and likewise when calculating our expectation we can sum over the probability of all events in \(\Omega\) - however in this case, most of the events have probability 0 and so do nothing to affect the expectation value.
+\subsubsection*{Properties of the expectation}
+The expectation has some useful properties for calculating with:
+\begin{itemize}
+    \item \(g(X)=b \implies E[G(X)]=b\)
+    \item \(E[ag(X)+bh(X)]=aE[g(X)]+bE[h(X)],\quad a,b\in\mathbb{R}\)
+    \item \(E[aX+b]=aE[X]+b\)
+    \item \(E[X_1+X_2+...+X_n]=E[X_1]+E[X_2]+...+E[X_n]\)
+    \item Iff \(X\) and \(Y\) are independent then: \[E[XY]=E[X]E[Y]\]
+\end{itemize}
+For \(r\in\mathbb{N}\), the \(r^{th}\) moment of \(X\) is \(E[X^r]\). It is important to note that \(E[g(X)]\ne g(X)E[X]\) generally, this is only the case when \(g(X)\) is a linear function.
+\subsection*{Variance}
+The variance of a random variable is a measure of the spread of that variable. It is defined:
+\[\text{Var}[X]=E[X^2]-E[X]^2\]
+another measure of spread is the standard deviation which is defined as the root of the variance:
+\[\text{Std. Dev }[X]=\sqrt{\text{Var}[X]}\]
+\subsubsection*{Properties of the variance}
+\begin{itemize}
+    \item \(\text{Var}[X]\geq0\)
+    \item \(\text{Var}[X]=0\iff P[X=E[X]]=1\)
+    \item \(\text{Var}[aX+b]=a^2\text{Var}[X]\)
+    \item Iff \(X\) and \(Y\) are independent then: \(\Var{X+Y}=\Var{X}+\Var{Y}\)
+\end{itemize}
+\section{Standard Discrete Random Variables}
+\subsection*{Bernoulli distribution}
+A Bernoulli trial is a simple random experiment with two outcomes "Success = \((1)\)" or "Failure = \((0)\)". The probability for success is \(p\) and the probability for failure is \(1-p\). The PMF that describes this situation is:
+\[p_X(x)=p^x(1-p)^{1-x},\qquad x=0,1\]
+it is trivial to show that:
+\[E[X]=p\]
+\[E[X^2]=p\]
+\[\Var{X}=p-p^2=p(1-p)\]
+\subsection*{Binomial distribution}
+Two random variables are said to be "identically distributed" if they have the same p.m.f, and are said to be independent if \(P(X=x,Y=y)=P(X=x)\cdot P(Y=y)\). If we consider \(n\) distinct Bernoulli trials with probability \(p\) and take \(X\) to be the number of successes. Then \(X\) has a binomial distribution:
+\[X\sim \text{Bin}(n,p)\text{ or }X\sim \text{B}(n,p)\]
+\[P(X=k)=\binom{n}{k}p^k(1-p)^{n-k}\]
+\[E[X]=np\]
+\[\Var{X}=np(1-p)\]
+These facts can be proved in a number of ways, rigorously with the properties of combinatorics and maybe less rigorously by more usefully, with properties of the expectation.
+\subsection*{Geometric distribution}
+Geometric distributions measure the number of independent Bernoulli trials needed before the first success. Given the random variable \(X\) and probability of success \(p\) we say that:
+\[X\sim\text{Geom}(p)\]
+with pmf:
+\[p_X(k)=(1-p)^{k-1}p\]
+It can be shown using infinite sums that the probability of a success occurring is eventually 1.
+\[E[X]=\frac{1}{p}\]
+\[\Var{X}=\frac{(1-p)}{p^2}\]
+The geometric distribution has this property known as being "memoryless". This means that the outcomes of previous trials do not affect the new trials, such that:
+\[P[X=x+k \mid X> x]=P[X=k]\]
+\subsection*{Negative binomial distribution}
+The negative binomial distribution is a generalisation of the geometric distribution. Given a sequence of independent Bernoulli trials, we wish to know when the first \(r\) successes occur .
+\[X\sim\text{NB}(r,p)\quad \text{or}\quad X\sim\text{NegBin}(r,p)\]
+\[p_X(k)=\binom{k-1}{r-1}p^r(1-p)^{k-r}\qquad k=r,\,r+1...\]
+\[E[X]=\frac{r}{p}\]
+\[\Var{X}=\frac{r(1-p)}{p^2}\]
+Hence we can see that the negative binomial distribution is just the sum of \(r\) distinct geometric distributions.
+\subsection*{Uniform discrete distribution}
+Uniform discrete distributions have a pmf of \(\frac{1}{b+1}\) when choosing randomly from a list of integers \(\{a,a+1,...a+b\}\)
+\[E[X]=a+\frac{b}{2}\]
+\[\Var{X}=\frac{1}{12}b(b+2)\]
+\subsection*{Poisson distribution}
+the Poisson distribution is used to calculating probabilities of events surrounding rates.
+\[X\sim\text{Po}(\lambda)\]
+\[p_X(k)=\frac{e^{-\lambda}\lambda^k}{k!}\]
+\[E[X]=\lambda\]
+\[\Var{X}=\lambda\]
+For large \(n\) and small \(p\) we have that \(\text{Bin}(n,p)\approx\text{Po}(np)\). In general, Poisson is quicker and easier to calculate.
+\subsection*{Hypergeometric distribution}
+Hypergeometric distributions are used for sampling without replacement. With a sample size of \(n\) and measuring the probability of picking something in category \(A\) we have:
+\[p_X(k)=\frac{\binom{A}{k}\binom{B}{n-k}}{\binom{A+B}{n}}\]
+This follows from combinatorics.
+\[E[X]=\frac{An}{A+B}\]
+\[\Var{X}=\frac{nAB(A+B-n)}{(A+B)^2(A+B-1)}\]
+We place restrictions on the value of \(k\) to ensure that we do in fact have a probability mass function. This mostly means that we can't take less than 0 items and cannot take more items than there are in the bag.
+\section{Point estimation}
+\subsection*{Definitions}
+Point estimation is used when you have some data that follows some distribution that is in turn dependant on some parameters but you might not know what they are. This makes it especially helpful for modelling in the real world where all you have is empirical data. This also makes estimator methods super useful for machine learning. We can work on data or on samples of random variables, the latter often being more useful. Suppose we have \(n\) independent and identically distributed random variables, then:
+\[T=T(X_1,X_2,...,X_n)\]
+is called the estimator, the value obtained from this estimator is called the estimate. A common estimator that we use all the time is the sample mean estimator:
+\[T=\bar{x}:=\frac{1}{n}\sum_{i=1}^nX_i\]
+which estimates \(\theta=\mu\). If we have \(E(T)=\theta\) then we say that \(T\) is an unbiased estimator of \(\theta\). Out of all of the unbiased estimators for \(\theta\), if \(T\) has the smallest variance we call \(T\) the "minimum variance unbiased estimator". These have already been calculated for many distributions but if you are working with a custom distribution or one that is more convoluted, finding these estimators is typically very difficult.
+\subsubsection*{Common estimators}
+\[E[\bar{x}]=E\left[\frac{1}{n}\sum_{i=1}^nX_i\right]=\frac{1}{n}\sum_{i=1}^nE[X_i]=\mu\]
+\[\Var{\bar{x}}=\frac{\sigma^2}{n}\]
+What these estimators give us is the best guesses that we can use for the parameters of our distribution to do later calculations with.
+\[s^2=\frac{1}{n-1}\sum_{i=1}^n\left(X_i-\bar{X}\right)^2\]
+\subsection*{Testing}
+We can look at the sensitivity and specificity of a test to help us predict our probability. Sensitivity is about how many true positives there are and sensitivity is about how many true negatives there are. To construct a probability, we can perform a weighted mean if we know both the specificity and sensitivity.
+\subsection*{Further reading}
+One of our requirements on our random variables is that the underlying distribution has a finite expectation and variance. It may seem like this requirement is always met but it actually isn't. An example of a distribution without a mean or variance defined is the "Cauchy distribution".
+\section{Continuous distributions}
+We define the so called probability density function of a continuous random variable in terms of the cumulative distribution function for that variable where:
+\[F_X(x)=\int_{-\infty}^xf_x(y)\,\text{d}y\quad\forall x\in\mathbb{R}\]
+The idea behind this is that when we are talking about continuous values it stops making sense to talk about the probability mass function of one specific value "\(P(X=x)\)" as we can get arbitrarily precise. We are instead more interested by what happens when we look at an interval - hence probability "density" function.
+\subsection*{PDF properties}
+Similar to pmf's, pdf's have some key properties that help us work with them as well as making them well-defined as a probability measure:
+\begin{itemize}
+    \item A pdf, \(f_X(x)\geq 0\quad\forall x\)
+    \item \(\int_{-\infty}^\infty f_X(x)\,\text{d}x=1\)
+    \item \(f_X(x)=\frac{\text{d}}{dx}F_X(x)\)
+    \item \(P[a\leq X\leq b] = \int_a^b f_X(x)\,\text{d}x\)
+\end{itemize}
+We also have some additional properties when we look at the concept of measures of location and spread which give us the results:
+\[E[x]=\int_{-\infty}^\infty xf_X(x)\,\text{d}x\]
+\[E[g(X)]=\int_{-\infty}^\infty g(x)f_X(x)\,\text{d}x\]
+\[\text{Var}[x]=E[X^2]-E[X]^2\]
+\[\text{Median is the value }x_0\text{ such that }F_X(x_0)=0.5\]
+\[\text{Mode is the maximum point of }f_X(x)\]
+\subsection*{Uniform distribution}
+The uniform distribution is almost identical to its discrete counter part. Let \(X\) denote the uniform distribution on \([a,b]\) then we write:
+\[X\sim U(a,b)\]
+And we have:
+\[f_X(x)=\begin{cases}
+    \frac{1}{b-a}&\quad a<x<b \\
+    0&\quad \text{otherwise}
+\end{cases}\]
+\[F_X(x)=\begin{cases}
+    0&\quad x\leq a \\
+    \frac{x-a}{a-b}&\quad a<x<b \\
+    1&\quad x\geq b
+\end{cases}\]
+\[E[X]=\frac{1}{2}(b+a)\]
+\[\Var{X}=\frac{1}{12}(b-a)^2\]
+\subsection*{Exponential distribution}
+We can view the exponential distribution as an extension of the Poisson distribution. Whilst the Poisson models the number of events that occur given a specific rate, the exponential distribution models the amount of time between events given a specific rate. We write:
+\[T\sim\text{Exp}(\lambda)\]
+\[f_T(t)=\begin{cases}
+    0&\quad t<0\\
+    \lambda e^{-\lambda t}& \quad t\geq 0
+\end{cases}\]
+\[F_T(t)=\begin{cases}
+    0&\quad t<0\\
+    1-e^{-\lambda t}&\quad t\geq0
+\end{cases}\]
+\[E[T]=\frac{1}{\lambda}\]
+\[\Var{T}=\frac{1}{\lambda^2}\]
+An important property of the exponential distribution is that is is memoryless. What this means is that the results of conditional probabilities often don't rely on the condition at all. In practice something like this:
+\[X\sim\text{Exp}(4)\]
+\[P[X\geq 5 \mid x\geq3]=P[X\geq2]\]
+which is the same as if we had just started counting after we met the first condition. The original condition does not affect any future events. This means that the exponential distribution can be (and is) used as a building block for many more continuous probability distributions.
+\subsection*{Gamma distribution}
+If the exponential distribution is an extension to Poisson, then the gamma distribution is a more general exponential distribution. We say:
+\[X\sim\text{Gamma}(\alpha,\beta)\qquad \alpha,\beta>0\]
+\[\Gamma(\alpha)=\int_0^\infty y^{\alpha-1}e^{-y}\,\text{d}y\]
+\[f_X(x)=\begin{cases}
+    \frac{\beta^\alpha}{\Gamma(\alpha)}x^{\alpha-1}e^{-\beta x}&\quad x>0 \\
+    0&\quad x\leq 0
+\end{cases}\]
+\[E[X]=\frac{\alpha}{\beta}\]
+\[\Var{X}=\frac{\alpha}{\beta^2}\]
+When \(\alpha=1\):
+\[X\sim\text{Gamma}(1,\beta)\sim\text{Exp}(\beta)\]
+Similarly, when you have the sum of \(n\) independent Exponential random variables then:
+\[\sum_{i=1}^nX_i\sim\text{Gamma}(n,\beta)\]
+\subsection*{Beta distribution}
+When we have a random variable \(X\) distributed according to a beta distribution, we write:
+\[X\sim\text{Beta}(\alpha,\beta)\qquad\alpha,\beta>0\]
+\[f_X(x)=\begin{cases}
+    \frac{\Gamma(\alpha+\beta)}{\Gamma(\alpha)\Gamma(\beta)}x^{\alpha-1}(1-x)^{\beta-1}&\quad0<x<1 \\
+    0&\quad \text{otherwise}
+\end{cases}\]
+\[E[X]=\frac{\alpha}{\alpha+\beta}\]
+\[\Var{X}=\frac{\alpha\beta}{(\alpha+\beta)^2(\alpha+\beta+1)}\]
+We have a special case when \(\alpha=\beta=1\):
+\[f_X(x)=1\]
+\[X\sim U(0,1)\]
+\subsection*{Normal distribution}
+The normal distribution is crucial to probability and statistics. \(X\) has a normal distribution: \(X\sim N(\mu,\sigma^2)\) if:
+\[f_X(x)=\frac{1}{\sqrt{2\pi}\sigma}\exp{\left(-\frac{1}{2\sigma^2}\{x-\mu\}^2\right)}\]
+where \(\mu\in\mathbb{R}\) and \(\sigma>0\). The cdf of the normal distribution is then given as:
+\[F_X(x)=\int^x_{-\infty}\frac{1}{\sqrt{2\pi}\sigma}\exp\left(\frac{1}{2\sigma^2}\{y-\mu\}^2\right)\,\text{d}y\]
+Which unfortunately does not have an analytical solution. So the way we have to deal with this is by defining the so called "standard normal distribution" with fixed \(\mu\) and \(\sigma^2\) or compute an approximate solution numerically. Because there are 2 parameters it is not feasible to numerically compute every value you could want for every parameter set, so we first turn our problem into one in the standard normal and then we can use a statistical table to solve from there.
+\subsection*{Standard normal}
+When \(\mu=0\) and \(\sigma^2=1\) we have the so called standard normal distribution. As you can see it will massively simplify the pdf because of substituting in these zeros and ones:
+\[f_Z(z)=\phi(z)=\frac{1}{\sqrt{2\pi}}e^{-\frac{z^2}{2}}\qquad z\in\mathbb{R}\]
+\[F_Z(z)=\Phi(z)=\int^z_{-\infty}\frac{1}{\sqrt{2\pi}}e^{-\frac{y^2}{2}}\,\text{d}y\]
+\subsection*{Expectation of the normal distribution}
+The mean and standard deviation are defined as parameters in the distribution and it takes some integration to show that the expectation is indeed \(\mu\). You can do the proof in a few ways but one of them is to use the fact that our integrand is an odd function. The trick is to try and show \(E[Z-\mu]=0\) and then rearrange to \(E[Z]=\mu\).
+\subsection*{Variance of the normal distribution}
+The variance is similar to the mean in that it is defined in the parameters of the distribution. To prove this you use the fact that the variance is:
+\[\Var{Z}=E[(Z-E[Z])^2]=E[(Z-\mu)^2]\]
+\subsection*{Transforming to the standard normal}
+It is simple to verify that you can construct a new random variable \(Y=\sigma Z+\mu\) where \(Z\sim N(0,1)\). It can be shown that this is also a random variable in terms of \(\sigma\) and \(\mu\). Thus it is possible to construct a transformation:
+\[Z=\frac{Y-\mu}{\sigma}\]
+With which we can know calculate probabilities as we have:
+\[P(Y\leq y)=\Phi\left(\frac{y-\mu}{\sigma}\right)\]
+Additionally, we know that \(\phi(z)\) is an even function so that we can see that \(\Phi(-z)=1-\Phi(z)\)
+\subsection*{Calculating probabilities with the standard normal}
+Probability values can be looked up inside statistical tables. It can sometimes also be useful to reverse the process and find what critical value is needed for a given probability. This is also possible to do using statistics tables.
+\subsection*{Samples of normal distributions}
+If we have a sequence of iid normal random variables then we have a special case where:
+\[\frac{1}{n}\sum_{i=1}^nX_i=\tilde{X}\sim N\left(\mu,\frac{\sigma^2}{n}\right)\]
+Or thinking about it another way: the average random variable that you could pick has mean \(\mu\) and variance \(\frac{\sigma^2}{n}\). We can also show a result for more general combinations of mutually independent normal random variables:
+\[\sum^n_{i=1}a_iX_i\sim N\left(\sum_{i=1}^na_i\mu_i,\,\sum^n_{i=1}a_i^2\sigma_i^2\right)\]
+Where \(a_i\) is a constant, the random variables are allowed to have different means and variances.
+\section{Discrete Bivariate distributions}
+Often we want to consider the joint behaviour of many random variables. If we let \(X\) and \(Y\) be random variables taking values \(\{x_i:i\in\mathbb{N}\}\) and \(\{y_i:i\in\mathbb{N}\}\) respectively then their pmf is defined by:
+\[p_{X,Y}(x,y)=P[\{X=x\}\cap\{Y=y\}]=P[(X,Y)=(x,y)]\]
+\[(x,y)\in\{x_i\}\times\{y_i\}\]
+We can also calculate the cumulative distribution function:
+\[F_{X,Y}=P[\{X\leq x\}\cap\{Y\leq y\}]=P[X\leq x, Y\leq y]\]
+\subsection*{Properties of joint pmfs}
+\begin{itemize}
+    \item \(\forall x,y,\quad0\leq p_{X,Y}(x,y)\leq 1\)
+    \item \(\sum_i\sum_jp_{X,Y}(x_i,y_j)=1\)
+    \item We have a transformation to what is known as the marginal pmf of one of the variables:
+    \[p_{X}(x_i)=P[X=x_i]=P\left[\bigcup_{y_j}\{X=x_i,Y=y_j\}\right]\]
+    \[= \sum_jP[\{X=x_i\}\cap\{Y=y_j\}]\]
+    \[=\sum_jp_{X,Y}(x_i,y_j)\]
+    \item We can calculate expectations like normal:
+    \[E[g(X,Y)]=\sum_i\sum_jg(X,Y)p_{X,Y}(x_i,y_j)\]
+    And immediately following this we can see that we can construct a "projective" function to calculate the expectation of just one variable. I.e. \(g(x,y)=x\).
+    \item It should be noted that knowing the pmf's for both random variables individually tells you nothing about the pmf of the joint pair.
+\end{itemize}
+\subsection*{Conditional probabilities}
+Recall our definition of conditional probabilities from before:
+\[P[E\mid F]=\frac{P[E\cap F]}{P[F]},\quad P[F]>0\]
+The exact same idea applies here with joint pairs, we get:
+\[p_{X\mid Y}(x\mid y)=\frac{P[X=x, Y=y]}{P[Y=y]},\quad P[Y=y]>0\]
+\[p_{X\mid Y}(x\mid y)=\frac{p_{X,Y}(x,y)}{p_Y(y)}\]
+We can calculate expectations of these conditional probabilities like we usually do:
+\[E[X\mid Y=y]=\sum_xxp_{X\mid Y}(x\mid y)\]
+It can be seen from this and our marginal pmf definitions that there are now multiple equivalent ways for us to calculate the expectation of just one of the variables:
+\[E[X]=\sum_i\sum_Jx_ip_{X,Y}(x_i,y_j)\]
+\[E[X]=\sum_yp_Y(y)E[X\mid Y=y]\]
+\[E[X]=\sum_xxp_X(x)\]
+Depending on what quantities you have one of these methods may be easier to calculate.
+\subsection*{Correlation and covariance}
+We define the covariance as a measure of how disjoint two random variables are. If we have \(X=Y\) then our formula just calculates the variance:
+\[\text{Cov}(X,Y)=E\left[(x-E[X])(Y-E[Y])\right]\]
+\[\text{Cov}(X,Y)=E[XY]-E[X]E[Y]\]
+We can also use this as a basis to define the correlation between two random variables:
+\[\rho(X,Y)=\frac{\text{Cov}(X,Y)}{\sqrt{\Var{X}\Var{Y}}}\]
+which is our correlation coefficient \(-1\leq\rho\leq1\). The correlation measures the degree of linear dependence between variables. If \(\rho=0\) then \(\text{Cov}(X,Y)=0\) and we say that \(X\) and \(Y\) are uncorrelated. Finally we can put this together and say that if \(\rho(X,Y)=\pm1\) then \(Y=aX+b\) for some \(a,b\in\mathbb{R}, a\ne 0\).
+\subsection*{Independence}
+We say that \(X\) and \(Y\) are independent if:
+\[p_{X,Y}(x,y)=p_X(x)p_Y(y)\]
+but this implication is one way only, you cannot assume it is true in reverse. Additionally if \(X\) and \(Y\) are independent they are uncorrelated (that is that \(\text{Cov}(X,Y)=0\)) but this implication is also only one way, we cannot assume anything from the covariance alone.
+\section{Properties of random variables}
+\subsection*{Sums of random variables}
+If we let \(X\) and \(Y\) be two random variables that take values in \(\mathbb{Z}_\geq0\) and let \(Z=X+Y\) then for \(n=0,1,...\):
+\[p_Z(n)=P[Z=n]=\sum^n_{k=0}P[X=k, Y=n-k]=\sum^n_{k=0}p_{X,Y}(k,n-k)\]
+If \(X\) and \(Y\) are also independent we can do some more arranging and see that:
+\[p_Z(n)=\sum^n_{k=0}p_X(n)p_Y(n-k)\]
+Sometimes this multiplication can significantly simplify a problem for example, say we have \(X\sim\text{Po}(\lambda)\) and \(Y\sim\text{Po}(\mu)\) be independent, then:
+\[Z=X+Y\sim \text{Po}(\lambda+\mu)\]
+\subsection*{Expectations of sums of random variables}
+We have some key properties of the expectations of sums of random variables:
+\begin{itemize}
+    \item \(E[h(X)+g(Y)]=E[h(X)]+E[g(Y)]\)
+    \item If \(X\) and \(Y\) are independent then: \(E[XY]=E[X]E[Y]\)
+\end{itemize}
+\subsection*{Variances of sums of random variables}
+\begin{itemize}
+    \item If \(X\) and \(Y\) are independent then: \(\Var{X+Y}=\Var{X}+\Var{Y}\)
+    \item More generally \(\Var{X+Y}=\Var{X}+\Var{Y}+2\,\text{Cov}(X,Y)\)
+    \item If \(a,b\in\mathbb{R}\) and \(X\) and \(Y\) are independent then we can work with linear combinations like so:
+    \[\Var{aX+bY}=\Var{aX}+\Var{bY}=a^2\Var{X}+b^2\Var{Y}\]
+\end{itemize}
+\subsection*{Extension to finite sums}
+Most importantly is that all of the statements can be extended up to a finite sum as demonstrated below, given we have \(X_1,X_2,X_3,...,X_n\) be random variables, then:
+\begin{itemize}
+    \item The expectation of the sum is the sum of the expectations:
+    \[E\left[\sum^n_{i=1}X_i\right]=\sum^n_{i=1}E[X_i]\]
+    \item If we have mutual independence then:
+    \[E\left[\prod^n_{i=1}X_i\right]=\prod^n_{i=1}E[X_i]\]
+    \item With mutual independence we also have:
+    \[\text{Var}\left[\sum^n_{i=1}X_i\right]=\sum^n_{i=1}\Var{X_i}\]
+    \item Finally, if we have mutual independence but the random variables are also identically distributed with \(E[X_i]=\mu\) and \(\Var{X_i}=\sigma^2\), then:
+    \[E\left[\sum^n_{i=1}X_i\right]=n\mu\]
+    \[\text{Var}\left[\sum^n_{i=1}X_i\right]=n\sigma^2\]
+\end{itemize}
+\section{Central limit theorem}
+We start by re-iterating some key definitions. Let \(X_1,X_2,...,X_n\) be independent and identically distributed random variables, and let \(S_n=X_1+X_2+\cdots+X_n\). We already know that \(E[S_n]=n\mu\) and \(\Var{S_n}=m\sigma^2\). Consider:
+\[Z_n:=\frac{S_n-n\mu}{\sqrt{n}\sigma}\]
+Then we can calculate:
+\[E[Z_n]=0\]
+\[\Var{Z_n}=1\]
+\subsection*{Motivation}
+Say we have two experiments that we wish to run a large\footnote{The exact amount does not matter but is typically bounded, as will be seen later} number of times, just as an example we could formulate these experiments like so:
+\subsubsection*{Experiment 1}
+Let \(X_i\) be the score when throwing the \(i^{th}\) distinct die, \(X_i\in\{1,2,3,4,5,6\}\). Then \(S_n\) is the total score. Additionally we have:
+\[E[X_i]=\frac{7}{2}\]
+\[\Var{X_i}=\frac{35}{12}\]
+\subsubsection*{Experiment 2}
+Let \(X_i\) be the number of rolls until we roll a 6, \(X_i\in\mathbb{N}\). Then \(S_n\) is the number of rolls until we roll the \(n^{th}\) 6. We have:
+\[X_i\sim\text{Geom}(\frac{1}{6})\]
+\[E[X_i]=6\]
+\[\Var{X_i}=30\]
+\[S_n\sim\text{NegBin}(n,\frac{1}{6})\]
+\subsubsection*{Conclusion}
+When we simulate running each experiment many times we can plot our values for \(Z_n\) against \(Z\sim N(0,1)\) and we should see that as \(n\to\infty\), \(Z_n\approx Z\). There is a fairly difficult proof that we can do that ends up showing that \(n\geq 30\) is a good approximation for the standard normal.
+\subsection*{Formal definition}
+What we have shown up to this point is a limit of our CDFs (note that it is important we do not treat this as a limit of our variables since the central limit theorem does not tell us anything about the individual variables):
+\[P\left[\frac{S_n-n\mu}{\sqrt{n}\sigma}\leq x\right]\to P[Z\leq x]\]
+where \(Z\) is our standard normal, as the number of samples \(n\) goes to infinity. Since this is a limit we can actually arrive at a more formal definition for the central limit theorem, that being:
+\[\forall \varepsilon>0, \exists n\in\mathbb{N}:\]
+\[\left|P\left[\frac{S_n-n\mu}{\sqrt{n}\sigma}\leq x\right]-P[Z\leq x]\right|<\varepsilon\]
+From this definition we end up with the actually useful statement:
+\[S_n\approx N(n\mu, n\sigma^2)\]
+\subsection*{The sample mean}
+We have already seen the sample mean before but now we can apply a little bit more mathematics to it. We define the sample mean such that:
+\[\tilde{X}=\frac{S_n}{n}\]
+This is another random variable hence we can apply similar techniques to above which results in the other really useful statement:
+\[\tilde{X}\approx N\left(\mu,\frac{\sigma^2}{n}\right)\]
+This comes up all the time in statistics results, as it allows us to approximate a general result of potentially quite complex experiments using the very well studied normal distribution.
+\subsection*{General solution method}
+The general solution method for problems of this type with finitely many iid random variables is always the same:
+\begin{enumerate}
+    \item Frame the original problem using whatever distributions you have.
+    \item Rewrite the original equation using the central limit theorem and estimators to approximate a normal distribution.
+    \item Recentre the normal distribution so you are working with the standard normal
+    \item Solve the problem in terms of \(\Phi\).
+\end{enumerate}
+\subsection*{Advice}
+Some advice for answering exam questions on these topics:
+\begin{itemize}
+\item When rewriting the original equations as a normal distribution be clear that this is being done by the central limit theorem.
+\item Remember to explicitly list the distribution of any new random variables that you may use (e.g \(S_n\) or \(Z\sim N(0,1)\)).
+\end{itemize}
+
+\hrulefill
+\begin{center}
+End of Autumn content
+\end{center}
+\hrulefill
+\section{Interval estimation}
+\subsection*{Motivating experiment}
+Suppose we wish to estimate the proportion of people in the UK who are left handed. There is some underlying true proportion \(p\). We could construct an estimator for \(p\) by the following set of steps:
+\begin{itemize}
+    \item Sample \(n\) people.
+    \item Count the number of left handed people in your sample, \(L\).
+    \item Estimate \(p\) with \(\hat{p}=\frac{L}{n}\)
+\end{itemize}
+We can verify that this is in fact a suitable estimator. Assume \(L\sim \text{Bin}(n,p)\). Then:
+\[\hat{p}=\frac{L}{n}=\frac{1}{n}\text{Bin}(n,p)\]
+\[E[\hat{p}]=\frac{E[L]}{n}=p\]
+\[\Var{\hat{p}}=\frac{p(1-p)}{n}\]
+We can see from this that \(\hat{p}\) is an unbiased estimator and the variance decreases as our sample size increases. This makes the estimator suitable for applying the central limit theorem with large enough \(n\).
+\subsection*{Types of uncertainty}
+There are 2 main types of uncertainty:
+\begin{itemize}
+    \item Aleatory uncertainty: This is the "chance" of an unpredictable event.
+    \item Epistemic uncertainty: This is uncertainty due to our ignorance of a fixed outcome.
+\end{itemize}
+Both types of uncertainty come up lots in mathematics although typically when dealing in matters of probability we are dealing with aleatory and in statistics we are usually interested in epistemic.
+\subsection*{Confidence intervals}
+Consider a generic sampled normal distribution (perhaps from the central limit theorem):
+\[\tilde{X}\sim N(\mu, \frac{\sigma^2}{n})\]
+and the mapping to the the standard normal:
+\[Z=\frac{\bar{x}-\mu}{\sigma/\sqrt{n}}\sim N(0,1)\]
+then it can be seen that for a chosen significance level we can rewrite our probability of being in that region as follows:
+\[p(z_{\alpha/2}\leq z\leq z_{1-\alpha/2})=1-\alpha\]
+Where \(z_\alpha\) is defined such that \(p(z\leq z_\alpha)=\alpha\). Then we can find a \(100(1-\alpha)\%\) confidence interval for a known \(\sigma\) with the following construction:
+\[\bar{x}\pm z_{1-\alpha/2}\frac{\sigma}{\sqrt{n}}\]
+Note that this assumes that our \(n\) is sufficiently large as to be able to make the first assumption about the normal distribution.
+\section{Hypothesis testing}
+Statistical inference is used to make decisions about the value of a parameter. Inferences of this kind are known as hypothesis tests.
+\subsection*{Null and alternative hypothesises}
+In a hypothesis test we have what is known as the null hypothesis, this is the hypothesis that nothing has changed: it is the "innocent until proven guilty" hypothesis.The null hypothesis is denoted \(H_0\). The alternate hypothesis is the hypothesis that there is a significant difference in some way, we are careful to define what it means to be significantly different when we start our test. The alternate hypothesis can be one-tailed or two-tailed or can take on a specific value (although this is rare). It is denoted \(H_1\). We favour the null hypothesis when testing.
+\subsection*{Critical region}
+When testing we have a critical (or rejection) region that determines whether we reject the null hypothesis or not. We need to specify the significance level of the test at the start and it is defined as follows:
+\[\alpha=p(\text{ reject } H_0 \mid H_0)\]
+The significance level is also known as the Type I error of the test. Most often we work backwards from our significance level to determine our critical region.
+\subsection*{Performing a test (\(\sigma\) known)}
+We can find our critical region easily by using the standard normal when our data can be approximated with a normal distribution. Consider a significance level \(\alpha\) and a null hypothesis \(H_0:\mu=\mu_0\). Then we define a test statistic \(z\) and make a comparison to determine the outcome of the test:
+\[z=\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}\]
+\[\text{Reject }H_0\text{ iff }\begin{cases}
+    z<z_\alpha & H_1:\mu<\mu_0 \\
+    z > z_{1-\alpha} & H_1: \mu > \mu_0 \\
+    |z| > z_{1-\alpha/2} & H_1:\mu\ne\mu_0
+\end{cases}\]
+\subsubsection*{Michelson's experiment example}
+Consider a set of 23 results from Michelson's tests for the speed of light. Imagine the sample mean of these results was \(299756.2\)km/s and the standard deviation of the test results was \(120\)km/s. We then wish to test if we can use Michelson's results to conclude the speed of light is not \(299710.5\)km/s. First we select our hypothesises:
+\[H_0:\mu=299710.5\text{ km/s}\]
+\[H_1:\mu\ne 299710.5\text{ km/s}\]
+Now we choose our significance level, here we choose \(\alpha=0.05\). Then we can find our critical region using our test statistic:
+\[\text{Reject }H_0\text{ if }\left|\frac{\bar{x}-\mu_0}{\sigma/\sqrt{n}}\right|>z_{0.975}=1.96\]
+We can evaluate this test statistic to be \(|z|=1.827\). We then compare against our critical region: \(1.827<1.96\). Finally we can conclude that there is insufficient evidence to reject \(H_0\).
+\subsection*{Performing a test (\(\sigma\) unknown)}
+Suppose \(x_1,x_2,...,x_n\) are samples from \(N(\mu,\sigma^2)\) with \(\sigma^2\) unknown. Then the test statistic:
+\[t=\frac{\bar{x}-\mu_0}{s/\sqrt{n}}\]
+has a Student's t distribution with \(n-1\) degrees of freedom and where \(s\) is the sample standard deviation. We note the t distribution with \(\nu\) degrees of freedom as \(t_\nu\) and it has the p.d.f:
+\[f_X(x)=\frac{\Gamma(\frac{\nu+1}{2})}{\sqrt{\nu\pi}\,\Gamma(\frac{\nu}{2})}\left(1+\frac{x^2}{\nu}\right)^{-\frac{\nu+1}{2}}\]
+For large \(\nu\) we have \(t_\nu\approx N(0,1)\) and \(t_1\) is a special case known as the Cauchy distribution. Performing hypothesis tests when you do not know \(\sigma\) are almost identical expect we use the t distribution.
+\[t=\frac{\bar{x}-\mu_0}{s/\sqrt{n}}\]
+\[\text{Reject }H_0\text{ iff }\begin{cases}
+    t < t_{n-1,\,\alpha} & H_1:\mu<\mu_0 \\
+    t > t_{n-1,\,1-\alpha} & H_1: \mu > \mu_0 \\
+    |t| > |t_{n-1,\,1-\alpha/2}| & H_1:\mu\ne\mu_0
+\end{cases}\]
+\subsubsection*{An example using the t distribution}
+We have some data from a coffee shop about the quantity of coffee poured into each drink. We are told the mean amount of coffee is \(200\)ml and we wish to perform a hypothesis test to verify this. We have data from 10 drinks with a sample mean quantity of \(210\)ml and a sample standard deviation of \(15.2\)ml.
+\[H_0:\mu = 200\text{ml}\]
+\[H_1:\mu\ne200\text{ml}\]
+We are going to choose \(\alpha=0.05\). We can look at our critical region:
+\[|t_{9,\,0.975}|=2.262\]
+And evaluate our test statistic:
+\[|t|=\left|\frac{10}{15\sqrt{30}}\right|=2.08\]
+We compare our test and the critical value: \(2.08<2.262\) so we conclude there is insufficient evidence to reject \(H_0\).
+\subsection*{Interpreting hypothesis tests}
+We need to be quite careful with what we conclude to make sure we aren't misinterpreting our test and concluding a false statement. We should also move away from critical regions since research results are often reported in terms of attained significance, also known as the p-value of the test. The way to interpret a p-value could be as follows:
+\[\begin{cases}
+    \text{Strong evidence} & p\leq0.01 \\
+    \text{Evidence} & p\leq0.05 \\
+    \text{Weak evidence} & p\leq0.1 \\
+    \text{No evidence} & p\geq0.1
+\end{cases}\]
+The p-value is the significance level with which we are undecided about whether to reject \(H_0\). There is obviously some sense of context when considering p-values as some tests might not be considered acceptable with the same significance level as another. Numerically, the p-value is the probability of observing a result more extreme than the test statistic given that \(H_0\) is actually true. In statistics we prefer to use p-values because their is much more nuance as opposed to looking at critical regions because they are on a continuous scale.
+\subsection*{Types of test error}
+There are 2 different types of error with a hypothesis that we need to consider:
+\begin{table}[H]
+    \begin{tabular}{c|c c}
+         & \(H_0\) true & \(H_0\) false \\ \hline
+         reject \(H_0\) & Type I error & \(\checkmark\) \\
+         accept \(H_0\) & \(\checkmark\) & Type II error \\
+    \end{tabular}
+\end{table}
+We have encountered Type I error before, as it is the significance level of the test \(\alpha\). It then makes sense to label the Type II error \(\beta\). Note that it is not actually possible to calculate \(\beta\) unless we have a specific data point, usually in the form of our alternate hypothesis \(H_1:\mu=\mu_1\). We also have a measure known as the power of the test, which is \(1-p(\text{Type II error})\) or \(1-\beta\). Generally having a higher test power means having a better test although this should be balanced with minimising our Type I error. We usually aim for a test to have a power of about 80\% or stronger - Again note that because we cannot calculate \(\beta\) we also cannot calculate the power unless we have extra data.
+\section{Comparing means of two populations}
+\subsection*{Motivation}
+If we have two samples we may wish to test if the population means from both samples is the same or not. These problems generally fit into 2 categories: 2 independent populations or Paired samples.
+\subsection*{Two independent populations}
+Consider 2 random samples of size \(n_1\) from \(N(\mu_1,\sigma_1^2)\) and \(n_2\) from \(N(\mu_2,\sigma_2^2)\). We are then interested in \(\mu_1-\mu_2\). Because each sample is random we have:
+\[\tilde{X}_1\sim N(\mu_1,\frac{\sigma_1^2}{n_1})\]
+\[\tilde{X}_2\sim N(\mu_2,\frac{\sigma_2^2}{n_2})\]
+Where  \(\tilde{X}_1,\tilde{X}_2\) are independent. We can draw conclusions about \(\mu_1-\mu_2\) by looking at \(\tilde{X}_1-\tilde{X}_2\):
+\[E[\tilde{X}_1-\tilde{X}_2]=\mu_1-\mu_2\]
+\[\Var{\tilde{X}_1-\tilde{X}_2}=\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}\]
+Then we can right a new distribution:
+\[(\tilde{X}_1-\tilde{X}_2)\sim N\left((\mu_1-\mu_2),\frac{\sigma^2_1}{n_1}+\frac{\sigma^2_2}{n_2}\right)\]
+Like before, these distributions are most conveniently worked with by coding into the the standard normal and this is done exactly as before:
+\[z=\frac{(\bar{x}_1-\bar{x}_2)-(\mu_1-\mu_2)}{\sqrt{\frac{\sigma^2_1}{n_1}+\frac{\sigma_2^2}{n_2}}}\sim N(0,1)\]
+Most often we wish to test \(H_0:\mu_1-\mu_2=0\) vs. \(H_1:\mu_1\ne \mu_2\) but these can be varied. The alternate hypothesis is sometimes a one tailed test, sometimes we don't need want our two populations means to be equal but to be a set distance away from each other. In hypothesis tests with 2 independent populations we have 3 main cases that we will look at.
+\begin{itemize}
+    \item Case 1: \(\sigma_1^2,\sigma_2^2\) are known or \(n_1,n_2\) are sufficiently large.
+    \item \(\sigma_1^2,\sigma_2^2\) are unknown but are equal.
+    \item \(\sigma_1^2,\sigma_2^2\) are unknown and not equal.
+\end{itemize}
+\subsubsection*{Case 1}
+This case follows almost immediately from the motivating problem, which is transforming two i.i.d random variables into one normal distribution and then solving normally with the test statistic (Note that in all the below test statistics we are testing for \(\mu_1=\mu_2\):
+\[z=\frac{\bar{x}_1-\bar{x}_2}{\sqrt{\frac{\sigma_1^2}{n_1}+\frac{\sigma_2^2}{n_2}}}\sim N(0,1)\]
+We reject \(H_0\) when \(z\) lies in the critical region. The critical region is calculated exactly the same as before.
+\subsubsection*{Case 2}
+In this case we set \(\sigma_1=\sigma_2=\sigma\) since we do not know what they are but we do know they are equal. This gives us the normal distribution:
+\[\tilde{X}_1-\tilde{X}_2\sim N\left((\mu_1-\mu_2),\sigma^2\left(\frac{1}{n_1}+\frac{1}{n_2}\right)\right)\]
+\(\sigma^2\) is not known but can be estimated by a pooled estimator which will take into account the sample variances from both samples:
+\[s_p^2=\frac{(n_1-1)s_p+(n_2-1)s_p}{n_1+n_2-2}\]
+Since we are now estimating the variance as well as the mean we have to use a t-distribution with \(n_1+n_2-2\) degrees of freedom. Besides the addition of this extra estimator everything else follows as before:
+\[t=\frac{\bar{x}_1-\bar{x}_2}{\sqrt{s_p^2\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}\sim t_{n_1+n_2-2}\]
+You can now perform a standard hypothesis test against this statistic. When taking confidence intervals of statistics like this we introduce what is known as the standard error, which is just our estimated standard deviation using whatever estimator we choose. This case tends to result in larger confidence intervals due to the increased uncertainty over guessing the standard deviation.
+\subsubsection*{Case 3}
+There is no simple approach to problems of this kind which are known as Behrens-fisher problems. Mostly if we have a problem in this case we ill try and turn it into a problem in one of the other cases because they are much easier to work with.
+\subsection*{Paired samples}
+In this situation we have two samples which do not come from independent populations but rather are paired, we tend to call these matched pairs. An experiment in which individual measurements are paired is a particular example of a designated experiment. These experiments often measure some quantity before and after a test is performed to measure its effectiveness. The way we perform hypothesis tests on data like this is by considering the difference between the two measurements for each member of the population.
+\[d_i=x_1{i}-x_2{i}\]
+\[d_i\sim N(\mu_d,\sigma^2_d)\]
+Then our sample has distribution:
+\[\tilde{d}\sim N(\mu_d,\frac{\sigma^2_d}{n})\]
+for sample size \(n\). \(\sigma^2_d\) is estimated by:
+\[s^2_d=\frac{1}{n-1}\left(\left(\sum^n_{i=1}d_i^2\right)+n\left(\sum^n_{i=1}d_i\right)^2\right)\]
+such that our test statistic becomes:
+\[t=\frac{\bar{d}-\mu_d}{s_d/\sqrt{n}}\sim t_{n-1}\]
+The most common null hypothesis we would use is \(\mu_d=0\) although we may be interested in the difference being something else. Confidence intervals are quite useful here because they can give us a rough idea of the scale we are talking about.
+\subsection*{Why use a paired test instead of a test of 2 populations}
+Whilst you can run an independent test on data that is actually paired it is not advised to. This is because running a paired test on paired data has a higher power than just running an independent test. This is because of the additional covariance term in the calculation of the variance - in an independent test we take this to be zero but could actually be larger than zero which would in turn make our variance smaller, smaller variance means a better test.
+\end{document}

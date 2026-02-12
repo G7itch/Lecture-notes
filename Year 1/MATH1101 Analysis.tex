@@ -1,0 +1,479 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float}
+\title{\textbf{MATH1101 Analysis Lecture Notes}}
+\author{Thomas Piercy}
+\date{\today{}}
+
+\newcommand{\df}[2]{\frac{\text{d}#1}{\text{d}#2}}
+\newcommand{\seq}[2]{(#1_#2)_{#2\in\mathbb{N}}}
+\begin{document}
+\maketitle
+\hrulefill
+\setstretch{1.5}
+\section{The Real Numbers}
+\subsection*{Properties of the reals}
+The reals, \(\mathbb{R}\), form what is known as a field because they obey certain properties:
+\begin{itemize}
+    \item A sum and product exist in the reals, which takes you to another element of the reals
+    \item We have additive and multiplicative commutativity
+    \item We have additive and multiplicative associativity
+    \item We have an additive identity and a multiplicative identity
+    \item We have an additive inverse
+    \item For \(\mathbb{R}\backslash\{0\}\) we have a multiplicative inverse
+    \item We have distributivity
+\end{itemize}
+Under this definition we could note that \(\mathbb{Q}\) is also a field.
+\subsubsection*{Proofs using the above properties}
+We can construct proofs of real numbers using the above properties, for example say we wish the prove the implication \(a,b\in\mathbb{R}:ab=0\implies a=0\lor b=0\):
+\[\text{Suppose } a\ne0\]
+\[a^{-1}(ab)=a^{-1}\cdot0\]
+\[(a^{-1}a)b=0\]
+\[1b=0\]
+\[b=0\]
+\[\text{When } a=0, \text{ trivial.}\]
+\subsection*{Equalities}
+We can also form rules about equalities but there are only a few really important ones:
+\begin{itemize}
+    \item If \(x>0\) and \(y>0\) then \((x+y)>0\)
+    \item If \(x>0\) and \(y>0\) then \(xy>0\)
+    \item The trichotomy law
+    \item Transitivity
+    \item If \(x>0\) then \(-x<0\)
+\end{itemize}
+These rules allow us to form proofs from the ground up, although more often than not we will continue using them like we already know how. It is occasionally useful to have this extra rigour.
+\[\text{Prove }x<y\land z<0 \implies zx>zy\]
+\[y-x>0\]
+\[-z>0\]
+\[-z(y-x)>0\]
+\[-zy+zx>0\]
+\[zx>zy\]
+We can also see from these rules that this current definition of inequalities cannot apply to complex numbers. We can take inequality of individual components, modulus's or arguments but it is not defined for the whole complex number.
+\subsection*{The modulus}
+The modulus is as we defined it before except now we can say some more useful things about it, \(x,y\in\mathbb{R}\):
+\begin{itemize}
+    \item \(\vert x\vert=\max(-x,x)\)
+    \item \(-\vert x\vert\leq x \leq \vert x\vert\)
+    \item \(\vert xy\vert\leq\frac{1}{2}(x^2+y^2)\)
+\end{itemize}
+\subsection*{Bounded sets}
+A set is bounded if there exists a real number, that every element in the set is less/greater than. In this case we call that real number a lower/upper bound of the set. The least upper bound is the smallest real number such that every element in the set is less than it - note that this does not require that the least upper bound is actually in the set. The same is true in reverse for the highest lower bound.
+\subsubsection*{Uppers bounds and supremum}
+A set can also have a maximum which is a number such that every element in the set is less than or equal to it AND the number itself is in the set:
+\[m\in A:x\leq m,\quad\forall x\in A\]
+We know that if a set has a maximum and is bounded then the maximum is the least upper bound. We denote the maximum of a set \(m=\max(A)\) and the least upper bound, the supremum of \(A\), \(m=\sup(A)\). From the above we can see that in the case that a set has a maximum and is bounded above then \(m=\max(A)=\sup(A)\).
+\subsubsection*{Lower bounds and infimum}
+All of the things that we defined are analogous to the lower bound case. We call the greatest lower bound the infimum of a set, which is equal to the sets minimum if the set is bounded below and has a minimum:
+\[m=\min(A)=\inf(A)=-\sup(-A)\]
+\subsection*{Epsilon characterisation}
+Let \(A\subseteq\mathbb{R}\) be a non-empty set. We have that \(s=\sup(A)\) if and only if the following hold:
+\begin{enumerate}
+    \item If \(x\in A\) then \(x\leq s\) (such that \(s\) is an upper bound)
+    \item For every \(\varepsilon>0\), there exists \(x\in A\) with \(s-\varepsilon<x\). Where we usually define \(\varepsilon\) to be a very small positive number - the exact level of "closeness" i.e. how small we make our \(\varepsilon\) depends on the context of the problem.
+\end{enumerate}
+What the second point is saying is that \(s\) is our least upper bound, because even reducing it a tiny amount puts it smaller than some other number in the set. The case is similar when looking at the infimum, except we care about a small increase to \(s\to s+\varepsilon\).
+\subsection*{Products of the supremum}
+If we let \(A_1,A_2\) be non-empty bounded sets of positive real numbers and define \(P=\{x_1x_2:x_1\in A_1,x_2\in A_2\}\). Then \(\sup(P)=(\sup(A_1))(\sup(A_2))\).
+\subsubsection*{Proof}
+To prove the statement we have to consider the definition of the supremum of a set. It is a two way implication so we have to prove both sides the prove the statement. Let:
+\[s_k=\sup(A_k),\quad s_k>0\text{ (from the definition of our sets)}\]
+For \(p=x_1x_2\in P\) with \(x_k\in A_k\) we have:
+\[0<x_k\leq s_k\implies0<p\leq s_1s_2\quad\text{(From multiplying out)}\]
+This tells us that \(s_1s_2\) is an upper bound and so our first requirement "\((1)\)" holds. Define:
+\[\varepsilon>0\]
+We wish to find \(p\in P:s_1s_2-\varepsilon<p\) to satisfy "\((2)\)". We know that \(x_1\) and \(x_2\) are just elements in \(A_k\) and so for \(s_k\) to be the supremum then we have to have:
+\[x_1>s_1-\delta,\quad x_2>s_2-\delta\]
+for some suitable \(\delta\). Then \(p>(s_1-\delta)(s_2-\delta)\). Let \(\varepsilon>0\) be arbitrary, then there are 2 cases:
+\[\text{Case 1: }\varepsilon\geq s_1s_2\]
+\[s_1s_2-\varepsilon\leq0\]
+\[\forall p\in P,\,p>s_1s_2-\varepsilon\]
+Otherwise we have:
+\[\text{Case 2: }\varepsilon<s_1s_2\]
+\[\delta=\frac{\varepsilon}{s_1+s_2}\qquad(\text{Because why not?})\]
+\[\delta<\frac{s_1s_2}{s_1+s_2}<s_k\]
+\[s_k-\delta>0\]
+For \(s_k\) to be \(\sup(A_k)\) we know need an element of \(A_k\) larger than \(s_1-\delta\):
+\[x_k\overset{?}{>}s_k-\delta\]
+\[p>s_1s_2-\varepsilon+\delta^2>s_1s_2-\varepsilon\]
+Thus \(s_1s_2=\sup(P)\), and so follows the most confusing and (semi)-rewarding QED ever written:
+\[\qed\]
+\subsection*{Proof of the existence of \(\sqrt{2}\)}
+The general idea behind this proof is to show that there exists a real number \(s\), such that \(s^2=2\). We do this by using properties of the supremum and then the law of trichotomy to exclude \(s^2<2\) and \(s^2>2\).
+\[\text{Let } A=\{x\in\mathbb{R}:x>0,x^2\leq2\}\]
+Then \(1\in A\) and \(A\) is bounded above by 2.
+\[\text{Let } s=\sup(A)\]
+\[1\leq s\leq2\]
+\[\text{Case 1: } s^2<2\]
+\[\varepsilon>0\]
+\[(s+\varepsilon)^2=s^2+2\varepsilon s+\varepsilon^2\]
+Since \(1\leq s\leq2\), we know that:
+\[(s+\varepsilon)^2\leq s^2+(4+\varepsilon)\varepsilon\]
+Choose:
+\[\varepsilon=\frac{2-s^2}{5}\implies0<\varepsilon\leq\frac{1}{5}\]
+\[(s+\varepsilon)^2\leq s^2+\underbrace{(4+\varepsilon)}_{4+\frac{1}{5}<5}\left(\frac{2-s^2}{5}\right)\]
+\[(s+\varepsilon)^2< s^2+(2-s^2)\]
+By our definition of the set \(A\), then \((s+\varepsilon)\) is a member of the set. However, if this is true then our supposition that \(s\) is an upper bound of \(A\) is wrong. There is a contradiction.
+\[\text{Case 2: }s^2>2\]
+Choose:
+\[\varepsilon=\frac{s^2-2}{5}\]
+and,
+\[a\in A:a>s-\varepsilon\]
+\[a^2-2>(s-\varepsilon)^2-2>s^2-2\varepsilon s-2\]
+\[2\varepsilon s=\frac{2s}{5}(s^2-2)\leq\frac{4}{5}(s^2-2)\]
+\[a^2-2>(s^2-2)-\frac{4}{5}(s^2-2)\]
+\[a^2-2>\frac{1}{5}(s^2-2)>0,\qquad\text{(From our case definition)}\]
+Hence \(a^2>2\) and so \(a\notin A\), which contradicts our definition. Finally by the law of trichotomy, if \(s^2\ngtr2\) and \(s^2\nless2\) then \(s^2=2\)
+\[\qed\]
+\subsection*{Unboundedness of the natural numbers}
+Since \(1\in\mathbb{N},\,\mathbb{N}\) is not empty. Assume \(\mathbb{N}\) is bounded above, then there exists some real \(M\in\mathbb{R}\) such that for all \(n\in\mathbb{N},\,n\leq M\). By the completeness axiom we know that there exists a least upper bound for \(\mathbb{N}\) with:
+\[\sup(\mathbb{N})\leq M\]
+\[\forall n\in\mathbb{N},\,n\leq\sup(\mathbb{N})\]
+let \(\varepsilon=1\). We know that there must exist some \(n_0\in\mathbb{N}\) with \(n_0>\sup(\mathbb{N})-\varepsilon=\sup(\mathbb{N})-1\), hence:
+\[\sup(\mathbb{N})<n_0+1\]
+But we know that \(n_0+1\in\mathbb{N}\) so \(\sup(\mathbb{N})\) is not an upper bound for \(\mathbb{N}\), which is a contradiction. Thus the naturals are unbounded.
+\[\qed\]
+\subsubsection*{A consequence}
+Whenever we have a set with discrete step values we have a maximum element, and then we know that the supremum of that set is equal to that maximum element. Hence in the cases when we have a discrete set, then the supremum is always in the set itself.
+\subsection*{Denseness of \(\mathbb{Q}\) in \(\mathbb{R}\)}
+For all \(a,b\in\mathbb{N},\,a<b\), we wish to show that there is a \(q\in\mathbb{Q}\) such that \(a<q<b\):
+\[\text{Case 1: }b-a>1\]
+\[S=\{k\in\mathbb{Z}:k<b\}\]
+\[s=\sup(S)\in S\]
+\[s<b,\,s+1\notin S\qquad\text{(From set definition)}\]
+\[s+1\geq b\implies s\geq b-1\]
+\[s\geq b-(b-a)\]
+Hence we have:
+\[a<s<b,\,s\in\mathbb{Z\subset\mathbb{Q}}\]
+We then have to consider when the gap between the two reals does not necessarily contain an integer:
+\[\text{Case 2: } n\in\mathbb{N},\;\frac{1}{n}<b-a\]
+\[nb-na>1\]
+\[\exists\,m\in\mathbb{Z}:na<m<nb\qquad\text{(From above)}\]
+\[a<\frac{m}{n}<b\]
+Since we know that \(m\) is an integer and \(n\) is a natural number we know that \(\frac{m}{n}\in\mathbb{Q}\).
+\subsubsection*{Proof of infinite rationals}
+You can extend the above proof by considering the new interval of reals: \(\left(\frac{m}{n},b\right)\) and concluding there must be a rational number between these two as above.
+\section{Sequences of real numbers}
+A sequence of real numbers is a function \(f:\mathbb{N}\to\mathbb{R}\) written as a non-terminating list \(f(1),f(2),f(3),...\) or \((f_n)_{n\in\mathbb{N}}\), or occasionally \((f_{n})_{n=1}^\infty\). If we are starting at an index larger than one we will use either \((g_n)_{n\geq k}\) or \((g_{n})_{n=k}^\infty\). When you have an integer sequence you can go on the OEIS website to try and classify it. We can also see that the set of all real sequences is just the set of all real functions \(\mathbb{N}\to\mathbb{R}\) ("\(\mathbb{R}^\mathbb{N}\)") is in-fact a vector space as it satisfies all of the axioms.
+\subsection*{Convergence of sequences}
+A sequence \(\seq{a}{n}\) is said to converge to a real value \(L\), for every \(\varepsilon>0\) there exists some \(N\in\mathbb{N}\) such that for every \(n\geq N\), \(\vert a_n-L\vert <\varepsilon\). This is sometimes written \(\lim_{n\to\infty}a_n=L\). Note that \(N\) usually depends on \(\varepsilon\) and so some people write \(N_\varepsilon\) or \(N(\varepsilon)\) for emphasis.
+\subsubsection*{Common sequence convergences}
+If \(\seq{r}{n}\) is a constant sequence of value \(r\) then \(\lim_{n\to\infty}r_n=r\). If \(a_n=\frac{1}{n}\) then \(\lim_{n\to\infty}a_n=0\). If the sequences \(\seq{a}{n}\) and \(\seq{b}{n}\) are the same except for finitely many indices, then \(\lim_{n\to\infty}a_n=\lim_{n\to\infty}b_n\).
+\subsection*{Algebra of limits}
+If \(\seq{a}{n}\) and \(\seq{b}{n}\) are convergent sequences with \(\lim_{n\to\infty}a_n=a\) and \(\lim_{n\to\infty}b_n=b\) then:
+\begin{enumerate}
+    \item \(\seq{a_n+b}{n}\) is convergent with limit \(a+b\)
+    \item \(\seq{a_nb}{n}\) is convergent with limit \(ab\)
+    \item If \(a\ne0\) then there exists some minimum index for which the sequence \(\left(\frac{1}{a_n}\right)_{n\geq N}\) converges to \(\frac{1}{a}\)
+\end{enumerate}
+A neat corollary of this is that convergent sequences are a real vector space and the \(\lim\) operator is a linear map.
+\subsubsection*{Proof of (1)}
+Let \(\varepsilon>0\):
+\[\exists\, N_1,N_2:\exists\,n\geq N\]
+Where \(N=\max(N_1,N_2)\). From definition of convergent sequences we have a limit that we can get arbitrarily close to. Let:
+\[\vert a_n-a\vert<\frac{\varepsilon}{2}\]
+\[\vert b_n-b\vert<\frac{\varepsilon}{2}\]
+For some \(n\) we have that:
+\[\vert (a_n+b_n)-(a+b)\vert=\vert a_n-a+b_n-b\vert\]
+By the triangle inequality:
+\[\vert a_n-a+b_n-b\vert\leq \vert a_n-a\vert+\vert b_n-n\vert\]
+\[\vert a_n-a\vert+\vert b_n-n\vert<\frac{\varepsilon}{2}+\frac{\varepsilon}{2}<\varepsilon\]
+Proved by the definition of convergent sequences.
+\subsubsection*{Proof of (2)}
+Let \(\varepsilon>0\) and set \(\varepsilon_1=\min(\varepsilon,1)\). Choose:
+\[N_1\in\mathbb{N}:\vert a_n-a\vert<\frac{\varepsilon_1}{1+\vert a\vert + \vert b\vert},\,n>N_1\]
+\[N_2\in\mathbb{N}:\vert b_n-b\vert<\frac{\varepsilon_1}{1+\vert a\vert + \vert b\vert},\,n>N_2\]
+For \(n\geq\max(N_1,N_2)\):
+\[\vert a_nb_n-ab\vert=\vert a_nb_n-a_nb+a_nb-ab\vert\]
+By the triangle inequality:
+\[\vert a_nb_n-a_nb+a_nb-ab\vert\leq\vert a_nb-ab\vert+\vert a_nb_n-a_nb\vert\]
+\[\vert a_nb-ab\vert+\vert a_nb_n-a_nb\vert=\vert b\vert(\vert a_n-a\vert)+\vert a_n\vert(\vert b_n-b\vert)\]
+We can do a weird triangle inequality step to say that:
+\[\vert a_n\vert\leq\vert a\vert +\vert a_n-a\vert < \vert a\vert +\varepsilon_1<\vert a\vert + 1\]
+We do this to remove the dependency on \(n\) in something that is not our limit.
+\[\vert a_nb_n-ab\vert\leq (\vert a\vert+1)(\vert b_n-n\vert)+\vert b\vert\vert a_n-a\vert\]
+\[(\vert a+1\vert)\vert b_n-n\vert+\vert b\vert\vert a_n-a\vert<\frac{(\vert a\vert+1)\varepsilon_1}{\vert a\vert + \vert b\vert + 1}+\frac{\vert b\vert\varepsilon_1}{\vert a\vert +\vert b\vert+1}<\varepsilon_1\leq\varepsilon\]
+Once again, proved by the definition of limits.
+\subsubsection*{Proof of (3)}
+Lots of this proof is actually just setting up definitions so that we do not accidentally divide by 0. Let \(\varepsilon=\frac{\vert a\vert}{2}>0\). There is some \(N_1\in\mathbb{N}\) such that for \(n\geq N_1\):
+\[\vert a_n-a\vert<\varepsilon_1\]
+\[\vert a_n\vert\geq \vert a\vert-\vert a_n-a\vert>\frac{\vert a\vert}{2}>0\]
+Now let \(N_2\in\mathbb{N}\) such that for \(n\geq N_2,\,\vert a_n-a\vert<\frac{\vert a\vert^2}{2}\varepsilon\). Then for \(n\geq\max(N_1,N_2)\):
+\[\vert\frac{1}{a_n}-\frac{1}{a}\vert=\vert\frac{a_n-a}{a_na}\vert = \frac{1}{\vert a\vert\vert a_n\vert}\vert a_n-a\vert<\frac{1}{\vert a\vert}\frac{2}{\vert a\vert}\frac{\vert a\vert^2}{2}\varepsilon=\varepsilon\]
+\subsection*{Limits of inequalities}
+Suppose we have \(\seq{a}{n}\) and \(\seq{b}{n}\) be sequences with \(a_n\leq b_n\) for all \(n\in\mathbb{N}\). Then if \(a_n\to a\) and \(b_n\to b\) as \(n\to\infty\), then \(a\leq b\). In other words, inequalities work exactly how you expect, the same inequality applies to the limit as to the sequence itself 
+\subsection*{The squeeze theorem}
+Suppose we have 3 sequences: \(\seq{a}{n},\,\seq{b}{n}\) and \(\seq{c}{n}\) which are defined such that there is some index \(N_0\) for all \(n\geq N_0\) we have:
+\[a_n\leq b_n\leq c_n\]
+Then if \(a_n\to a\) and \(c_n\to a\), the squeeze theorem states that \(b_n\to a\) as \(n\to\infty\). This is very useful and very important as it means we can use estimates to put bounds on a complex or unknown sequence and if those estimates tend to the same limit then so does our complicated sequence.
+\subsubsection*{A consequence}
+Limits must be unique because the squeeze theorem gives us:
+\[a_n\leq a_n\leq a_n\]
+Thus if \(a_n\) has two limits then they must be equal. 
+\subsubsection*{Rational sequences}
+Another consequence of the squeeze theorem is that every real number can be written as the limit of a sequence of rational numbers. This follows from the denseness of rationals in the reals and the squeeze theorem.
+\subsection*{Divergent sequences}
+If a sequence is not convergent then it is called divergent. The formal definition of divergence is quite complicated to write but simple to use:
+\[\forall L\in\mathbb{R},\,\exists\,\varepsilon>0,\,\forall N\in\mathbb{N},\,\exists\,n\geq N:\vert a_n-L\vert\geq\varepsilon\]
+Essentially we are just looking for a sequence that will never settle into an epsilon "band" around some point. We know if it is divergent that it will never stay in one of these bands.. We call a sequence "bounded" if there is a \(K>0\) such that \(\vert a_n\vert\leq K,\,\forall n\in\mathbb{N}\).
+\subsubsection*{Convergence and boundedness}
+It should not be too much of a stretch to see that if a sequence is convergent then it must also be bounded by its limit. Although often the contrapositive is more useful which is that if you have a sequence that is unbounded then you know it must be divergent. It is important not to conclude that a bound means convergence however: \(\seq{a}{n}=(-1)^n\) is a divergent sequence that is bounded by \(1\).
+\subsection*{Monotone sequences}
+A sequence \(\seq{a}{n}\) is called "monotone increasing" if for all \(n\in\mathbb{N}\) we have \(a_{n+1}\geq a_n\). Similarly it is called "monotone decreasing" if \(a_{n+1}\leq a_n\). If we have \(\seq{a}{n}\) be a monotone increasing sequence that is bounded above then \(a_n\) is convergent with limit \(L=\sup\{a_n:n\in\mathbb{N}\}\). The same is true for a decreasing sequence bounded below with the \(\inf\).
+\subsubsection*{Boundedness of subsets of reals}
+If \(A\subseteq \mathbb{R}\) is not bounded above, we say \(\sup (A)=\infty\). If \(A\subseteq \mathbb{R}\) is not bounded below then we say \(\inf(A)=-\infty\). We say \(\sup(\emptyset)=-\infty\) and \(\inf(\emptyset)=\infty\).
+\subsubsection*{Divergence to infinity}
+If from some arbitrary index onwards, we can make our sequence arbitrarily large then we say it diverges to \(\infty\). If we can make our sequence arbitrarily negative then we say it diverges to \(-\infty\). If \(a_n\to\infty\), then \(b_n=\frac{1}{a_n}\to0\) and vice versa.
+\subsection*{Proof of uncountability of reals}
+Let \(\seq{x}{n}\) be a sequence of real numbers and consider the interval \([a_1,b_1]\) where \(a_1,b_1\in\mathbb{R}\) and \(x_1\notin [a_1,b_1]\). Split the interval into 3 equal length subintervals and consider \(x_2\), which can be in none of the subintervals, 1 of them or, at most, 2 of them. Therefore let us define:
+\[[a_2,b_2]\subset[a_1,b_1]\]
+with \(b_2-a_2=\frac{1}{3}(b_1-a_1)\) and \(x_2\notin[a_2,b_2]\). We can apply this argument inductively and get a new interval:
+\[[a_n,b_n]\subset[a_{n-1},b_{n-1}]\]
+with \(x_n\notin[a_n,b_n]\). Now we have the sequences \(\seq{a}{n}\) and \(\seq{b}{n}\) as monotone bounded sequences. Hence \(a_n\) converges to some limit \(L\) and as the length of the subinterval gets smaller:
+\[b_n-a_n\to L\]
+\[b_n\to L\]
+as \(n\to\infty\). We now have \(L\in[a_n,b_n]\) so therefore:
+\[L\in\bigcap_{n\in\mathbb{N}}[a_n,b_n]\]
+\[[a_n,b_n]\subseteq \mathbb{R}\backslash\{x_n\}\]
+\[L\in\bigcap_{n\in\mathbb{N}}\mathbb{R}\backslash\{x_n\}\]
+\[L\in\mathbb{R}\backslash\bigcup_{n\in\mathbb{N}}\{x_nz\}\]
+So \(L\ne x_n,\;\forall n\in\mathbb{N}\). And thus we have found a real number not in our sequence of reals.
+\subsection*{Important sequences}
+Let \(k\in\mathbb{Z}\)
+\[n^k\to\begin{cases}
+    0&\quad k<0 \\
+    1&\quad k=0 \\
+    \infty&\quad k>0
+\end{cases}\]
+If \(q>0\):
+\[q^n\to\begin{cases}
+    0&\quad q<1 \\
+    1&\quad q=1 \\
+    \infty&\quad q>1
+\end{cases}\]
+\[q^\frac{1}{n}\to 1,\text{ as }n\to\infty\]
+If \(q\leq 0\):
+\[q^n\to\begin{cases}
+    0&\quad q>-1\\
+    \text{Does not diverge to }\pm\infty&\quad q\leq-1
+\end{cases}\]
+This last one is a special case wherein we know that \(q^n\) cannot converge but we also know that it oscillates positive and negative and so does not diverge to either \(+\infty\) or \(-\infty\).
+\subsection*{The ratio test for sequences}
+Let \(\seq{a}{n}\) be a sequence of positive numbers such that \(\frac{a_{n+1}}{a_n}\to L\) as \(n\to\infty\). Then if \(L\in[0,1)\) then \(a_n\to 0\). Note that it is really important you are looking at the value of the limit being between \([0,1)\) and not the value of the function, as is a very common mistake to make. By algebra of limits we know that if \(L>0\) then \(a_n\to\infty\).
+\subsection*{Subsequences}
+For any sequence we can construct an ordered sample of that sequences indices and have a so called "subsequence". We have that if \(\seq{a}{n}\to a\) as \(n\to\infty\) then any subsequence \(\seq{a}{{n_k}}\to a\) also.
+\subsubsection*{Bolzano-Weierstrass theorem}
+This theorem states that every bounded sequence has a convergent subsequence. The proof is pretty dense and I may fill it in later but for now I will leave it. This proof is considered quite difficult and will not come up on the exam however you may be asked for the proof statement or to apply the proof to a problem. The final point around bounded sequences is that a bounded sequence converges to some limit if and only if every convergent subsequence also converges to that limit.
+\section{Infinite Series}
+Let \((a_n)_{n\geq m}\) be a sequence of real numbers. We can define a new sequence \((s_n)_{n\geq m}\) so that it represents the sum of our sequence \(a_n\):
+\[s_n:=\sum_{k=m}^n a_k\]
+Which we call the partial sum. If the sequence \(s_n\) converges to some real number \(s\) then we say that the infinite series \(\sum^\infty_{k=m}a_k\) converges:
+\[\sum^\infty_{k=m}a_k=s\]
+If the sequence \(s_n\) does not converge we say that the infinite series does not converge
+\subsection*{Linear combinations}
+Exactly as with algebra of limits we can say that if we have two infinite series,
+\[\sum^\infty_{k=m}a_k\]
+\[\sum^\infty_{k=m}b_k\]
+Where both are convergent and we have some \(\lambda\in\mathbb{R}\), then:
+\[\sum^\infty_{k=m}(a_k+b_k)=\sum^\infty_{k=m}a_k+\sum^\infty_{k=m}b_k\]
+\[\sum^\infty_{k=m}\lambda a_k=\lambda\sum^\infty_{k=m}a_k\]
+and both of these new series converge also.
+\subsection*{The geometric series}
+The geometric series is arguably the most important infinite series in all of mathematics, it likes to crop up everywhere. We can form the geometric series as follows: Let \(-1<q<1\), define \(a_n=q^n,\, n\geq 0\), then:
+\[\sum_{k=0}^\infty a_k=\frac{1}{1-q}\]
+\subsubsection*{Proof}
+\[s_n=\sum_{k=0}^nq^k\]
+We can do a very useful trick for proofs of this kind:
+\[(1-q)s_n=\sum_{k=0}^n q^k-\sum_{k=0}^n q^{k+1}\]
+We can now perform a basic index shift to help us simplify this expression
+\[\sum_{k=0}^n q^k-\sum_{k=0}^n q^{k+1}=\sum_{k=0}^n q^k-\sum_{k=1}^{n+1} q^{k}\]
+\[=1+\sum_{k=1}^n q^k - \sum^n_{k=1} q^k-q^{n+1}\]
+We get this by evaluating the summations at their extremes.
+\[=1-q^{n+1}\]
+Hence:
+\[s_n=\frac{1-q^{n+1}}{1-q},\quad q\ne 1\]
+We know that \(q^{n+1}\to 0\) as \(n\to\infty\) so we have:
+\[s_n\to \frac{1}{1-q}\]
+which is exactly what we wanted to show.
+\subsection*{Conditions on convergence}
+It is pretty intuitive but worth pointing out that convergence does not depend on finitely many terms, we can start our sequence at any point that is convenient to us since we have infinitely many terms. Additionally we should point out that if we have convergence of the infinite series then the general term tends to 0 but although it is tempting we do not have this in reverse:
+\[\sum_{k=n}^\infty a_k=s\implies a_n\to 0,\; (n\to\infty)\]
+But not the other way around! A consequence of this is that if you have a sequence of positive numbers only then the partial sums are monotone increasing and so need to either be bounded or diverge to \(+\infty\).
+\subsection*{The harmonic series}
+The harmonic series is the sum to infinity of the reciprocals of the natural numbers:
+\[\sum^\infty_{k=1}\frac{1}{k}=\infty\]
+It can be shown that this series is divergent by breaking down the sum:
+\[1+\frac{1}{2}+\underbrace{\frac{1}{3}+\frac{1}{4}}_{>\frac{1}{2}}+\underbrace{\frac{1}{5}+\frac{1}{6}+\frac{1}{7}+\frac{1}{8}}_{>\frac{1}{2}}+\cdots\]
+etc. Hence we can see that the partial sums are unbounded, and although they grow very very slowly, do not converge. In mathematical symbols we note:
+\[\sum^{2^{r+1}}_{k=2^r+1}\frac{1}{k}>\frac{2^r}{2^{r+1}}=\frac{1}{2}\]
+\subsection*{The \(\zeta\) series}
+A generalisation of the harmonic series that is especially important in many fields of mathematics is the zeta series, defined by:
+\[\zeta(p)=\sum^\infty_{k=1}\frac{1}{k^p}\]
+It can be shown that when considering real values of \(p\) that the zeta series converges for \(p>1\) and diverges for \(p\leq 1\). A visual argument can be constructed in a very similar way to with the harmonic series.
+\subsection*{Convergence criteria}
+We now know some key results about the convergence of common series, in particular we have:
+\[\sum^\infty_{k=1}q^k=\begin{cases}
+    \frac{1}{1-q}\quad&\vert q\vert <1\\
+    \text{diverges}\quad&\text{otherwise}
+\end{cases}\]
+\[\sum^\infty_{k=1}\frac{1}{k^p}=\begin{cases}
+    \text{converges}\quad&p>1\\
+    \text{diverges}\quad&p\leq 1
+\end{cases}\]
+Now we can also consider what happens when we have a series bounded by another series. If \(0\leq a_k\leq b_k\) for all \(k\geq m\) and \(\sum^\infty_{k=m}b_k\) converges then \(\sum^\infty_{k=m}b_k\) must also converge. It can actually be more useful to consider the contrapositive sometimes: If you have a series \(b_k\) larger than a divergent series \(a_k\) then \(b_k\) must also be divergent.
+\subsection*{Absolute convergence}
+We say that a series \(\sum^\infty_{k=m}a_k\) is "absolutely convergent" if \(\sum^\infty_{k=m}\vert a_k\vert\) converges. We can also show that if a series is absolutely convergent then it is also convergent. It is often useful to split the series into two separate sums, one of which containing the positive terms and one containing the negative terms and then working out absolute convergence. We will make great use of this in the future.
+\subsection*{Leibniz criterion}
+If you alternate signs in your series and the sequences are positive numbers that monotonically decrease towards 0, then the series itself is convergent. When we check for convergence this way we need to remember to check all 3 conditions: Always positive, monotone decreasing and the sequence goes to 0.
+\subsection*{Ratio test for sequences}
+This is a strengthening of the ratio test for sequences and is very important. It says, if \(a_k\ne0\) for all \(k\geq m\) and \(\left|\frac{a_{k+1}}{a_k}\right|\to L\) as \(k\to\infty\), then if \(L\in[0,1)\), \(a_k\) the series \(\sum^\infty_{k=m}a_k\) converges absolutely. If \(L>1\) then it diverges. Whenever you have a rational function, the ratio test will never tell you anything because the test will always give a limit of 1. The ratio test is great for exponentials or factorials but not polynomials.
+\subsection*{Convergence of common series}
+These series are very common and the key results around them should be memorised:
+\begin{itemize}
+    \item 
+    \[\exp(x)=\sum^\infty_{k=0}\frac{x^k}{k!}\]
+    \item 
+    \[\sin(x)=\sum^\infty_{k=0}\frac{(-1)^k(x)^{2k+1}}{(2k+1)!}\]
+    \item 
+    \[\cos(x)=\sum^\infty_{k=0}\frac{(-1)^k(x)^{2k}}{(2k)!}\]
+\end{itemize}
+All of the above series converge and this can be proven using the ratio test for series. There is an interesting series which is the sum of the reciprocals of the primes:
+\[\sum^\infty_{i=1}\frac{1}{p_i}\]
+Where \(p_i\) is the \(i^{th}\) prime number. We would expect this series to converge but it can in-fact be shown to diverge. Intuitively you could consider this as demonstration of the density of primes in the reals.
+
+\hrulefill
+\begin{center}
+End of content for January exams
+\end{center}
+\hrulefill
+\section{Limits of functions and Continuity}
+\subsection*{Limits of functions}
+Let \(a<b\) and \(x_0\in(a,b)\). If \(f:D\to\mathbb{R}\) is a function defined on \(D\supseteq (a,b)\,\backslash\,\{x_0\}\) then we say the \(f\) approaches the limit \(L\) as \(x\to x_0\) if the following holds:
+\[\forall\varepsilon>0,\;\exists\,\delta>0:|f(x)-L|<\varepsilon\text{ when }0<|x-x_0|<\delta\]
+When this is the case we write:
+\[\lim_{x\to x_0}f(x)=L\]
+\subsection*{One-sided limits}
+We can also view limits as coming from one side or the other. A limit comes "from the right" if we consider the limit \(L\) at the point \(a\) to come from the right if above holds without the original restriction on delta and \(a<x<a+\delta\). Likewise we consider the limit \(L\) at the point \(b\) to come from the left when \(b-\delta<x<b\). These limits have their own notation:
+\[\lim_{x\to a+}f(x)=L\quad( x\to a\text{ when we approach from values }x>a)\]
+\[\lim_{x\to b-}f(x)=L\quad( x\to b\text{ when we approach from values }x<b)\]
+The two-sided limit exists if and only if both the left and right sided limit exist and agree.
+\subsection*{The sequence perspective}
+Limits of functions can be thought of in the same way as convergence of sequences which is often more intuitive for students. However it is important to be able to understand the formal proofs using epsilon and delta techniques, especially since these come up much more frequently in later studies. It is thus ill-advised to only learn to understand limits from the perspective of sequences.
+\subsection*{Limits of functions as sequences}
+Let \(a<b\) and \(x_0\in (a,b)\). If \(f:D\to\mathbb{R}\) is defined on \(D\supseteq (a,b)\,\backslash\,\{x_0\}\) then:
+\[\lim_{x\to x_0}f(x)=L\]
+if and only if for every sequence \(\seq{x}{n}\) with \(x_n\in D\,\backslash\,\{x_0\}\) and \(x_n\to x_0\) then:
+\[f(x_n)\to L\]
+\subsection*{Proof of the above proposition}
+\subsubsection*{Proof of forward implication, \(\implies\)}
+Suppose:
+\begin{equation*}
+    \lim_{x\to x_o}f(x)=L
+    \tag{*}
+    \label{eq:finite_limit}
+\end{equation*}
+Let \(\seq{x}{n}\) with \(x_n\in D\), \(x_n\ne x_0\) and \(x_n\to x_o\) as \(n\to \infty\). Let \(\varepsilon >0\). Since we have \eqref{eq:finite_limit}, \(\exists\,\delta>0\) such that \(\forall x\in D\):
+\[0<|x-x_0|<\delta\implies |f(x)-L|<\varepsilon\]
+Since \(x_n\to x_0\) as \(n\to\infty\) and \(x_n\ne x_0\), \(\exists N\in\mathbb{N}\) such that \(\forall n\geq N\) we have \(0<|x_n-x_0|<\delta\). We then apply the function \(f\) and see \(|f(x_n)-L|<\varepsilon\). This shows that \(f(x_n)\to L\) as \(n\to\infty\).
+\subsubsection*{Proof of converse, \(\impliedby\)}
+Assume \(\exists\,\varepsilon>0\), where \(\forall\,\delta>0\) we have \(\exists \,x\in D\) with \(0<|x-x_0|<\delta\) such that \(|f(x)-L|\geq \varepsilon\) \((**)\). Let \(\varepsilon>0\) be fixed for the rest of the proof. Apply \((**)\) for a given sequence:
+\[\delta_n=\frac{1}{n}\]
+\[\delta_n\to0,\text{ as }n\to\infty\]
+By \((**),\ \exists\,x_n\in D\) with \(0<|x_n-x_0|<\frac{1}{n}\) such that \(|f(x_n)-L|\geq\varepsilon\). The squeeze theorem for sequences shows us that \(x_n\to x_0\) as \(n\to\infty\). Then we have \(x_n\in D,\ x_n\ne x_0\) and \(x_n\to x_0\) as \(n\to\infty\) but \(|f(x_n)-L|\geq \varepsilon\) and so:
+\[f(x_n)\not\to L,\text{ as }n\to\infty\]
+Which tells us that \((**)\) fails.
+\qed
+\subsection*{Infinite limits}
+We can apply all the above the the notion of infinite limits, looking at what happens are we approach \(\pm\infty\). These infinite limits work very nicely with sequences because it is pretty easy to evaluate arbitrary sequences, when you only have to consider those that diverge to \(\pm\infty\) from one side. We can of course also formalise this: let \(a\in\mathbb{R}\) and \(f:(a,\infty)\to\mathbb{R}\). We say that \(f\) approaches the limit \(L\in\mathbb{R}\) as \(x\to\infty\) if:
+\[\forall\varepsilon>0,\ \exists M>a: \forall x\geq M, \ |f(x)-L|<\varepsilon\]
+in this case we say:
+\[\lim_{x\to\infty}f(x)=L\]
+\subsection*{Standard limits}
+There are some standard limits that should be memorised and if not asked specifically, can be used without proof. Let \(n>0\) then for positive \(x\):
+\[\lim_{x\to0}x^n=0\]
+\[\lim_{x\to\infty}x^n=\infty\]
+\[\lim_{x\to0^+}\frac{1}{x^n}=\infty\]
+\[\lim_{x\to\infty}\frac{1}{x^n}=0\]
+For \(x<0\) the behaviour depends on whether \(n\) is odd or even. Some other important functions are: the limits of the exponential function;
+\[\lim_{x\to-\infty}\exp{(x)}=0\]
+\[\lim_{x\to\infty}\exp{(x)}=\infty\]
+The natural logarithm;
+\[\lim_{x\to0^+}\ln{(x)}=-\infty\]
+\[\lim_{x\to\infty}\ln{(x)}=\infty\]
+and the inverse tan function;
+\[\lim_{x\to-\infty}\arctan{(x)}=-\frac{\pi}{2}\]
+\[\lim_{x\to\infty}\arctan{(x)}=\frac{\pi}{2}\]
+\subsection*{Algebra of limits, comparison test and squeeze theorem}
+Exactly like before with sequences the same logic applies when dealing with combinations of function limits. Provided functions \(f,g:D\to\mathbb{R}\) with \(f(x)\to F\) and \(g(x)\to G\) for any \(x\to x_0\) then we have:
+\[f(x)+g(x)\to F+G\]
+\[f(x)g(x)\to FG\]
+Provided we have strict conditions on the function \(g(x)\) we can also have:
+\[\frac{f(x)}{g(x)}\to \frac{F}{G}\]
+One small caveat to all this is that if one of your functions are such that \(F,G=\pm\infty\) then none of this works. This is because we define our functions to map to \(\mathbb{R}\) and infinity is not a value in \(\mathbb{R}\) so it is not in the codomain.
+\subsubsection*{Comparison test}
+For the above defined functions the comparison test also works: if \(f(x)\leq g(x),\ \forall x\in D\) then \(F\leq G\).
+\subsubsection*{Squeeze theorem}
+If we include a new function \(u:D\to\mathbb{R}\) then the squeeze theorem works exactly as we would expect it to. For \(f(x)\leq u(x)\leq g(x)\) and \(F=G\) then:
+\[u(x)\to F\]
+A good example of a function limit that can be calculated using the squeeze theorem is \(u(x)=\frac{\sin{x}}{x}\) as \(x\to\infty\) which is clearly trapped between \(-\frac{1}{x}\) and \(\frac{1}{x}\) and hence it too goes to \(0\).
+\subsection*{Standard reciprocal results}
+There are some standard results that should be known and can be applied generally without proof, unless a question demands it. Let \(f:(a,\infty)\to(0,\infty)\) with \(f(x)>0\). If \(f(x)\to\infty\) as \(x\to\infty\), then \(\frac{1}{f(x)}\to0\) as \(x\to\infty\). If \(f(x)\to0\) as \(x\to\infty\) then \(\frac{1}{f(x)}\to\infty\) as \(x\to\infty\). If \(f:(a,\infty)\to(-\infty,0)\), if \(f(x)\to-\infty\) as \(x\to\infty\) then \(\frac{1}{f(x)}\to0\), and finally if \(f(x)\to0\) then \(\frac{1}{f(x)}\to-\infty\) as \(x\to\infty\)
+\subsection*{Continuity}
+Let \(I\subseteq\mathbb{R}\) be a non-degenerate interval and \(f:I\to\mathbb{R}\). \(f\) is called continuous at \(x_0\in I\) if for every \(\varepsilon>0\), there is a \(\delta>0\) with \(|x-x_0|<\delta\) for which \(|f(x)-f(x_0)|<\varepsilon\). \(f\) is called continuous on \(I\) if it is continuous at every point on \(I\).
+\subsubsection*{Characteristics of continuity}
+The following 3 statements are all logically equivalent and it may be useful to use one or the other depending on the problem you are looking at:
+\begin{itemize}
+    \item \(f(x)\) is continuous at \(x_0\)
+    \item \(\lim_{x\to x_0}f(x)=f(x_0)\)
+    \item For every sequence \(\seq{x}{n}\) with \((x_n)\in I\) and \(x_n\to x_0\) as \(n\to\infty\) we have \(f(x_n)\to f(x_0)\)
+\end{itemize}
+\subsection*{Important results for continuous functions}
+There are some important results that you should be familiar with because they will come up a lot. Often you will not be asked to prove anything here, however you may need to apply this knowledge in other proofs.
+\begin{itemize}
+    \item Any polynomial is continuous everywhere.
+    \item The following functions are continuous on \(\mathbb{R}\):
+    \begin{itemize}
+        \item \(\exp\)
+        \item \(\sin\)
+        \item \(\cos\)
+        \item \(\arctan\)
+        \item \(|\cdot|\)
+    \end{itemize}
+    \item The following functions are continuous on their domains:
+    \begin{itemize}
+        \item \(\log\)
+        \item \(\arccos\)
+        \item \(\arcsin\)
+        \item \(\tan\)
+        \item \(\frac{1}{x}\)
+    \end{itemize}
+    \item Combinations of these standard functions are usually continuous on the appropriate domain, as long as we are careful of any problem points (such as division by 0). 
+\end{itemize}
+We can also compose continuous functions and get another continuous function in the new domain. We can use this fact the demonstrate that on a restricted domain, all real powers of \(x\) are continuous - For any \(\alpha\in\mathbb{R}\) the function:
+\[f:(0,\infty)\to\mathbb{R};\;f(x)=x^\alpha=\exp(\alpha\ln(x))\]
+is continuous.
+\subsection*{Properties of continuous functions on closed intervals}
+One of the more important theorems relating to function continuity is the intermediate value theorem. Let \(a<b\) and \(f:[a,b]\to\mathbb{R}\) be continuous everywhere on \([a,b]\). Then if \(f(a)<z<f(b)\) or \(f(a)>z>f(b)\), there exists at least one \(x\in(a,b)\) with \(f(x)=z\). This theorem essentially tells us the when we have a continuous function we can't "jump over" any values in the reals. This theorem comes in very useful especially when dealing with polynomials: for example we can apply the IVT to say that:
+\[\forall n\in\mathbb{N}, z>0, \exists w\in\mathbb{R}:w^n=z\]
+I.e. that all positive roots exist. This is quite the step up from the previous proof which was long an difficult to find the supremum of a set bounded by \(\sqrt{z}\).
+\subsection*{Extreme value theorem}
+This theorem works hand in hand with the IVT and essentially states that for some continuous function on a closed interval there is a maximum and a minimum point and those points are attainable. Let \(a<b\) and \(f:[a,b]\to\mathbb{R}\) be continuous on \([a,b]\). Then there exists \(x_m,x_M\in[a,b]\) such that \(f(x_m)=\inf\{f(x):x\in[a,b]\}\) and \(f(x_M)=\sup\{f(x):x\in[a,b]\}\).
+\subsubsection*{Image of a bounded interval}
+As a useful piece of additional information. If \([a,b]\) is closed and bounded and \(f:I\to\mathbb{R}\) is continuous then \(J=f(I)\) is also closed and bounded. This should make sense if you think about it, because we know all points in \(J\) are attainable thanks to the above 2 theorems it should easily follow that the interval \(J\) is closed.
+\subsection*{Monotone functions}
+A function \(f:D\to\mathbb{R}\) is called:
+\begin{itemize}
+    \item Monotone increasing if \(\forall x,y\in D,\  x\leq y\implies f(x)\leq f(y)\).
+    \item Monotone decreasing if \(\forall x,y\in D,\  x\leq y\implies f(x)\geq f(y)\).
+    \item Monotone if it is either monotone increasing or monotone decreasing.
+    \item Strictly increasing if \(x<y\implies f(x)<f(y)\).
+    \item Strictly decreasing if \(x<y\implies f(x)>f(y)\)
+    \item Strictly monotone if it is either strictly increasing or strictly decreasing.
+\end{itemize}
+Note that sometimes the names change slightly (for example, describing the function as non-decreasing to mean monotone increasing). Generally if somebody just says "increasing" they should mean strictly, just be wary.
+\subsubsection*{Monotonicity of common functions}
+Some examples demonstrating the monotonicity of functions could be:
+\begin{itemize}
+    \item \(x\mapsto x^\alpha\) on \((0,\infty)\) is monotone increasing for \(\alpha>0\), monotone decreasing for \(\alpha<0\) and constant for \(\alpha=0\).
+    \item \(x\mapsto\lfloor x\rfloor\) is monotone increasing but not strictly increasing.
+    \item \(x\mapsto\frac{1}{x}\) is strictly decreasing on both \((-\infty,0)\) and \((0,\infty)\) but it is not monotone on its domain of definition \(\mathbb{R}\backslash\{0\}\).
+\end{itemize}
+\end{document}

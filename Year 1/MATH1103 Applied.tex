@@ -1,0 +1,636 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float}
+\title{\textbf{MATH1103 Personal Lecture Notes}}
+\author{Thomas Piercy}
+\date{\today{}}
+
+\newcommand{\uvec}[1]{\underline{\hat{#1}}}
+\newcommand{\bvec}[1]{\uvec{e}_#1}
+\newcommand{\df}[2]{\frac{\text{d}#1}{\text{d}#2}}
+
+\begin{document}
+\maketitle
+\hrulefill
+\setstretch{1.5}
+\section{Modelling}
+\subsection*{Notation}
+The Applied maths module uses some different notation to other modules and lecturers, the table below lists the common notation used in other modules on the left and the applied maths alternative on the right.
+\begin{table}[H]
+    \begin{tabular}{|l|l|}
+        \hline
+        \textbf{Other notation} & \textbf{Applied notation}  \\ \hline
+        \(\frac{\text{d}x}{\text{d}t}\) & \(\overset{.}{x}\) \\ \hline
+        \(\textbf{r}=x\cdot\hat{\textbf{i}}+y\cdot\hat{\textbf{j}}+z\cdot\hat{\textbf{k}}\) & \(\underline{r}=x\cdot\bvec{x}+y\cdot\bvec{y}+z\cdot\bvec{z}\) \\ \hline
+    \end{tabular}
+\end{table}
+\subsection*{The modelling process}
+\begin{enumerate}
+    \item Application - Know your problem and frame it mathematically
+    \item Variables - Pick which data points are going to be relevant or mathematically interesting
+    \item Equations - Decide upon the equations that govern your chosen variables
+    \item Interpret Solutions - Work out what physical phenomena are being represented by the solutions to your equations
+    \item Refine your model - Use the feedback cycle of your solutions to improve your original model
+\end{enumerate}
+\subsubsection*{Key considerations}
+You can often gleam a lot of information from the equations themselves without even solving them. Using context and initial conditions can help answer questions about the system even whilst it is still in ODE form. A good example of this is the fruit flies guy. You can verify the solutions to ODEs if given to you by using the general form of the solution and differentiating it the required amount of times. Differentiation is often much easier to work back from than it is to solve the ODE originally: However it is worth considering that it is not always possible or easy to tell if a derivative exists and/or is pleasant to calculate.
+\subsection*{Nondimensionalisation}
+Sometimes we have the option to select the units that we are using and can introduce new units with an appropriate scaling factor into our ODE or solution to make it significantly easier to solve or use.
+\subsubsection*{Example: melting snowball}
+\textit{Q)  Assume you have a perfectly spherical snowball of volume  \(V_0\). Create a model for the rate of change of it melting.}
+\\
+It may be tempting to create a linear or exponential model with some proportionality constant, however this doesn't use all of the information that we have been given
+Think about the fact that we have a sphere of snow and we know how snow melts in the real world. This leads us to consider the surface area of the sphere and how to convert to volume which we know.
+\[\text{Volume}\;\sim\;r^3\]
+\[\text{Surface area}\;\sim\;r^2\]
+\[\df{V}{t}=-\gamma V^\frac{2}{3},\;V(0)=V_0\]
+Solving this gives us:
+\[V(t)=V_0\left(1-\frac{\gamma t}{3\sqrt[\leftroot{0}\uproot{1}3]{V_0}}\right)^3\]
+As you can see this could be cleaned up significantly if we used an appropriate unit that incorporated the complex and ugly coefficients. We could then provide our new unit definitions to help people convert. We need to ask ourselves what happens when our initial conditions change, what happens if we have different \(\gamma\) or \(V_0\)? We want to express all quantities in appropriate units:
+\[\tau=\frac{t}{T_0},\qquad\nu(\tau)=\frac{V(t(\tau))}{V^0}\]
+We can then calculate the derivative of our two new units:
+\[\df{\nu}{\tau}=\frac{1}{V^0}\df{V(t(\tau))}{\tau}=\frac{T_0}{V^0}\df{V}{t}\]
+\[\frac{V^0}{T_0}\df{\nu}{\tau}=-\gamma {V^0}^\frac{2}{3}\nu^\frac{2}{3},\quad \nu(0)=\frac{V_0}{V^0}\]
+Lets choose are units of volume to be \(V_0=V^0,\;T_0=\frac{{V_0}^\frac{1}{3}}{\gamma}\):
+\[\df{\nu}{\tau}=-\gamma T_0 {V_0}^{-\frac{1}{3}}\nu^\frac{2}{3}=-\nu^\frac{2}{3},\quad \nu(0)=1\]
+Hence:
+\[\nu(\tau)=V_0\left(1-\frac{\tau}{3}\right)^3\]
+\subsubsection*{The general approach}
+Overall, we want to increase new scales for all lengths, times etc. and then we want to derive a new ODE using these quantities.
+\[x\mapsto\overset{\sim}{x}:=\frac{x}{L_0},\;t\mapsto\overset{\sim}{t}:=\frac{t}{T_0},\;\text{etc ...}\]
+\[\df{x}{t}=\df{L_0\cdot\overset{\sim}{x}\left(\overset{\sim}{t}(t)\right)}{t}\]
+\[\df{L_0\cdot\overset{\sim}{x}\left(\overset{\sim}{t}(t)\right)}{t}=L_0\df{\overset{\sim}{x}}{\overset{\sim}{t}}\df{\overset{\sim}{t}}{t}=\frac{L_0}{T_0}\df{\overset{\sim}{x}}{\overset{\sim}{t}}\]
+\subsubsection*{Falling close to earth problem}
+\[m\df{^2z}{t^2}=-mg,\qquad z(0)=0,\qquad\overset{.}{z}(0)=v_0\]
+\[z\mapsto\overset{\sim}{z}:=\frac{z}{L_0},\;t\mapsto\overset{\sim}{t}:=\frac{t}{T_0}\]
+\[\df{^2\overset{\sim}{z}}{\overset{\sim}{t}^2}=-g\frac{T_0^2}{L_0}=-\overset{\sim}{g}\]
+Choose \(L_0=g{T_0}^2\) such that \(\overset{\sim}{g}\overset{!}{=}1\).
+\[\overset{\sim}{z}''=-1\]
+using \(v_0\) to eliminate \(T_0\):
+\[1=\frac{T_0v_0}{L_0}=\frac{v_0}{gT_0}\]
+\[T_0=\frac{v_0}{g},\quad L_0=\frac{{v_0}^2}{g}\]
+\[\overset{\sim}{z}''=-1,\quad\overset{\sim}{z}'(0)=0,\quad\overset{\sim}{z}(0)=1\]
+\subsubsection*{Throwing a ball with drag}
+There is another example here that i will fill in when i understand wtf is happening.
+\subsection*{Taylor series}
+The Taylor series of a function \(f(x)\) at \(x_0\) is as follows:
+\[f(x)\approx f(x_0)+f'(x_0)(x-x_0)+\frac{f''(x_0)(x-x_0)^2}{2!}+...+\frac{f^{(n)}(x_0)(x-x_0)^n}{n!}\]
+\[\sum_{n=0}^N\frac{1}{n!}f^{(n)}(x_0)(x-x_0)^n\]
+\section{Vectors}
+There are two important rules for vectors at this stage and those are that you must be able to add them, and you must be able to scalar multiply. There is no requirement for the scalar to be real however.
+\subsection*{Scalar/Dot product}
+The dot product is defined geometrically as the orthogonal projection of one vector onto another. It is related to the magnitudes of the vectors and the angle between them.
+\[\underline{a}\cdot\underline{b}=|\underline{a}||\underline{b}|\cos{(\phi)}\]
+\[\bvec{i}\cdot\underline{a}=|\underline{a}|\cos{(\phi)}\]
+If we project \(\underline{r}\) onto the basis vectors \(\bvec{x},\;\bvec{y},\;\bvec{z}\) then we get:
+\[\underline{r}=(\underline{r}\cdot\bvec{x})\bvec{x}+(\underline{r}\cdot\bvec{y})\bvec{y}+(\underline{r}\cdot\bvec{z})\bvec{z}\]
+Note that there are some special cases of this:
+\[\bvec{x}\cdot\bvec{x}=1\]
+\[\bvec{y}\cdot\bvec{x}=0\]
+Indeed when we have for general coordinates \(i,j,...\) we can say that they form an orthonormal basis when the scalar product with itself is one and with every other basis is 0. We also have the special case of any arbitrary vector dotted with itself:
+\[\underline{a}\cdot\underline{a}=|\underline{a}|^2\]
+\subsection*{Different coordinate systems}
+One of the advantages with writing out a vector in terms of its projection onto some basis is that we can easily describe the same vector in two different coordinate systems and make sense of this much easier than if we were using other notation.
+\[\underline{r}=x\,\bvec{x}+y\,\bvec{y}\]
+\[\underline{r}=\eta\,\bvec{\eta}+\zeta\,\bvec{\zeta}\]
+We can be much clearer expressing that these are in fact the same fundamental vector object.
+\subsection*{Cross product}
+We can also have a cross product which geometrically represents a vector orthogonal to the two input vectors. It is important to note that the cross product only exists in \(\mathbb{R}^3\). We have:
+\[(\underline{a}\times\underline{b})_i\equiv(\underline{a}\times\underline{b})\cdot\bvec{i}\]
+and,
+\[\underline{a}\times\underline{b}=\det\begin{pmatrix}
+    \bvec{i} & \bvec{j} & \bvec{k} \\
+    \underline{a}_i & \underline{a}_j & \underline{a}_k \\
+    \underline{b}_i & \underline{b}_j & \underline{b}_k
+\end{pmatrix}\]
+Some special cases of this are:
+\[\bvec{x}\times\bvec{x}=0\]
+\[\bvec{x}\times\bvec{y}=\bvec{z}\]
+Generally the cross product of a vector with itself is always the zero vector. The length of the cross vector can be calculated either using the magnitude method or by taking the area of the parallelogram spanned by \(\underline{a}\) and \(\underline{b}\). The direction of the cross vector can be found by considering the rotation of \(\underline{a}\) onto \(\underline{b}\).
+\[|\underline{a}\times\underline{b}|=|\underline{a}||\underline{b}|\cdot\sin{(\phi)}\]
+\[\underline{a}\times\underline{b}=-\underline{b}\times\underline{a}\]
+\[\underline{a}\times\underline{a}=0\]
+\section{Partial Derivatives}
+\subsection*{Derivatives of vectors}
+We look at the definition of a derivative of a function f at a point x and are motivated to consider functions that depend on more than one variable.
+\[f'(x)=\lim_{h\to0}\frac{f(x+h)-f(x)}{h}\]
+As it turns out we can extend this definition to vector valued functions given that we are using a constant coordinate basis (such as the Cartesian coordinates):
+\[\underline{r}=\underline{x}(t)\cdot\bvec{x}+\underline{y}(t)\cdot\bvec{y}+\underline{z}(t)\cdot\bvec{z}\]
+\[\df{\underline{r}}{t}=\df{\underline{x}}{t}\cdot\bvec{x}+\df{\underline{y}}{t}\cdot\bvec{y}+\df{\underline{z}}{t}\cdot\bvec{z}\]
+In this case if \(\underline{r}\) represented a position then \(\df{\underline{r}}{t}\) would be a velocity. We sometimes more generally refer to it is a tangential vector \(\underline{t}\) as that is applicable in more situations. We generally only care about the normalised tangential vector as well.
+\[\df{\underline{r}}{t}=\underline{t}\]
+\[\uvec{t}=\frac{\underline{t}}{\vert \underline{t}\vert}\]
+\subsection*{Partial derivatives}
+All of this leads naturally to our definition of a partial derivative (given below in just 2 dimensions for conciseness):
+\[\frac{\partial f}{\partial x}=\lim_{h\to0}\frac{f(x+h,y)-f(x,y)}{h}\]
+And likewise for all other variables. We take every variable that we are not considering for the derivative to be constant values and then differentiate the resulting single input function as we would normally.
+\section{Basic Kinematics}
+We denote the location of a particle with a time-dependent position vector. This is a vector from the origin:
+\[\underline{r}(t)\]
+\[\underline{v}:=\df{\underline{r}}{t}\equiv\overset{.}{\underline{r}}\]
+\[\underline{a}:=\df{^2\underline{r}}{t^2}\equiv\df{\underline{v}}{t}\equiv\overset{..}{\underline{r}}\]
+\subsection*{Cartesian coordinates}
+A Cartesian coordinate system for a three-dimensional space is defined by a set of three fixed, orthonormal basis vectors. If we have a coordinate system \(\{\bvec{x},\,\bvec{y},\,\bvec{z}\}\) and we want to consider another coordinate system \(\{\bvec{\zeta},\,\bvec{\eta},\,\bvec{\xi}\}\):
+\[\begin{pmatrix}
+    \zeta(t) \\
+    \eta(t) \\
+    \xi(t)
+\end{pmatrix}=R\begin{pmatrix}
+    x(t) \\
+    y(t) \\
+    z(t)
+\end{pmatrix}\]
+Where \(R\) is the coordinate transform matrix given by:
+\[R_{i,\,j}=\bvec{i}\cdot\bvec{j}\qquad i\in\{\bvec{x},\,\bvec{y},\,\bvec{z}\},\;j\in\{\bvec{\zeta},\,\bvec{\eta},\,\bvec{\xi}\}\]
+\subsection*{Curvilinear coordinates}
+There are coordinate systems which are still orthonormal at every point but they are not constant throughout space. For sake of simplicity we want to focus on 2D coordinates here. But the concepts are the same in higher dimensions. Unit vectors in curvilinear coordinates are defined to be the direction in which you move when a small change is made to one variable:
+\[\bvec{r}\sim\frac{\partial}{\partial r}\underline{r}\]
+\[\bvec{\phi}\sim\frac{\partial}{\partial\phi}\underline{r}\]
+The main point to note here is that different from Cartesian coordinates is that the unit vectors in the \(r\) and \(\phi\) direction depend on the location of \(\underline{r}\).
+\subsection*{Arc Length}
+The length\(L\) of a curve can be calculated with the following integral:
+\[L=\int^t_{t_0}\vert\text{d}\underline{r}\vert=\int^t_{t_0}\text{d}s\]
+This is how we commonly write this integral however it is not usually how we numerically solve it:
+\[L=\int^t_{t_0}\vert\underline{r}'(\tau)\vert\;\text{d}\tau=\int^t_{t_0}\sqrt{x'(\tau)^2+y'(\tau)^2+z'(\tau)^2}\;\text{d}\tau\]
+This is derived from the definition of the Riemann sum.
+\subsection*{Tangent vectors, Normal vectors, Bi-normal vectors}
+By noting that the speed of the particle is equivalent to its change in arc-length over time we can write:
+\[\uvec{t}=\df{\underline{r}(s)}{s}\]
+Hence we can get the tangent vector directly when the parameter is not time but arc-length. We can calculate the normal vector from the tangent vector. Given that the tangent vector is normalised it follows:
+\[\uvec{t}\cdot\uvec{t}=1\]
+Differentiating with respect to \(s\):
+\[\df{\uvec{t}}{s}\cdot\uvec{t}+\uvec{t}\cdot\df{\uvec{t}}{s}=0\]
+\[2\left(\df{\uvec{t}}{s}\cdot\uvec{t}\right)=0\]
+Therefore we have \(\df{\uvec{t}}{s}\) to be perpendicular to \(\uvec(t)\) and so normal to the trajectory. However it is not yet normalised. Its length defines the curvature and radius of curvature:
+\[\left\vert\df{\uvec{t}}{s}\right\vert=\kappa(s)=\frac{1}{R(s)}\]
+The radius \(R\) is the radius of the circle touching the trajectory tangentially. The unit vector is now:
+\[\uvec{n}=\frac{\df{\uvec{t}}{s}}{\kappa(s)}\]
+For a straight line we get \(\kappa(s)=0\). The vector orthogonal to both \(\uvec{t}\) and \(\uvec{n}\) is the bi-normal vector:
+\[\uvec{b}=\uvec{t}\times\uvec{n}\]
+\subsection*{Tangent and normal vectors in 2D}
+The relationship between the unit tangent and unit normal can be expressed as rotations of \(\pm 90^{\circ}\). The resulting \(\pm\) signs depend on whether the trajectory is making a left or right turn in the direction of travel. In this case it makes sense to give \(\kappa(s)\) a sign.
+\subsection*{Derivative of polar form}
+We have to use an expanded product rule which results in us getting:
+\[\underline{r}'(t)=r'(t)\bvec{r}+r(t)\varphi'(t)\bvec{\varphi}\]
+This is occasionally useful.
+\section{Newton's laws}
+\subsection*{Inertial frames}
+Reference frames in which no force \(\implies\) no motion are called inertial frames. All inertial frames are not accelerating to each other or with respect to the absolute space.
+\subsection*{Moving frames of reference}
+Suppose we have two coordinate systems: \(S\) and \(\Sigma\). These are both Cartesian coordinate systems and for simplicity let us make them pairwise parallel in each direction. It should be clear that if we have a fixed point in the space then we can represent that with either coordinate system:
+\[S: \underline{r}=x\bvec{x}+y\bvec{y}+z\bvec{z}\]
+\[\Sigma:\underline{\rho}=\zeta\bvec{\zeta}+\eta\bvec{\eta}+\xi\bvec{\xi}\]
+We know that the origin of \(\Sigma\) has a representation in \(S\) which we denote \(\sigma\). We can see that a way to represent a fixed point in \(S\) could be:
+\[\underline{r}=\underline{\sigma}+\underline{\rho}\]
+If we divide by \(m\) and take the second time derivative, we can form newtons equations of motion in the new system.
+\[m\overset{..}{\underline{r}}=m\overset{..}{\underline{\sigma}}+m\overset{..}{\underline{\rho}}\]
+We can see that the first term is the force vector in the coordinate system \(S\) and on the right we have the force vector for the same force but in the system \(\Sigma\).
+\[\underline{F}(\underline{r})=\underline{\Phi}(\underline{\rho})=\underline{F}(\underline{\rho}+\underline{\sigma})\]
+This means that newtons second law in \(\Sigma\) is given by rearranging this equation in \(S\).
+\[m\overset{..}{\underline{\rho}}=\underline{F}(\underline{\rho}+\underline{\sigma})-m\overset{..}{\underline{\sigma}}\]
+Then we can see that the two forms of newtons second law are equal when \(\overset{..}{\underline{\sigma}}=0\)
+\[\overset{..}{\underline{\sigma}}=0\implies\underline{\sigma}=V_{0_\sigma}t+r_{0_\sigma}\]
+What this means is that if an inertial reference frame is moving at a constant velocity along a straight line then all systems describe the same motion. \(m\overset{..}{\underline{\sigma}}\) is a fictitious force which shows you what force you would see as the point in the system.
+\subsection*{Recap of circular motion}
+We know that to make something move in a circle we need a force. Let us first recap circular motion:
+\[\underline{\overset{.}{r}}=\underline{\omega}\times\underline{r}\]
+\(\omega\) is the normal vector to the plane of motion, and \(r\) gives us the direction it is moving in. Whenever we have circular motion:
+\[\overset{.}{\underline{r}}=\omega\times\underline{r}\]
+holds. This means that \(\overset{.}{\underline{r}}\) is the perpendicular vector the the plane spanned by \(\underline{r}\) and \(\underline{\omega}\). Calculating the time derivative of this shows us that:
+\[\underline{\overset{..}{r}}=\underline{w}\times(\underline{\omega}\times\underline{r})\]
+This equation is useful because it describes a coordinate free system.
+\subsection*{Rotating frames of reference}
+For simplicity let us fix \(z\) to make the movement easier to visualise. Let us consider \(S\), an inertial coordinate system and our alternative system \(\Sigma\). The basis vectors in \(\Sigma\) are rotating hence we can use the above formula:
+\[\frac{\text{d}}{\text{d}t}\bvec{i}=\underline{w}\times\bvec{i},\qquad i\in\{\zeta,\eta,\xi\}\]
+Since our object is has a position in absolute space, we can write:
+\[\underline{\rho}=\zeta\bvec{\zeta}+\eta\bvec{\eta}+\xi\bvec{\xi}\]
+\[\df{}{t}\underline{r}=\df{}{t}\underline{\rho}=\df{}{t}\left(\zeta\bvec{\zeta}+\eta\bvec{\eta}+\xi\bvec{\xi}\right)\]
+Applying the product rule gives us:
+\begin{align*}
+    \df{}{t}\underline{r}&=\left(\overset{.}{\zeta}\bvec{\zeta}+\overset{.}{\eta}\bvec{\eta}+\overset{.}{\xi}\bvec{\xi}\right)+\left(\zeta\overset{.}{\bvec{\zeta}}+\eta\overset{.}{\bvec{\eta}}+\xi\overset{.}{\bvec{\xi}}\right) \\
+    &=\left(\overset{.}{\zeta}\bvec{\zeta}+\overset{.}{\eta}\bvec{\eta}+\overset{.}{\xi}\bvec{\xi}\right)+\left(\zeta\underline{\omega}\times\bvec{\zeta}+\eta\underline{\omega}\times\bvec{\eta}+\xi\underline{\omega}\times\bvec{\xi}\right) \\
+    &=\left(\overset{.}{\zeta}\bvec{\zeta}+\overset{.}{\eta}\bvec{\eta}+\overset{.}{\xi}\bvec{\xi}\right)+\underline{w}\times\left(\zeta\bvec{\zeta}+\eta\bvec{\eta}+\xi\bvec{\xi}\right) \\
+    &=\left(\overset{.}{\zeta}\bvec{\zeta}+\overset{.}{\eta}\bvec{\eta}+\overset{.}{\xi}\bvec{\xi}\right)+\underline{w}\times\underline{\rho}
+\end{align*}
+Let use define \(\overset{.}{\underline{\rho}}_{apparant}=\overset{.}{\zeta}\bvec{\zeta}+\overset{.}{\eta}\bvec{\eta}+\overset{.}{\xi}\bvec{\xi}\):
+\[\df{}{t}\underline{r}=\overset{.}{\underline{\rho}}_{app}+\underline{w}\times\underline{\rho}\]
+This is known as the velocity transformation formula.
+\subsubsection*{Acceleration transformation formula}
+\begin{align*}
+    \df{^2\underline{r}}{t^2}&=\df{}{t}\left(\overset{.}{\underline{\rho}}_{app}+\underline{w}\times\underline{\rho}\right) \\
+    &=\df{}{t}\left(\overset{.}{\zeta}\bvec{\zeta}+\overset{.}{\eta}\bvec{\eta}+\overset{.}{\xi}\bvec{\xi}\right)+\overset{.}{\underline{w}}\times\underline{\rho}+\underline{w}\times\overset{.}{\underline{\rho}} \\
+    &=\df{}{t}\left(\overset{.}{\zeta}\bvec{\zeta}+\overset{.}{\eta}\bvec{\eta}+\overset{.}{\xi}\bvec{\xi}\right)+\overset{.}{\underline{w}}\times\underline{\rho}+\underline{w}\times\left(\overset{.}{\underline{\rho}}_{app}+\underline{\omega}\times\underline{\rho}\right) \\
+    &=\df{}{t}\left(\overset{.}{\zeta}\bvec{\zeta}+\overset{.}{\eta}\bvec{\eta}+\overset{.}{\xi}\bvec{\xi}\right)+\overset{.}{\underline{w}}\times\underline{\rho}+\left(\underline{\omega}\times\overset{.}{\underline{\rho}}_{app}\right)+\underline{\omega}\times\left(\underline{\omega}\times\underline{\rho}\right) \\
+    &=\left(\overset{..}{\zeta}\bvec{\zeta}+\overset{..}{\eta}\bvec{\eta}+\overset{..}{\xi}\bvec{\xi}\right)+\left(\overset{.}{\zeta}{\bvec{\zeta}'}+\overset{.}{\eta}\bvec{\eta}'+\overset{.}{\xi}\bvec{\xi}'\right)+\overset{.}{\underline{w}}\times\underline{\rho}+\left(\underline{\omega}\times\overset{.}{\underline{\rho}}_{app}\right)+\underline{\omega}\times\left(\underline{\omega}\times\underline{\rho}\right)
+\end{align*}
+Define \(\overset{..}{\underline{\rho}}_{apparant}=\overset{..}{\zeta}\bvec{\zeta}+\overset{..}{\eta}\bvec{\eta}+\overset{..}{\xi}\bvec{\xi}\):
+\begin{align*}
+    \df{^2\underline{r}}{t^2}&=\overset{..}{\underline{\rho}}_{app}+\left(\overset{.}{\zeta}{\bvec{\zeta}'}+\overset{.}{\eta}\bvec{\eta}'+\overset{.}{\xi}\bvec{\xi}'\right)+\overset{.}{\underline{w}}\times\underline{\rho}+\left(\underline{\omega}\times\overset{.}{\underline{\rho}}_{app}\right)+\underline{\omega}\times\left(\underline{\omega}\times\underline{\rho}\right) \\
+    &=\overset{..}{\underline{\rho}}_{app}+\left(2\underline{\omega}\times\overset{.}{\underline{\rho}}_{app}\right)+\left(\overset{.}{\underline{\omega}}\times\underline{\rho}\right)+\left(\underline{\omega}\times\left(\underline{\omega}+\underline{\rho}\right)\right)
+\end{align*}
+Thankfully due to the linearity of the velocity formula, if \(\Sigma\) is also moving we only need to add in a simple movement term:
+\[\overset{..}{\underline{r}}=\overset{..}{\underline{\rho}}_{app}+\left(2\underline{\omega}\times\overset{.}{\underline{\rho}}_{app}\right)+\left(\overset{.}{\underline{\omega}}\times\underline{\rho}\right)+\left(\underline{\omega}\times\left(\underline{\omega}+\underline{\rho}\right)\right)+\overset{..}{\underline{\sigma}}\]
+Now that we have an expression for the apparent acceleration from the perspective of the reference frame \(\Sigma\), one might naturally ask how newtons equations look from this perspective. This is as simple as multiplying by \(m\) and rearranging:
+\[m\overset{..}{\underline{\rho}}_{app}=\underline{F}-\underbrace{m\left(2\underline{\omega}\times\overset{.}{\underline{\rho}}_{app}\right)}_{\text{Coriolis force}}-\underbrace{m\left(\overset{.}{\underline{\omega}}\times\underline{\rho}\right)}_{\text{Euler force}}+\underbrace{m\left(\underline{\omega}\times\left(\underline{\omega}+\underline{\rho}\right)\right)}_{\text{Centrifugal force}}+\underbrace{m\overset{..}{\underline{\sigma}}}_{\text{Due to movement of }\Sigma}\]
+\section*{ODEs}
+\subsection*{Non-linear \(2^{nd}\) order ODEs or linear ODEs with non-constant coefficients}
+Sometimes our ODE is reducible, but generally there are no general solution methods. We either have to rely on a known solution for a specific form of integral or we have to deal with the integral.
+\subsubsection*{The reducible case}
+Sometimes we have an ODE of a special form that we can work with. When the ODE relies on only one variable there are some elementary methods we can try, as the number of dependant variables increases the complexity of the solution also increases. Below is a table for solution methods for a general form of ODE:
+\begin{table}[h]
+    \begin{tabular}{|c|c|}
+    \hline
+        \textbf{ODE Form} & \textbf{Solution Method} \\ \hline
+        \(f''(x)=g(f'(x))\) & Substitute \(u(x)=f'(x)\) and solve the new ODE \\ \hline
+        \(f''(x)=g(x)\) & Integrate twice \\ \hline
+        \(f''(x)=g(f(x))\) & Multiply by \(2f'(x)\) and integrate \\ \hline
+        \(f''(x)=g(f'(x),x)\) & Substitute \(u(x)=f'(x)\) \\ \hline 
+        \(f''(x)=g(f(x),x)\) & It may the case you can use Euler homogeneity \\ \hline
+        \(f''=g(f''(x),f'(x),f(x),x)\) & Don't bother unless it has a known solution \\ \hline
+    \end{tabular}
+\end{table}
+\subsection*{Systems of ODEs}
+Usually we will try and split the problem into uncoupled equations, which we will look at more later in the semester. A common trick is to introduce a complex variable.
+\section{Simple Harmonic Motion}
+For the case of a weight on a spring, we have Hooke's law:
+\[m\overset{..}{x}=-kx\]
+However this is not that realistic, so we include some damping force that could represent drag or friction and rearrange our equation:
+\[\overset{..}{x}+\frac{\gamma}{m}\overset{.}{x}+\frac{k}{m}x=0\]
+This is a linear, 2nd order homogenous ODE, so we can solve it using the standard complementary function technique. This gives us 3 possible forms for the solutions to our ODE:
+\begin{itemize}
+    \item Distinct real
+    \item Repeated real
+    \item Complex conjugates
+\end{itemize}
+We also have the general form of our solutions to be:
+\[\lambda_{1,2}=\frac{-\gamma\pm\sqrt{ \gamma^2-4\cdot m\cdot k}}{2m}\]
+In the case of heavy damping (over-damping), we can see that we require \(m\cdot k<\left(\frac{\gamma}{2}\right)^2\). This forces our roots to be distinct and real. When \(m\cdot k=\left(\frac{\gamma}{2}\right)^2\) we have critical damping - this is one repeated root. Finally when \(m\cdot k>\left(\frac{\gamma}{2}\right)^2\) we have light damping, which is the only one in which we see oscillations and this corresponds to complex roots, \(\lambda=\kappa\pm\omega i\).
+\begin{table}[h]
+    \begin{tabular}{c|c}
+    \hline
+        \textbf{Damping type} & \textbf{Solution form} \\ \hline
+        Heavy/Over & \(Ae^{\lambda_1t}+Be^{\lambda_2t}\) \\
+        Critical & \(Ae^{\lambda_1t}+Bte^{\lambda_1t}\) \\
+        Light & \(e^{\kappa t}\left(A\cos(\omega t)+\sin(\omega t)\right)\) \\
+        None & \(a\cos\left(\omega t\right)+b\sin\left(\omega t\right)\)
+    \end{tabular}
+\end{table}
+\subsubsection*{Driven systems}
+Often when we have a simple harmonic oscillator, we have some force driving its motion. This could be something that moves with the oscillator or provides a force to start it oscillating. Let us consider a very simple simple harmonic oscillator:
+\[m\overset{..}{z}=-kz-\gamma_{\text{SI}}\overset{.}{z}\]
+\[z(0)=0,\,\overset{.}{z}(0)=0\]
+However in a driven system we have some sinusoidal motion and we are in a non-inertial frame.
+\[\sigma = \tilde{f}\sin(\omega t)\]
+\[m\overset{..}{z}+\gamma_{\text{SI}}\overset{.}{z}+kz=-m\overset{..}{\sigma}\]
+This is a fairly clear second order linear ODE, however it becomes easier to solve when we non-dimensionalise it as follows:
+\[\overset{..}{z}+2\gamma\overset{.}{z}+z=\sin(\omega t)\]
+\[z(0)=0,\,\overset{.}{z}(0)=0\]
+The extra factor of \(2\) is included here because it makes later calculations easier. This is still the ODE for a simple harmonic oscillator, it has just been non-dimensionalised. This means it still has the same 4 cases of no-damping, light damping, heavy damping and critical damping. The only one that is particularly interesting to us is the light damping case. We can solve the ODE for the complementary function and the particular solution, and can see that for large time, the initial conditions do not really affect the oscillator much, it is all about the driving force and the amplitude of the oscillations. If the driving force is in phase as the oscillations we can get a positive feedback loop. For some values of damping this can lead to the amplitude of our oscillations increasing very rapidly - sometimes if implemented in real life, these oscillations can suddenly exceed the structural limit which is known as a resonance catastrophe.
+\subsubsection*{Non-linear resonance}
+Sometimes our damping makes it so that we do not have a linear ODE. If our \(\gamma\) is a non-linear function then our equations have a slightly different form. What is interesting about these systems (such as a pendulum), is that the are self stabilising, if your driving force is the same as the resonance of the system, then the system will just increase to a larger stable oscillation around a new resonance.
+\section{Energy}
+\subsection*{Kinetic energy}
+One of the key concepts in solving ODEs comes from the notion of conserved quantities. The kinetic energy of an object is the energy it possesses due to its motion.
+\[T:=\frac{1}{2}m|\underline{v}|^2\]
+To see where this formulation comes from we can start with Newtons second law with constant mass and take the dot product with \(\underline{v}\):
+\[\underline{v}\cdot\underline{F}=\underline{v}\cdot m\overset{.}{\underline{v}}=\df{}{t}\left(\frac{1}{2}m|\underline{v}|^2\right)\]
+This reworking comes from the derivative of the dot product rule, as well as rewriting the modulus as a dot product.
+\[\df{}{t}\left(\frac{1}{2}m|\underline{v}|^2\right)=\frac{m}{2}\df{}{t}\left(\underline{v}\cdot\underline{v}\right)=\frac{m}{2}\df{}{t}\left(\underline{v}\cdot\overset{.}{\underline{v}}+\overset{.}{\underline{v}}\cdot\underline{v}\right)\]
+\[\frac{m}{2}\df{}{t}\left(\underline{v}\cdot\overset{.}{\underline{v}}+\overset{.}{\underline{v}}\cdot\underline{v}\right)=m(\underline{v}\cdot\overset{.}{\underline{v}})=\underline{v}\cdot(m\overset{.}{\underline{v}})\]
+This is helpful because when \(\overset{.}{\underline{v}}\cdot\underline{F}=0\) it is a conserved quantity and we can use our geometric view to see when this is the case: either the force is 0 or the acceleration and velocity are perpendicular (i.e circular motion).
+\subsection*{The work done integral}
+Note that we can define the quantity \(\underline{v}\cdot\underline{F}\) as a derivative so it is natural for us to want to express something as an integral.
+\[W:=\int_{t_1}^{t_2}\underline{v}\cdot\underline{F}\,\text{d}t=\int_{t_1}^{t_2}\df{T}{t}\,\text{d}t=T_2-T_1\]
+The quantity \(W\) is called work and is measured in joules. The work done integral gives us the change in kinetic energy of a particle.
+\subsection*{Work in the rectilinear case}
+The rectilinear case refers to the simplest  example of things moving in straight lines. We will assume it only moves in one direction and is subject to \(mx''=F(x)\). We can do a substitution to replace our integral of time with one of distance.
+\[W=\int_{t_1}^{t_2}F(x(t))v(t)\,\text{d}t=\int_{x_1}^{x_2}F(x)\,\text{d}x\]
+\subsection*{Potential energy}
+In the one dimensional case we can introduce the indefinite integral over the force:
+\[V(x)=-\int F(x)\,\text{d}x\]
+This quantity is called potential or potential energy. Note that \(V\) is only defined up to a constant. This constant can usually be set to 0. We can see that the sum of the kinetic and potential energies are conserved.
+\subsubsection*{In 3D}
+In this module we will only look at a subset of forces in 3D, using the following result without proof:
+\[\underline{F}=f(|r|)\cdot\frac{\underline{r}}{|r|}\implies V(|r|)=-\int f(r)\,\text{d}r\]
+\subsection*{Total energy}
+\[V'(x)=F(x)\]
+Then:
+\[W=\left[-V(x)\right]^{x_2}_{x_1}=-V(x_2)+V(x_1)\]
+But we also know how to express \(W\) in terms of kinetic energy, equating the two solutions and rearranging gets us:
+\[T_1+V(x_1)=T_2+V(x_2)\]
+Which means that energy is conserved. All of the forces for which we can find a \('V'\) are called "conservative". 
+\subsection*{The energy method}
+We know that our total energy is the sum of our kinetic and potential energy:
+\[E=T+V\]
+We also know that this is a constant value. This allows us to draw qualitative conclusions about our particles movement. For example we know that:
+\[E-V(x)=\frac{m}{2}\overset{.}{x}^2>0\]
+So all position values \(x\) such that \(E-V(x)<0\) are inaccessible. We cannot have particle motion there. If the accessible region of the particles motion extends to infinity we call it unbounded motion. The opposite is called bounded motion. We can explore the possible motions for particles using "potential well" diagrams.
+\subsection*{Oscillations around minima}
+Consider \(\Delta x=x-x^*\), where \(x^*\) is the point at which we have the local minima of potential energy \(V'(x^*)=0\). Now consider an energy level just above this minima. We can rewrite newtons equations such that:
+\[m\df{^2}{t^2}\Delta x=F(x)=F(\Delta x+x^*)\]
+Since we know that \(\Delta x\) is a small quantity, it is natural to want to express this as a Taylor series:
+\[F(\Delta x+x^*)\approx F(x^*)+\Delta x(F'(X^*))\]
+\[F(x^*)+\Delta x(F'(X^*))=-V'(x^*)+\Delta x(-V''(x^*))\]
+\[-V'(x^*)+\Delta x(-V''(x^*))=-V''(x^*)\Delta x\]
+We know that in this case \(-V''(x^*)\) is just a constant because we are evaluating the potential function at a specific value. We can rearrange newtons equations of motion into the following ODE:
+\[\df{^2}{t^2}\Delta x=-\frac{V''(x^*)}{m}\Delta x\]
+Which is exactly the equation for simple harmonic motion with oscillations of frequency:
+\[\omega=\sqrt{\frac{V''(x^*)}{m}}\]
+\subsection*{Using the energy method}
+One of the primary uses of the energy method is writing a potentially very complicated or impossible ODE of the form:
+\[m\overset{..}{x}=F(x)\]
+which is 2nd order and non-linear, as a first order ODE.
+\[E=\frac{m}{2}\overset{.}{x}^2+V(x)\]
+\[\overset{.}{x}=\pm\sqrt{\left(\frac{2}{m}(E-V(x))\right)}\]
+This is still a very complicated integral, however we can apply separation of variables to get:
+\[\int_{x_0}^x\frac{\text{d}x}{\sqrt{\frac{2}{m}(E-V(x))}}=\pm t+c_1\]
+Which is generally much easier to solve than the original second order equation. The first order equation can still be very difficult though. We also know that if we look at the intersection of \(E\) and \(V(x)\) we can find some turning points that we can plug in to get a definite integral and this definite integral is equal to the time period of oscillation divided by 2. This is because it we assume it takes equal time to get from one side to the middle as it does to get from the middle to the other side.
+\[\frac{T}{2}=\int_{x_0}^{x_1}\frac{\text{d}x}{\sqrt{\frac{2}{m}\left(E-V(x)\right)}}\qquad x_1>x_0\]
+\subsection*{Further conserved quantities}
+The more conserved quantities you can find, the more success you will have to solve a problem. However, sometimes there simply aren’t any conserved quantities.
+\subsection*{Angular momentum}
+For any motion we define angular momentum as:
+\[\underline{L}=\underline{r}\times\underline{p}=m\underline{r}\times \overset{.}{\underline{r}}\]
+Angular momentum is the rotational analogue of linear momentum and is a conserved quantity in circular motion. It has some nice properties:
+\[\df{}{t}\underline{L}=m\df{}{t}\underline{r}\times \overset{.}{\underline{r}}\]
+\[m\df{}{t}\underline{r}\times \overset{.}{\underline{r}}=m(\overset{.}{\underline{r}}\times\overset{.}{\underline{r}})+m\underline{r}\times \overset{..}{\underline{r}}=m\underline{r}\times \overset{..}{\underline{r}}\]
+\[m\underline{r}\times \overset{..}{\underline{r}}=\underline{r}\times\underline{F}=M\]
+Where \(M\) is called the moment. We obviously care about when \(L\) is a constant and this occurs when \(F=0\) or \(F\parallel r\), (\(F\) is parallel to \(r\)). Another way of writing \(F\parallel r\) is:
+\[F\parallel r\iff F(r)=f(r)\frac{r}{\vert r \vert}\]
+Which is known as being a central force. So \(L\) is constant when the force \(F\) is a central force. When we have this by extension we can always find a plane perpendicular to \(L\) such that the motion is confined to it. Which can turn a 3-dimensional problem into a 2-dimensional problem. In practical terms what we do is switch to polar coordinates:
+\[\underline{r}=\underline{r}\bvec{r}\]
+\[\overset{.}{\underline{r}}=\overset{.}{\underline{r}}\cdot\bvec{r}+\underline{r}\overset{.}{\underline{\varphi}}\cdot\bvec{\varphi}\]
+\[\underline{L}=mr^2\left(\bvec{r}\times\overset{.}{\underline{\varphi}}\bvec{\varphi}\right)=mr^2\overset{.}{\varphi}\bvec{z}\]
+Because of the conservation of angular momentum we can rewrite it like we did for \(E\) and \(V(x)\):
+\[\overset{.}{\varphi}(t)=\frac{r_0^2\overset{.}{\varphi}_0}{r(t)^2}\]
+This leaves us with an integral that we can solve:
+\[\varphi(t)=\int^t_0\frac{r_0^2\overset{.}{\varphi}_0}{r(\tau)^2}\,\text{d}\tau\]
+\section{Two body problems}
+\subsection*{Effective potential}
+As it turns out we can simplify some problems even further by combining the conservation of angular momentum and the conservation of energy. This can bring a 3-dimensional problem down to a 1-dimensional problem that we solve with the energy method. To start let us take \(L\equiv\vert \underline{L}\vert\) since we know that it is a constant anyway. Then we already know that we can write this in polar coordinates as:
+\[L=mr^2\overset{.}{\varphi}\iff\overset{.}{\varphi}=\frac{L}{mr^2}\]
+We can also write our total energy in polar coordinates (we know the potential exists because we restricted the force to being conservative):
+\[E=\frac{m}{2}\vert\underline{\overset{.}{r}}\vert^2 + V(r)\]
+Expanding out:
+\[E=\frac{m}{2}\left(\overset{.}{r}^2+r^2\overset{.}{\varphi}^2\right)+V(r)\]
+This is a good start but we don't want to have \(\varphi\) in our final expression but luckily we know that our angular momentum is conserved so we can rearrange for that:
+\[E=\frac{m}{2}\overset{.}{r}^2+\frac{L^2}{2mr^2}+V(r)= const.\]
+Finally we can bundle up the last two terms which together are clearly just a function of \(r\) and call it the "Effective potential":
+\[E=\frac{m}{2}\overset{.}{r}^2+V_{eff}(r)\]
+Which is in the exact form we need to use the energy method on it. We can also see that this is a one dimensional problem, so under the two provided constraints, we can simplify 3D all the way down to 1D motion. At this point we can either do qualitative or quantitive analysis by looking at the potential well diagram and considering valid motion or we can integrate and get an exact formula for our motion in polar coordinates.
+\subsection*{Centre of mass and relative coordinates}
+We will often see that when we have a force only acting between two particles, we can reduce the problem to an effective 1-particle problem. One of the ways we do this is by considering newtons 3rd law and defining a new force which depends only on the difference between the two position vectors, not on velocities or time:
+\[\underline{F}=\underline{F}(\underline{r}_1-\underline{r}_2)\]
+\[m_1\overset{..}{\underline{r}}_1=\underline{F}(\underline{r}_1-\underline{r}_2)\]
+\[m_2\overset{..}{\underline{r}}_2=-\underline{F}(\underline{r}_1-\underline{r}_2)\]
+We want to define the vector between \(r_1\) and \(r_2\) and find the centre of mass somewhere along this vector. We give the centre of mass:
+\[\underline{R}=\frac{1}{m_1+m_2}(m_1\underline{r}_1+m_2\underline{r}_2)\]
+We also care about the relative coordinate:
+\[\underline{r}=\underline{r}_1-\underline{r}_2\]
+The reason this is helpful is because our second derivative of this centre of mass is just \(0\) which gives us an ODE for motion on a straight line.
+\subsubsection*{Derivations}
+\[\df{^2}{t^2}(m_1+m_2)\underline{R}=(m_1+m_2)\overset{..}{\underline{R}}\]
+\[(m_1+m_2)\overset{..}{\underline{R}}=m_1\df{^2}{t^2}\underline{r}_1+m_2\df{^2}{t^2}\underline{r}_2\]
+\[m_1\df{^2}{t^2}\underline{r}_1+m_2\df{^2}{t^2}\underline{r}_2=\underline{F}(\underline{r}_1-\underline{r}_2)-\underline{F}(\underline{r}_1-\underline{r}_2)=0\]
+\[(m_1+m_2)\overset{..}{\underline{R}}=0\]
+\[R(t)=\underline{v}_0t+\underline{R}_0\]
+This is rectilinear motion, where we are either moving on a straight line or not at all. Now we can consider what happens when we do the same for our relative coordinate vector:
+\[\overset{..}{\underline{r}}=\df{^2}{t^2}(\underline{r}_1-\underline{r}_2)\]
+\[\df{^2}{t^2}(\underline{r}_1-\underline{r}_2)=\overset{..}{\underline{r}}_1-\overset{..}{\underline{r}}_2\]
+\[\overset{..}{\underline{r}}_1-\overset{..}{\underline{r}}_2=\frac{1}{m_1}\underline{F}(\underline{r}_1-\underline{r}_2)-\frac{1}{m_2}(-\underline{F}(\underline{r}_1-\underline{r}_2))\]
+\[\frac{1}{m_1}\underline{F}(\underline{r}_1-\underline{r}_2)-\frac{1}{m_2}(-\underline{F}(\underline{r}_1-\underline{r}_2)=\left(\frac{1}{m_1}+\frac{1}{m_2}\right)\underline{F}(\underline{r})\]
+\[\overset{..}{\underline{r}}=\frac{m_1+m_2}{m_1m_2}\underline{F}(\underline{r})\]
+\subsection*{Effective mass}
+When we try the same with our relative vector and take its second derivative. We do something funny by dividing the whole equation by mass so we can reintroduce force into it and get a new newton equation:
+\[\frac{m_1m_2}{m_1+m_2}\overset{..}{\underline{r}}=\underline{F}(\underline{r})\]
+Note that we call this mass prefactor the "effective mass" and often denote it \(\mu\). Now if \(F\) is conservative and a central force then we have lots of techniques to simplify and attempt to solve this equation. Fundamentally we have reduced our two original equations of 6 variables into a different set of two equations:
+\[(m_1+m_2)\overset{..}{\underline{R}}=0\]
+\[\mu\overset{..}{\underline{r}}=\underline{F}(\underline{r})\]
+These equations are still difficult to solve by hopefully more possible than what we had originally. This also gives us much more freedom for solving when we constrain with statements like having and conservative central force \(\underline{F}\). In this case the problem reduces to the 1-dimensional problem we have seen before:
+\[E=\frac{\mu}{2}\overset{.}{r}^2+\frac{L^2}{2\mu r^2}+V(r)\]
+Where we have:
+\[L=\mu r_0^2\overset{.}{\varphi}_0\bvec{z}\]
+\subsubsection*{More special cases}
+It turns out that if out potential energy is of a given form we can actually arrange our equations slightly differently. For example, if we have \(V(r)=-\frac{k}{r}\) we can actually rearrange to have our energy in terms of \(\varphi\), meaning we can have an solution for \(r\) in terms of \(\varphi\) rather than \(t\).
+\subsection*{Kepler's laws}
+Kepler's laws were formed on observation and intuition and then refined mathematically after Newton published his work on gravitational forces. Kepler's observations went against the current theory of the time which was that all planets orbited the sun in circles with constant speed. Kepler instead said that:
+\begin{itemize}
+    \item Planetary orbits are ellipses with the sun being a focal point
+    \item The area swept by a line drawn between each planet and the sun grows linearly. That is to say that the areal speed is constant, not the angular velocity or tangential velocity.
+    \item The ratio \(T^2/a^2\) is the same for every object orbiting the sun, where \(T\) is the time for one orbit and \(a\) is the semi-major axis of the orbit ellipse
+\end{itemize}
+\subsection*{Gravitational force}
+Newtons work was published after Kepler's and contained a very important equation for the gravitational force of attraction:
+\[\underline{F}(\underline{r}_1,\underline{r}_2)=-\frac{Gm_1m_2}{\vert \underline{r}_1-\underline{r}_2\vert^2}\frac{\underline{r}_1-\underline{r_2}}{\vert\underline{r}_1-\underline{r}_2\vert}\]
+Notice how this is a two-body problem with a central force, and so can be solved with similar methods as we have already seen. The actual mathematics comes out in the wash but our equations for \(\underline{r}\) end up with two parameters. It turns out that one of these parameters is only dependant on the angular momentum but not the energy, and the other depends only on the energy. Fixing one value and alternating the other lets us change the shape of the orbit. This is particularly useful to consider when we think about aerospace problems as we can almost manually affect how an object orbits depending on how much energy and angular momentum it has.
+
+\hrulefill
+\begin{center}
+End of Autumn content
+\end{center}
+\hrulefill
+\section{Mathematical Modelling}
+\subsection*{Definitions}
+Mathematical models are sets of equations that describe some object or entities behaviour based on some set of independent variables and parameters. The state of the system is the set of all dependant variables. A solution to the system is the state of the system at some variation of the independent variables given a specific starting state.
+\subsection*{Types of models}
+Broadly speaking mathematical models can be split into groups with associated equation formulations. Models can be discrete or continuous as well as stochastic or deterministic. Some models can appear stochastic when they are actually deterministic in a process known as chaos.
+\subsubsection*{Continuous}
+A continuous deterministic model is often formulated using differential equations, a continuous stochastic model uses stochastic differential equations. Stochastic differential equations are typically very difficult to solve and are not covered in this module.
+\subsubsection*{Discrete}
+Discrete deterministic models are most well formulated using difference equations. A stochastic discrete model may be formulated using random walks.
+\section{Qualitative analysis for 1st order ODEs}
+\subsection*{Autonomous 1st order ODEs}
+We define a system of equations as a series of \(n\) first order ODEs describing \(n\) variables with respect to 1 common independent variable. In this module the largest systems we will look at are only up to \(n=2\). The system is autonomous if it does not explicitly depend on the independent variable. The following is what that looks like in equation form:
+\[\df{y}{t}=F(y)\]
+A system without this property is non-autonomous.Autonomy physically means the system has no forcing, i.e making our measurements are not dependent on our environmental conditions. Most often our independent variable is time and not having any forcing means that it doesn't matter when we run our experiment. An example of an autonomous system would be the simple rabbit population model:
+\[\dot{N}=rN,\quad r>0\]
+Whereas we could construct a non-autonomous formula by considering a variable birth rate (for example, with seasonal highs and lows):
+\[\dot{N}=r\left(1+\alpha\sin\left({\frac{2\pi t}{365}}\right)\right)\]
+\subsection*{Phase lines}
+We want to have some way to qualitatively analyse the solutions of an autonomous system. Despite autonomous first order ODEs being separable, the resulting integral is not always trivial (or indeed, possible) to solve and we are often not interesting in specific solution values but rather their behaviour across a range of initial conditions. For this we can use the phase line method. Consider:
+\[\dot{y}=F(y)\]
+Let \(y\) be continuous and differentiable to ensure a solution exists. Then we know for some \(y\) if:
+\begin{itemize}
+    \item \(F(y)>0\implies \df{y}{t}>0\) so \(y(t)\) is locally increasing.
+    \item \(F(y)<0\implies \df{y}{t}<0\) so \(y(t)\) is locally decreasing.
+    \item \(F(y^*)=0\implies \df{y}{t}=0\) so no movement.
+\end{itemize}
+The last case is a special case because it means we have no shift in gradient, such points are called equilibrium or fixed points. We can then construct the phase line but marking the equilibrium points on a line of \(y\) values and using arrows to indicate whether \(y(t)\) is locally increasing or decreasing. Note that \(F(y)\) and \(\df{y}{t}\) can only change sign at an equilibrium point but \(\df{y}{t}\) is not required to.
+\subsubsection*{Plots against time}
+We can also use the phase line to create a plot of \(y\) values against time \(t\) which can occasionally be useful in providing some graphical insight but all of the same information is contained within the phase line so just using that is generally better.
+\subsubsection*{Plotting unknown equilibrium points}
+One of the nice parts of qualitative analysis is that when we do not know a value, we can substitute in a suitable replacement or just leave it blank. For plotting phase lines if we have a complicated expression we cannot easily evaluate, we can either not worry about where our equilibrium points are as long as their relative positions are correct or we can plot the function itself above our phase line and bring equilibrium points down - we still would not know their value but we know they would be in the right place which is all we care about.
+\subsection*{Stability of equilibrium points in autonomous 1st order ODEs}
+We say that an equilibrium point is stable if a small perturbation decays back to the equilibrium point. If it grows away from the equilibrium point we call it unstable.
+\subsubsection*{Derivation for classifying equilibrium points rule}
+Consider a generic IVP with:
+\[\df{x}{t}=f(x)\]
+\[f(x^*)=0\]
+\[f(0)=x_0\]
+Where \(f(x)\) is suitably pleasant to ensure uniqueness and existence of a solution. Now we want to consider the solution of \(x(t)\) near \(x^*\), representing a small perturbation: Define \(y(t)=x(t)-x^*\) to be our distance from the equilibrium point:
+\[\df{y}{t}=\df{x}{t}=f(x)=f(x^*+y)\]
+Since we are expecting \(y(t)\) to be small it is not unreasonable to suggest using a Taylor series expansion to represent our function \(f(x^*+y)\):
+\[\df{y}{t}=f(x^*)+yf'(x^*)+\frac{y^2}{2}f''(x^*)+\frac{y^3}{6}f'''(x^*)+O(y^4)\]
+We know already that \(f(x^*)=0\) and we can safely assume that any terms containing \(y^2\) or above are far too small to be consequential, then our ODE takes the form:
+\[\df{y}{t}=yf'(x^*)\]
+Which is a linear ODE since \(f'(x^*)\) is just a value. Solving this equation shows us that if \(f'(x^*)>0\) then we have exponential growth of our distance function and so a small perturbation from our equilibrium point causes us to shoot off away from it and hence it is unstable. On the other hand if \(f'(x^*)<0\) we have exponential decay and any perturbation will move back to the equilibrium point so it is stable. If \(f'(x^*)=0\) then we will have to add back some more terms to the Taylor expansion to see what kind of behaviour we have:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+         \textbf{Second derivative} & \textbf{Third derivative} & \textbf{Classification of point} \\ \hline
+         \(f''(x^*)=0\) & \(f'''(x^*)<0\) & Stable \\ \hline
+         \(f''(x^*)<0\) & - & Semi-stable \\ \hline
+         \(f''(x^*)>0\) & - & Semi-stable \\ \hline
+         \(f''(x^*)=0\) & \(f'''(x^*)>0\) & Unstable \\ \hline
+    \end{tabular}
+\end{table}
+Note that this is consistent with the direction we would draw the arrows if we were just looking at the slope to draw the phase line. This is an alternate method to provide some more mathematical rigour and for dealing with small changes in initial condition, or when there are lots of equilibrium points very close to one another.
+\subsection*{Structural stability and bifurcations}
+One thing to note is that our phase lines do not encapsulate any information about how fast we go to equilibrium points. It is entirely possible we run into what is known as finite time blow-up, meaning that we shoot of to \(\pm\infty\) in finite time - which causes there to be inaccessible initial conditions. In practice this tends not to matter too much. When \(f'(x^*)=0\) a small perturbation in \(f(x)\) can drastically change the stability or number of equilibrium points. When this happens we say that \(f(x)\) has undergone a bifurcation. If a small perturbation cannot affect the phase line we say the system is structurally stable.
+\subsubsection*{Example}
+\[\df{x}{t}=ax-x^3\qquad a\in\mathbb{R}\]
+We always have a equilibrium point at \(x=0\) and when \(a>0\) we also have \(x=\pm\sqrt{a}\). Consider \(a<0\):
+\[f'(x)=a-3x^2\]
+\[f''(x)=-6x\]
+\[f'(0)=a<0\]
+So our equilibrium point is stable. Now consider \(a=0\):
+\[f'(0)=a=0\]
+\[f''(0)=0\]
+\[f'''(0)=-6<0\]
+So the equilibrium point is stable. Finally consider \(a>0\):
+\[f'(0)=a>0\]
+\[f'(\pm\sqrt{a})=-2a<0\]
+So the equilibrium point \(x=0\) is unstable but the points \(x=\pm\sqrt{a}\) are stable.
+\subsection*{Modelling rabbit populations}
+\subsubsection*{Logistic population growth}
+With logistic population growth we assume the per capita growth rate, \(\frac{\dot{N}}{N}\), decreases as \(N\) increases. For populations larger than the carrying capacity \(K>0\) the growth rate becomes negative. The simplest way to do this is with a growth rate that decreases linearly with \(N\) from \(r\) and is \(0\) when \(N=K\). This leads us to the famous logistic equation:
+\[\df{N}{t}=rN\left(1-\frac{N}{K}\right),\quad N(0)=N_0\]
+We can non-dimensionalise this and get the very pleasant equation:
+\[\df{n}{\tau}=n(1-n),\quad n(0)=\frac{N_0}{K}\]
+We are left with equilibrium points at \(n=0\) and \(n=1\). Note that we disregard the whole region below \(n=0\) as it doesn't make any physical sense given our model. We can see that with this model the population is either \(0\) or is stable at \(n=1\implies N=K\), the carrying capacity as \(t\to\infty\).
+\subsubsection*{Controlling the population}
+In real life, our aim may be to decrease the population of rabbits and so we many introduce some form of culling method:
+\[\df{N}{t}=rN\left(1-\frac{N}{K}\right)-C(N,t)\]
+We can choose the same scaling for non-dimensionalising and be left with a new equation of the form:
+\[\df{n}{\tau}=n(1-n)-h(n,\tau)\]
+where:
+\[h(n,\tau)=\frac{C(N,t)}{Kr}\]
+This is known as the logistic-equation with time dependant harvesting. Unfortunately this equation type is not autonomous and so we cannot analyse it in the way we want to. Instead we will consider an only population dependant removal rate: \(h(n)=h_0n\), then:
+\[\df{n}{\tau}=n(1-h_0-n)\]
+This equation has equilibrium points \(n=0\) and \(n=1-h_0\) when \(0\leq h_0\leq 1\). We are not really interested in values of \(h\) beyond this range anyway. Letting \(h_0>1\) would correspond to culling rabbits before they were born and in this case gives our phase line just one stable equilibrium point at \(n=0\). If \(h_0\) is in our desired range however, we are left with an unstable point at \(n=0\) and a stable point at \(n=1-h_0\), meaning that the rabbit population will sit at some percentage of its maximum depending on how aggressive our culling rate is. At \(h_0=1\) the qualitative nature of the phase line has changed so we have a bifurcation that we can plot on a bifurcation diagram if we wish.
+\section{Introduction to coupled 1st order ODEs}
+Often the natural processes that we want to model depend on 2 or more dependant variables. In this case we can have coupled ODEs that take the form:
+\[\df{x}{t}=f(x,y)\]
+\[\df{y}{t}=g(x,y)\]
+We are primarily concerned with times that these systems are autonomous. These systems are called planar systems and the state space is \((x(t),y(t))\). When it comes to representing them you have some options: You can do a time series plot where you plot both \(x\) and \(y\) against \(t\); or you can choose to plot \(x(t),y(t)\) in the \((x,y)\) plane and this is known as the phase plane. The path through the phase plane from an initial condition is called a trajectory or integral curve. The set of all trajectories is called the phase portrait. When we want to represent the phase portrait we use a subset of the trajectories to paint a picture of how the systems evolve with time. Different to phase lines, phase plans have many more kinds of motion. For instance, we can get time-periodic motion, although in this module we will only look at equilibrium solutions.
+\subsection*{Equation decomposition}
+Important is the fact that these coupled 1st order systems can arise from a single 2nd order equation. All second order ODEs can be turned into a coupled system in this way however the reverse is not true. We can also decompose a single non-autonomous equation into an autonomous planar system, making it much easier to explore analytically at the cost of an extra dimension.
+\[ML\ddot{x}=-\alpha\dot{x}-Mg\sin(x)\equiv\begin{cases}
+    \dot{x}=y \\
+    \dot{y}=\frac{1}{ML}(-\alpha y-Mg\sin(x))
+\end{cases}\]
+\[\df{y}{x}=\frac{x-y}{x+y^2}\equiv\begin{cases}
+    \df{y}{t}=x-y \\
+    \df{x}{t}=x+y^2
+\end{cases}\]
+\[\df{y}{x}=1+xy\equiv\begin{cases}
+    \df{y}{t}=1+xy \\
+    \df{x}{t}=1
+\end{cases}\]
+\subsection*{Competitive Lotka-Volterra equations}
+A very common example of coupled 1st order ODEs is a predator-prey model, where two species are fighting over shared resources. This is also known as competitive exclusion. We can construct the dimensional Lotka-Volterra equations with a logistic population model and a competition term:
+\[\df{X}{\bar{t}}=r_XX\left(1-\frac{X}{X_c}\right)-F_X(X,Y)\]
+\[\df{Y}{\bar{t}}=r_YY\left(1-\frac{Y}{Y_c}\right)-F_Y(X,Y)\]
+Where \(X_c,Y_c\) are the populations carrying capacities and \(r_X,r_Y\) are the populations growth rates. An appropriate question to ask now would be what is a good choice for \(F_X\) and \(F_Y\)? We know that they need to be positive since we are trying to curb population size. We also know that there should be no competition if one of the species dies out:
+\[F_X(0,Y)=F_X(X,0)=F_Y(0,Y)=F_Y(X,0)=0\]
+The simplest model that satisfies these conditions is:
+\[F_X=k_XXY\]
+\[F_Y=k_YXY\]
+We now need to nondimensionalise to get these equations in a form we can use for modelling. Note that our scales need to be the same for both equations, that doesn't matter too much with the carrying capacity but for the growth rate we could choose either \(r_X\) or \(r_Y\). It doesn't matter really which we pick as long as we are consistent.
+\[\df{x}{t}=x(1-x)-\alpha xy\]
+\[\df{y}{t}=r[y(1-y)-\beta xy]\]
+\[\alpha=\frac{k_XY_c}{r_X}\qquad \beta=\frac{k_YX_c}{r_Y}\qquad r=\frac{r_Y}{r_X}\]
+\subsection*{Equilibrium points}
+Our method of identifying equilibrium points is almost identical to the 1D case, we just have to be slightly more careful to ensure we have gotten all of them. \((x^*,y^*)\) is an equilibrium point if and only if \(f(x^*,y^*)=0\) and \(g(x^*,y^*)=0\). This set of simultaneous equations is not always linear and may be difficult to solve.
+\subsubsection*{Lotka-Volterra example}
+Consider the Competitive Lotka-Volterra equations in the form we derived earlier. Now choose \(\alpha=\frac{3}{2}\) and \(\beta=\frac{1}{2}\). Then there are 4 possible equilibrium points:
+\[x(1-x-\frac{3}{2}y)=0\]
+\[y(1-y-\frac{1}{2}x)=0\]
+If \(x=0\):
+\[(x^*,y^*)=\begin{cases}
+    (0,0) & y=0 \\
+    (0,1) & 1-y=0
+\end{cases}\]
+in the \((0,1)\) case we can see that one species has been eradicated completely. If \(y=0\):
+\[(x^*,y^*)=\begin{cases}
+    (0,0) & x=0 \\
+    (1,0) & 1-x=0
+\end{cases}\]
+Finally what if \((1-x-\frac{3}{2}y)=0\) and \((1-y-\frac{1}{2}x)=0\)? Solving this system gives us an equilibrium point at \((-2,2)\) which is obviously valid mathematically, but given our context is not a valid solution, so it is important to remember to apply the context of the problem when looking for equilibrium points.
+\subsection*{Vector fields}
+The direction of movement of the planar system state at each point in the \((x,y)\) plane can be indicated with an arrow in the slope of \(\df{y}{x}\).
+\[\df{y}{x}=\frac{\text{d}y/\text{d}t}{\text{d}x/\text{d}t}=\frac{g(x,y)}{f(x,y)}\]
+Although this slope is not defined at equilibrium points, it is defined everywhere outside these points. The only way two trajectories can meet is at an equilibrium point and trajectories cannot cross because of uniqueness of solutions.
+\subsection*{Nullclines}
+Since it is impossible for us to draw the vector field entirely by hand (although a computer could), we need to find a small subset that are possible to calculate and provide the most information. To help us determine the shape of trajectories we look at when the vector field is perfectly horizontal or vertical. These points are called nullclines, and the \(x\) and \(y\) nullclines are given by:
+\[C_x=\{(x,y):f(x,y)=0\}\]
+\[C_y=\{(x,y):g(x,y)=0\}\]
+It should be pretty obvious that the equilibrium points of the system are at the intersections of \(C_x\) and \(C_y\). When we are asked to plot phase portraits by hand the best thing to do is to plot the nullclines and then one vector in each region. Because the nullclines are always curves containing at least one equilibrium points we can treat them as a 1D system and perform some phase line analysis to see whether the nullcline's arrow should point left or right (for \(C_x\)) or up or down (for \(C_y\)).
+\subsection*{Stability of equilibrium points}
+Because we are now working in 2D, the notion of stability needs broadening because we are no longer restricted to moving in one direction and hence all sorts of weird solutions can occur. We now have multiple definitions of stability that we can choose between.
+\subsubsection*{Lyapunov stability}
+An equilibrium point \(\textbf{x}^*=(x^*,y^*)\) is called Lyapunov stable if for any \(\varepsilon>0\) there exists a \(\delta>0\) such that:
+\[\|\textbf{x}_0-\textbf{x}^*\|<\delta\implies\|\textbf{x}(t)-\textbf{x}^*\|<\varepsilon,\quad\forall t\geq 0\]
+Where \(\|\cdot\|\) is the length of the vector. What this is is saying broadly is that if we start close to the equilibrium point in some small region, we will never leave a corresponding larger region for all time. Start close, stay close.
+\subsubsection*{Attracting stability}
+An equilibrium point \(\textbf{x}^*=(x^*,y^*)\) is called attracting stable if there exists a \(\delta>0\) such that:
+\[\|\textbf{x}_0-\textbf{x}^*\|<\delta\implies\textbf{x}(t)\to\textbf{x}^*,\;t\to \infty\]
+This says that if we start in some close region of our equilibrium point, we will eventually tend to it. It is important to note that unlike Lyapunov stability we are allowed to go away from the equilibrium point we just have to tend back to it as time increases. Start close, eventually tend to.
+\subsubsection*{Other terminology}
+An equilibrium point is known as asymptotically stable if it is both Lyapunov stable and attracting stable. it is known as unstable if it is neither. If an equilibrium point is Lyapunov stable but not attracting stable it is sometimes called neutrally stable, since it is possible for trajectories nearby to be neither attracted nor repelled to the equilibrium point. The next question that arises is what method can we use to determine the stability of equilibrium points in both linear and non-linear planar systems
+\section{Planar linear systems}
+\subsection*{Explicit solutions of coupled linear systems}
+We have seen that we cannot generally write a coupled first order system as a single second order system, however an exception to this is when our system is linear and of the form:
+\[\dot{x}=ax+by\]
+\[\dot{y}=cx+dy\]
+In this case, we can rearrange to get a single second order equation with the following: Differentiate \(\dot{x}\),
+\[\ddot{x}=a\dot{x}+b\dot{y}\]
+Substitute \(\dot{y}\),
+\[\ddot{x}=a\dot{x}+bcx+bdy\]
+Eliminate remaining \(y\) using \(\dot{x}\) equation,
+\[y=\frac{\dot{x}-ax}{b}\]
+\[\ddot{x}=a\dot{x}+bcx+d\dot{x}-adx\]
+Finally we can rearrange to get our homogenous equation,
+\[\ddot{x}-(a+d)\dot{x}-(bc-ad)x=0\]
+This equation should be relatively easy to solve because it is just a \(2^{nd}\) order ODE with constant coefficients. After solving this equation we know what \(x(t)\) is but we also need to provide \(y(t)\) to finish describing the system. We do this by just plugging our \(x(t)\) into the equation for \(y\) and simplifying.
+\subsection*{The matrix approach using eigenvalues and eigenvectors}
+We can rewrite our system as a matrix equation of the form:
+\[\dot{\textbf{x}}(t)=A\textbf{x}(t)\]
+Where we have:
+\[\textbf{x}(t)=\begin{pmatrix}
+    x(t) \\
+    y(t)
+\end{pmatrix},\qquad A=\begin{pmatrix}
+    a & b \\
+    c & d
+\end{pmatrix}\]
+In this case \(A\) represents a generic coefficient matrix. We can see that this equation will have solutions of the form \(e^{\lambda t}\underline{v}\). Some rearranging of this general form gets us to the equation:
+\[A\underline{v}=\lambda\underline{v}\]
+Which is known as an eigenvalue equation. Here, \(\lambda\) is an eigenvalue and \(\underline{v}\) is the corresponding eigenvector.
+\subsection*{Eigenvalues and eigenvectors of \(2\times2\) matrices}
+We want to know for what values of \(\lambda\) our eigenvalue equation is non-zero. We can rewrite the equation in a form that is more useful:
+\[A\underline{v}=\lambda\underline{v}\implies(A-\lambda I)\underline{v}=0\]
+We want to find the non-trivial solutions to this equation so we are looking for when \(\det{(A-\lambda I)}=0\). The resulting equation is known as the characteristic equation of the matrix and the values of \(\lambda\) satisfying this equation are the eigenvalues. To then calculate the eigenvectors we want to solve \((A-\lambda_1 I)\underline{v}_1=0\).
+\subsubsection*{Properties of eigenvalue/vector pairs}
+\begin{itemize}
+    \item If \(\underline{v}\) is an eigenvector then multiplying by a constant is still an eigenvector, this means we need to make a choice of one component to decide the other.
+    \item It is useful to know that if you have a diagonal matrix then the eigenvalues are the numbers on the diagonal and the corresponding eigenvectors are the corresponding columns of the matrix.
+    \item If the matrix has a single repeated eigenvalue then there is a single corresponding eigenvector.
+    \item If \(A=\lambda I\) then any vector is an eigenvector.
+    \item If the eigenvalues are a complex conjugate pair then the eigenvectors will also be a complex conjugate pair.
+\end{itemize}
+\subsubsection*{Application to solving linear systems}
+We can use the superposition principle to see that a general solution of our matrix equation takes the form:
+\[\textbf{x}(t)=\alpha e^{\lambda_1t}\underline{v}_1+\beta e^{\lambda_2t}\underline{v}_2\]
+Where \(\alpha,\beta\in \mathbb{R}\) are constants to be determined by initial conditions; \(\lambda_1,\lambda_2\) are the eigenvalues of the coefficient matrix and \(\underline{v}_1,\underline{v}_2\) are the corresponding eigenvectors.
+\end{document}

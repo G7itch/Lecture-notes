@@ -1,0 +1,548 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float}
+\title{\textbf{MATH1101 Personal Lecture Notes}}
+\author{Thomas Piercy}
+\date{\today{}}
+
+\newcommand{\df}[2]{\frac{\text{d}#1}{\text{d}#2}}
+\begin{document}
+\maketitle
+\hrulefill
+\setstretch{1.5}
+\section{Module Notation}
+\begin{table}[H]
+    \begin{tabular}{|l|l|}
+        \hline
+        Subset & \(A\subseteq B\)  \\ \hline
+        Proper Subset & \(A\subset B\) \\ \hline
+        Element of & \(a\in A\) \\ \hline
+        Naturals (not 0) & \(\mathbb{N}\) \\ \hline
+        Naturals (inc 0) & \(\mathbb{N}_0\)  \\ \hline
+        Closed interval & \([a,b]\) \\ \hline
+        Open interval & \((a,b)\) \\ \hline
+        Clopen & \((a,b]\) \\ \hline
+        \((-\infty,\infty)\) & \(\mathbb{R}\) \\ \hline
+        Empty set & \(\emptyset\) \\ \hline
+        Cartesian Product & \(A\times B\) \\ \hline
+        For all & \(\forall\)  \\ \hline
+        There exists & \(\exists\) \\ \hline
+        Complex conjugate & \(\bar{z},\,z^*\)  \\ \hline
+        Real component & \(\text{Re}(z),\,\Re(z)\) \\ \hline
+        Imaginary component & \(\text{Im}(z),\,\Im(z)\) \\ \hline
+        function \(f\) from \(A\) to \(B\) & \(f:A\to B\) \\ \hline
+        \(P\) implies \(Q\) & \(P\implies Q\)  \\ \hline
+        \(P\) and \(Q\) & \(P \land Q\) \\ \hline
+        \(P\) or \(Q\) & \(P \lor Q\)  \\ \hline
+        not \(P\) & \(\lnot P\) \\ \hline
+        Converse of \(P\) implies \(Q\) & \(P\impliedby Q\) \\ \hline
+        \(P\) if and only if \(Q\) & \(P\iff Q\) \\ \hline
+        Statement \(R\) is equivalent to \(S\) & \(R\iff S\) \\ \hline
+    \end{tabular}
+\end{table}
+\section{Sets}
+\subsection*{Equivalence}
+\[A=B\iff A\subseteq B \land B\subseteq A\]
+\subsection*{Transitive law}
+If \(A\subseteq B \land B\subseteq C\) then \(A\subseteq C\)
+\subsubsection*{The empty set}
+The empty set represents the set of no elements. The empty set is a subset of all other sets by vacuous truth. It can be shown by the above facts that there is only one empty set:
+\[\text{Let }\emptyset_1,\emptyset_2\text{ be arbitrary empty sets}\]
+\[\text{Suppose } x\in\emptyset_1,\text{then }x\in\emptyset_2\because \emptyset_1\subseteq\emptyset_2\]
+The reverse is also true by the same logic. Since we have:
+\[\emptyset_1\subseteq\emptyset_2,\quad\emptyset_2\subseteq\emptyset_1\]
+then by the definition of set equality:
+\[\emptyset_1=\emptyset_2\]
+There is only one empty set.
+\[\qed\]
+\subsection*{Distributive law of intersection over union}
+\[A\cap(B\cup C)=(A\cap B)\cup(A\cap C)\]
+\subsubsection*{Proof}
+The proof of this is given in the algebra module and relies on showing that an element of the LHS must be an element in the RHS (and vice-versa) hence they must be subsets of each other.
+\subsubsection*{A useful titbit}
+If \(A\subseteq B\) then \(A\cap B=A\)
+This comes up more often that you would think in proofs. It is also sometimes beneficial to write it as an implication:
+\[A\subseteq B\implies A\cap B = A\]
+\[A\subseteq B \implies A\cup B = B\]
+The intuition for this comes from thinking about the cardinality of both sets and whether intersection or union results a set that is bigger or smaller than its components.
+\subsection*{De Morgan's laws}
+\[(A\cap B)'=A'\cup B'\]
+\[(A\cup B)'=A'\cap B'\]
+\subsubsection*{Proof}
+We want to show LHS \(\subseteq\) RHS and RHS \(\subseteq\) LHS.
+\\
+Suppose \(x\in(A\cup B)'\) then \(x\notin(A\cup B)\),
+\\
+Then \(x\notin A\) and \(x\notin B\),
+\\
+Then \(x\in A'\) and \(x\in B'\),
+\\
+\(x\in A'\cap B' \therefore \text{LHS}\subseteq\text{RHS}\)
+\\
+The logic is identical for the other case but in reverse.
+\subsection*{Sets of sets}
+It is perfectly valid to have a set that contains another set.
+\[S= \{1,2,3,\{1,2,3\},\{123\}\} \text{ is a perfectly valid set}\]
+\[\{\emptyset\}\text{ is a valid set and non-empty because it contains the empty set}\]
+A similar idea but done slightly differently is the idea of an ordered pair which comes up when we look at the Cartesian product. There can be some ambiguity between the notation for an open interval and an ordered pair so it should be made clear from context what you are discussing.
+\[A\times B = \{(a,b): a\in A \land b\in B\}\]
+The Cartesian product of the reals with the reals is an important result as it is the set of all points in the x-y plane. It is important enough to have its own notation.
+\[\mathbb{R}\times\mathbb{R}=\mathbb{R}^2\]
+\subsection*{Operations on families of sets}
+Let \(n=\mathbb{N},\quad A_1,A_2,A_3,..,A_n\) be an indexed family of sets. The finite union is:
+\[\bigcup_{k=1}^nA_k=\{x:\exists k\in \{1,2,..,n\}\;\text{where}\;x\in A_k\}\]
+In English this would read like: "There exists an index \(k\) such that \(x\) is in the set at that index". The finite intersection is given by:
+\[\bigcap_{k=1}^nA_k=\{x:\forall k\in\{1,2,...,n\},\;x\in A_k\}\]
+Read as: "\(x\) is in the set at all indices \(k\)". We can also take this idea to an indexed family of infinitely many sets:
+\[\bigcup_{k=1}^{\infty}A_k=\{x:\exists k\in \mathbb{N}\;\text{where}\;x\in A_k\}\]
+The infinite intersection is given by:
+\[\bigcap_{k=1}^{\infty}A_k=\{x:\forall k\in\mathbb{N},\;x\in A_k\}\]
+\subsubsection*{An example}
+Let \(k\in \mathbb{N},\;A_k=\left[\frac{1}{k}-1,1-\frac{1}{k}\right]\)
+\[A_1=\{0\}\]
+\[A_2=\left[-\frac{1}{2},\frac{1}{2}\right]\]
+\[A_1\subset A_2,\;\therefore A_1\cup A_2=A_2\]
+\[A_2\subset A_3,\;\therefore A_2\cup A_3=A_3\]
+\[A_k\cup A_{k+1}=A_{k+1}\]
+As \(k\to\infty,\;A_k\to(-1,1)\), hence:
+\[\bigcup_{k=1}^{\infty}A_k=(-1,1)\]
+\subsubsection*{Application to De Morgan's laws}
+Let \(k\in\mathbb{N}\)
+\[\left(\bigcup_{k=1}^{\infty}A_k\right)'=\bigcap_{k=1}^{\infty}{A_k}'\]
+\[\left(\bigcap_{k=1}^{\infty}A_k\right)'=\bigcup_{k=1}^{\infty}{A_k}'\]
+\section{Complex numbers}
+\subsection*{A word on convention}
+Different to A-levels and below, in mathematics we tend to define the square of the imaginary unit as -1, rather than involving the root. This is partly because it is a more accurate claim most of the time, especially with the joy of not having to deal with the principal root "debate". It is also to align the notation more with other areas of mathematics.
+\[i^2=-1\]
+\subsection*{Important qualities of the modulus}
+Let \(W,Z\in\mathbb{C}\)
+\[\overline{Z+W}=\overline{Z}+\overline{W}\]
+\[\overline{ZW}=\overline{Z}\cdot\overline{W}\]
+\[Z\overline{Z}=\vert Z\vert^2\]
+\[\frac{1}{Z}=\frac{\overline{Z}}{\vert Z\vert^2}\]
+\[\Re(Z)=\frac{1}{2}(Z+\overline{Z})\]
+\[\Im(Z)=\frac{1}{2}(Z-\overline{Z})\]
+Dividing by \(i\) is the same as multiplying by \(-i\). This result is very useful in complex analysis and quantum mechanics. Another key result is the triangle inequality, the proof of which relies up lots of the above statements:
+\[\vert Z+W\vert\leq \vert Z\vert+\vert W\vert\]
+\subsubsection*{Proof}
+\[\vert X\vert^2=X\overline{X}\]
+\[\vert Z+W\vert^2=(Z+W)\overline{(Z+W)}\]
+\[\vert Z+W\vert^2=(Z+W)(\overline{Z}+\overline{W})\]
+\[(\overline{Z}+\overline{W})=\vert Z\vert^2+\vert W\vert^2+\overline{Z}\cdot W+\overline{W}\cdot Z\]
+Let \(K=Z\cdot\overline{W}\), hence:
+\[2\,\Re(K)=K+\overline{K}=\overline{Z}\cdot W+Z\cdot \overline{W}\]
+\[|Z+W|^2=|Z|^2+|W|^2+2\,\Re(K)\]
+\[\Re(K)\leq|K|\]
+Thus:
+\[|Z+W|^2\leq|Z|^2+|W|^2+2|K|\]
+\[|Z+W|^2\leq|Z|^2+|W|^2+2|Z\cdot\overline{W}|\]
+\[|Z+W|^2\leq|Z|^2+|W|^2+2|Z||W|\]
+\[|Z+W|^2\leq(|Z|+|W|)^2\]
+\[|Z+W|\leq|Z|+|W|\]
+\subsection*{The argument}
+\[\arg(\overline{z})=-\arg(z)\]
+\[\overline{e^{ix}}=e^{-ix}=\frac{1}{e^{ix}}\]
+\subsection*{Differentiation of complex numbers}
+We can demonstrate differentiation of complex numbers with the standard intuitive differentiation formulae:
+\[\df{}{x}e^{ix}=ie^{ix}\]
+\[\df{}{x}(\cos(x)+i\sin(x))=\df{}{x}\cos(x)+i\df{}{x}\sin(x)\]
+\[\df{}{x}\cos(x)+i\df{}{x}\sin(x)=-\sin(x)+i\cos(x)\]
+\[-\sin(x)+i\cos(x)=i^2\sin(x)+i\cos(x)\]
+\[i(\cos(x)+i\sin(x))=ie^{ix}\]
+\subsection*{Euler's identity}
+The exponential definition of complex numbers gives rise to what is considered one of the most beautiful results in mathematics:
+\[e^{i\pi}+1=0\]
+\subsection*{De Moivre's Theorem}
+De Moivre's theorem tells us how to deal with complex numbers when raised to powers. Thankfully, everything works exactly as intuition would suggest:
+\[(e^{ix})^n=e^{ixn}\]
+\[z^n=|z|^n(\cos(nx)+i\sin(nx))\]
+As we will see in the next section, De Moivre's provides a great way to calculate the roots of a complex number as well as large powers easily.
+\subsection*{Roots of unity}
+When taking the nth root of 1, we end up with few real numbers and mostly complex results. Roots of unity is the name we give the the mathematics behind calculating these complex roots. If we let \(n\in\mathbb{N}\), then the \(n\) solutions of \(z^n=1\) are given by:
+\[z_k=e^{i\left(\frac{2\pi k}{n}\right)}\]
+Where \(k\in\{1,2,...n-1\}\)
+\subsubsection*{Proof}
+The proof for \(n = 1\) is trivial. For cases \(n \geq 2\) we start by replacing 1 with its complex definition:
+\[z^n=e^{i(2\pi k)},\quad k\in\mathbb{Z}\]
+\[z=\left(e^{i(2\pi k)}\right)^\frac{1}{n}=e^{i\left(\frac{2\pi k}{n}\right)}\]
+This demonstrates the first part of the theorem is true but now we need to examine all cases \(k\). We first define \(k\in\{1,2,...n-1\}\) be the "fundamental set" of values:
+\[k'=k+nk''\qquad (k',k''\in\mathbb{Z},k''\ne0)\]
+The intuitive understanding for this is that \(k''\) represents how many rotations of a full circle we have made, so we are increasing the fundamental set uniformly and without overlap. Both \(k\) and \(k'\) are just integer variables so we can substitute one for the other:
+\[e^{i\left(\frac{2\pi k'}{n}\right)}=e^{i\left(\frac{2\pi}{n}\right)(k+nk'')}\]
+\[e^{i\left(\frac{2\pi}{n}\right)(k+nk'')}=e^{i\left(\frac{2\pi k}{n}\right)}\cdot e^{i\left(\frac{2\pi}{n}\right)nk''}\]
+\[e^{i\left(\frac{2\pi k}{n}\right)}\cdot e^{i\left(\frac{2\pi}{n}\right)nk''}=e^{i\left(\frac{2\pi k}{n}\right)}\cdot e^{i\left(2\pi k''\right)}\]
+\[e^{i\left(\frac{2\pi k}{n}\right)}\cdot e^{i\left(2\pi k''\right)}=1\cdot e^{i\left(\frac{2\pi k}{n}\right)}\]
+Hence every solution for any integer will be a repeat of a solution in the fundamental set of values \(k\).
+\[\qed\]
+\subsection*{Roots of general complex expressions}
+The notion of roots of unity can be generalised to solve for roots of any complex number. If \(z^n=w\) where \(w=re^{it}\) then the roots of \(w\) are given by:
+\[z_k=r^\frac{1}{n}e^{i\left(\frac{t+2\pi k}{n}\right)}\qquad k\in\{1,2,...,n-1\}\]
+\subsubsection*{Proof}
+\[z_0=r^\frac{1}{n}e^{\frac{it}{n}}\]
+\[{z_0}^n=re^{it}=w\]
+so \(z_0\) is a root (known as the principal root). If \(z\) is a root then:
+\[\left(\frac{z}{z_0}\right)^n=\frac{w}{w}=1\]
+so we have a root of unity with \(\left(\frac{z}{z_0}\right)^n\)
+\[\frac{z_k}{z_0}=e^{i\left(\frac{2\pi k}{n}\right)}\]
+\[z_k=e^{i\left(\frac{2\pi k}{n}\right)}\cdot r^{\frac{1}{n}}e^{\frac{it}{n}}\]
+\[z_k=r^{\frac{1}{n}}e^{i\left(\frac{t+2\pi k}{n}\right)}\]
+\[\qed\]
+\section{Functions}
+\subsection*{Defining functions}
+Two key takeaways from the transition from thinking of functions at GCSE and A-level to university are:
+\begin{enumerate}
+    \item A function should describe a correspondence between sets, it doesn't require that this has a formula
+    \item A given element in the first set cannot correspond to two different elements in the second set
+\end{enumerate}
+Let \(A\) and \(B\) be sets, the function \(f:A \to B\) maps every \(a\in A\) to exactly one \(b \in B\). We call \(A\) the domain of \(f\) and \(B\) the codomain. When \(f(a) = b\), we call \(b\) the image of \(a\) and \(a\) the pre-image of \(b\). The range of \(f\) is the set of all \(b\in B\) that have at least 1 pre-image in \(A\). Range is denoted \(f(A)\).
+\subsection*{Types of functions}
+\subsubsection*{Surjective}
+A function \(f : A \to B\) is said to be surjective (or said to map \(A\) onto \(B\)) if for all \(b\in B\) there is \(a\in A\) such that \(f (a) = b\). Every element of \(B\) has a pre-image.
+\subsubsection*{Injective}
+A function \(f : A \to B\) is said to be injective (or one-to-one) if:
+\[\forall a_1,\,a_2\in A,\qquad f(a_1) = f(a_2) \implies a_1=a_2\]
+This means that there is a unique \(a\) pairing to a unique \(b\) for all \(a,\,b\).
+\subsubsection*{Bijective}
+A function \(f : A \to B\) is bijective if it is both injective and surjective - this may also be referred to as a perfect pairing.
+\subsection*{Subsets}
+Suppose \(C\subseteq A\) then:
+\[f(C)=\{f(x):x\in C\}\]
+\(f(C)\) is known as the image of \(C\).
+\\
+Now suppose \(D\subseteq A\), then:
+\[f^{-1}(D)=\{x\in A:f(x)\in D\}\]
+This is the inverse function definition for subsets but this is not a formal inverse function as we will see later.
+\subsection*{Special functions}
+\[|\cdot|-\text{Modulus function}\]
+\[\lceil\cdot\rceil-\text{Ceiling function}\]
+\[\lfloor\cdot\rfloor-\text{Floor function}\]
+\[x_+=\frac{1}{2}(x+|x|)-\text{plus function}\]
+\subsection*{Function composition}
+If we have \(f:A\to B\) and \(g:B\to C\), then:
+\[g\circ f:A\to C;\;g(f(x))\]
+One should note that this composition is only defined when the codomain of \(f\) is a subset of the domain of \(g\). Sometimes we will need to restrict the domain of \(f\) to ensure this is the case. It follows that the range of the composite function \(\subseteq\) the range of the outer function. We also have that if \(f\) and \(g\) are injective/surjective then \(g\circ f\) will also be injective/surjective.
+\subsection*{Inverse functions}
+A properly defined inverse function only exists when the function \(f\) is bijective. We may need to restrict the domain of \(f\) for this to be the case.
+\[f^{-1}(x)=\{(y,x)\in B\times A: (x,y)\in A\times B\}\]
+We have a special case with the identity function which maps an element to itself. This function is alternatively written as the composition of a function with its inverse:
+\[f^{-1}\circ f:A\to A;\; i_A\]
+\subsection*{Other functions}
+Functions can be polynomials (they contain only natural powers of \(x\) and coefficients), they can be algebraic (such that they can be rewritten in the form of polynomial coefficients with natural powers of \(y\)) or they can be transcendental meaning that they are neither of these.
+
+If \(f(-x)=-f(x)\) then we call the function odd. If \(f(-x)=f(x)\) we call the function even. If a function \(f\) is odd and 0 is in its domain then the function passes through the origin. If the functions domain is invariant under \(x\mapsto-x\) then we can split it into its odd and even components:
+\[f(x)=\frac{(f(x)+f(-x))}{2}+\frac{(f(x)-f(-x))}{2}\]
+A function is periodic then for all \(x\) in the domain, there exists \(p\) such that \(f(x+p)=f(x)\).
+\subsection*{Hyperbolics}
+We can have hyperbolic functions, which behave similarly to trig functions but are defined in terms of \(e^x\). You should know or be able to deduce the domain and range of these functions. When converting standard trig identities to hyperbolic identities you keep them mostly the same except when observing Osborn's rule which tells us to negate the sign whenever there are two \(\sin\) functions multiplying each other.
+\subsection*{Linear maps}
+\(f:u\to v\) is a linear map if for all \(u,v\in U\) and any scalar \(c\in\mathbb{R}\) we have:
+\[f(u+v)=f(u)+f(v)\]
+\[f(cu)=cf(u)\]
+Linear maps are operation preserving, it does not matter if the map is applied before or after the \(+\) or \(\cdot\) operation.
+\section{Logic and Proof}
+\subsection*{Key definitions}
+There are some key definitions that we need to know when talking about logic or proof:
+\subsubsection*{Proof}
+\begin{itemize}
+    \item Axiom: A statement that is agreed to be universally true.
+    \item Definition: A precise statement about the meaning of something that does not require proof.
+    \item Theorem: A relationship between mathematical ideas (requires proof).
+    \item Lemma: An auxiliary theorem, often used to prove a larger theorem (requires proof).
+    \item Corollary: A small theorem that follows immediately from a lemma or theorem (usually does not require proof).
+\end{itemize}
+\subsubsection*{Logic}
+\begin{itemize}
+    \item Statement/Proposition: A declaration that is either true of false but not both.
+    \item Predicate: A proposition that depends on the value of some variable(s).
+    \item Domain of discourse: The range of values that we can assign to a variable in a predicate.
+    \item Vacuous truth: Implications that are true because the first condition is not met.
+    \item Tautology: A predicate whose truth value is always true no matter what value you give its variables.  
+    \item Equivalence: Statements \(R\) and \(S\) are equivalent if \(R\iff S\) is a tautology.
+    \item Veracity: Truthfulness of a statement.
+    \item Premise: Statement used as support for an argument, presumed to be true.
+    \item Conclusion: Closing statement that follows logically from all premises.
+    \item Valid: The conclusion follows logically from premises.
+    \item Sound: The conclusion follows logically from premises and the premises are true.
+\end{itemize}
+\subsection*{Important results}
+\subsubsection*{Proof by contradiction}
+The basis of proof by contradiction is formed from the following logic statement:
+\[((\lnot P\implies Q)\land \lnot Q)\implies P\]
+\subsubsection*{Modus ponens}
+\[((P\implies Q)\land Q)\implies P\]
+\subsubsection*{Modus tollens}
+\[((P\implies Q)\land \lnot Q)\implies \lnot P\]
+This can be a bit confusing but you can interpret it as: If we have \(P\), then we must have \(Q\) but we don't have \(Q\) so we cant have had \(P\).
+\subsubsection*{Contrapositive}
+The general form of the contrapositive is as follows:
+\[(P\implies Q)\iff (\lnot Q\implies \lnot P)\]
+A statement and its contrapositive are logically equivalent.
+\subsection*{Negation}
+When we negate a logic statement with quantifiers such as "for all" and "there exists" we should be careful to switch their order in our final statement. This is because the opposite of "for every case, \(x\) is true" is "there is at least one case where \(x\) is false" and \textbf{not} "there are no cases where \(x\) is true.
+\subsection*{Proof}
+There are many types of proofs in mathematics. Most of the proofs that we have looked at so far are deductive proofs.
+\subsubsection*{Some advice}
+\begin{itemize}
+    \item Start by writing what we need to show and what we already know
+    \item Definitions are a good place to start
+    \item Split the proof into sections to make it easier to read and write as well as just generally organise your logic
+    \item At the start of the proof, do not just write out the statement we are trying to prove, as this can be confusing. Instead, write a sentence along the lines of "We are required to show..."
+    \item Using words is invaluable for comprehension. You are trying to write mathematics that others can follow. 
+    
+    \textit{"A proof is like the mathematician’s travelogue. A successful proof is like a set of signposts that allow all subsequent mathematicians to make the same journey. Readers of the proof will experience the same exciting realization as its author that this path allows them to reach the distant peak." - Marcus du Sautoy, 2015}
+\end{itemize}
+\subsection*{Types of proof}
+Broadly speaking most types of proof fall into one of two categories: direct proof or indirect proof. Direct proofs are not always possible and may be more difficult but are generally considered "better" proof even though indirect proofs can be more elegant. We also have proof by induction which kind of straddles the line between proof types and is debated as to if it is a direct proof method because it does not provide any insight into "why" something is true.
+\subsection*{Direct}
+\subsubsection*{Proof by deduction}
+This is the method we use for proofs of the form "show that \(P\implies Q\)". This is reaching a conclusion from a series of deductive steps and is the type of proof mostly done at A-level and below.
+\subsubsection*{Proof by Existence}
+Proofs by existence have two cases in themselves. You can have either a constructive or non-constructive proof. In a constructive proof, you provide a specific value that satisfies your requirements. In a non-constructive proof, you don't provide a value but instead prove that one must exist.
+\subsubsection*{Proof by counter-example}
+Kind of the negated sibling of proof by existence, as you show that there is an example for which the conjecture fails. Statements of the form:
+\[Q\iff\forall x,P(x)\text{ is true}\]
+become:
+\[\lnot Q\iff\exists x: P(x) \text{ is False}\]
+This proof type can be a little risky as it requires intuition about the veracity of the original statement and if the statement we wish to disprove is actually true then we cannot find a counter-example.
+\subsubsection*{Proof by cases/exhaustion}
+This proof method relies on splitting the conjecture into a finite series of cases and proving each one individually. A common time this is used is for proofs in number theory with the cases odd and even.
+\subsection*{Indirect proofs}
+As mentioned it is sometimes extremely difficult or even impossible to make progress using a direct proof method, in this case we need to use an indirect proof technique.
+\subsubsection*{Proof by contradiction}
+A proof by contradiction always relies on the same 3 steps:
+\begin{enumerate}
+    \item Assume \(\lnot P\)
+    \item Deduce \(Q\)
+    \item Show \(\lnot Q\) from other known facts/work
+\end{enumerate}
+If we do this then we have \(Q \land\lnot Q\), a contradiction that means our initial assumption was incorrect.Therefore \(P\) must be true. The hardest part about proof by contradiction is knowing when to use it.
+\subsubsection*{Proof by the contrapositive}
+It is sometimes easier to prove the contrapositive of a statement rather than the statement itself. We can do this because we know the contrapositive is logically equivalent to the original statement.
+\\
+Let \(R:P\implies Q\) and \(S: \lnot Q\implies\lnot P \)
+\begin{table}[H]
+    \begin{tabular}{|l|l|l|l|l|l|l|}
+        \hline
+        \textbf{P} & \textbf{Q} & \(\lnot \textbf{P}\) & \(\lnot\textbf{Q}\) & \textbf{R} & \textbf{S} & \(R\iff S\) \\ \hline
+        T & T & F & F & T & T & \textbf{T} \\ \hline
+        T & F & F & T & F & F & \textbf{T} \\ \hline
+        F & T & T & F & T & T & \textbf{T} \\ \hline
+        F & F & T & T & T & T & \textbf{T} \\ \hline
+    \end{tabular}
+\end{table}
+\subsection*{Proof by induction}
+Suppose we have a predicate \(P(n),\,\in\mathbb{N}\) and we wish to prove \(P(n)\) is true \(\forall n\). We do this by mathematical induction. The general steps to a proof by induction are always the same:
+\begin{enumerate}
+    \item Show \(P(n)\) is true for some base case. \(P(1)\) if the domain of discourse is \(\mathbb{N}\). This is also called the anchor step
+    \item Assume \(P(k)\) for some arbitrary \(k\in\mathbb{N}\)
+    \item Demonstrate \(P(k)\implies P(k+1)\). This is the principle of mathematical induction (PMI)
+    \item Conclude if true for our base case and assumed true for any case, then true for the next case means true for all cases in the domain of discourse.
+\end{enumerate}
+There are actually two types of proof by induction that are logically equivalent but are used in different situations to make the proof easier.
+\subsubsection*{Weak mathematical induction}
+Weak mathematical induction is the bread and butter of induction. Our inductive hypothesis is that \(P(k)\) holds given the base case holds. This is usually the easier form of proof by induction and as it has the same logical strength as strong induction, you usually want to use this form.
+\subsubsection*{Strong mathematical induction}
+In strong mathematical induction we strengthen our inductive hypothesis to be that all of \(P(1),P(2),...P(k)\) hold rather than just \(P(k)\). Usually there is absolutely no need to include this extra step and it just convolutes stuff, although it is necessary for certain proofs and makes it easier to prove recursive statements.
+\subsection*{Inequalities}
+We know that if we have \(a=b\) and \(c=d\) then:
+\[ac=bd\]
+but this does not generalise into inequalities as we can see by the following example. We have \(-4<-3\) and \(-2<-1\) but we do not have that \((-4)\cdot(-2)<(-3)\cdot(-1)\)
+\subsubsection*{Rules of inequalities}
+Let \(x,\,y,\,z\in\mathbb{R}\):
+\begin{itemize}
+    \item Exactly one of the following holds:\(\quad x<y,\quad x=y,\quad x>y\) (Trichotomy)
+    \item \(x<y\iff y>x\) (Reflexivity)
+    \item If \(x<y\) and \(y<z\) then \(x<y\) (Transitivity)
+    \item If \(x<y\) then \(x+a<y+a\) (Addition compatibility)
+    \item If \(x<y\) and \(a>0\) then \(ax<ay\) (Multiplication compatibility)
+    \item \(x<y\implies -x>-y\) (Additive inverse)
+    \item \(x<y\implies\frac{1}{x}>\frac{1}{y}\) (Multiplicative inverse)
+\end{itemize}
+\section{Cardinality}
+The cardinality of a set is denoted \(\vert A\vert\) and is expressed in cardinal numbers. The simplest set of cardinal numbers is \(\mathbb{N}_0\).
+\subsubsection*{Equinumerous-ness}
+Two sets \(A,\,B\) are said to be equinumerous if they have the same cardinality. This only occurs when there exists a bijection between them.
+\subsubsection*{Finite}
+A set \(A\) is said to be finite if:
+\[A=\emptyset\]
+Or
+\[\exists n\in\mathbb{N}\text{ and a bijection }f:\underbrace{\{1,2,3,...n\}}_{I_n}\to A\]
+If a cardinal number is not finite it is said to be transfinite.
+\subsection*{Pigeonhole principle}
+The pigeonhole principle says that if we have \(n+1\) pigeons and \(n\) pigeonholes, then at least 1 pigeonhole contains 2 pigeons. In mathematics we extend this more generally to the notion of set cardinality.
+
+Mathematically the pigeonhole principle says that if \(\vert A\vert>\vert B\vert\) then there are no injections from \(A\) to \(B\). The easiest way to prove this is by looking at the contrapositive:
+\[\exists \text{ an injection } f:A\to B\implies\vert A\vert\leq\vert B\vert\]
+It immediately follows from definition that this is true.
+\subsection*{Cardinality of finite unions}
+In the simple case with 2 sets then the cardinality of their union will depend on whether or not the sets share any element (are not disjoint). If \(A_1\cap A_2=\emptyset\):
+\[\vert A_1\cup A_2\vert=\vert A_1\vert+\vert A_2\vert\]
+If \(A_1\cap A_2\ne\emptyset\) then we have:
+\[A_1\backslash A_2\cap A_2=\emptyset\]
+\[A_1\cup A_2=(A_1\backslash A_2)\cup A_2\]
+and once again we have the union of two disjoint sets:
+\[\vert A_1\cup A_2\vert=\vert A_1\backslash A_2\vert +\vert A_2\vert\]
+\[\vert A_1\backslash A_2\vert=\vert A_1\vert -\vert A_1\cap A_2\vert\]
+hence:
+\[\vert A_1\cup A_2\vert=\vert A_1\vert + \vert A_2\vert -\vert A_1\cap A_2\vert\]
+\subsubsection*{Generalised to finite \(n\) sets}
+\[\left|\bigcup_{i=1}^nA_i\right|=\sum_{k=1}^n(-1)^{n-1}\left(\sum_{1\leq i_1<\dots<i_k\leq n}\vert A_1\cap\cdots\cap A_{i_k}\vert\right)\]
+which can also be written
+\[\left|\bigcup_{i=1}^nA_i\right|=\sum_{J\subseteq I_n}^n(-1)^{\vert J\vert-1}\left|\bigcap_{j\in J}A_j\right|\]
+It is not really important to know these formulas, it is useful if you can understand them but generally in practice you follows the inclusion-exclusion principle and add the cardinalities of each individual set and then subtract all pairs and then add all trios, etc.
+\subsection*{Cardinality of infinite sets}
+A set \(A\) is infinite if:
+\begin{itemize}
+    \item \(A\) is not empty
+    \item There does not exist a bijection between \(I_n\) and \(A\). This is because there is no way to have a bijection from a set with a finite amount of elements to one with a transfinite number of them.
+\end{itemize}
+Set \(A\) is countably infinite if there is a bijection between \(A\) and \(\mathbb{N}\). A set is countable if it is finite or countably infinite. The cardinality number of a countably infinite set is \(\aleph_0\).
+\subsection*{Countable sets}
+A useful trick is that if the elements of a set can be ordered in an unambiguous way then it is countable. We are looking for the set to either be finite or there to be a bijection between the set and \(\mathbb{N}\). A set \(A\) is countable if:
+\begin{itemize}
+    \item The set is finite
+    \item There exists a surjection \(f:\mathbb{N}\to A\)
+    \item There exists a injection \(g:A\to \mathbb{N}\)
+\end{itemize}
+On top of this all of these facts imply each other.
+\subsection*{Union of countable sets}
+If \(A\) and \(B\) are non-empty countable sets then \(A\cup B\) is also countable. The proof of this is rather elegant. Since we know \(A\) and \(B\) are countable we know there exists a surjection from the naturals to them. Define:
+\[f:\mathbb{N}\to A\]
+\[g:\mathbb{N}\to B\]
+\[h:\mathbb{N}\to A\cup B;h(n)=\begin{cases}
+f\left(\frac{n+1}{2}\right),\quad &n\text{ is odd} \\
+g\left(\frac{n}{2}\right),\quad &n\text{ is even}
+\end{cases}\]
+This is a rather beautiful function that encompasses both the values:
+\[f(n),\,\forall n\in\mathbb{N}\]
+\[g(n),\,\forall n\in\mathbb{N}\].
+\subsubsection*{Union of infinite countable sets}
+If \(A_1,A_2,...\) be an indexed family of sets, all of which are countable, then
+\[\bigcup_{k=1}^\infty A_k\]
+is also countable.
+\subsection*{Counting the rationals}
+In a somewhat unintuitive manner, \(\mathbb{Q}\) has the same cardinality as \(\mathbb{N}\). This is proved by constructing a snaking map from the naturals to the rationals. The cardinality of \(\mathbb{N}\times\mathbb{N}\) is shown in the same way.
+\subsection*{Uncountable sets}
+The most famous example of an uncountable set is the reals, \(\mathbb{R}\). this is shown using cantor's diagonal argument.
+\section{ODEs}
+An ordinary differential equation involves an unknown function of one variable and its derivatives. When dealing with ODEs we wish to find a solution, which is a function that satisfies the equation at all points in its domain. An exact solution written algebraically is called an analytical solution. An approximate solution found using numerical methods is a numerical solution
+\subsubsection*{Classifying ODEs}
+\subsubsection*{Order}
+The order of an ODE is the highest power derivative in the equation.
+\subsubsection*{Degree}
+The degree of an ODE is the positive integer power to which the highest power derivative is raised to:
+\[\left(\frac{\text{d}^2y}{\text{d}x^2}\right)^{3}-\left(\frac{\text{d}y}{\text{d}x}\right)^7=4y(x)\]
+Is order 2, degree 3.
+\subsection*{Linearity}
+A linear ODE is given in the form:
+\[a_n(x)\frac{\text{d}^ny}{\text{d}x^n}+a_{n-1}(x)\frac{\text{d}^{n-1}y}{\text{d}x^{n-1}}+...+a_1(x)\frac{\text{d}y}{\text{d}x}+a_0(x)y=b(x)\]
+Where each \(a_i(x)\) is a continuous function over some subset \(I\subseteq \mathbb{R}\). The coefficient terms, \(a_i(x)\) in a linear ODE do not have to be linear themselves. In a linear ODE we cannot have non-linear functions of \(y\) or any \(y\) dependant terms multiplying each other.  
+\subsubsection*{Homogenous linear ODEs}
+A homogenous linear ODE is an ODE of the same form as a linear one, except \(b(x)=0\) for all \(x\). Hence:
+\[a_n(x)\frac{\text{d}^ny}{\text{d}x^n}+a_{n-1}(x)\frac{\text{d}^{n-1}y}{\text{d}x^{n-1}}+...+a_1(x)\frac{\text{d}y}{\text{d}x}+a_0(x)y=0\]
+\subsection*{First order ODE's}
+Consider the first order ODE:
+\[y'=f(x,y)\]
+Where f is a function \(f:G\to\mathbb{R}\) and \(G\subseteq\mathbb{R}^2\). A function \(u:I\to\mathbb{R}\) for the interval \(I\subseteq\mathbb{R}\) is called a solution to the ODE on \(I\), given that for all \(x\in I\):
+\begin{itemize}
+    \item \(u\) and \(u'\) are both continuous on \(I\)
+    \item \((x,u(x))\in G\), meaning that all of the solution points are in the domain of \(f\)
+    \item \(u'(x)=f(x,u(x))\), meaning that \(u\) satisfies the ODE
+\end{itemize}
+\subsection*{Initial Value problems}
+Often we want to solve an ODE with respect to some initial conditions. To specify an initial condition we need to provide the function, some point that it passes through in its domain and a value for that point.
+\[y'=f(x,y),\quad y(x_0)=y_0\]
+The solution to an initial value problem satisfies both the ODE and the initial condition.
+\subsubsection*{Peano's theorem}
+Peano's theorem states that if \(f\) is continuous in \(x\) and \(y\) then a solution is guaranteed to exist at or near \(x=x_0\), but this solution may not be unique.
+\subsubsection*{Informal Picard-Lindelof theorem}
+if \(f\) is continuous in \(x\) and \(y\) and \(y\) "does not vary too quickly", then there exists \(\epsilon>0\) such that the IVP has a unique solution for \((x_0-\epsilon,x_0+\epsilon)\).
+\subsection*{Solving first order ODEs}
+\subsubsection*{Functions of only \(x\)}
+To begin, lets start with the simplest case:
+\[y'=f(x)\]
+then from the fundamental theorem of calculus we know that:
+\[y=\int_{x_0}^xf(t)\,\text{d}t+C\]
+Where \(t\) is a dummy variable.
+\subsubsection*{Separable ODEs}
+A first order ODE is said to be separable, when we can write it in the form:
+\[y'=g(x)h(y)\]
+Assuming \(h(y)\ne0\) the solution can be found by:
+\[\int\frac{1}{h(y)}\,\text{d}y=\int g(x)\,\text{d}x+C\]
+There are also uniqueness conditions on ODEs of this form which are slightly more restrictive than normal. We require that both of our separating functions \(g\) and \(h\) are continuous with a continuous first derivative. If we have a solution and we satisfy the initial conditions then we have uniqueness for ODEs in this form.
+\subsubsection*{Euler homogeneity}
+We can also solve ODEs by separation when they are in the form:
+\[y'=f\left(\frac{y}{x}\right)\]
+ODEs like this can be solved by separation of variables after using a suitable substitution. This is known as Euler homogeneity. Introduce:
+\[v(x)=\frac{y}{x}\implies y=vx\]
+\[y'=v'x+v=f(v)\]
+\[v'=\frac{1}{x}\left(f(v)-v\right)\]
+Which is separable for \(v\), so we can solve for our solution for \(v\) and then just convert back to \(y\) by multiplying by \(x\).
+\subsubsection*{Integrating factor}
+The integrating factor method is used to solve ODEs of the form:
+\[y'+a(x)y=b(x)\]
+So called standard form. The way to solve ODEs in standard form follows a set pattern:
+\begin{enumerate}
+    \item Multiply both sides of the ODE with the integrating factor \(e^{\int a(x)\,\text{d}x}\)
+    \item Rewrite the LHS using reverse product rule.
+    \item Integrate both sides with respect to \(x\)
+    \item Rearrange for an explicit equation of \(y\)
+\end{enumerate}
+\subsection*{Second order ODEs}
+When solving second order ODEs we follow a similar method whether or not they are homogenous. We first consider the auxiliary equation, which will give us either two roots or one repeated root. We can then use the standard form of solution to equations with that style of root - this form follows from making an Ansatz. If we have an inhomogeneous second order ODE, we do the same but have to add on the particular integral, which we find by taking a trial function and testing it. There is also a list of common trial functions that you should remember.
+\[ay''+by'+cy=0\]
+General solution forms:
+\begin{table}[H]
+    \begin{tabular}{|l|l|l|}
+    \hline
+        \textbf{Root type} & \textbf{Roots} & \textbf{General solution} \\ \hline
+        Two distinct real roots & \(\alpha,\,\beta\) & \(y(x)=Ae^{\alpha x}+Be^{\beta x}\) \\ \hline
+        One repeated root & \(\alpha\) & \(y(x)=Ae^{\alpha x}+Bxe^{\alpha x}\) \\ \hline
+        Complex roots & \(\alpha\pm\beta i\) & \(y(x)=e^{\alpha  x}\left(A\cos(\beta x)+B\sin(\beta x)\right)\) \\ \hline
+    \end{tabular}
+\end{table}
+Importantly we need to state our assumption of solutions in the form \(e^{mx}\) before we can jump to the auxiliary equation. this is just due to increased rigour at university. We can differentiate our general solution if we have to find initial conditions, which will let us substitute in and get a particular solution. We can also find the particular solution when we have boundary conditions:
+\[y(x_0)=y_0\text{ and }y'(x_0)=y_1\]
+or
+\[y(x_0)=y_0 \text{ and }y(x_1)=y_1\]
+\subsubsection*{Inhomogeneous second order ODEs}
+We need to make an educated guess at a particular solution of the ODE. We call this our trial function and it is usually based on the general form of the RHS \(f(x)\). Example trial functions are:
+\begin{table}[H]
+    \begin{tabular}{|l|l|l|}
+    \hline
+        \textbf{Type of RHS} & \textbf{Example} & \textbf{Potential trial function} \\ \hline
+        Polynomial & \(6x^2+1\) & \(y_p=Cx^2+Dx+E\) \\ \hline
+        Exponential & \(6e^{5x}\) & \(y_p=Ce^{5x}\) \\ \hline
+        Trigonometric & \(\cos(5x)\) & \(y_p=C\cos(5x)+D\sin(5x)\) \\ \hline
+    \end{tabular}
+\end{table}
+After we choose an appropriate trial we substitute the function into the ODE and determine constants. We can then add this particular integral to our complementary function to get the general solution. It is worth remembering that the trial function needs to be linearly independent to all terms in the complementary function, meaning we sometimes need to multiply by \(x\).
+\subsubsection*{Combinations of functions}
+When we have a sum of two functions on the RHS of our ODE we can just sum the appropriate trial functions, when we multiply two functions on the RHS we can take the product of their trial functions. However, it is important to note that we always need 2 constants on the right hand side for matching when taking a product, so often we will need to condense a constant.
+\subsection*{Non-assessed but interesting}
+\subsubsection*{Method of variation of parameters}
+The method we have looked at so far (known as the method of undetermined coefficients) works for solving second order inhomogeneous differential equations most of the time, although it can fail. An example of a RHS for which you cannot use the current method is \(\tan(x)\). There is another method to solve equations like this known as the method of variation of parameters although it is beyond the scope of the module.
+\[y''+y=\tan(x)\]
+Let \(y_h\) be the general solution to the homogeneous version of y, then:
+\[y_h=A\sin(x)+B\cos(x)\]
+Now lets say that instead of being multiplied by a constant, we are multiplying by some function - since we know that if we multiply by a constant we get 0 instead of \(f(x)\) :
+\[y=u_1(x)\sin(x)+u_2(x)\cos(x)\]
+then:
+\[y'={u_1}'\sin(x)+u_1\cos(x)+{u_2}'\cos(x)-u_2\sin(x)\]
+Set \({u_1}'\sin(x)+{u_2}'\cos(x)=0\). We can do this because we are trying to find any such function that satisfies our problem, then any constraint will restrict our domain but necessarily still solve the problem. Another reason that this is alright to do is that before introducing this constraint we have 2 degrees of freedom but only one restriction, so we should expect there to be another restriction somewhere.
+\[y'=u_1\cos(x)-u_2\sin(x)\]
+\[y''={u_1}'\cos(x)-u_1\sin(x)-{u_2}'\sin(x)-u_2\cos(x)\]
+plugging this into the original equation nets us:
+\[{u_1}'\cos(x)-u_1\sin(x)-{u_2}'\sin(x)-u_2\cos(x)+u_1\sin(x)+u_2\cos(x)=\tan(x)\]
+\[{u_1}'\cos(x)-{u_2}'\sin(x)=\tan(x)\]
+We now have two constraints and two parameters, we can do simultaneous equations with them:
+\[{u_1}'\cos(x)-{u_2}'\sin(x)=\tan(x)\]
+\[{u_1}'\cos(x)+{u_2}'\sin(x)=0\]
+multiply top equation by \(\cos(x)\) and bottom equation by \(\sin(x)\), so that they have an equal term. Now we can sum them to get:
+\[{u_1}'\cos^2(x)+{u_1}'\sin^2(x)=\sin(x)\]
+\[{u_1}'=\sin(x)\implies u_1=c_1-\cos(x)\]
+\[{u_2}'=\tan(x)\sin(x)\implies u_2=\frac{1}{2}\ln\left|\frac{\sin(x)-1}{\sin(x)+1}\right|+\sin(x)+c_2\]
+\subsubsection*{Lipschitz continuity}
+At a low level, Lipschitz continuity is about y not changing "too fast". What this looks like is plotting a double cone for some real slope at a pair of points on the curve \((x,y)\) will never contain any part of the graph. It essentially provides a limit to how fast a graph can change.
+\[f:\mathbb{R}\to\mathbb{R},\quad K>0\]
+\[\vert f(x_0)-f(x_1)\vert \leq K\vert x_0-x_1\vert\]
+\end{document}
