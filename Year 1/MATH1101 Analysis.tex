@@ -483,5 +483,25 @@ Let \(I\subset \mathbb{R}\) be an interval and \(f:I\to\mathbb{R}\) be continuou
 \subsubsection*{Corollary}
 With any continuous strictly monotone function the inverse is also continuous. This is a very helpful fact for proving things about the continuity of inverses.
 \subsubsection*{A remark}
-We should note that whilst it is true that a function being strictly monotone implies that the function is injective however the converse is not necessarily true. If \(I\) is an interval and \(f(I)\) is continuous then \(f(x)\) is continuous along \(I\): This is because of the intermediate value theorem saying that we cannot skip a value in the range.  
+We should note that whilst it is true that a function being strictly monotone implies that the function is injective however the converse is not necessarily true. If \(I\) is an interval and \(f(I)\) is continuous then \(f(x)\) is continuous along \(I\): This is because of the intermediate value theorem saying that we cannot skip a value in the range. 
+\subsection*{Uniform continuity (optional material)}
+\subsubsection*{Definition}
+Let \(I\) be an interval and \(f:I\to\mathbb{R}\) be a function. \(f\) is called uniformly continuous on \(I\) if for every \(\varepsilon>0\) there exists \(\delta>0\) such that for any \(x,y\in I\) with \(|x-y|<\delta\) we have \(|f(x)-f(y)|<\varepsilon\). If \(I\) is an interval and \(f\) is a uniformly continuous function on \(I\), then \(f\) is a continuous function on \(I\). If \(f\) is uniformly continuous then for every \(\varepsilon>0\) we can pick a \(\delta>0\) that does not depend on our value of \(x_0\).
+\subsubsection*{Continuous functions on closed bounded intervals}
+For \(a<b\), if \(f:[a,b]\to\mathbb{R}\) is continuous on \([a,b]\) then it is uniformly so. This is proved using a contradiction by Bolzano-Weierstrass
+\section{Differentiation}
+\subsection*{Definition}
+Let \(I\) be a non-degenerate interval of \(\mathbb{R}\), \(x_0\in I\) and \(f:I\to\mathbb{R}\) be a function. Suppose \(x_0\) is non an endpoint of \(I\). We say \(f\) is differentiable at \(x_0\) if the limit:
+\[\lim_{x\to x_0}\frac{f(x)-f(x_0)}{x-x_0}=f'(x_0)\]
+exists. This is then called the derivative of \(f\) at \(x_0\). If \(x_0\) is an endpoint of \(I\) then we take a one sided limit and subsequently call this the one-sided derivative. Essentially what we are doing here is looking at the limiting gradients of chords along the curve.
+\subsubsection*{Example}
+The function \(h:\mathbb{R}\to\mathbb{R};\, h(x)=|x|\) is differentiable for any \(x_0\in\mathbb{R}\backslash\{0\}\). We have \(h'(x)=1\) for \(x>0\), \(h'(x)=-1\) for \(x<0\), however despite being defined at \(x=0\) we do not have differentiability there because even though both one sided limits exist, they disagree. 
+\subsection*{Chord functions}
+Let \(I\subseteq \mathbb{R}\) be an interval, \(f:I\to\mathbb{R}\) and \(x_0\in I\). Then \(f\) is differentiable at \(x_0\) if and only if there exists \(\hat{f}:I\to\mathbb{R}\) such that \(\forall x\in I\):
+\[f(x)=f(x_0)+(x-x_0)\hat{f}(x)\]
+and such a \(\hat{f}(x)\) is continuous at \(x_0\). \(\hat{f}\) is known as a chord function, although this naming convention is not standard in the literature.
+\subsubsection*{Corollary}
+If a function is differentiable at a point it is also continuous at that point. However, the converse is not necessarily true.
+\subsubsection*{Remark}
+An extension to the above would be that all differentiable functions are continuous but not all continuous functions are differentiable (for example the Weierstrass function).
 \end{document}
