@@ -633,4 +633,72 @@ We want to find the non-trivial solutions to this equation so we are looking for
 We can use the superposition principle to see that a general solution of our matrix equation takes the form:
 \[\textbf{x}(t)=\alpha e^{\lambda_1t}\underline{v}_1+\beta e^{\lambda_2t}\underline{v}_2\]
 Where \(\alpha,\beta\in \mathbb{R}\) are constants to be determined by initial conditions; \(\lambda_1,\lambda_2\) are the eigenvalues of the coefficient matrix and \(\underline{v}_1,\underline{v}_2\) are the corresponding eigenvectors.
+\subsection*{Phase portraits for planar linear systems}
+The qualitative behaviour of the linear system is determined by the eigenvalues of \(A\). The matrix can have two distinct real eigenvalues, a complex conjugate pair of eigenvalues or a repeated eigenvalue.
+\subsection*{Distinct real eigenvalues}
+\[\textbf{x}(t)=\alpha e^{\lambda_1t}\underline{v}_1+\beta e^{\lambda_2t}\underline{v}_2\]
+If the system starts on one of the eigenvectors then the solution will move along this eigenvector for all time. If the corresponding eigenvalue is positive then the solution will move away from the equilibrium point and if it is negative then it will move towards the equilibrium point. Since no trajectories can cross trajectories and the eigenvectors are trajectories, we cannot cross them this makes them helpful for drawing the phase portrait. We have some different cases depending on the signs of the eigenvalues.
+\subsubsection*{Case 1: \(0<\lambda_1<\lambda_2\)}
+We see that \(|x|\to0\) as \(t\to\infty\) and \(x\to0\) as \(t\to-\infty\). This is n=known as an unstable node and is an unstable equilibrium point.
+\subsubsection*{Case 2: \(\lambda_1<\lambda_2<0\)}
+Here \(x\to0\) as \(t\to\infty\) and \(|x|\to\infty\) as \(t\to-\infty\). In this case we call the equilibrium point a stable node and it is an asymptotically stable equilibrium point.
+\subsubsection*{Case 3: \(\lambda_1<0<\lambda_2\)}
+This case is known as a saddle node. We call \(\underline{v}_1\) the separatrix because coming above or below this line changes the direction of the trajectory, landing slightly on the other side of this line will lead to drastically different long term behaviour. This is an unstable equilibrium point.
+\subsubsection*{Case 4: \(\lambda_1=0,\,\lambda_2\ne0\)}
+In this case the nullclines coincide therefore every point along this line is an equilibrium point, we say that this is a line of non-isolating equilibrium points. These points can either be Lyapunov stable or unstable depending on the value of \(\lambda_2\).
+\subsection*{Example}
+\[\dot{x}=-3x+y\]
+\[\dot{y}=-2x\]
+This system can be written as the matrix equation:
+\[\dot{\textbf{x}}=A\textbf{x}\]
+Where,
+\[\textbf{x}=\begin{pmatrix}
+    x \\
+    y
+\end{pmatrix},\qquad A=\begin{pmatrix}
+    -3 & 1 \\
+    -2 & 0
+\end{pmatrix}\]
+Then we are interested in the characteristic equation:
+\[\det{\begin{pmatrix}
+    -3-\lambda &1 \\
+    -2 & -\lambda
+\end{pmatrix}}=0\]
+\[-\lambda(-3-\lambda)+2=0\]
+\[(\lambda+2)(\lambda+1)\]
+\[\lambda_1=-2,\,\lambda_2=-1\]
+Both eigenvalues are negative so we know we have a stable node at the origin. Now we need to solve for the eigenvectors:
+\[(A+2I)\underline{v}_1=0\]
+\[\begin{pmatrix}
+    -1 & 1 \\
+    -2 & 2
+\end{pmatrix}\begin{pmatrix}
+    v_{11} \\
+    v_{12}
+\end{pmatrix}=\begin{pmatrix}
+    0 \\ 0
+\end{pmatrix}\]
+\[v_{11}=v_{12}\]
+Choose a simple solution \(v_{11}=1\)
+\[\underline{v}_1=\begin{pmatrix}
+    1 \\ 1
+\end{pmatrix}\]
+Now we have to do the same with the other eigenvector:
+\[(A+I)\underline{v}_2=0\]
+\[\begin{pmatrix}
+    -2 & 1 \\
+    -2 & 1
+\end{pmatrix}\begin{pmatrix}
+    v_{21} \\ v_{22}
+\end{pmatrix}=\begin{pmatrix}
+    0 \\ 0
+\end{pmatrix}\]
+\[-2\underline{v}_{21}+\underline{v}_{22}=0\]
+Choose a simple solution \(v_{21}=1\)
+\[\underline{v}_2=\begin{pmatrix}
+    1 \\ 2
+\end{pmatrix}\]
+And now we have all the information we need to plot a full phase portrait.
+\subsubsection*{Advice}
+When drawing phase portraits draw the eigenvectors and the nullclines to make it easy to see which trajectories you need to follow from any starting condition. Adding in these easy support lines makes it much simpler to draw accurate phase portraits. However, in an exam make sure to do the drawing in pencil and to bring a rubber because you will likely make at least one mistake and it can be hard to correct. The most important thing when plotting phase portraits is to make sure none of the trajectories cross.
 \end{document}

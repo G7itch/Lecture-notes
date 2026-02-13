@@ -450,4 +450,17 @@ Elements of \(V\) are called vectors. \(\mathbb{R}\) is referred to as the field
     \item \((\mathbb{C},+,\times)\)
     \item \((\mathbb{F}_2,+,\times)\)
 \end{itemize}
+\subsubsection*{Some extra facts}
+There are also some extra facts that are not considered axioms but can be proved from the original axioms.
+\begin{itemize}
+    \item \(\lambda\cdot0=0\)
+    \item \(0\cdot v=0\)
+    \item \((-1)\cdot v=-v\)
+    \item \((-\lambda)\cdot v=-(\lambda\cdot v)=\lambda\cdot(-v)\)
+\end{itemize}
+\subsection*{Spanning vector spaces}
+Let \(\emptyset \ne S\subset V\) where \(V\) is a vector space. The span of \(S\) is \(\langle S\rangle=\left\{\lambda_1v_1+\dots+\lambda_rv_r:r\in\mathbb{N},\lambda_i\in\mathbb{R},v_i\in S\right\}\). This is identical to the notion of span we had before, the main purpose of this redefinition is to broaden our intuition to vector spaces not just being part of \(\mathbb{R}^n\).
+\subsection*{Finite-dimensional subspaces}
+A vector space \(V\) is called finite-dimensional if and only if there exists a finite set of vectors that spans \(V\). Some examples of finite dimensional vector spaces are \(\mathbb{R}^n,\,M_{2\times2}(\mathbb{R}),\,\mathbb{R}[x]_{\leq d}\). If \(W\subset V\) are both vector spaces with the same notion of addition between vectors and scalar multiplication, we then say \(W\) is a subspace of \(V\). Here we write \(W\leqslant V\).
+\[\mathbb{R}[x]_{\leq d}<\mathbb{R}[x]<C^\infty(\mathbb{R})<C(\mathbb{R})\]
 \end{document}
