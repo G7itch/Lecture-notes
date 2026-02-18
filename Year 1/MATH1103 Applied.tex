@@ -701,4 +701,65 @@ Choose a simple solution \(v_{21}=1\)
 And now we have all the information we need to plot a full phase portrait.
 \subsubsection*{Advice}
 When drawing phase portraits draw the eigenvectors and the nullclines to make it easy to see which trajectories you need to follow from any starting condition. Adding in these easy support lines makes it much simpler to draw accurate phase portraits. However, in an exam make sure to do the drawing in pencil and to bring a rubber because you will likely make at least one mistake and it can be hard to correct. The most important thing when plotting phase portraits is to make sure none of the trajectories cross.
+\subsection*{Complex eigenvalues}
+We also need to consider the case when the eigenvalues are of the form \(\lambda_{1,2}=\mu\pm i\omega\). Then the corresponding eigenvectors are:
+\[\textbf{v}_1=\begin{pmatrix}
+    1 \\
+    (\mu+i\omega-a)/b
+\end{pmatrix},\qquad\textbf{v}_2=\begin{pmatrix}
+    1 \\
+    (\mu-i\omega -a)/b
+\end{pmatrix}\]
+The general solution therefore is:
+\[\textbf{x}(t)=e^{\mu t}\left(\alpha e^{i\omega t}\begin{pmatrix}
+    1 \\
+    z
+\end{pmatrix}+\beta e^{i\omega t}\begin{pmatrix}
+    1 \\
+    \bar{z}
+\end{pmatrix}\right)\]
+Where \(z=(\mu+i\omega-a)/b=re^{i\theta}\). Since this is real we must have \(\beta=\bar{\alpha}\), hence:
+\[\textbf{x}(t)=2e^{\mu t}\begin{pmatrix}
+    \Re(\alpha)\cos{\omega t - \Im(\alpha)\sin{\omega t}} \\
+    r\Re(\alpha)\cos({\omega t+\theta)-r\Im(\alpha)\sin({\omega t+\theta})}
+\end{pmatrix}\]
+\subsubsection*{Case 1: \(\mu\ne0\)}
+The above equation shows that solutions oscillate and either decrease \((\mu<0)\) or increase \((\mu>0)\) in amplitude. This means that trajectories in the phase plane either spiral towards or away from the equilibrium point. If \(\mu<0\) we call the equilibrium point a stable spiral and if \(\mu>0\) we have an unstable spiral. Stable spirals are asymptotically stable equilibrium points. Unstable spirals are unstable equilibrium points. The easiest way to tell the direction of the spiral is to pick a point and calculate the trajectory, a good point to pick is on the x-axis looking at the trajectory when. We know that for \(y=0\) we have \(\dot{y}=cx\) so if \(c>0\) we are moving anticlockwise, if \(c<0\) we are moving clockwise.
+\subsubsection*{Case 2: \(\mu=0\)}
+If \(\mu=0\) then the amplitude of the solutions does not increase or decrease so the trajectories cannot get any closer or further away from the equilibrium point. The trajectories are periodic, forming closed ellipses around the equilibrium point. In this case the equilibrium point is called a linear centre. A linear centre is an example of a neutrally stable equilibrium point since it is Lyapunov stable but not attracting. Note that in the case of a spiral or a linear centre we do not need to calculate the eigenvectors to sketch the phase portrait as they do not give us any more useful information.
+\subsection*{Repeated eigenvalue}
+There are two different situations in which the matrix \(A\) has one repeated eigenvalue \(\lambda\).
+\subsubsection*{Case 1: \(A=\lambda I\)}
+In this case the two linear equations are not actually coupled but are of the form:
+\[\dot{x}=\lambda x\]
+\[\dot{y}=\lambda y\]
+In this case, any line through the origin is an eigenvector and \(\textbf{x}(t)=e^{\lambda t}\textbf{x}(0)\) is a solution. The solutions move on straight lines towards or away from the origin and the origin is called a star node. This point is stable if \(\lambda <0\) and unstable if \(\lambda>0\).
+\subsubsection*{Case 2: \(A\ne\lambda I\)}
+In this case there is only one eigenvector and solutions that start on this eigenvector either converge towards the equilibrium point or diverge away from it. It can be shown that the general solution in this case is:
+\[\textbf{x}(t)=\alpha te^{\lambda t}\textbf{v}_2+\beta e^{\lambda t}\textbf{v}_1\]
+Where \(\textbf{v}_2\) is a vector that is not parallel to \(\textbf{v}_1\). General trajectories here look like "S" shapes and we determine the direction using the nullclines. This type of equilibrium point is known as a degenerate node or an improper node.
+\subsection*{Classifying planar linear systems using Trace and Det.}
+Recall that we know for the planar system of the form:
+\[\dot{x}=ax+by\]
+\[\dot{y}=cx+dy\]
+Our eigenvalues of the matrix \(A\) satisfy the characteristic equation:
+\[\lambda^2-(a+d)\lambda+(ad-bc)=0\]
+This can be rewritten as:
+\[\lambda^2-T\lambda+D=0\]
+Where \(T=\text{Trace}(A)=a+d\) and \(D=\text{Det}(A)=(ad-bc)\), therefore for planar linear systems we can impose conditions on \(T\) and \(D\) to calculate things about the eigenvalues which is helpful because \(T\) and \(D\) are often much easier for us to find.
+\begin{table}[H]
+    \begin{tabular}{|c|c|c|}
+        \hline
+        \textbf{Type} & \textbf{Eigenvalues} & \textbf{Trace and Determinant}  \\ \hline
+        Stable node & Both real and negative & \(T<0,\,D>0,\,T^2-4D>0\) \\ \hline
+        Unstable node & Both real and positive & \(T>0,\, D>0,\,T^2-4D>0\) \\ \hline
+        Saddle & Both real and opposite sign & \(D<0\) \\ \hline
+        Line of equilibria & One eigenvalue \(0\) & \(D=0\) \\ \hline
+        Stable spiral & Complex, negative real part & \(T<0,\,D>0,\,T^2-4D<0\) \\ \hline
+        Unstable spiral & Complex, positive real part & \(T>0,\,D>0,\,T^2-4D<0\) \\ \hline
+        Linear centre & Purely imaginary & \(T=0,\, D>0\) \\ \hline
+        Star node & One eigenvalue \(A=\lambda I\) & \(T^2=4D\) \\ \hline
+        Degenerate node & One eigenvalue \(A\ne \lambda I\) & \(T^2=4D\) \\ \hline
+    \end{tabular}
+\end{table}
 \end{document}

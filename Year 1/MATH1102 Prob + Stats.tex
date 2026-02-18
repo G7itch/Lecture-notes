@@ -662,4 +662,74 @@ such that our test statistic becomes:
 The most common null hypothesis we would use is \(\mu_d=0\) although we may be interested in the difference being something else. Confidence intervals are quite useful here because they can give us a rough idea of the scale we are talking about.
 \subsection*{Why use a paired test instead of a test of 2 populations}
 Whilst you can run an independent test on data that is actually paired it is not advised to. This is because running a paired test on paired data has a higher power than just running an independent test. This is because of the additional covariance term in the calculation of the variance - in an independent test we take this to be zero but could actually be larger than zero which would in turn make our variance smaller, smaller variance means a better test.
+\section{Inference about variances}
+\subsection*{One population}
+Suppose we have \(n\) observations that are i.i.d normal with \(X_1,X_2,...,X_n\sim N(\mu,\sigma^2)\), then:
+\[\frac{\sum_{i=1}^n(X_i-\bar{X})^2}{\sigma^2}=\frac{(n-1)s^2}{\sigma^2}\sim \chi^2_{n-1}\]
+Which is a chi-squared distribution with \(n-1\) degrees of freedom. We use this distribution for hypothesis testing for. The chi-squared distribution is actually an example of a specific gamma distribution:
+\[\chi^2_{n-1}\sim \Gamma\left(\frac{n-1}{2},\frac{1}{2}\right)\]
+\[E[\chi^2_{\nu}]=\nu\]
+\[\Var{\chi_\nu^2}=2\nu\]
+\subsection*{Confidence intervals}
+For one population (assuming i.i.d normal observations) a confidence interval for \(\sigma^2\) at an \(\alpha\) significance level can be constructed with:
+\[\left(\frac{(n-1)s^2}{\chi^2_{n-1,1-\alpha/2}},\frac{(n-1)s^2}{\chi^2_{n-1,\alpha/2}}\right)\]
+\subsection*{Hypothesis testing}
+For a hypothesis test:
+\[H_0:\sigma^2= \sigma^2_0\]
+\[H_1:\sigma^2\ne\sigma^2_0\]
+Under \(H_0\) we have a test statistic:
+\[\frac{(n-1)s^2}{\sigma^2_0}\sim \chi^2_{n-1}\]
+We can use this test statistic to compare against the critical region and reject \(H_0\) if:
+\[\begin{cases}
+    \frac{(n-1)s^2}{\sigma^2_0}>\chi^2_{n-1,1-\alpha/2} \\
+    \frac{(n-1)s^2}{\sigma^2_0}<\chi^2_{n-1,\alpha/2}
+\end{cases}\]
+\subsection*{Ratio of two population variances}
+Suppose we have two independent populations with random samples:
+\[X_1,X_2,...,X_{n_X}\sim N(\mu_X,\sigma^2_X)\]
+\[Y_1,Y_2,...,Y_{n_Y}\sim N(\mu_Y,\sigma^2_Y)\]
+Then we want to test if \(\frac{\sigma^2_X}{\sigma^2_Y}=1\), that is if the variances are equal. We already know:
+\[\frac{(n_X-1)s^2}{\sigma^2_X}\sim\chi^2_{n_X-1},\qquad \frac{(n_Y-1)s^2}{\sigma^2_Y}\sim\chi^2_{n_Y-1}\]
+A useful result to know is that:
+\[F=\frac{s^2_X/\sigma^2_X}{s^2_Y/\sigma^2_Y}\sim F_{n_X-1,n_Y-1}\]
+Where \(F_{\nu_1,\nu_2}\) is an \(F\) distribution with \(\nu_1,\nu_2\) degrees of freedom. We use this for distribution for hypothesis testing, particularly when we have the situation:
+\[H_0:\sigma^2_X=\sigma^2_Y\]
+\[H_1:\sigma_X^2\ne\sigma^2_Y\]
+Under \(H_0\) we have,
+\[F=\frac{s^2_X}{s^2_Y}\sim F_{n_X-1,n_Y-1}\]
+We can compare this statistic to our critical region at an \(\alpha\) significance level and reject \(H_0\) if:
+\[\begin{cases}
+    F>F_{n_X-1,n_y-1,1-\alpha/2} \\
+    F<F_{n_X-1,n_Y-1,\alpha/2}
+\end{cases}\]
+Note that the \(F\) distribution table only gives us the upper critical value, however we can convert between the two by the formula:
+\[F_{\nu_1,\nu_2,\alpha}=\frac{1}{F_{\nu_2,\nu_1,1-\alpha}}\]
+\section{Inferences about proportions}
+\subsection*{Normal approximation}
+If we have a large sample size \(n\) then we can approximate a normal distribution with a binomial one, which allows us to perform lots more analysis on it:
+\[X\sim \text{Bin}(n,\pi)\approx N(n\pi,n\pi(1-\pi))\]
+\subsection*{Single population}
+We can use the normal approximation to construct a hypothesis test for a sample proportion being equal to the true population proportion:
+\[H_0:\pi=\pi_0\]
+\[H_1:\pi\ne\pi_0\]
+Under \(H_0\) at a significance level of \(\alpha\) we have the test statistic:
+\[|z|=\left|\frac{X-n\pi_0}{\sqrt{n\pi_0(1-\pi_0)}}\right|\]
+Which we can compare to the critical region, \(z_{1-\alpha/2}\). Equivalently we can write our test in terms of the sample proportion \(p=\frac{X}{n}\), then:
+\[|z|=\left|\frac{p-\pi_0}{\sqrt{\frac{\pi_0(1-\pi_0)}{n}}}\right|\]
+Which we compare with the same critical region. It can also be worthwhile to construct a confidence interval for a single population proportion - this happens a lot when we look at opinion polls in politics.
+\[p\pm z_{1-\alpha/2}\sqrt{\frac{p(1-p)}{n}}\]
+For smaller \(n\) we can also consider:
+\[\frac{|X-n\pi_0|-\frac{1}{2}}{\sqrt{n\pi_0(1-\pi_0)}}\sim N(0,1)\]
+Which applies a "continuity correction" which can help account for the fact we are changing continuity in our approximation. For large \(n\) this correction factor does not matter because the central limit theorem kicks in.
+\subsection*{Comparing two population proportions}
+If we assume both samples are independent and identically distributed then we have:
+\[p_1\sim N\left(\pi_1,\frac{\pi_1(1-\pi_1)}{n_1}\right),\qquad p_2\sim N\left(\pi_2,\frac{\pi_2(1-\pi_2)}{n_2}\right)\]
+But since they are independent we can also write a new random variable:
+\[p_1-p_2\sim N\left(\pi_1-\pi_2,\frac{\pi_1(1-\pi_1)}{n_1}+\frac{\pi_2(1-\pi_2)}{n_2}\right)\]
+We want to test under the assumption \(H_0:\pi_1=\pi_2\), then we can simplify \(p_1-p_2\):
+\[p_1-p_2\sim N\left(\pi_1-\pi_2,\pi(1-\pi)\left(\frac{1}{n_1}+\frac{1}{n_2}\right)\right)\]
+We would like to simplify this even further however we do not know what \(\pi\) is, so we will have to estimate it using the total proportion:
+\[\hat{p}=\frac{X_1+X_2}{n_1+n_2}\]
+For a test at an \(\alpha\) significance level against \(H_1:\pi_1\ne \pi_2\) we reject \(H_0\) if:
+\[|z|=\left|\frac{p_1-p_2}{\sqrt{\hat{\pi}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}\right|>z_{1-\alpha/2}\]
 \end{document}

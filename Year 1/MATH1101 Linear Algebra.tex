@@ -463,4 +463,73 @@ Let \(\emptyset \ne S\subset V\) where \(V\) is a vector space. The span of \(S\
 \subsection*{Finite-dimensional subspaces}
 A vector space \(V\) is called finite-dimensional if and only if there exists a finite set of vectors that spans \(V\). Some examples of finite dimensional vector spaces are \(\mathbb{R}^n,\,M_{2\times2}(\mathbb{R}),\,\mathbb{R}[x]_{\leq d}\). If \(W\subset V\) are both vector spaces with the same notion of addition between vectors and scalar multiplication, we then say \(W\) is a subspace of \(V\). Here we write \(W\leqslant V\).
 \[\mathbb{R}[x]_{\leq d}<\mathbb{R}[x]<C^\infty(\mathbb{R})<C(\mathbb{R})\]
+\subsection*{Unions and intersections of subspaces}
+Let \(V\) be a vector space over \(\mathbb{R}\). If \(S\subseteq V\) is a non-empty subset then \(\langle S\rangle \leqslant V\). If \(W_1,W_2\leqslant V\) then \(W_1\cap W_2\leqslant V\) and \(W_1+W_2=\langle W_1\cup W_2\rangle\). Note that \(W_1+W_2\) and \(W_1\cap W_2\) are very different objects, \(W_1\cap W_2\) is the largest subspace contained in both \(W_1\) and \(W_2\) whereas \(W_1 + W_2\) is the smallest subspace which contains both \(W_1\) and \(W_2\). Note that \(W_1\cap W_2\leqslant W_1+W_2\).
+\subsection*{Basis of a vector space}
+Suppose \(V\) is a vector space and \(B\subset V\). We say that \(B\) is a basis of \(V\) if and only if \(B\) is linearly independent and spans \(V\). Note that \(B\) is not required to be finite.
+\subsubsection*{Example 1: Matrices}
+Let \(V=M_{m\times n}(\mathbb{R})\). For \(1\leq i \leq m\) and \(1\leq j \leq n\) let \(E_{ij}\) be the matrix with entry \(1\) at position \((i,j)\) and \(0\) elsewhere. Choose an arbitrary matrix \(A=(a_{ij})\in V\) then:
+\[A=\sum_{i=1}^m\sum_{j=1}^na_{ij}E_{ij}\]
+Hence \(\{E_{ij}\}\) spans \(V\). Suppose \(\exists\,\lambda_{ij}\) for \(1\leq i\leq m\) and \(1\leq j\leq n\) such that:
+\[\sum_{i=1}^m\sum_{j=1}^n\lambda_{ij}E_{ij}=\textbf{0} \implies \lambda_{ij}=\textbf{0},\quad \forall\, i,j\]
+Hence \(E_{ij}\) are linearly independent. Thus \(\{E_{ij}\}\) is a basis for \(V\).
+\subsubsection*{Example 2: \(\mathbb{R}^n\) under constraints}
+Let \(V\leqslant\mathbb{R}^5\) be the span of all vectors \((x_1,x_2,x_3,x_4,x_5)\in\mathbb{R}^5\) subject to:
+\[\begin{cases}
+    x_1+x_3-x_4+3x_5=0 \\
+    2x_1+x_2+x_4+x_5= 0 \\
+    x_1+x_2-x_3+2x_4-2x_5=0
+\end{cases}\]
+Our aim is to find a basis for \(V\). We start by noting that we can write \(V\) as the solution set to a matrix equation:
+\[\begin{pmatrix}
+    1 & 0 & 1 & -1 & 3 \\
+    2 & 1 &0 & 1 & 1 \\
+    1 & 1 & -1 & 2 & -2
+\end{pmatrix}\begin{pmatrix}
+    x_1 \\
+    x_2 \\
+    x_3 \\
+    x_4 \\
+    x_5
+\end{pmatrix}=\begin{pmatrix}
+    0 \\
+    0 \\
+    0
+\end{pmatrix}\]
+We can put this matrix into row reduced echelon form without changing the solutions and doing so allows us to see a dependence relationship between some of the variables:
+\[\begin{pmatrix}
+    1 & 0 & 1 & -1 & 3 \\
+    0 & 1 & -2 & 3 & -5 \\
+    0 & 0 & 0 & 0 & 0
+\end{pmatrix}\begin{pmatrix}
+    x_1 \\
+    x_2 \\
+    x_3 \\
+    x_4 \\
+    x_5
+\end{pmatrix}=\begin{pmatrix}
+    0 \\
+    0 \\
+    0
+\end{pmatrix}\]
+\[\begin{cases}
+    x_1 = -x_3 + x_4 - 3x_5 \\
+    x_2 = 2x_3 -3x_4 + 5x_5 \\
+    x_3 = a \\
+    x_4 = b \\
+    x_5 = c
+\end{cases}\]
+Where \(x_3,\,x_4\) and \(x_5\) are free parameters. Then we can see that any vector in \(V\) can be written:
+\[\begin{pmatrix}
+    x_1\\x_2\\x_3\\x_4\\x_5
+\end{pmatrix}=\begin{pmatrix}
+    -a+b-3c\\2a-3b+5c\\a\\b\\c
+\end{pmatrix}=av_1+bv_2+cv_3\]
+Where \(v_i\) is the simplest vector chosen with our free parameters:
+\[v_1=(-1,2,1,0,0)\]
+\[v_2=(1,-3,0,1,0)\]
+\[v_3=(-3,5,0,0,1)\]
+Now we have shown that \(\langle v_1,v_2,v_3\rangle=V\) and that they are linearly independent hence we have shown \(\{v_1,v_2,v_3\}\) is a basis for \(V\). Note that this is the general solution method whenever we have a subspace of \(\mathbb{R}^n\) subject to constraints.
+\subsection*{Basis as a subset}
+Let \(V\) be a non-zero finite dimensional vector space. Suppose \(S=\{\arbvec{v}{s}\}\) such that \(\langle S\rangle=V\) then there is a subset \(B\subseteq S\) such that \(B\) is a basis of \(V\).
 \end{document}

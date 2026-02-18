@@ -504,4 +504,19 @@ and such a \(\hat{f}(x)\) is continuous at \(x_0\). \(\hat{f}\) is known as a ch
 If a function is differentiable at a point it is also continuous at that point. However, the converse is not necessarily true.
 \subsubsection*{Remark}
 An extension to the above would be that all differentiable functions are continuous but not all continuous functions are differentiable (for example the Weierstrass function).
+\subsection*{Algebra of limits for differentiable functions}
+If \(f:I\to\mathbb{R}\) and \(g:I\to\mathbb{R}\) are differentiable at \(x_0\in I\) then the sum and product are also differentiable at \(x_0\):
+\[(f+g)'(x_0)=f'(x_0)+g'(x_0)\]
+\[(fg)'=f'(x_0)g(x_0)+g'(x_0)f(x_0)\]
+Note that the second result is what we know as the product rule. The proof of the addition property comes from summing the chord functions or from using the limit definitions. For \(n\in\mathbb{N}\) we have:
+\[(x^n)'=nx^{n-1}\]
+The proof of this is a relatively simple proof by induction.
+\subsection*{The chain rule}
+Let \(I,J\subseteq \mathbb{R}\) be intervals and \(f:I\to\mathbb{R}\), \(g:J\to\mathbb{R}\) functions such that \(f(I)\subset J\). Assume that \(f\) is differentiable at \(x_0\in I\) and \(g\) is differentiable at \(f(x_0)\). Then \(g\circ f\) is differentiable at\(x_0\) and:
+\[(g\circ f)'(x_0)=g'(f(x_0))f'(x_0)\]
+\subsection*{The quotient rule}
+If \(I\) is an interval and \(u,v:I\to\mathbb{R}\) are differentiable at \(x_0\in I\) and \(v(x_0)\ne0\), then \(f=\frac{u}{v}\) is differentiable at \(x_0\) with:
+\[f'(x_0)=\frac{u'(x_0)v(x_0)-u(x_0)v'(x_0)}{(v(x_0))^2}\]
+\subsection*{Differentiation of power series}
+
 \end{document}
