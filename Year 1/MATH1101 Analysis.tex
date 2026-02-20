@@ -518,5 +518,39 @@ Let \(I,J\subseteq \mathbb{R}\) be intervals and \(f:I\to\mathbb{R}\), \(g:J\to\
 If \(I\) is an interval and \(u,v:I\to\mathbb{R}\) are differentiable at \(x_0\in I\) and \(v(x_0)\ne0\), then \(f=\frac{u}{v}\) is differentiable at \(x_0\) with:
 \[f'(x_0)=\frac{u'(x_0)v(x_0)-u(x_0)v'(x_0)}{(v(x_0))^2}\]
 \subsection*{Differentiation of power series}
-
+Note that we can differentiate power series term by term and that generally we have \(f(x)=C(x-x_0)^n\implies f'(x)=Cn(x-x_0)^{n-1}\). A consequence of this is that \(\exp'=\exp,\,\sin'=\cos,\text{ and }\cos'=-\sin\).
+\subsection*{Derivatives of inverses}
+Let \(I\) be an interval and \(f:I\to\mathbb{R}\) be a strictly monotone continuous function. Let \(J=f(I)\) and let \(g:J\to\mathbb{R}\) be the inverse function of \(f\). Then if \(f\) is differentiable at \(x_0\in I\) where \(f'(x_0)\ne 0\) then \(g\) is differentiable at \(f(x_0)\) with \(g'(f(x_0))=\frac{1}{f'(x_0)}\). Note that here we have \(g\) continuous. This is particularly helpful when calculating certain derivatives such as \(\df{}{x}(\ln(x))=\frac{1}{x}\) for \(x>0\). We also have \((1+\frac{1}{n})^n\to e\) as \(n\to\infty\), which can be useful for constructing further proofs.
+\subsection*{Properties of differentiable functions}
+Let \(f:D\to\mathbb{R}\) be a function, we say \(f\) has a local minimum at \(x_0\in D\) if \(\exists\,\delta>0\) such that \(f(x_0)\leq f(x)\quad \forall x\in(x_0-\delta,x_0+\delta)\cap D\). Equally it has a local maximum if \(\exists\,\delta>0:f(x_0)\geq f(x)\), again \(\forall\,x\in(x_0-\delta,x_0+\delta)\cap D\).
+\subsection*{Differentiation at extremum}
+Let \(I\subset\mathbb{R}\) be an interval and \(f:I\to\mathbb{R}\). If \(f\) has a local minimum or maximum at \(x_0\in I\), where \(x_0\) is not an endpoint then if \(f\) is differentiable at \(x_0\) we have \(f'(x_0)=0\).
+\subsubsection*{Rolle's theorem}
+Let \(f:[a,b]\to\mathbb{R}\) be continuous on \([a,b]\) and differentiable on \((a,b)\) if \(f(a)=f(b)\) then there exists \(\xi\in(a,b)\) with \(f'(\xi)=0\).
+\subsection*{Mean value theorem}
+Let \(f:[a,b]\to\mathbb{R}\) be continuous on \([a,b]\) and differentiable on \((a,b)\). Then there exists \(\xi\in (a,b)\) with:
+\[f'(\xi)=\frac{f(b)-f(a)}{b-a}\]
+We prove this by considering the function of the chord that joins \(a\) and \(b\) of the form \(y=Cx\), where \(C=\frac{f(b)-f(a)}{b-a}\). Note that if \(f(a)=f(b)\) then we just have Rolle's theorem, however if we do not have this we still want to apply Rolle's so we subtract a function that removes the difference between \(f(a)\) and \(f(b)\). It turns out the simplest function you can pick in this case is \(y=Cx\). Consider \(g(x)=f(x)-\frac{f(b)-f(a)}{b-a}x\). Then \(g(a)=g(b)\) so \(g(x)\) satisfies the conditions for Rolle's theorem to apply, but remember that \(g(x)=f(x)=Cx\) so \(g'(x)=0=f'(x)-C\) then:
+\[f'(x)=C\]
+\subsubsection*{Applications}
+The main application of the mean value theorem is to prove results about monotonicity:
+\begin{itemize}
+    \item If \(f'(t)\geq0,\ \forall t\in (a,b)\) then \(f\) is monotone increasing on \([a,b]\)
+    \item If \(f'(t)\leq 0,\ \forall t\in (a,b)\) then \(f\) is monotone decreasing on \([a,b]\)
+    \item If \(f'(t)=0,\ \forall t\in (a,b)\) then \(f\) is constant on \([a,b]\)
+\end{itemize}
+We can also demonstrate results such as \(\exp\) being the only function \(f:\mathbb{R}\to\mathbb{R}\) such that:
+\[f'(x)=f(x),\ \forall x\in\mathbb{R}\]
+\[f(0)=1\]
+\[f(x+y)=f(x)f(y),\ \forall x,y\in\mathbb{R}\]
+\subsection*{Cauchy's mean value theorem}
+We have a generalisation of the mean value theorem known as Cauchy's mean value theorem. It says that if \(f,g:[a,b]\to\mathbb{R}\) are continuous on \([a,b]\) and differentiable on \((a,b)\), then there exists a \(\xi\in (a,b)\) such that:
+\[f'(\xi)(g(b)-g(a))=g'(\xi)(f(b)-f(a))\]
+Note that in the case \(g(x)=x\) this is exactly the mean value theorem from before. The main application of Cauchy's mean value theorem is to prove L'H\^opital's rule.
+\subsection*{L'H\^opital's rule}
+Let \textbf{x} be a fixed choice from \(\{a^+,b^-,x_0,\infty\}\) and \(f,g:(a,b)\to\mathbb{R}\) with \(\lim_{x\to\textbf{x}}f(x)=\lim_{x\to\textbf{x}}g(x)=0\) or \(\lim_{x\to\textbf{x}}f(x)=\lim_{x\to\textbf{x}}g(x)=\infty\). Then if \(g'(x)\ne 0\) for \(x\in(a,b)\) and:
+\[\lim_{x\to\textbf{x}}\frac{f'(x)}{g'(x)}=L\]
+Where \(L\in\mathbb{R}\cup \{-\infty,\infty\}\), we have:
+\[\lim_{x\to\textbf{x}}\frac{f(x)}{g(x)}=L\]
+Before applying L'H\^opital's rule we have to be careful that we meet all of the conditions otherwise we will get a nonsense result. We require the limit of the ratio of derivatives to exist otherwise we say that the 'test was inconclusive'.
 \end{document}

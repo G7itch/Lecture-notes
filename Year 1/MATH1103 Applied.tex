@@ -7,6 +7,7 @@
 \newcommand{\uvec}[1]{\underline{\hat{#1}}}
 \newcommand{\bvec}[1]{\uvec{e}_#1}
 \newcommand{\df}[2]{\frac{\text{d}#1}{\text{d}#2}}
+\newcommand{\jaco}[1]{\text{D}\textbf{f}(\textbf{#1}^*)}
 
 \begin{document}
 \maketitle
@@ -747,7 +748,7 @@ Our eigenvalues of the matrix \(A\) satisfy the characteristic equation:
 This can be rewritten as:
 \[\lambda^2-T\lambda+D=0\]
 Where \(T=\text{Trace}(A)=a+d\) and \(D=\text{Det}(A)=(ad-bc)\), therefore for planar linear systems we can impose conditions on \(T\) and \(D\) to calculate things about the eigenvalues which is helpful because \(T\) and \(D\) are often much easier for us to find.
-\begin{table}[H]
+\begin{table}[h]
     \begin{tabular}{|c|c|c|}
         \hline
         \textbf{Type} & \textbf{Eigenvalues} & \textbf{Trace and Determinant}  \\ \hline
@@ -762,4 +763,96 @@ Where \(T=\text{Trace}(A)=a+d\) and \(D=\text{Det}(A)=(ad-bc)\), therefore for p
         Degenerate node & One eigenvalue \(A\ne \lambda I\) & \(T^2=4D\) \\ \hline
     \end{tabular}
 \end{table}
+\section{Planar non-linear systems}
+We are going to consider drawing phase portraits of two coupled non-linear autonomous first order ODEs. We are only going to look at the cases that have equilibrium points, since the others are complicated beyond the scope of the module.
+\subsection*{Linearisation and stability of equilibrium points}
+Suppose \(\textbf{x}^*=(x^*,y^*)\) is an equilibrium point. We want to consider the behaviour of solution trajectories in a small region around \(\textbf{x}^*\). Consider:
+\[x(t)=x^*+u(t)\]
+\[y(t)=y^*+v(t)\]
+Where \(u,v\) are small displacements from the equilibrium point and \((x,y)\) is a location near \((x^*,y^*)\). Differentiating with respect to \(t\) gives us:
+\[\dot{x}=\dot{u}=f(x^*+u,y^*+v),\qquad\dot{y}=\dot{v}=g(x^*+u,y^*+v)\]
+Since \(u,v\) are small we can do a Taylor expansion near the equilibrium point to get:
+\[f(x^*+u,y^*+v)=f(x^*,y^*)+u\frac{\partial f}{\partial x}(x^*,y^*)+v\frac{\partial f}{\partial y}(x^*,y^*)+O(2)\]
+\[f(x^*+u,y^*+v)=g(x^*,y^*)+u\frac{\partial g}{\partial x}(x^*,y^*)+v\frac{\partial g}{\partial y}(x^*,y^*)+O(2)\]
+We consider the \(O(2)\) terms to be too negligible and the first term in both expansions is \(0\) because we are looking at equilibrium points. The partial derivatives are also just numbers so we know have a linear system:
+\[\dot{u}=u\frac{\partial f}{\partial x}(x^*,y^*)+v\frac{\partial f}{\partial y}(x^*,y^*)\]
+\[\dot{v}=u\frac{\partial g}{\partial x}(x^*,y^*)+v\frac{\partial g}{\partial y}(x^*,y^*)\]
+This is better written in matrix form as:
+\[\begin{pmatrix}
+    \dot{u} \\
+    \dot{v}
+\end{pmatrix}=\begin{pmatrix}
+    \partial f/\partial x & \partial f/\partial y \\
+    \partial g/\partial x & \partial g/\partial y
+\end{pmatrix}\biggr\rvert_{(x^*,y^*)}\begin{pmatrix}
+    u \\ v
+\end{pmatrix}\]
+or \(\dot{w}=\text{D}\textbf{f}(\textbf{x}^*)w\) where \(w=(u,v)^T\) and D\textbf{f}(\textbf{x}\(^*\)) is the Jacobian matrix:
+\[D\textbf{f}(\textbf{x}^*)=\begin{pmatrix}
+    f_x(\textbf{x}^*) & f_y(\textbf{x}^*) \\
+    g_x(\textbf{x}^*) & g_y(\textbf{x}^*)
+\end{pmatrix}\]
+Note that this is a matrix that is evaluated at an equilibrium point so the entries are numbers and not functions. Note that this linearisation is not valid far away from the equilibrium points. Note that each such equilibrium point will have a different Jacobian and we will we have to find them individually. The Jacobian takes the role of the \(A\) matrix we had before.
+\subsubsection*{Example}
+Looking back at the competitive Lotka-Volterra equations with \(r=1,\alpha=3/2\) and \(\beta=1/2\):
+\[\dot{x}=x(1-x-\frac{3}{2}y)\]
+\[\dot{y}=y(1-y-\frac{1}{2}x)\]
+\[\text{D}\textbf{f}(\textbf{x}^*)=\begin{pmatrix}
+    1-2x-\frac{3}{2}y & -\frac{3}{2}x \\
+    -\frac{1}{2}y & 1-2y-\frac{1}{2}x
+\end{pmatrix}=\begin{pmatrix}
+    f_x & f_y \\
+    g_x & g_y
+\end{pmatrix}\]
+At \((0,0)=\textbf{x}^*\):
+\[\text{D}\textbf{f}(\textbf{x}^*)=\begin{pmatrix}
+    1 & 0 \\
+    0 & 1
+\end{pmatrix}=I\]
+This has a repeated eigenvalue at \(\lambda=1\) so we have an unstable star node. At \((1,0)=\textbf{x}^*\):
+\[\text{D}\textbf{f}(\textbf{x}^*)=\begin{pmatrix}
+    -1 & -\frac{3}{2} \\
+    0 & \frac{1}{2}
+\end{pmatrix}\]
+This has distinct real eigenvalues at \(\lambda_1=-1\) and \(\lambda_2=\frac{1}{2}\). Then linearisation is a saddle point. At \((0,1)=\textbf{x}^*\):
+\[\text{D}\textbf{f}(\textbf{x}^*)=\begin{pmatrix}
+    -\frac{1}{2} & 0 \\
+    -\frac{1}{2} & -1
+\end{pmatrix}\]
+This has distinct real eigenvalues at \(\lambda_1=-\frac{1}{2}\) and \(\lambda_2=-1\). Then linearisation is a stable node.
+\subsection*{The Hartman-Grobman theorem}
+It remains to consider how the behaviour of the linearised system relates to the full non-linear system. An equilibrium point \(\textbf{x}^*=(x^*,y^*)\) is hyperbolic if the Jacobian has no eigenvalues with zero real components. If \textbf{x}\(^*\) is a hyperbolic equilibrium point of the non-linear system \(\dot{\textbf{x}}=f(\textbf{x})\) where \(\textbf{x}\in\mathbb{R}^n\) then there is a homeomorphism from \(\mathbb{R}^n\) to \(\mathbb{R}^n\) declared in the neighbourhood of \(\textbf{x}^*\) that maps trajectories of non-linear systems to trajectories of linear systems. This tells us that if the equilibrium point is hyperbolic then our non-linear systems looks qualitatively like a linear system near the equilibrium point. The trajectories of the non-linear system are just a distorted version of the eigenvectors. Note that the eigenvectors are no longer trajectories so should be drawn in dotted lines or otherwise indicated that they are not actual trajectories. For non-hyperbolic equilibrium points the linearised and full non-linear system may look qualitatively different.
+\subsubsection*{Example}
+Consider the system:
+\[\dot{x}=x-x^2+y^2\]
+\[\dot{y}=y+2xy\]
+Then we have the Jacobian formed from,
+\[\text{D}\textbf{f}(\textbf{x}^*)=\begin{pmatrix}
+    1-2x & 2y \\
+    2y & 1+2x
+\end{pmatrix}\]
+Our first job is to identify the equilibrium points, which we do in the usual way.
+\[y(1+2x)=0\]
+\[y=0\implies x-x^2=0,\  (x=0,\,x=1)\]
+\[x=-\frac{1}{2}\implies y=\pm\frac{\sqrt{3}}{2}\]
+At \(\textbf{x}^*=(0,0)\):
+\[\text{D}\textbf{f}(\textbf{x}^*)=\begin{pmatrix}
+    1 & 0 \\
+    0 & 1
+\end{pmatrix}\]
+So this is an unstable star node. At \(\textbf{x}^*=(1,0)\):
+\[\text{D}\textbf{f}(\textbf{x}^*)=\begin{pmatrix}
+    -1 & 0 \\
+    0 & 3
+\end{pmatrix}\]
+Here there are two distinct real roots of opposite signs, so we have a saddle point. At \(\textbf{x}^*=(-\frac{1}{2},\pm\frac{\sqrt{3}}{2})\):
+\[\text{D}\textbf{f}(\textbf{x}^*)=\begin{pmatrix}
+    2 & \sqrt{3} \\
+    \sqrt{3} & 0
+\end{pmatrix}\]
+\[\text{D}\textbf{f}(\textbf{x}^*)=\begin{pmatrix}
+    2 & -\sqrt{3} \\
+    -\sqrt{3} & 0
+\end{pmatrix}\]
+Here we have \(T=2\) and \(D=-3<0\) so we also have a saddle points here too.
 \end{document}

@@ -531,5 +531,15 @@ Where \(v_i\) is the simplest vector chosen with our free parameters:
 \[v_3=(-3,5,0,0,1)\]
 Now we have shown that \(\langle v_1,v_2,v_3\rangle=V\) and that they are linearly independent hence we have shown \(\{v_1,v_2,v_3\}\) is a basis for \(V\). Note that this is the general solution method whenever we have a subspace of \(\mathbb{R}^n\) subject to constraints.
 \subsection*{Basis as a subset}
-Let \(V\) be a non-zero finite dimensional vector space. Suppose \(S=\{\arbvec{v}{s}\}\) such that \(\langle S\rangle=V\) then there is a subset \(B\subseteq S\) such that \(B\) is a basis of \(V\).
+Let \(V\) be a non-zero finite dimensional vector space. Suppose \(S=\{\arbvec{v}{s}\}\) such that \(\langle S\rangle=V\) then there is a subset \(B\subseteq S\) such that \(B\) is a basis of \(V\). If \(S\) is linearly independent then it is a basis. If not then without loss of generality we can say that \(\lambda_1\ne0\) because not all \(\lambda_i\) can be \(0\) and so we can rearrange for this \(\lambda\) to be at the front. Then:
+\[v_1=\frac{-\lambda_2}{\lambda_1}v_2+\dots+\frac{-\lambda_s}{\lambda_1}v_s\]
+Then \(v_1\in\langle v_2,...,v_s\rangle =\langle v_1,v_2,...,v_s\rangle =V\). If that set is linearly independent then we are done however if it isn't we can just repeat the above logic until we do have one. We can do this in finitely many steps since we know \(V\) is finite dimensional. Furthermore if \(L\subset S\) is any linearly independent set then we may choose \(B\) to contain \(L\).
+\subsection*{Steinitz exchange lemma}
+Let \(V\) be a vector space and \(X=\{v_1,...,v_n\}\subset V\). Suppose \(u\in\langle X\rangle\) and \(u\notin \langle X\backslash \{v_l\}\rangle\) for some \(l\). Let \(Y=(X\,\backslash\,\{v_l\})\cup\{u\}\) then \(\langle Y\rangle =\langle X\rangle\).
+\subsubsection*{Example}
+\[X=\{(1,0,0),(0,1,0),(0,0,1)\}\subseteq\mathbb{R}^3\]
+Let \(u\in (0,1,2)\in\langle X\rangle\) and \(u\notin \langle X\,\backslash(0,1,0)\rangle\). Let:
+\[Y=\{(1,0,0),(0,1,2),(0,0,1)\}\]
+\[\langle Y\rangle=\langle X\rangle =\mathbb{R}^3\]
+
 \end{document}
