@@ -9,6 +9,8 @@
 \begin{document}
 \maketitle
 \hrulefill
+\tableofcontents
+\newpage
 \setstretch{1.5}
 \section{The Real Numbers}
 \subsection*{Properties of the reals}
@@ -553,4 +555,26 @@ Let \textbf{x} be a fixed choice from \(\{a^+,b^-,x_0,\infty\}\) and \(f,g:(a,b)
 Where \(L\in\mathbb{R}\cup \{-\infty,\infty\}\), we have:
 \[\lim_{x\to\textbf{x}}\frac{f(x)}{g(x)}=L\]
 Before applying L'H\^opital's rule we have to be careful that we meet all of the conditions otherwise we will get a nonsense result. We require the limit of the ratio of derivatives to exist otherwise we say that the 'test was inconclusive'.
+\subsection*{Higher derivatives}
+We define higher derivatives \(f^{(k)}\) by setting \(f^{(0)}=f,\,f^{(1)}=f'\) and generally \(f^{(n)}=(f^{(n-1)})'\) for \(n\in\mathbb{N}\). A function is called \(n\) times differentiable if \(f^{(n-1)}\) is differentiable. In addition \(f^{(n)}\) is continuous we say that \(f\) is \(n\) times continuously differentiable. We can also define:
+\[C(I)=\{f:I\to\mathbb{R}\mid f \text{ is continuous on }I\}\]
+\[C^k(I)=\{f:I\to\mathbb{R}\mid f \text{ is } k \text{ times continuous differentiable on }I\}\]
+\[C^\infty(I)=\{f:I\to\mathbb{R}\mid f \text{ is infinitely continuous differentiable on }I\}\]
+\subsection*{Leibniz' formula}
+If \(f\) and \(g\) are \(n\) times continuously differentiable on an interval \(I\) then so are the sum and product:
+\[(f+g)^{(n)}=f^{(n)}+g^{(n)}\]
+\[(fg)^{(n)}=\sum^n_{k=0}\binom{n}{k}f^{(n)}g^{(n-k)}\]
+This is known as Leibniz' formula for the derivative of a product. There is also a formula for higher derivatives of the composition \(f\circ g\). This is known as Fa\'a di Bruno's formula.
+\subsection*{Taylor polynomials}
+Let \(f\) be \(n\) times differentiable on a non-degenerate interval \(I\) and let \(x_0\in I\).  The nth Taylor polynomial of \(f\) at \(x_0\) is:
+\[P_n(x)=\sum^n_{k=0}\frac{f^{(k)}(x_0)}{k!}(x-x_0)^{k}\]
+Note that the derivatives of \(P_n(x)\) satisfy:
+\[P_n^{(k)}(x)=f^{(k)}(x)\]
+for \(0\leq k\leq n\).
+\subsection*{Taylor's theorem}
+Let \(I\) be an interval and \(f\) be a \((n+1)\) times differentiable on \(I\) and \(x_0\in I\). Let \(x\in I\), \(x\ne x_0\) then there exists \(\xi\in I\) with \(\xi\) between \(x_0\) and \(x\) such that:
+\[f(x)-P_n(x)=\frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}=R_n(x)\]
+The term \(R_n(x)\) is known as the Lagrange's remainder term. It is also sometimes called the nth remainder term. Since we do not know the value of \(\xi\) we can try and find an \(M_{n+1}\) such that \(|f^{(n+1)}(\xi)|\leq M_{n+1}\) for all \(\xi\) between \(x_0\) and \(x\), then:
+\[|R_n(x)|\leq \frac{M_{n+1}|x-x_0|^{n+1}}{(n+1)!}\]
+This is known as the error term and it gives an idea of how close the Taylor polynomial is to the actual function. If the error term goes to \(0\) then the Taylor polynomial is exactly the function and we can say \(f(x)=P_\infty(x)\).
 \end{document}

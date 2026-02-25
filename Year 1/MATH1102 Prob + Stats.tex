@@ -7,10 +7,14 @@
 \newcommand*{\Perm}[2]{{}^{#1}\!P_{#2}}%
 \newcommand*{\Comb}[2]{{}^{#1}C_{#2}}%
 \newcommand{\Var}[1]{\text{Var}[#1]}
+\newcommand{\chisq}{\chi^2_{\text{obs}}}
+
 \begin{document}
 \maketitle
 \hrulefill
 \setstretch{1.5}
+\tableofcontents
+\newpage
 \section{Introduction to Probability}
 \subsection*{Notation}
 \begin{table}[H]
@@ -732,4 +736,100 @@ We would like to simplify this even further however we do not know what \(\pi\) 
 \[\hat{p}=\frac{X_1+X_2}{n_1+n_2}\]
 For a test at an \(\alpha\) significance level against \(H_1:\pi_1\ne \pi_2\) we reject \(H_0\) if:
 \[|z|=\left|\frac{p_1-p_2}{\sqrt{\hat{\pi}(1-\hat{p})\left(\frac{1}{n_1}+\frac{1}{n_2}\right)}}\right|>z_{1-\alpha/2}\]
+\section{Correlation}
+In the Autumn semester we learned about bivariate distributions. We want to consider pairs of data \((x_i,y_i)\) from \(X\) and \(Y\) to see if there is a possible relationship between them. A descriptive measure of the strength of the linear relationship between two sets of observations is the sample covariance:
+\[s_{XY}=\sum^n_{i=1}(x_i-\bar{x})(y_i-\bar{y})\]
+\[=\frac{1}{n-1}\left(\left(\sum^n_{i=1}x_iy_i\right)-\frac{1}{n}\left(\sum^n_{i=1}x_i\right)\left(\sum^n_{i=1}y_i\right)\right)\]
+This is an estimate of the population covariance:
+\[\text{cov}(X,Y)=\sigma_{XY}=E[XY]-E[X]E[Y]\]
+\[E[s_{XY}]=\sigma_{XY}\]
+The sample covariance depends on the units of measurement so it is not always the best choice for looking at relationships. For this we can consider the sample correlation coefficient:
+\[r=\frac{s_{XY}}{s_Xs_{Y}}\]
+Where \(s_X,\,s_Y\) are the sample standard deviations of \(X\) and \(Y\) respectively.
+\subsection*{Properties of sample correlation}
+\begin{itemize}
+    \item The correlation is bounded: \(-1\leq r\leq 1\).
+    \item The larger the value of \(|r|\), the stronger the linear association.
+    \item A negative \(r\) value indicates negative association.
+    \item \(r=1\) is perfect positive correlation, meaning both data sets lie on the same straight line.
+    \item \(r=-1\) is perfect negative correlation.
+    \item if \(r=0\) there is no linear correlation between the datasets.
+\end{itemize}
+The sample correlation is known as Pearson's correlation coefficient or the product moment correlation coefficient. This is the most common correlation coefficient and it estimates:
+\[\rho=\frac{\sigma_{XY}}{\sigma_X\sigma_Y}\]
+A nice property of correlation is that it is independent of units of measurement. This because any chance to a unit would just rescale the data rather than change the underlying distribution.
+\subsubsection*{A note on causality}
+Be careful when talking about correlation and causality. know that correlation does not imply causality and is a weaker condition.
+\subsection*{Hypothesis testing for correlation}
+There are 2 main method for hypothesis testing for correlation:
+\begin{itemize}
+    \item You can perform a t-test. This is the best kind of test to perform when we know we have linear association and our data is normal or approximately normal (i.e. bivariate normal)
+    \[\binom{X}{Y}\sim N\left(\binom{\mu_X}{\mu_Y},\,\begin{pmatrix}
+        \sigma_X^2 & \rho\sigma_X\sigma_Y \\
+        \rho\sigma_X\sigma_Y & \sigma_Y^2
+    \end{pmatrix}\right)\]
+    \item You can perform a non-parametric test. This is most suitable for non-linear association or we cannot make assumptions about the normality of the underlying data.
+\end{itemize}
+\subsubsection*{T-test}
+In this test our hypotheses are most often:
+\[H_0: \rho=0\]
+\[H_1: \rho \ne 0\]
+Although the alternate hypothesis can sometimes be one sided. We then need to assume our data is normal or can be approximated as normal. We choose our test statistic to be:
+\[t=r\sqrt{\frac{n-1}{1-r^2}}\]
+Where \(r=\frac{s_{XY}}{s_{X}s_{Y}}\). Under \(H_0\) we have \(t\sim t_{n-2}\). Then we can compare critical values like usual.
+\subsubsection*{Non-parametric test}
+If we cannot assume normality or the relationship is non-linear then we can perform a non-parametric test. We do however, require that the relationship is monotonic. Consider \(n\) pairs of data \((x_i,y_i)\) from \(X,Y\). We are going to look at the difference of ranks for each of these data points. Then we can calculate Spearman's rank order correlation coefficient, \(r_s\):
+\[r_s=1-\frac{6\sum^n_{i=1}d_i^2}{n(n^2-1)}\]
+Where \(d_i\) is the difference in rank for pair \(i\). We can then compare \(r_s\) against the critical values found in statistical tables.
+\section{Goodness of fit}
+In a goodness of fit test we are trying to match up data to a distribution. We want to check if the distribution fits the observed data well or not. For a hypothesis test of this form we have:
+\[H_0: \text{Model fits well}\]
+\[H_1: \text{Model does not fit}\]
+with test statistic:
+\[\chisq=\sum_i\frac{(O_i-E_i)^2}{E_i}\]
+Where \(O_i\) is observed frequency for data point \(i\) and \(E_i\) is the expected frequency under \(H_0\). we reject \(H_0\) at the \(\alpha\) significance level if:
+\[\chisq\geq \chi^2_{\nu,1-\alpha}\]
+Where \(\nu\) is the degrees of freedom of the test. This is \(\nu=\#\text{Categories}-\#\text{Estimated parameters}-1\). Note that \(\chisq\) does not exactly follow a \(\chi^2\) distribution but rather just approximates it in a similar way to how the central limit theorem works. \(E_i\) should be greater than or equal to \(5\) for exactly this reason, we want to ensure we have an accurate approximation. If the expected values are not like this we need to combine categories until they all are.
+\subsection*{Example}
+let \(X\) be the number of storms in a month in some city. We have observed frequency data:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c|c|c|c|c|c|c}
+        \(X\) & 0 & 1 & 2 & 3 & 4 & 5 & \(\geq 6\) \\ \hline
+        \(O_i\) & 22 & 37 & 20 & 13 & 6 & 2 & 0
+    \end{tabular}
+\end{table}
+We are going to test if this data fits well to a Poisson distribution with \(\alpha=0.1\):
+\[H_0: X\sim \text{Po}(\lambda)\]
+\[H_1: \text{Poisson is not a good fit}\]
+We need to estimate \(\lambda\) first however, so we look at the standard unbiased estimator:
+\[E[\bar{x}]=\lambda\]
+\[\bar{x}=\hat{\lambda}\]
+In this specific case we have \(\bar{x}=1.5\) so we will take that for \(\lambda\). Then we can fill in the expected values, combining categories where needed:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c|c|c|c|c}
+        \(X\) & 0 & 1 & 2 & 3 & \(\geq4\) \\ \hline
+        \(O_i\) & 22 & 37 & 20 & 13 & 8 \\
+        \(E_i\) & 22.3 & 33.5 & 14.9 & 12.6 & 6.6 \\
+        \((O_i-E_i)\) & -0.3 & 3.5 & 5.1 & 0.4 & 1.4 
+    \end{tabular}
+\end{table}
+\[\chisq =\sum_i\frac{(O_i-E_i)^2}{E_i}=\frac{(-0.3)^2}{22.3}+\frac{(3.5)^2}{33.5}+\dots+\frac{(1.4)^2}{6.6}\approx 1.7156\]
+The degrees of freedom in this case are \(\nu=5-1-1=3\), this comes from combining categories as well as estimating \(\lambda\). We can also find our critical value:
+\[\chi^2_{3,0.9}=6.25\]
+\[6.25\geq 1.7156\]
+So we do not reject \(H_0\).
+\subsection*{Contingency tables and independence}
+We can also test for independence. We can plot a two way table called a contingency table that shows the observed values from both categories. We estimate the probability of being in any one of the groups by:
+\[\hat{p}=\frac{\text{Total in category}}{\text{Total sample size}}\]
+We can then use properties of independence to calculate the expected values for each category. In particular:
+\[P[E\cap F]=P[E]P[F]\]
+We can apply this in our situation and see that if we are looking at the expected number for being in the overlap of category \(A\) and \(B\) we have:
+\[E_i=n\cdot P[A]P[B]\]
+We can construct a new table of expected values using this formula and from there a table of differences. If we sum up all of these results we have our test statistic, note that this is exactly the same formula as before we have just done it in a slightly different way:
+\[\chisq = \sum_i\frac{(O_i-E_i)^2}{E_i}\]
+Finally we can compare against our critical value:
+\[\chisq\geq \chi^2_{\nu,1-\alpha}\]
+Where \(\nu=(\#\text{Rows}-1)(\#\text{Cols}-1)\).
 \end{document}

@@ -13,8 +13,10 @@
 \maketitle
 \hrulefill
 \setstretch{1.5}
+\tableofcontents
+\newpage
 \section{Module Notation}
-\begin{table}[h]
+\begin{table}[H]
     \begin{tabular}{|c|c|}
     \hline
        Definition & Notation \\ \hline
@@ -541,5 +543,35 @@ Let \(V\) be a vector space and \(X=\{v_1,...,v_n\}\subset V\). Suppose \(u\in\l
 Let \(u\in (0,1,2)\in\langle X\rangle\) and \(u\notin \langle X\,\backslash(0,1,0)\rangle\). Let:
 \[Y=\{(1,0,0),(0,1,2),(0,0,1)\}\]
 \[\langle Y\rangle=\langle X\rangle =\mathbb{R}^3\]
-
+\subsection*{Dimensions}
+If you have a finite dimensional vector space then any bases of this space have the same size. Let \(V\) be a finite dimensional vector space, then the dimension of \(V\) is \(\dim{V}=|\{v_1,v_2,...,v_n\}|\) where \(v_1,v_2,...,v_n\) is a basis of \(V\). Sometimes we write \(\dim_\mathbb{R} V\) to emphasise the field. If \(V\) is a finite dimensional vector space and \(U\leqslant V\) then \(U\) is also finite dimensional and \(\dim{U}\leq \dim V\). In this case if \(\dim{U}=\dim{V}\) then \(U=V\).
+\subsubsection*{Example of dimensions of vector spaces}
+\[\dim_{\mathbb{R}}\mathbb{R}^n=n\]
+\[\dim_{\mathbb{R}}\mathbb{C}=2\]
+\[\dim_{\mathbb{C}}\mathbb{C}=1\]
+The basis for \(\mathbb{C}\) over \(\mathbb{R}\) is \(\{1,i\}\).
+\subsubsection*{Dimension of a subspace}
+Let \(S=\{(1,0,1,-2),(1,1,-3,2),(1,3,-11,10)\}\subset \mathbb{R}^4\). What is \(\dim \langle S \rangle\)?. Let:
+\[A=\begin{pmatrix}
+    1 & 0 & 1 & -2 \\
+    1 & 1 & -3 & 2 \\
+    1 & 3 & -11 & 10
+\end{pmatrix}\]
+Note that Rowspan\((A)=\langle S\rangle\). Performing row reductions on \(A\) will not change the solution set:
+\[A=\begin{pmatrix}
+    1 & 0 & 1 & -2 \\
+    0 & 1 & -4 & 4 \\
+    0 & 0 & 0 & 0
+\end{pmatrix}\]
+Now we can see that:
+\[\langle S\rangle = \langle (1,0,1,-2),(0,1,-4,4)\rangle\]
+These are linearly independent and they span \(\langle S\rangle\) so this means they are a basis of \(\langle S\rangle\). Then it is clear that \(\dim{\langle S\rangle =2}\).
+\subsection*{The dimension formula}
+Let \(V\) be a vector space. If \(V\) has a finite spanning set we call \(V\) finite dimensional, and all the bases have the same number of vectors, \(\dim{V}\). We want to study \(U+W=\langle U\cup W\rangle\) for \(U,W\leqslant V\) which is the smallest vector space containing both \(U\) and \(W\). Recall that:
+\[A\leqslant B\implies \dim{A}\leq \dim B\]
+Furthermore if \(\dim{A}=\dim{B}\) then we have \(A=B\). For a vector space \(V\) and \(U,W\leqslant V\), the dimension formula tells us that:
+\[\dim{(U+W)}+\dim{(U\cap W)}=\dim{U}+\dim{W}\]
+which obviously has a special case when \(\dim{(U\cap W)}=0\).
+\subsection*{The direct sum}
+Suppose \(V\) is a vector space and \(U,W\leqslant V\) with the conditions that \(U\cap W=\{\underline{0}\}\) and \(U+W=\langle U\cup W\rangle =V\). Then we say \(V\) is the direct sum of \(U\) and \(W\) and we write \(V=U\oplus W\).
 \end{document}

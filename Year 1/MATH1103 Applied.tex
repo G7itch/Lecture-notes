@@ -13,6 +13,8 @@
 \maketitle
 \hrulefill
 \setstretch{1.5}
+\tableofcontents
+\newpage
 \section{Modelling}
 \subsection*{Notation}
 The Applied maths module uses some different notation to other modules and lecturers, the table below lists the common notation used in other modules on the left and the applied maths alternative on the right.
@@ -855,4 +857,18 @@ Here there are two distinct real roots of opposite signs, so we have a saddle po
     -\sqrt{3} & 0
 \end{pmatrix}\]
 Here we have \(T=2\) and \(D=-3<0\) so we also have a saddle points here too.
+\subsection*{Attractors and basis of attraction}
+An attractor is something in the phase space which attracts trajectories. Examples from this module that we have looked at are asymptotically stable equilibrium points. The basis of an attractor is the set of initial conditions that go to the attractor as \(t\to\infty\).
+\subsection*{Summary of steps to draw phase portraits for non-linear planar systems}
+The aim is to understand the solutions of the system of non-linear differential equations:
+\[\dot{x} = f(x, y),\qquad \dot{y} = g(x, y)\]
+The way we do this is by drawing the phase portrait.
+\begin{itemize}
+    \item Find the equilibrium points \((x^*, y^*)\): where \(f(x^*, y^*) = 0\) and \(g(x^*, y^*) = 0\).
+    \item Find the nullclines and sketch the them and the vector field arrows on them. These nullclines should cross at equilibrium points.
+    \item Linearise the equations near each equilibrium point by finding the Jacobian matrix at each equilibrium point.
+    \item Classify each equilibrium point (node, spiral, saddle, etc). Draw the phase portrait near each equilibrium point (by finding eigenvectors for real eigenvalues, and finding direction of spirals).
+    \item Join the dots by drawing a consistent phase portrait. We can use nullclines to help with this.
+    \item Use the phase portrait to draw conclusions about the behaviour of solutions with different initial conditions
+\end{itemize}
 \end{document}
