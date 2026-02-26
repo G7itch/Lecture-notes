@@ -871,4 +871,14 @@ The way we do this is by drawing the phase portrait.
     \item Join the dots by drawing a consistent phase portrait. We can use nullclines to help with this.
     \item Use the phase portrait to draw conclusions about the behaviour of solutions with different initial conditions
 \end{itemize}
+\subsection*{Conservative systems}
+Special features of a system can help us immensely when plotting phase portraits. In a conservative system, the total energy is conserved. For any one-dimensional conservative force \(F(x)\) we can define the potential \(V(x)\) such that:
+\[F(x)=-V'(x)\]
+Then for a given solution \(x(t)\), we can see that total energy is a constant function of time (for more details and a proof look at the Autumn content):
+\[E=\frac{m}{2}\dot{x}^2+V(x)\]
+We can write this in coupled form:
+\[\dot{x}=y,\qquad \dot{y}=\frac{-V'(x)}{m}\]
+We know that the total energy is conserved on the trajectories in the phase plane. Therefore the trajectories are constant and are the contours/level curves of \(E\). For the general first order autonomous system, on the trajectories we have:
+\[\df{y}{x}=\frac{g(x,y)}{f(x,y)}\]
+If this is a separable ODE then we can solve it to find a conserved quantity: \(H(x,y)\). Note that all linearised conservative systems can have saddle points or linear centres but not attracting or repelling equilibrium points. While saddles remain saddles due to Hartman-Grobman, we need to be careful when looking at the behaviour of centres to make sure they remain how we think. 
 \end{document}
