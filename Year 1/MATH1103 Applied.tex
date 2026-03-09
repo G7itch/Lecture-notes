@@ -880,5 +880,49 @@ We can write this in coupled form:
 \[\dot{x}=y,\qquad \dot{y}=\frac{-V'(x)}{m}\]
 We know that the total energy is conserved on the trajectories in the phase plane. Therefore the trajectories are constant and are the contours/level curves of \(E\). For the general first order autonomous system, on the trajectories we have:
 \[\df{y}{x}=\frac{g(x,y)}{f(x,y)}\]
-If this is a separable ODE then we can solve it to find a conserved quantity: \(H(x,y)\). Note that all linearised conservative systems can have saddle points or linear centres but not attracting or repelling equilibrium points. While saddles remain saddles due to Hartman-Grobman, we need to be careful when looking at the behaviour of centres to make sure they remain how we think. 
+If this is a separable ODE then we can solve it to find a conserved quantity: \(H(x,y)\). Note that all linearised conservative systems can have saddle points or linear centres but not attracting or repelling equilibrium points. While saddles remain saddles due to Hartman-Grobman, we need to be careful when looking at the behaviour of centres to make sure they remain how we think. We know that a linear centre will remain a linear centre if the trajectories in the non-linear system remain closed. The easiest way for us to tell if the trajectories will be closed is to work out if we are near a local minimum or maximum.
+\subsection*{Conservative system example}
+Suppose we wish to sketch the phase portrait for the energy conserved system when \(m=1\) and \(V(x)=x-\frac{1}{3}x^3\).
+\[\ddot{x}=-V'(x)=-1+x^2\]
+\[\dot{x}=y\]
+\[\dot{y}=x^2-1\]
+Next we need to find equilibrium points, we know this occurs when \(y=0\) and \(x=\pm 1\) so our equilibrium points are \((1,0)\) and \((-1,0)\). The next step is for us to linearise the system, we can calculate the Jacobian as:
+\[D\textbf{f}=\begin{pmatrix}
+    0 & 1 \\
+    2x & 0
+\end{pmatrix}\]
+At \((1,0):\)
+\[D\textbf{f}((1,0))=\begin{pmatrix}
+    0 & 1 \\
+    2 & 0
+\end{pmatrix}\]
+\[\lambda_{1,2}=\pm \sqrt{2}\]
+So we have a saddle point, we know this will remain a saddle point in the non-linear system. At \((-1,0):\)
+\[D\textbf{f}((-1,0))=\begin{pmatrix}
+    0 & 1 \\
+    -2 & 0
+\end{pmatrix}\]
+\[\lambda_{1,2}=\pm\sqrt{2}i\]
+So we have a linear centre and we need to examine it more closely. We need to see if the linear centre remains a centre in the non-linear system so we need to check if the trajectories are closed. We know \(E=\frac{1}{2}y^2+x-\frac{1}{3}x^3\) is constant on trajectories, if we can show \((-1,0)\) then we are done. The trajectory through \((-1,0)\) has:
+\[y^2=2E-2x+\frac{2}{3}x^3\implies0=2E+2-\frac{2}{3}\implies E=-\frac{2}{3}\]
+The trajectory through \((1,0)\) has:
+\[y^2=2E-2x+\frac{2}{3}x^3\implies0=2E-2+\frac{2}{3}\implies E=\frac{2}{3}\]
+The final step is to plot direction arrows on the trajectories.
+\subsection*{Damping and orbits}
+Note that if we add damping to the above system the energy will decrease over time and we can see that we no longer have a linear centre. When the energy is decreasing such as with damping the linear centre collapses into a stable spiral in the non-linear plot.  A homoclinic orbit or homoclinic connection between a point and itself is a trajectory for which \(\textbf{x}\to\textbf{x}^*\) as \(t\to\pm\infty\). A heteroclinic orbit joins an equilibrium point to another with the relationship \(\textbf{x}\to \textbf{x}_1^*\) as  \(t\to\infty\) and \(\textbf{x}\to\textbf{x}_2^*\) as \(t\to -\infty\).
+\subsection*{Simple non-linear pendulum example}
+We can non-dimensionalise the equation for a simple non-linear pendulum as:
+\[\ddot{\theta}=-\sin{\theta}\]
+If \(\theta\) is small then we would traditionally use the small angle approximation \(\sin{\theta}\approx\theta \), however we can now use phase plane analysis to describe the motion of the pendulum without imposing any conditions on \(\theta\):
+\[\dot{\theta}=q\]
+\[\dot{q}=-\sin \theta\]
+\[V'(\theta)=\sin\theta\]
+\[V(\theta)=-\cos{\theta}\]
+\[E=\frac{1}{2}q^2-\cos{\theta}\]
+We have \(E\) constant on trajectories. The equilibrium points of this system are at \(q=0\) and \(\theta=n\pi\) for \(n\in\mathbb{Z}\), although because the system is \(2\pi\)-periodic we only need to consider two example, for this we can choose \(n=0\) and \(n=1\).
+\[D\textbf{f}=\begin{pmatrix}
+    0 & 1 \\
+    -\cos{\theta} & 0
+\end{pmatrix}\]
+At \((\pi,0)\) we have a saddle so this remains a saddle. At \((0,0)\) we have a linear centre so more work needs to be done to work out if this remains a centre in the non-linear system.
 \end{document}

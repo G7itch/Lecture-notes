@@ -8,6 +8,7 @@
 \newcommand{\mat}[3]{\text{Mat}_{#1\times#2}(\mathbb{#3})}
 \newcommand{\arbvec}[2]{\ensuremath{\textbf{#1}_1,\textbf{#1}_2,\dots,\textbf{#1}_{#2}}}
 \newcommand{\arbreal}[2]{{#1}_1,{#1}_2,\dots,{#1}_{#2}}
+\newcommand{\st}{\text{ s.t. }}
 
 \begin{document}
 \maketitle
@@ -574,4 +575,63 @@ Furthermore if \(\dim{A}=\dim{B}\) then we have \(A=B\). For a vector space \(V\
 which obviously has a special case when \(\dim{(U\cap W)}=0\).
 \subsection*{The direct sum}
 Suppose \(V\) is a vector space and \(U,W\leqslant V\) with the conditions that \(U\cap W=\{\underline{0}\}\) and \(U+W=\langle U\cup W\rangle =V\). Then we say \(V\) is the direct sum of \(U\) and \(W\) and we write \(V=U\oplus W\).
+\subsection*{Properties of the direct sum}
+Suppose \(V\) is a finite dimensional vector space and \(U,W\leqslant V\). Then each of the following properties is equivalent to \(V=U\oplus W\):
+\begin{enumerate}
+    \item Every \(v\in V\) has a unique expression as \(v=u+w\) with \(u\in U\) and \(w\in W\).
+    \item \(v=u+w\) and \(\dim V=\dim U+\dim W\).
+    \item \(\dim V=\dim U+\dim W\) and \(\dim(U\cap W)=0\).
+    \item If \(\{u_1,\dots,u_m\}\) is a basis for \(U\) and \(\{w_1,\dots,w_n\}\) is a basis for \(W\) then \(\{u_1,\dots u_m,w_1,\dots w_n\}\) forms a basis for \(V\)
+\end{enumerate}
+\subsubsection*{\underline{Pf. \(V=U\oplus W\iff \forall v\in V,\,\exists! u\in U,\,\exists!w\in W\st v=u+w\)}}
+\subsubsection*{(\(\implies\)):}
+\[V=U\oplus W\implies V=U+W\implies \exists u\in U,w\in W\st v=u+w\]
+Suppose \(\exists u_1,u_2\in U\) and \(\exists w_1,w_2\in W\) such that:
+\[v=u_1+w_1=u_2+w_2\implies u_1-u_2=w_2-w_1=0\]
+\[\implies u_2-u_1\in U\cap W \text{ and }w_2-w_1\in U\cap W\]
+But we already put conditions on \(U\cap W\):
+\[U\cap W=\{0\}\]
+\[\therefore\]
+\[u_1-u_2=w_2-w_1=0\implies u_1=u_2,\,w_1=w_2\]
+So we have proved both existence and uniqueness.
+\subsubsection*{(\(\impliedby\)):}
+Since \(u\in U\) and \(w\in W\) exist we conclude that \(V=U+W\). Suppose \(a\in U\cap W\) and \(a\ne0\). Then \(a=a+0_w=0_u+a\) with \(0_u\in U,\,0_w\in W\) and \(0_u=0_w=0\). Then this contradicts uniqueness so we cannot have a non-zero element in \(U\cap W\).
+\[\blacksquare\]
+\subsubsection*{\underline{Pf. \(V=U\oplus W\iff V=U+W \text{ and } \dim{V}=\dim{U}+\dim{W}\)}}
+\subsubsection*{(\(\implies\)):}
+\[V=U\oplus W\implies V=U+W\land U\cap W=\{0\}\]
+Recall the dimension formula:
+\[\dim{(U+W)}+\dim{(U\cap W)}=\dim{U}+\dim{W}\]
+Substitute for \(V\):
+\[\dim{V}+0=\dim{U}+\dim{W}\]
+\subsubsection*{(\(\impliedby\)):}
+\[\dim{(U\cap W)}=\dim{U}+\dim{W}-\dim{(U+W)}=0\implies U\cap W=\{0\}\]
+\[\blacksquare\]
+\subsubsection*{\underline{Pf. \(V=U\oplus W\iff \dim{V}=\dim{U}+\dim{W}\land \dim{(U\cap W)}=0\)}}
+\subsubsection*{(\(\impliedby\)):}
+\[\dim{(U+W)}=\dim{U}+\dim{W}=\dim{V}\]
+\[\begin{cases}
+    U,W\leqslant V \\
+    \dim{(U+W)=\dim{V}}
+\end{cases}\implies U+W=V\]
+\[U+W=V\land \dim{(U\cap W)=0\implies V=U\oplus W}\]
+\subsubsection*{(\(\implies\)):}
+\[V=U\oplus W\implies V=U+W\land U\cap W=\{0\}\]
+Then:
+\[\dim{(U\cap W)}=0\]
+\[\dim{(U+W)}=\dim{U}+\dim{W}=\dim{V}\]
+\[\dim{(U+W)}=\dim{V}\implies V=U+W\]
+\[\blacksquare\]
+\subsection*{Proof of bases claim for direct sum}
+This last proof (of statement 4) has been put in its own section, partly because it is a bit more technical than the others but mostly because it is just more wordy. If \(\{u_1,\dots,u_m\}\) is a basis for \(U\) and \(\{w_1,\dots,w_n\}\) is a basis for \(W\) then \(\{u_1,\dots,u_m,w_1,\dots,w_n\}\) forms a basis for \(V\iff V=U\oplus W\).
+\subsubsection*{(\(\impliedby\)):}
+\[V=U\oplus W\implies V=U+W=\langle U\cup W\rangle\].
+Let \(\{u_1,\dots,u_m\}\) be a basis for \(U\) and \(\{w_1,\dots,w_n\}\) be a basis for \(W\), then:
+\[V=\langle \langle u_1,\dots ,u_m\rangle \cup \langle w_1,\dots,w_n\rangle\rangle=\langle u_1,\dots,u_m,w_1,\dots,w_n\rangle\]
+If \(V=U\oplus W\) we also have that \(U\cap W=\{0\}\), so all the vectors in the bases of \(U\) and \(W\) are linearly independent of each other. Hence the set \(\{u_1,\dots,u_m,w_1,\dots w_n\}\) spans \(V\) and is linearly independent so forms a basis for \(V\).
+\subsubsection*{(\(\implies\)):}
+Let \(v\in V\), then as \(\{u_1,\dots,u_m,w_1,\dots w_n\}\) is a basis for \(V\):
+\[\exists\,\arbreal{a}{m},\arbreal{b}{n}\in\mathbb{R}\st v=a_1u_1+\cdots a_mu_m+b_1w_1+\cdots b_nw_n\]
+This expansion is unique by the definition of a basis. Then \(v=u+w\) and \(u\in U,\ w\in W\) are unique so by our first equivalence statement, \(V=U\oplus W\).
+\[\blacksquare\]
 \end{document}

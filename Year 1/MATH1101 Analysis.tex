@@ -599,4 +599,59 @@ The set of all Riemann integrable functions has some useful properties:
     \item If \(f\in R[a,b]\) then \(|f|\in R[a,b]\) and:
     \[\left|\int^b_af(x)\,\text{d}x\right|\leq \int^b_a|f(x)\,\text{d}x|\]
 \end{itemize}
+\subsection*{Fundamental theorem(s) of calculus}
+If \(f\in C[a,b]\) and we define \(F:[a,b]\to\mathbb{R}\) by:
+\[F(x)=\int^x_af(t)\,\text{d}t\]
+Then \(F\) is differentiable on \([a,b]\) with \(F'=f\). This theorem tells us that \(F\) is an anti-derivative of \(f\) on \([a,b]\). Anti-derivatives are also sometimes called primitives. If \(F_1,F_2\) are anti-derivatives of \(f\) on \([a,b]\) then \(F_1-F_2\) is constant. If \(f\in C[a,b]\) and \(F\) is differentiable with \(F'=f\) then:
+\[\int^b_af(x)\,\text{d}x=F(b)-F(a)\]
+Anti-derivatives can also be written as indefinite integrals:
+\[\int f(x)\,\text{d}x=F(x)+C\]
+\subsection*{Standard integrals}
+There are loads of standard integrals that you should remember, here is just a small sample of them:
+\[\int x^a\,\text{d}x=\frac{1}{a+1}x^{a+1}+C\quad (\text{Valid for }a\ne1)\]
+\[\int \frac{1}{x}\,\text{d}x=\log{|x|}+C\quad (\text{Valid for }x\ne0)\]
+\[\int \frac{1}{1+x^2}\,\text{d}x=\arctan{x}+C\]
+\[\int \frac{1}{\sqrt{1-x^2}}\,\text{d}x=\arcsin{x}+C\quad (\text{Valid for }|x|<1)\]
+\[\int \cos{x}\,\text{d}x=\sin{x}+C\]
+\[\int e^{ax}\,\text{d}x=\frac{1}{a}e^{ax}+C\quad (\text{Valid for }a\ne0)\]
+\[\int \frac{1}{\cos^2{x}}\,\text{d}x=\tan{x}+C\quad (\text{Valid for }\cos{x}\ne0)\]
+\subsection*{Methods of integration}
+Many integrals can be calculated explicitly by finding anti-derivatives using techniques from differentiation. However, sometimes the only way we can calculate an integral is numerically and sometimes the anti-derivatives contain non-elementary functions (such as the error function).
+\subsubsection*{Integration by substitution}
+Let \(I\) be an interval, \(f\in C(I),\ y\in C'[a,b]\) with \(g([a,b])\subseteq I\). Then:
+\[\int^b_af(g(t))g'(t)=\int^{g(b)}_{g(a)}f(x)\,\text{d}x\]
+\subsubsection*{Integration by parts}
+Let \(u,v\in C'[a,b]\). Then:
+\[\int^b_au(x)v'(x)\,\text{d}x=\left[u(x)v(x)\right]^b_a-\int^b_au'(x)v(x)\,\text{d}x\]
+\subsection*{Improper integrals}
+The Riemann integral is only defined for bounded functions over bounded intervals. It would obviously be useful to be able to calculate the values of integrals with infinite bounds. Let \(f:[a,\infty)\to\mathbb{R}\) be a function such that \(f\in R[a,s]\) for all \(s>a\). If the limit:
+\[\lim_{s\to\infty}\int^s_af(x)\,\text{d}x\]
+exists, then we say that the improper integral exists and set:
+\[\int^\infty_af(x)\,\text{d}x:=\lim_{x\to\infty}\int^s_af(x)\,\text{d}x\]
+We can do the same for the lower limit being equal to infinity.
+\subsection*{Integral comparison test}
+Let \(f:[a,b]\to(0,\infty)\) be a decreasing function. Then:
+\[\sum^\infty_{n=1}f(n)<\infty\iff\int^\infty_1f(t)\,\text{d}t<\infty\]
+This test is particularly useful for calculating convergence of \(\zeta\) series. We are essentially saying that the series converges only if the corresponding integral exists and vice versa.
+\section{Multivariable calculus}
+We define a function of multiple variables as \(f:D\to\mathbb{R}\) with \(D\subseteq \mathbb{R}^d\) and \(d\in\mathbb{N}\) - a rule that maps every point in D to exactly one point in \(\mathbb{R}\). This will commonly be written in the implicit form:
+\[y=f(x_1,x_2,...,x_d)\]
+Often we have \(d=2\) and we will write \(z=f(x,y)\) with \((x,y)\in D\subseteq\mathbb{R}^d\).
+\subsection*{Graphs of functions}
+In 1D we could represent the graph of a function as a set of pairs of points:
+\[f:I\to\mathbb{R},\ I\subseteq\mathbb{R}\leadsto G_f=\{(x,f(x)): x\in I\}\subseteq \mathbb{R}^2\]
+This notion extends to 2D and higher although it is not usually easy to plot or visualise what these graphs look like. Sometimes the best option is to use computers to assist in plotting them.
+\[f:D\to\mathbb{R},\ D\subseteq\mathbb{R}^2\leadsto G_f=\{(x,y,f(x,y)): (x,y)\in D\}\subseteq \mathbb{R}^3\]
+We can also sketch level curves or contours:
+\[L_\lambda = \{(x,y)\in D: f(x,y)=\lambda\}\]
+The \(L_\lambda\)'s form the level sets of \(f\).
+\subsection*{Coordinates}
+\subsubsection*{Cartesian}
+The most common coordinate system for 2D systems and beyond. Cartesian coordinates describe positions as a list of distances to the origin in each axis.
+\subsubsection*{Polar}
+Polar coordinates are an alternative coordinate system for 2D which describe positions as the combination of a distance to the origin and an angle counter-clockwise from the horizontal axis. Typically we restrict the angle to be \(-\pi\leq \varphi\leq \pi\) and the distance to be \(r\geq 0\).
+\subsubsection*{Cylindrical}
+In essence cylindrical coordinates are an extension of polar coordinates in 3D that use an extra variable to represent the height off the original plane.
+\subsubsection*{Spherical}
+A different extension of polar coordinates that includes an additional angle to represent positions in 3D. Typically we restrict these angles to \(-\pi\leq \varphi\leq \pi\) and \(0\leq \theta\leq \pi\).
 \end{document}
