@@ -634,4 +634,48 @@ Let \(v\in V\), then as \(\{u_1,\dots,u_m,w_1,\dots w_n\}\) is a basis for \(V\)
 \[\exists\,\arbreal{a}{m},\arbreal{b}{n}\in\mathbb{R}\st v=a_1u_1+\cdots a_mu_m+b_1w_1+\cdots b_nw_n\]
 This expansion is unique by the definition of a basis. Then \(v=u+w\) and \(u\in U,\ w\in W\) are unique so by our first equivalence statement, \(V=U\oplus W\).
 \[\blacksquare\]
+\section{Linear maps}
+Let \(V,W\) be two vector spaces, then a map \(\phi:V\to W\) is called a linear map if \(\phi(v+v')=\phi(v)+\phi(v')\) and \(\phi(\lambda v)=\lambda \phi(v)\) for all \(v,v'\in V\) and \(\lambda\in \mathbb{R}\). If this linear map is also bijective then \(\phi\) is called an isomorphism, we say \(V\) is isomorphic to \(W\) and we write \(V\cong W\).
+\[\phi:V\to W\text{ linear map }\iff \phi(\alpha v+\beta v')=\alpha\phi(v)+\beta\phi(v')\;  \forall\, \alpha,\beta\in \mathbb{R};\ v,v'\in V\]
+\subsection*{Image and kernel}
+Let \(\phi:V\to W\) be a linear map, the image of \(\phi\) is denoted im(\(\phi\)) and is the subset of \(W\) given by:
+\[\text{im}(\phi)=\{w\in W\mid \exists\, v\in V: w=\phi(v)\}\]
+The kernel of \(\phi\) is denoted \(\ker(\phi)\) and is a subset of \(V\) given by:
+\[\ker{(\phi)}=\{v\in V\mid \phi(v)=0_W\}\]
+\subsubsection*{Properties of images and kernels}
+Let \(\phi:V\to W\) be a linear map, then:
+\begin{itemize}
+    \item \(\phi(0_V)=0_W\)
+    \item \(\phi\) is injective \(\iff\ \ker{\phi}=\{0_V\}\) 
+    \item \(\ker(\phi)\leqslant V\)
+    \item im\((\phi)\leqslant W\)
+\end{itemize}
+\subsubsection*{Rank-nullity formula}
+Let \(\phi:V\to W\) be a linear map, then the rank-nullity formula states:
+\[\dim(\text{im}(\phi))+\dim(\ker(\phi))=\dim(V)\]
+Where \(\dim(\text{im}(\phi))\) is known as the rank of \(\phi\) and \(\dim(\ker(\phi))\) is known as the nullity of \(\phi\).
+\subsection*{Linear maps and bases}
+Let \(\phi:V\to W\) be an isomorphism. If \(B\) is a basis of \(V\) then \(\phi(B)\) is a basis of \(W\) with \(\phi(B)=\{\phi(v):v\in B\}\). A corollary of this is that if \(V\cong W\) and \(V\) is a finite dimensional vector space, then \(W\) is also finite dimensional with \(\dim V=\dim W\). In particular, \(\mathbb{R}^m\cong \mathbb{R}^n\) if and only if \(m=n\)
+\subsection*{The coordinate map}
+Let \(V\) be a real vector space and \(B=\{\arbvec{v}{n}\}\) be a basis. Then there exists an isomorphism:
+\[\chi_B:V\to\mathbb{R}^n;\, v\mapsto (\arbreal{\lambda}{n})\]
+Where \(v=\lambda_1\textbf{v}_1+\cdots \lambda_n\textbf{v}_n\). That is:
+\[\chi_B(v)+\chi_B(w)=\chi_B(v+w)\]
+\[\chi_B(\lambda v)=\lambda\chi_B(v)\]
+We call \(\chi_B\) the coordinate map. This means that if \(V\) is a finite dimensional vector space then \(V\cong \mathbb{R}^n\) for some unique \(n\in \mathbb{N}_0\) (or similarly \(V\cong \mathbb{C}^n\) for some \(n\in \mathbb{N}_0\)).
+\subsection*{Linear maps, bases and matrices}
+\subsubsection*{Maps as matrices}
+Any matrix \(A\in M_{m,n}(\mathbb{R})\) determines a linear map by left multiplication:
+\[L_A:\mathbb{R}^n\to\mathbb{R}^m;\ \textbf{v}\mapsto A\textbf{v}\]
+We also already have an understanding of the image and kernel of \(L_A\):
+\[\ker{(L_A)}=\{\textbf{v}\in\mathbb{R}^n:A\textbf{v}=0\}\]
+\[\text{im}(L_A)=\text{Colspan}(L_A)\]
+\subsubsection*{Composition of maps}
+Let \(A\in M_{m,n}(\mathbb{R})\) and \(B\in M_{l,m}(\mathbb{R})\) then:
+\[L_{BA}=L_B\circ L_A: \mathbb{R}^n\to\mathbb{R}^l\]
+If we have \(m=n\) then:
+\begin{itemize}
+    \item \(L_{I_n}\) is the identity map \(\mathbb{R}^n\to\mathbb{R}^n\)
+    \item If \(A\) is invertible then \(L_A\) is invertible with \((L_A)^{-1}=L_{A^{-1}}\)
+\end{itemize}
 \end{document}

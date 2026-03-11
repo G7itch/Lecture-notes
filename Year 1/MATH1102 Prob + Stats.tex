@@ -832,4 +832,82 @@ We can construct a new table of expected values using this formula and from ther
 Finally we can compare against our critical value:
 \[\chisq\geq \chi^2_{\nu,1-\alpha}\]
 Where \(\nu=(\#\text{Rows}-1)(\#\text{Cols}-1)\).
+\section{Linear regression}
+\subsection*{Introduction}
+Consider a linear dataset of two variables. We are interested in the best relationship we can find between them. Our main motivation for this is that once we find this relationship, we can use it to make predictions about other pieces of data.
+\subsection*{Running example}
+Whilst looking at linear models and regression we will use the example of the relationship between GDP per capita and life expectancy across 6 countries. We want to estimate life expectancy based upon GDP per capita:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c|c}
+        \textbf{Country} & \textbf{x} & \textbf{y} \\ \hline 
+        Ukraine & \(8.2\) & \(67.9\) \\
+        UAE & \(11.1\) & \(78.7\) \\
+        UK & \(10.6\) & \(79.4\) \\
+        US & \(10.8\) & \(78.3\) \\
+        Uruguay & \(9.6\) & \(76.4\) \\
+        Uzbekistan & \(7.3\) & \(67.2\)
+    \end{tabular}
+\end{table}
+In particular we may wish to predict the life expectancy in South Africa with a GDP per capita of \(9.03\).
+\subsection*{Linear models}
+If we have a linear relationship then we can construct a model as an equation of the form:
+\[y_i=\beta_0+\beta_1x_i+\varepsilon_i,\qquad i=1,\dots,n\]
+Where \(\beta_0,\,\beta_1\) are the regression coefficients and \(\varepsilon_i\) are unobservable errors with a zero mean and variance, \(\sigma^2\). \(\beta_0\) is the intercept and \(\beta_1\) is the slope. This model specifies a mean:
+\[E[Y_i]=\beta_0+\beta_1x_i\]
+Which is a linear function in the \(x\)-direction with an additional error in the \(y\)-direction. There is no error in the \(x\)-direction because all \(x_i\)'s are assumed to be known. Linear regression is suitable for prediction of \(Y_i\) given \(x_i\). A natural question that now arises is how to pick \(\beta_0\) and \(\beta_1\)?
+\subsection*{Model assumptions}
+These linear models make some assumptions, namely:
+\begin{itemize}
+    \item Errors have zero mean, \(E[\varepsilon_i]=0\)
+    \item Errors are uncorrelated, \(\text{cov}(\varepsilon_i,\varepsilon_j)=0,\,i\ne j\)
+    \item Errors have the same variance, \(\Var{\varepsilon_i}=\sigma^2\)
+\end{itemize}
+Then we can estimate \(\beta_0\) and \(\beta_1\) by the principle of least squares. Note that we do not need to have normally distributed errors but if we do then we can perform hypothesis testing and all other requirements will be met. As an extension we sometimes say that all \(\varepsilon_i\overset{\text{i.i.d}}{\sim}N(0,\sigma^2)\).
+\subsection*{Principle of least squares}
+We wish to minimise our errors:
+\[\varepsilon_i=y_i-\beta_0-\beta_1x_i\]
+So we choose \(\beta_0,\,\beta_1\) to minimise the sum of the squares of the errors:
+\[S=\sum^n_{i=1}\varepsilon_i^2=\sum^n_{i=1}(y_i-\beta_0-\beta_1x_i)^2\]
+The estimators of \(\beta_0,\,\beta_1\) that minimise \(S\) are:
+\[\hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}\]
+\[\hat{\beta}_1=\frac{s_{xy}}{S_x^2}\]
+\subsection*{Derivation}
+\[S=\sum^n_{i=1}(y_i-\beta_0-\beta_1x_i)^2\]
+We wish to minimise so we are looking for turning points:
+\[\frac{\partial S}{\partial \beta_0}=\sum^n_{i=1}2(y_i-\beta_0-\beta_1x_i)(-1)\]
+\[=-2n\bar{y}+2n\beta_0+2n\beta_1\bar{x}\]
+\[\frac{\partial S}{\partial\beta_1}=\sum^n_{i=1}2(y_i-\beta_0-\beta_1x_i)(-x_i)\]
+\[=-2\sum^n_{i=1}x_iy_i+2n\beta_0\bar{x}+2\beta_1\sum^n_{i=1}x_i^2\]
+We want to set \(\frac{\bar{x}}{2}S_{\beta_0}=0\) and \(-\frac{1}{2}S_{\beta_1}=0\):
+\[-n\bar{y}\bar{x}+n\bar{x}\beta_0+\beta_1n\bar{x}^2=\sum^n_{i=1}x_iy_i-n\bar{x}\beta_0-\beta_1\sum^n_{i=1}x_i^2\]
+\[\left(\sum^n_{i=1}x_iy_i-n\bar{y}\bar{x}\right)-\beta_1\left(\sum^n_{i=1}x_i^2-n\bar{x}^2\right)=0\]
+\[(n-1)s_{xy}-(n-1)s_x^2\beta_1=0\]
+\[\hat{\beta}_1=\frac{s_{xy}}{s_x^2}\]
+\[-\bar{y}+\beta_0+\beta_1\bar{x}=0\]
+\[\hat{\beta}_0=\bar{y}-\hat{\beta}_1\bar{x}\]
+\subsection*{Applying the estimators to our population example}
+\[n=6\quad\bar{x}=9.6\quad \bar{y}=74.65\]
+\[s_{xy}=8.358\quad s_x^2=2.388 \quad s_y^2=31.283\]
+\[\hat{\beta}_1=\frac{s_{xy}}{s_{x}^2}=\frac{8.358}{2.388}=3.5\]
+\[\hat{\beta}_0=74.65-3.5(9.6)=41.05\]
+\(\beta_0\) represents the expected life population if a country had a GDP per capita of \(0\). \(\beta_1\) represents how much the life expectancy of a country increases per unit increase of GDP per capita. Consider our example of South Africa:
+\[\hat{Y}_{SA}=\hat{\beta}_0+\hat{\beta}_1x_{SA}\]
+\[\hat{Y}_{SA}=41.05+3.5(9.03)=72.655\approx72.7\]
+\subsection*{Model evaluation}
+The natural question that comes up here is "how good is our linear model". When we fit a model we are mostly only interested in a small range of values so we can inspect the residuals:
+\[r_i=y_i-\hat{y}_i\]
+The residual plot is found by plotting the values \(r_i\) against \(\hat{y}_i\). We want to see no clear pattern in the residuals for our model to be good.
+\subsubsection*{Justifying \(\hat{\beta}_0\) and \(\hat{\beta}_1\)}
+It can be seen that:
+\[\beta_0=E[\hat{\beta}_0]\]
+\[\beta_1=E[\hat{\beta}_1]\]
+So \(\hat{\beta}_0\) and \(\hat{\beta}_1\) are unbiased estimators. Note that the better range of \(x\) values the we have the better model fit we will get.
+\subsubsection*{Estimating \(\sigma^2\)}
+We can estimate the \(\sigma^2\) variance of our error terms with:
+\[\hat{\sigma^2}=\frac{1}{n-2}\sum^n_{i=1}(y_i-\hat{y}_i)^2=\frac{1}{n-2}\sum^n_{i=1}r_i^2\]
+A larger \(\hat{\sigma^2}\) would indicate a worse model fit. Alternatively:
+\[\sum^n_{i=1}r_i^2=(n-1)s_x^2+\hat{\beta}_1^2(n-1)s_x^2-2\hat{\beta}_1(n-1)s_{xy}\]
+Since \(s_{xy}=\hat{\beta}_1s_x^2\):
+\[\hat{\sigma^2}=\frac{(n-1)}{(n-2)}\left(s_y^2-\hat{\beta}_1^2s_x^2\right)\]
 \end{document}
