@@ -575,4 +575,41 @@ We can easily generalise this by thinking about how symmetries and permutations 
 What this means is that there is an injective map \(D_n\to S_n;\ \sigma\mapsto\tilde{\sigma}, \tau\mapsto\tilde{\tau}\) such that the group operations are respected as above. This is an example of a homomorphism.
 \subsection*{Cayley's theorem}
 Let \(G\) be a finite group. Then there exists \(n\in\mathbb{N}\) such that \(G\leqslant S_n\) is a subgroup of \(S_n\). This is one of those theorems that sounds nice and has a pretty proof but is generally not particularly helpful.
+\section{Homomorphisms and isomorphisms}
+Often we are interested in comparing abstract structures, in particular we wish to check if two structures are equal. Consider that each abstract object can have multiple representations, for example the set with three elements can take many forms, including but not limited to:
+\begin{itemize}
+    \item \(\{1,2,3\}\)
+    \item \(\{1,2,3,3\}\)
+    \item \(\{"a","b","c"\}\)
+\end{itemize}
+Importantly there exists some bijection that takes us from one of these sets to the other. We can think of this as a simple relabelling, the underlying structure doesn't change. In this part of the course we are looking to compare group structures using two special kinds of functions.
+\subsection*{Isomorphisms}
+Consider two groups, \(C_3\) with composition and \(H=\langle \{I,A,B\}, \times\rangle\) and draw their cayley tables:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c c c}
+        \(\circ\) & \(e\) & \(\sigma\) & \(\sigma^2\) \\ \hline
+        \(e\) & \(e\) & \(\sigma\) & \(\sigma^2\) \\
+        \(\sigma\) & \(\sigma\) & \(\sigma^2\) & \(e\) \\
+        \(\sigma^2\) & \(\sigma^2\) & \(e\) & \(\sigma\)
+    \end{tabular}
+\end{table}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c c c}
+        \(\times\) & \(I\) & \(A\) & \(B\) \\ \hline
+        \(I\) & \(I\) & \(A\) & \(B\) \\
+        \(A\) & \(A\) & \(B\) & \(I\) \\
+        \(B\) & \(B\) & \(I\) & \(A\)
+    \end{tabular}
+\end{table}
+Notice how these two cayley tables have exactly the same layout. You could say that they are the sample table up to relabelling. The similarities here can be represented by a bijective function:
+\[F:C_3\to H;\]
+\[F(e)=I\]
+\[F(\sigma)=A\]
+\[F(\sigma^2)=B\]
+Additionally, consider \(F(a\circ b)\quad \forall a,b\in C_3\):
+\[F(a\circ b)=F(a)\times F(b)\]
+Bijections between groups with this property are known as isomorphisms and encapsulate the idea that both groups convey the same information just with different labels.
+\subsection*{Homomorphisms}
 \end{document}
