@@ -9,6 +9,7 @@
 \newcommand{\arbvec}[2]{\ensuremath{\textbf{#1}_1,\textbf{#1}_2,\dots,\textbf{#1}_{#2}}}
 \newcommand{\arbreal}[2]{{#1}_1,{#1}_2,\dots,{#1}_{#2}}
 \newcommand{\st}{\text{ s.t. }}
+\newcommand{\genvec}[3]{#1_1\textbf{#2}_1+\cdots + #1_#3\textbf{#2}_#3}
 
 \begin{document}
 \maketitle
@@ -677,7 +678,7 @@ Where \(v=\lambda_1\textbf{v}_1+\cdots \lambda_n\textbf{v}_n\). That is:
 \[\chi_B(\lambda v)=\lambda\chi_B(v)\]
 We call \(\chi_B\) the coordinate map. This means that if \(V\) is a finite dimensional vector space then \(V\cong \mathbb{R}^n\) for some unique \(n\in \mathbb{N}_0\) (or similarly \(V\cong \mathbb{C}^n\) for some \(n\in \mathbb{N}_0\)).
 \subsection*{Linear maps, bases and matrices}
-\subsubsection*{Maps as matrices}
+\subsubsection*{Matrices as maps}
 There is a very important relationship between matrices and linear maps that we will make great use of moving forward. Any matrix \(A\in M_{m,n}(\mathbb{R})\) determines a linear map by left multiplication:
 \[L_A:\mathbb{R}^n\to\mathbb{R}^m;\ \textbf{v}\mapsto A\textbf{v}\]
 We also already have an understanding of the image and kernel of \(L_A\):
@@ -691,4 +692,92 @@ If we have \(m=n\) then:
     \item \(L_{I_n}\) is the identity map \(\mathbb{R}^n\to\mathbb{R}^n\)
     \item If \(A\) is invertible then \(L_A\) is invertible with \((L_A)^{-1}=L_{A^{-1}}\)
 \end{itemize}
+\subsubsection*{Linear maps and bases}
+Let \(V\) be a vector space with a finite basis \(\{\arbvec{v}{n}\}\), \(W\) be any vector space. Then let \(\phi_1,\phi_2:V\to W\) be linear maps:
+\begin{enumerate}
+
+    \item If \(\phi_1(\textbf{v}_i)=\phi_2(\textbf{v}_i)\quad \forall i\) then \(\phi_1=\phi_2\).
+    \item For any choice \(\arbvec{w}{n}\in W\) there exists a linear map \(\phi\) such that \(\phi(\textbf{v}_i)=\textbf{w}_i\quad \forall i\).
+\end{enumerate}
+\subsubsection*{Proof of (1):}
+We want to show \(\phi_1(\textbf{v})=\phi_2(\textbf{v})\quad \forall \textbf{v}\in V\). We have:
+\[\phi_1(\textbf{v})=\phi_1(\lambda_1\textbf{v}_1+\cdots + \lambda_n\textbf{v}_n)\]
+\[=\lambda_1\phi_1(\textbf{v}_1)+\cdots+\lambda_n\phi_1(\textbf{v}_n)\]
+\[=\lambda_1\phi_2(\textbf{v}_1)+\cdots \lambda_n\phi_2(\textbf{v}_n)\]
+\[=\phi_2(\genvec{\lambda}{v}{n})\]
+\[=\phi_2(\textbf{v})\]
+\[\blacksquare\]
+\subsubsection*{Proof of (2):}
+Define \(\phi:V\to W\) with \(\phi(\textbf{v}_i)=\textbf{w}_i\quad \forall i\). Then:
+\[\phi(\textbf{v})=\phi(\genvec{\lambda}{v}{n})\]
+\[=\lambda_1\phi(\textbf{v}_1)+\cdots\lambda_n\phi(\textbf{v}_n)\]
+\[=\lambda_1\textbf{w}_1 + \cdots \lambda_n\textbf{w}_n\]
+So now we just need to ensure \(\phi\) is linear:
+\[\phi(\alpha(\genvec{\lambda}{v}{n}))=\genvec{\alpha\lambda}{w}{n}\]
+\[=\alpha\phi(\genvec{\lambda}{v}{n})\]
+And:
+\[\phi((\genvec{\alpha}{v}{n})+(\genvec{\beta}{v}{n}))\]
+\[=(\alpha_1+\beta_1)\textbf{w}_1+\cdots (\alpha_n+\beta_n)\textbf{w}_n\]
+\[=\phi(\genvec{\alpha}{v}{n})+\phi(\genvec{\beta}{v}{n})\]
+\[\blacksquare\]
+\subsubsection*{Maps as matrices}
+Let \(\arbvec{v}{n}\) be a basis of \(V\) and \(\arbvec{w}{m}\) be basis of \(W\). \(A=(a_{ij})\in M_{m,n}(\mathbb{R})\). Then there exists a linear map \(\phi_A:V\to W\) defined as:
+\[\textbf{v}_i\mapsto a_{1i}\textbf{w}_i+\cdots + a_{mi}\textbf{w}_m\]
+\(\phi_A\) is called the linear map of \(A\) with respect to the bases \(V\) and \(W\). We can think of this in the following way:
+\[\phi_A(\textbf{v})=\phi_A(\genvec{\lambda}{v}{n})\]
+\[=\lambda_1\phi_A(\textbf{v}_1)+\cdots \lambda_n\phi_A(\textbf{v}_n)\]
+\[=\begin{pmatrix}
+    \phi_A(\textbf{v}_1) & \cdots & \phi_A(\textbf{v}_n)
+\end{pmatrix}\begin{pmatrix} \lambda_1 \\
+\vdots \\
+\lambda_n
+\end{pmatrix}\]
+\[=\begin{pmatrix}
+    \textbf{w}_1 & \cdots & \textbf{w}_m
+\end{pmatrix}A\begin{pmatrix}
+    \lambda_1 \\
+    \vdots \\
+    \lambda_n
+\end{pmatrix}\]
+\[=\begin{pmatrix}
+    \textbf{w}_1 & \cdots & \textbf{w}_m
+\end{pmatrix}L_A\begin{pmatrix}
+    \lambda_1 \\
+    \vdots \\
+    \lambda_n
+\end{pmatrix}\]
+\subsubsection*{Example}
+\[V=W=\mathbb{R}^2\]
+\[A=\begin{pmatrix}
+    2 & -5 \\
+    -1 & 3
+\end{pmatrix}\]
+We use the standard basis for \(V\) and \(W\).
+\[\phi_A(\begin{pmatrix}
+    x & y
+\end{pmatrix}^T)=\phi_A(x\cdot\textbf{e}_1 + y\cdot\textbf{e}_2)\]
+\[=\begin{pmatrix}
+    \textbf{e}_1 & \textbf{e}_2
+\end{pmatrix}\begin{pmatrix}
+    2 & -5 \\
+    -1 & 3
+\end{pmatrix}\begin{pmatrix}
+    x \\ y
+\end{pmatrix}\]
+\[=\begin{pmatrix}
+    \textbf{e}_1 & \textbf{e}_2
+\end{pmatrix}\begin{pmatrix}
+    2x -5y \\
+    -x+3y
+\end{pmatrix}\]
+\[=(2x-5y)\textbf{e}_1 + (-x+3y)\textbf{e}_2\]
+\[=\begin{pmatrix}
+    2x-5y & -x+3y
+\end{pmatrix}^T\]
+\[\phi_A(\begin{pmatrix}
+    x & y
+\end{pmatrix}^T)=\begin{pmatrix}
+    2x-5y & -x+3y
+\end{pmatrix}^T\]
+So every matrix along with two fixed bases of finite dimensions forms a linear map. In fact vector spaces themselves give rise to linear maps.
 \end{document}
