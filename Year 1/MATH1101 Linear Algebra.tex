@@ -656,6 +656,19 @@ Let \(\phi:V\to W\) be a linear map, then the rank-nullity formula states:
 Where \(\dim(\text{im}(\phi))\) is known as the rank of \(\phi\) and \(\dim(\ker(\phi))\) is known as the nullity of \(\phi\).
 \subsection*{Linear maps and bases}
 Let \(\phi:V\to W\) be an isomorphism. If \(B\) is a basis of \(V\) then \(\phi(B)\) is a basis of \(W\) with \(\phi(B)=\{\phi(v):v\in B\}\). A corollary of this is that if \(V\cong W\) and \(V\) is a finite dimensional vector space, then \(W\) is also finite dimensional with \(\dim V=\dim W\). In particular, \(\mathbb{R}^m\cong \mathbb{R}^n\) if and only if \(m=n\)
+\subsubsection*{Proof}
+Let \(V,W\) be vector spaces, \(B\) be a basis of \(V\) and \(\phi:V\to W\) be an isomorphism. We want to show that \(\phi(B)\) spans \(W\). Let \(w\in W\) and put \(v=\phi^{-1}(w)\). This implies \(\exists \arbreal{\lambda}{s}\in \mathbb{R}\) and \(\arbvec{v}{s}\in B\) such that:
+\[v=\lambda_1\textbf{v}_1+\cdots +\lambda_s\textbf{v}_s\]
+\[\implies \phi(v)=\phi(\lambda_1\textbf{v}_1+\cdots+\lambda_s\textbf{v}_s)\]
+\[=\lambda_1\phi(\textbf{v}_1)+\cdots+\lambda_s\phi(\textbf{v}_s)=w\]
+Hence \(\phi(B)\) spans \(W\) since any \(w\in W\) can be constructed using it. Now we need to show that \(\phi(B)\) is linearly independent. Suppose there are \(\lambda_i\in \mathbb{R}\) such that:
+\[0_W=\lambda_1\phi(\textbf{v}_1)+\cdots+\lambda_s\phi(\textbf{v}_s)\]
+for some \(\phi(\textbf{v}_i)\in \phi(B)\). This implies:
+\[0_V=\phi^{-1}(\lambda_1\phi(\textbf{v}_1)+\cdots+\lambda_s\phi(\textbf{v}_s))\]
+\[=\lambda_1\phi^{-1}(\phi(\textbf{v}_1))+\cdots+\lambda_s\phi^{-1}(\phi(\textbf{v}_s))\]
+\[=\lambda_1\textbf{v}_1+\cdots+\lambda_s\textbf{v}_s\]
+But \(B\) is a basis and so is linearly independent. Then \(\lambda_1,\dots\lambda_s=0\), so \(\phi(B)\) is a basis for \(W\).
+\[\blacksquare\]
 \subsection*{The coordinate map}
 Let \(V\) be a real vector space and \(B=\{\arbvec{v}{n}\}\) be a basis. Then there exists an isomorphism:
 \[\chi_B:V\to\mathbb{R}^n;\, v\mapsto (\arbreal{\lambda}{n})\]
@@ -665,7 +678,7 @@ Where \(v=\lambda_1\textbf{v}_1+\cdots \lambda_n\textbf{v}_n\). That is:
 We call \(\chi_B\) the coordinate map. This means that if \(V\) is a finite dimensional vector space then \(V\cong \mathbb{R}^n\) for some unique \(n\in \mathbb{N}_0\) (or similarly \(V\cong \mathbb{C}^n\) for some \(n\in \mathbb{N}_0\)).
 \subsection*{Linear maps, bases and matrices}
 \subsubsection*{Maps as matrices}
-Any matrix \(A\in M_{m,n}(\mathbb{R})\) determines a linear map by left multiplication:
+There is a very important relationship between matrices and linear maps that we will make great use of moving forward. Any matrix \(A\in M_{m,n}(\mathbb{R})\) determines a linear map by left multiplication:
 \[L_A:\mathbb{R}^n\to\mathbb{R}^m;\ \textbf{v}\mapsto A\textbf{v}\]
 We also already have an understanding of the image and kernel of \(L_A\):
 \[\ker{(L_A)}=\{\textbf{v}\in\mathbb{R}^n:A\textbf{v}=0\}\]

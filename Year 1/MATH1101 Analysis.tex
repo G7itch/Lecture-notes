@@ -6,6 +6,7 @@
 
 \newcommand{\df}[2]{\frac{\text{d}#1}{\text{d}#2}}
 \newcommand{\seq}[2]{(#1_#2)_{#2\in\mathbb{N}}}
+\newcommand{\pf}[2]{\frac{\partial #1}{\partial #2}}
 \begin{document}
 \maketitle
 \hrulefill
@@ -654,4 +655,84 @@ Polar coordinates are an alternative coordinate system for 2D which describe pos
 In essence cylindrical coordinates are an extension of polar coordinates in 3D that use an extra variable to represent the height off the original plane.
 \subsubsection*{Spherical}
 A different extension of polar coordinates that includes an additional angle to represent positions in 3D. Typically we restrict these angles to \(-\pi\leq \varphi\leq \pi\) and \(0\leq \theta\leq \pi\).
+\subsection*{Limits}
+Let \(f:D\to \mathbb{R}, \ D\subseteq\mathbb{R}^2\) be a function. We say \(f(x,y)\) approaches the limit \(L\) as \((x,y)\to(x_0,y_0)\in D\) if \(\forall \varepsilon>0,\ \exists\delta>0:|f(x,y)-L|<\varepsilon\) with \(|x-x_0|<\delta\) and \(|y-y_0|<\delta\) for \((x,y)\ne(x_0,y_0)\).
+\subsubsection*{Example}
+\[f:\mathbb{R}^2\to\mathbb{R};\;f(x,y)=x^2+y^2\]
+Let \(\varepsilon>0\):
+\[|f(x,y)-0|=x^2+y^2<\varepsilon\]
+With:
+\[|x-0|<\delta,\qquad |y-0|<\delta\]
+Then choose \(\delta=\sqrt{\frac{\varepsilon}{2}}\):
+\[x^2+y^2<\delta^2+\delta^2=\varepsilon\]
+So:
+\[\lim_{(x,y)\to(x_0,y_0)}f(x,y)=0\]
+\subsection*{Continuity}
+Let \(f:D\to\mathbb{R},\ D\subseteq\mathbb{R}^2\) be a function and \((x_0,y_0)\in D\). We say \(f\) is continuous at \((x_0,y_0)\) if \(f(x,y)\to f(x_0,y_0)\) as \((x,y)\to (x_0,y_0)\). In 1D we have the notion of a left-sided limit and a right-sided limit. These do not exist in 2D or higher since we now have infinitely many directions we can approach \(L\) from. If we find just two directions that have different limits our function must be discontinuous there.
+\subsubsection*{Example}
+\[f:\mathbb{R}^2\to\mathbb{R};\; f(x,y)=\begin{cases}
+    0 & x=y=0 \\
+    \frac{x^2y^2}{x^2+y^2} & \text{Otherwise}
+\end{cases}\]
+We want to show \(f\) is continuous at \((0,0)\). For any \((x,y)\ne(0,0)\):
+\[0\leq \frac{x^2y^2}{x^2+x^2}= x^2\left(\frac{y^2}{x^2+y^2}\right)\leq x^2\]
+Then as \(x\to 0\), the squeeze theorem gives us:
+\[\lim_{(x,y)\to (0,0)}\frac{x^2y^2}{x^2+y^2}=0\]
+\subsection*{Using sequences}
+Considering sequences can be a useful tool to avoid us manually checking infinite directions of approach. Suppose \(f:D\to\mathbb{R},\ D\subseteq \mathbb{R}^2\) is a function. Then \(f\) is continuous at a point \((x_0,y_0)\in D\) if and only if for any pair of sequences \(\seq{x}{n}, \seq{y}{n}\) in \(\mathbb{R}\), we have \(f(x_n,y_n)\to f(x_0,y_0)\) as \(n\to \infty\). This generalises nicely into dimensions above 2 as well although finding such sequences can become far more complex.
+\subsection*{Partial derivatives}
+\subsubsection*{Definition}
+Let \(f:D\to\mathbb{R},\; D\subseteq \mathbb{R}^2\) be a function and \((x_0,y_0)\in D\). If the limit:
+\[f_x(x_0,y_0)=\lim_{(x,y)\to(x_0,y_0)}\frac{f(x,y_0)-f(x_0,y_0)}{x-x_0}\]
+exists, then we say \(f\) has a partial derivative in the \(x\)-direction at \((x_0,y_0)\). Similarly if the limit:
+\[f_y(x_0,y_0)=\lim_{(x,y)\to(x_0,y_0)}\frac{f(x_0,y)-f(x_0,y_0)}{y-y_0}\]
+exists, then we say \(f\) has a partial derivative in the \(y\)-direction at \((x_0,y_0)\).
+\subsubsection*{Example}
+\[f:D\to\mathbb{R},\;D\subseteq\mathbb{R}^2\]
+\[f(x,y)=\begin{cases}
+    \frac{xy}{x^2+y^2} & (x,y)\ne(0,0) \\
+    0 & (x,y)=(0,0)
+\end{cases}\]
+\[f_x(x_0,y_0)=\lim_{h\to 0}\frac{f(0+h,0)-f(0,0)}{h}=\lim_{h\to 0}\frac{0-0}{h}=0\]
+\[f_y(x_0,y_0)=\lim_{h\to 0}\frac{f(0,0+h)-f(0,0)}{h}=\lim_{h\to 0}\frac{0-0}{h}=0\]
+Notice that both partial derivatives at \((0,0)\) exist but \(f\) is not continuous at \((0,0)\). This demonstrates that differentiability does not imply continuity in dimensions higher than 1.
+\subsection*{Chain rule}
+Consider a function \(f:D\to \mathbb{R},\;D\subseteq\mathbb{R}^2\) where \((x,y)\mapsto f(x,y)\) and in particular:
+\[x,y:I\to\mathbb{R};\]
+\[u\mapsto x(u)\]
+\[u\mapsto y(u)\]
+We then write:
+\[z=f(x,y)\longmapsto z=g(u)=f(x(u),y(u))\]
+If \(x,y\) are differentiable at a point \(u_0\) then:
+\[g'(u)=\frac{\partial f}{\partial x}\cdot \frac{\text{d}x}{\text{d}u}+\frac{\partial f}{\partial y}\cdot\df{y}{u}\]
+\subsubsection*{Example}
+\[f(x,y)=x^2+y^2\]
+\[(x(u),y(u))=(\cos(u),2\sin(u))\]
+Evaluating our composition function:
+\[g(u)=(\cos(u))^2+(2\sin(u))^2=\cos^2(u)+4\sin^2(u)\]
+\[g'(u)=6\cos(u)\sin(u)\]
+Alternatively we can use the chain rule formula:
+\[g'(u)=\frac{\partial f}{\partial x}\cdot x'(u)+\frac{\partial f}{\partial y}\cdot y'(u)\]
+\[g'(u)=2x\cdot(-\sin(u))+2y\cdot(2\cos(u))=6\cos(u)\sin(u)\]
+\subsection*{More general chain rule}
+If we have a function \(f:D\to\mathbb{R},\;D\subseteq\mathbb{R}^2\) where \((x,y)\mapsto f(x,y)\) and in particular:
+\[x,y:B\to\mathbb{R},\;B\subseteq\mathbb{R}^2\]
+\[(u,v)\mapsto x(u,v)\]
+\[(u,v)\mapsto y(u,v)\]
+So \(z=f(x,y)\) becomes:
+\[z(u,v)=f(x(u,v),y(u,v))\]
+\[\frac{\partial z}{\partial u}=\frac{\partial f}{\partial x}\cdot \frac{\partial x}{\partial u}+\frac{\partial f}{\partial y}\cdot \frac{\partial y}{\partial u}\]
+\[\frac{\partial z}{\partial v}=\frac{\partial f}{\partial x}\cdot \frac{\partial x}{\partial v}+\frac{\partial f}{\partial y}\cdot \frac{\partial y}{\partial v}\]
+\subsubsection*{Example}
+\[f(x,y)=x^2y^2\]
+\[x=u+v\]
+\[y=u-v\]
+\[\pf{f}{u}=2y^2x+2x^2y=2xy(y+x)=2(u+v)(u-v)(2u)=4u(u^2-v^2)\]
+\[\pf{f}{v}=2xy(y-x)=-4v(u^2-v^2)\]
+\subsection*{Cauchy-Riemann Equations}
+Consider the functions \(u(x,y)\) and \(v(x,y)\) that satisfy the equations:
+\[\pf{u}{x}=\pf{v}{y}\text{ and }\pf{u}{y}=-\pf{v}{x}\]
+We want to show:
+\[\pf{u}{r}=\frac{1}{r}\pf{v}{\varphi}\text{ and }\pf{v}{r}=-\frac{1}{r}\pf{u}{\varphi}\]
+These equations are very important for characterising differentiability for complex functions.
 \end{document}

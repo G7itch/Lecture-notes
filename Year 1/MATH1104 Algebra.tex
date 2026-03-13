@@ -612,4 +612,21 @@ Additionally, consider \(F(a\circ b)\quad \forall a,b\in C_3\):
 \[F(a\circ b)=F(a)\times F(b)\]
 Bijections between groups with this property are known as isomorphisms and encapsulate the idea that both groups convey the same information just with different labels.
 \subsection*{Homomorphisms}
+Consider two groups: \(\langle G,*\rangle\) and \(\langle H,\circ\rangle\). A function \(f:G\to H\) is known as a homomorphism if:
+\[f(g*h)=f(g)\circ f(h)\qquad\forall g,h\in G\]
+\subsubsection*{Examples}
+\begin{itemize}
+    \item The inclusion function:
+    \[f:\mathbb{Z}\to\mathbb{Q};\; f(n)=\frac{n}{1}\]
+    is a homomorphism for \(\langle\mathbb{Z},+\rangle\) and \(\langle\mathbb{Q},+\rangle\).
+    \item If \(H\leqslant G\) then \(f:H\to G;\;f(g)=g\) is always a homomorphism.
+\end{itemize}
+\subsubsection*{Properties of homomorphisms}
+Let \(G,\ H\) and \(J\) be groups and \(f_1:G\to H\) and \(f_2:H\to J\) be homomorphisms. Let \(e_G\) and \(e_H\) be the identity elements of \(G\) and \(H\) respectively. Then we have:
+\begin{itemize}
+    \item \(f(e_G)=e_H\)
+    \item \(f(g^{-1})=f(g)^{-1}\quad \forall g\in G\)
+    \item \(f(g^k)=f(g)^k\quad \forall g\in G\)
+    \item \(f_2\circ f_1: G\to J\) is also a homomorphism
+\end{itemize}
 \end{document}
