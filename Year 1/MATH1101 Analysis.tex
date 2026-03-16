@@ -735,4 +735,33 @@ Consider the functions \(u(x,y)\) and \(v(x,y)\) that satisfy the equations:
 We want to show:
 \[\pf{u}{r}=\frac{1}{r}\pf{v}{\varphi}\text{ and }\pf{v}{r}=-\frac{1}{r}\pf{u}{\varphi}\]
 These equations are very important for characterising differentiability for complex functions.
+\subsection*{Implicit differentiation}
+Up until now we have only looked at equations in explicit form although we can also use implicit differentiation in the same way as we would in 1D. We differentiate assuming \(z\) is a function of \(x\) and \(y\).
+\subsubsection*{Example}
+\[F(x,y,z)=2x^2+y^2+z^2-16=0\]
+\[\pf{z}{x}:\quad 4x+0+2z\pf{z}{x}-0=0\implies \pf{z}{x}=-\frac{2x}{z}\]
+\[\pf{z}{y}:\quad 2y+2z\pf{z}{y}=0\implies \pf{z}{y}=-\frac{y}{z}\]
+\subsection*{Geometric interpretation}
+In 1D we had the derivative describing the gradient of the tangent to our function at a given point. In 2D imagine a plane cutting our surface along the line of differentiation, the partial derivative gives the gradient of the tangent to the curve formed by the intersection of our surface and plane at a given point. We are essentially cutting the surface into a curve along a plane. We can use this to construct the so called tangent plane (of the surface \(z=f(x,y)\) at point \((x_0,y_0)\)):
+\[z-z_0=m_1(x-x_0)+m_2(y-y_0)\]
+\[z_0=f(x_0,y_0),\quad m_1=f_z(x_0,y_0),\quad m_2=f_y(x_0,y_0)\]
+\subsection*{Directional derivatives}
+We can define the partial derivative of a function for any direction. Let \(f:D\to R,\;D\subseteq\mathbb{R}^2\) be a function. Then the directional derivative of \(f\) in the direction \(\underline{a}=(\cos{\theta},\sin{\theta})=(\lambda,\mu)\) is denoted:
+\[D_af(x,y)=\lim_{h\to 0}\frac{f(x+\lambda h, y+\lambda \mu)-f(x,y)}{h}\]
+Note that when \(\theta=0\) we have the case:
+\[\lambda=1,\mu=0\implies D_af=\pf{f}{x}\]
+Similarly for \(\theta=\frac{\pi}{2}\):
+\[\lambda=0,\mu=1\implies D_af=\pf{f}{y}\]
+Whilst this definition is useful, in practice there is a simpler formula that we can apply to calculate these directional derivatives. Let \(f:D\to\mathbb{R},\;D\subseteq\mathbb{R}^2\) be a function with continuous partial derivatives and \(\underline{a}=(\cos{\theta},\sin{\theta})\) then:
+\[D_af(x,y)=f_x(x,y)\cdot\cos{\theta}+f_y(x,y)\cdot\sin{\theta}\]
+Note that \(D_a f\) can also be written \(D_\theta f\).
+\subsubsection*{Example}
+\[f(x,y)=x^2+2y^2-3x+2y\]
+\[\theta=\frac{\pi}{6}\]
+\[\underline{a}=(\cos{\frac{\pi}{6}},\sin{\frac{\pi}{6}})=(\frac{\sqrt{3}}{2},\frac{1}{2})\]
+\[f_x=2x-3\]
+\[f_y=4y+2\]
+\[D_af=\frac{\sqrt{3}}{2}(2x-3)+\frac{1}{2}(4y+2)\]
+\subsubsection*{Optimisation problems}
+There is an interesting question that can be asked about optimisation which involves finding the direction that gives a minimum or maximum gradient for a given point on a surface. 
 \end{document}

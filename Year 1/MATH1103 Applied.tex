@@ -977,4 +977,88 @@ If the term \(g(n)=0\) we call the difference equation homogenous. In this case 
 If \(a(n)=\lambda\) is constant then:
 \[x_n=\lambda^nx_0\]
 Which we can see grows unbounded if \(|\lambda|>1\)
+\subsection*{Second order linear difference equations (const. coeffs)}
+We wish to consider equations of the form:
+\[x_{n+2}+ax_{n+1}+bx_n=f(n)\]
+With \(a,b\in\mathbb{R}\). Equations of this type are called homogenous if \(f(n)=0\). The way we solve equations like this is by first finding the general solution of the homogenous problem and then adding a particular solution.
+\subsection*{Solving the homogenous problem}
+We already know that first order homogenous difference equations have solutions \(x_n=\lambda^nx_0\), therefore when we are trying to solve second order equations we look for solutions of the form \(y_n=\lambda_n\). We can substitute into the homogenous equation:
+\[\lambda^{n+2}+a\lambda^{n+1}+b\lambda^n=0\]
+Where we do not care about the trivial solution \(\lambda^n=0\), hence we can divide by \(\lambda^n\) to get:
+\[\lambda^2+a\lambda+b=0\]
+as our characteristic equation. Solving this gives us:
+\[\lambda_\pm=\frac{-a\pm\sqrt{a^2-4b}}{2}\]
+Now similar to differential equations, our general solution form depends on the \(\lambda\) values.
+\begin{itemize}
+    \item If \(a^2-4b>0\), then we have distinct real roots and the general solution takes the form: \(y_n=A\lambda_+^n+B\lambda_-^n\).
+    \item If \(a^2-4b=0\), then we have a repeated real root and the general solution takes the form: \(y_n=A\lambda^n+Bn\lambda^n\).
+    \item If \(a^2-4b<0\), then we have a complex conjugate pair \(\lambda=\mu\pm i\omega\). We write them in exponential form, \(\lambda=re^{\pm i\theta}\) and our general solution takes the form: \(r^n(A\cos{n\theta}+B\sin{n\theta})\).
+\end{itemize}
+\subsubsection*{Example - Fibonacci's rabbits}
+\[x_{n+2}=x_{n+1}+x_{n}\]
+\[x_{n+2}-x_{n+1}-x_n=0\]
+Guess \(x_n=\lambda^n\):
+\[\lambda^2-\lambda-1=0\]
+\[\lambda_{\pm}=\frac{1\pm\sqrt{5}}{2}\]
+So the general solution is:
+\[x_n=A\left(\frac{1+\sqrt{5}}{2}\right)^n+B\left(\frac{1-\sqrt{5}}{2}\right)^n\]
+Consider the initial conditions \(x_0=1, x_1=1\):
+\[\begin{cases}
+    1=A+B \\
+    1=A\left(\frac{1+\sqrt{5}}{2}\right)+B\left(\frac{1-\sqrt{5}}{2}\right)
+\end{cases}\implies A=\frac{1+\sqrt{5}}{2\sqrt{5}},\, B=\frac{-1-\sqrt{5}}{2\sqrt{5}}\]
+\[x_n=\frac{1}{\sqrt{5}}\left(\frac{1+\sqrt{5}}{2}\right)^{n+1}-\frac{1}{\sqrt{5}}\left(\frac{1-\sqrt{5}}{2}\right)^{n+1}\in\mathbb{Z}\]
+It turns out this model is not particularly better than the exponential first order model. We still have exponential growth towards infinity.
+\subsection*{Inhomogeneous difference equations}
+If we have an equation with a non-zero right hand side then we need to add a particular solution to our general equation. Here are some common trial functions to test:
+\begin{table}[H]
+    \begin{tabular}{c|c}
+        \(f(n)\) &  \(x_n\) \\ \hline
+        \(Ck^n\) & \(ck^n\) \\
+        \(C_mn^m+\cdots+C_1n+C_0\) & \(c_mn^m+\cdots+c_1n+c_0\) using all terms even if some \(C_i=0\) \\
+        \(C\sin(bn)+D\cos({bn})\) & \(c\sin(bn)+d\cos(bn)\)
+    \end{tabular}
+\end{table}
+If the trial function is already a solution then try multiplying by \(n\), exactly the same as when solving ODEs.
+\subsubsection*{Example}
+\[x_{n+2}+x_{n+1}-6x_n=12(-2)^n\]
+Consider the homogenous equation:
+\[y_{n+2}+y_{n+1}-6y_n=0\]
+Guess \(y_n=\lambda^n\):
+\[\lambda^2+\lambda-6=0\]
+\[\lambda=-3,\, \lambda=2\]
+The general solution is then:
+\[y_n=A(2)^n+B(-3)^n\]
+Now we need to find a particular solution, guess \(x_n=c(-2)^n\):
+\[c(-2)^{n+2}+c(-2)^{n+1}-6c(-2)^n=12(-2)^n\]
+\[(-2)^n(c(-2)^n+c(-2)-6c)=12(-2)^n\]
+\[-4c=12\implies c=-3\]
+Then our solution is:
+\[x_n=A(2)^n+B(-3)^n-3(-2)^n\]
+\subsubsection*{Example - Modified rabbit population model}
+Consider a new rabbit population model which includes constant death rate per time step:
+\[N_{n+1}-N_n=rN_n-K\]
+This is non-dimensionalised as:
+\[x_{n+1}=(1+r)x_n-k\]
+We already know the solution of the homogenous equation is:
+\[x_n=(1+r)^nA\]
+To find a particular solution, try \(x_n=c\):
+\[c=(1+r)c-k\implies c=\frac{k}{r}\]
+\[\therefore\]
+\[x_n=(1+r)^nA+\frac{k}{r}\]
+Since \(x_0=1\):
+\[1=A+\frac{k}{r}\implies A=1-\frac{k}{r}\]
+\[x_n=(1-\frac{k}{r})(1+r)^n+\frac{k}{r}\]
+This is slightly better as a model but now allows for negative rabbit populations which obviously is not accurate. A better model would have a death rate depend on the current population of living rabbits. This death rate function \(f(x_n)\) may not be linear so we need some tools for analysing non-linear equations.
+\subsection*{1st order non-linear difference equations}
+Consider a non-linear equation of the form:
+\[x_{n+1}=f(x_n)\]
+To find \(x_n\) given \(x_0\) we repeatedly apply \(f\) to get the sequence of iterates:
+\[x_1=f(x_0)\]
+\[x_2=f(f(x_0))\]
+\[\vdots\]
+\[x_n=f^n(x_0)\]
+The sequence of \(x_1,x_2,\dots\) is called the orbit of \(x_0\) under the map \(f\).
+\subsection*{Fixed points and stability}
+A fixed point of the map \(f\) is a point such that \(f(x^*)=x^*\) such that if \(x_n=x^*\) then \(x_{n+1}=x^*\). Fixed points are analogous to equilibrium points of differential equations. We can similarly look at the stability of fixed points of difference equations.
 \end{document}
