@@ -780,4 +780,38 @@ We use the standard basis for \(V\) and \(W\).
     2x-5y & -x+3y
 \end{pmatrix}^T\]
 So every matrix along with two fixed bases of finite dimensions forms a linear map. In fact vector spaces themselves give rise to linear maps.
+\subsection*{Extracting matrices from maps}
+Start with a specific linear map \(\phi\). Use the standard basis to compute \(\phi(\textbf{e}_1),\phi(\textbf{e}_2),\dots,\phi(\textbf{e}_n)\), then define the matrix \(A\) with:
+\[A=\begin{pmatrix}
+    \vert &\vert & \cdots & \vert \\
+    \textbf{e}_1 & \textbf{e}_2 & \cdots & \textbf{e}_n \\
+    \vert & \vert & \cdots & \vert
+\end{pmatrix}\]
+Now we can see that this map is very close to the \(L_A\) map we defined before. In particular:
+\[\phi_A(\textbf{v})^T=L_A(\textbf{v}^T)\]
+and,
+\[L_A(\textbf{e}_i^T)=\textbf{c}_i\]
+the \(i^{th}\) column of \(A\).
+\subsubsection*{Existence of maps}
+Let \(V,W\) be two vector spaces with \(\{\arbvec{v}{n}\}\) be the basis of \(V\) and \(\{\arbvec{w}{m}\}\) be the basis for \(W\). Let \(\phi:V\to W\) be a linear map. Then \(\exists A\in M_{m,n}(\mathbb{R}):\phi=\phi_A\).
+\subsection*{Rank nullity formula}
+Take \(\phi:V\to W\) be a linear map. Define:
+\[\text{rank}(\phi)=\dim(\text{im}(\phi))\]
+\[\text{nullity}(\phi)=\dim(\ker(\phi))\]
+These quantities satisfy the rank nullity formula:
+\[\text{rank}(\phi)+\text{nullity}(\phi)=\dim V\]
+\subsubsection*{Example}
+\[\phi:\mathbb{R}^2\to\mathbb{R}^2;\; (x,y)\mapsto(2x+3y,-4x-6y)\]
+\[\ker(\phi)=\left\{\left(-\frac{3}{2}t,t\right):t\in \mathbb{R}\right\}=\left\langle\left(\frac{-3}{2},1\right)\right\rangle \]
+\[\text{im}(\phi)=\langle(1,-2)\rangle\]
+\[\dim(\ker(\phi))+\dim(\text{im}(\phi))=1+1=\dim{\mathbb{R}^2}\]
+\subsection*{Checking injectivity and surjectivity}
+We already have some conditions on the injectivity and surjectivity of linear maps, for example we know:
+\[\phi \text{ injective}\iff \ker(\phi)=\{0\}\iff\dim(\ker(\phi))=0\]
+\[\phi\text{ surjective}\iff \text{im}(\phi)=W\iff \dim(\text{im}(\phi))=W\]
+If \(\dim(V)=\dim(W)\) then we can apply the rank nullity formula and see that \(\phi\) is injective if and only if it is also surjective.
+\section{Eigenvectors and eigenvalues}
+Let \(V\) be a finite dimensional vector space and \(\phi:V\to V\) be a linear map. Then \(\phi\) is called an endomorphism and we have \(\phi\) surjective \(\iff\phi\) injective.
+\subsection*{Definition}
+\(\lambda\in \mathbb{R}\) is called an eigenvalue of an endomorphism \(\phi:V\to V\) if there exists a non-zero vector \(\textbf{v}\in V\st \phi(\textbf{v})=\lambda\textbf{v}\). We call \(\textbf{v}\) the eigenvector of \(\phi\) that corresponds to the eigenvalue \(\lambda\).
 \end{document}
