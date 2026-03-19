@@ -583,8 +583,8 @@ Often we are interested in comparing abstract structures, in particular we wish 
     \item \(\{"a","b","c"\}\)
 \end{itemize}
 Importantly there exists some bijection that takes us from one of these sets to the other. We can think of this as a simple relabelling, the underlying structure doesn't change. In this part of the course we are looking to compare group structures using two special kinds of functions.
-\subsection*{Isomorphisms}
-Consider two groups, \(C_3\) with composition and \(H=\langle \{I,A,B\}, \times\rangle\) and draw their cayley tables:
+\subsection*{Isomorphisms in Cayley tables}
+Consider two groups, \(C_3\) with composition and \(H=\langle \{I,A,B\}, \times\rangle\) and draw their Cayley tables:
 \begin{table}[H]
     \centering
     \begin{tabular}{c|c c c}
@@ -603,7 +603,7 @@ Consider two groups, \(C_3\) with composition and \(H=\langle \{I,A,B\}, \times\
         \(B\) & \(B\) & \(I\) & \(A\)
     \end{tabular}
 \end{table}
-Notice how these two cayley tables have exactly the same layout. You could say that they are the sample table up to relabelling. The similarities here can be represented by a bijective function:
+Notice how these two Cayley tables have exactly the same layout. You could say that they are the sample table up to relabelling. The similarities here can be represented by a bijective function:
 \[F:C_3\to H;\]
 \[F(e)=I\]
 \[F(\sigma)=A\]
@@ -629,4 +629,37 @@ Let \(G,\ H\) and \(J\) be groups and \(f_1:G\to H\) and \(f_2:H\to J\) be homom
     \item \(f(g^k)=f(g)^k\quad \forall g\in G\)
     \item \(f_2\circ f_1: G\to J\) is also a homomorphism
 \end{itemize}
-\end{document}
+\subsection*{Isomorphisms}
+Let \(G,H\) be groups, a function \(f:G\to H\) is said to be an isomorphism if:
+\begin{itemize}
+    \item \(f\) is a homomorphism.
+    \item \(f\) is bijective.
+\end{itemize}
+We say \(G\) and \(H\) are isomorphic to each other if there exists an isomorphism between them and we write:
+\[G\cong H\]
+\subsubsection*{Isomorphism as a relation}
+It can be seen that isomorphism defines an equivalence relation on groups. Recall that an equivalence relation must satisfy reflexivity, transitivity and symmetry. We clearly have \(G\cong G\) by the identity map so \(\cong\) is reflexive. Since an isomorphism is defined by a bijection if \(G\cong H\) by \(f\) then \(H\cong G\) by \(f^{-1}\) so \(\cong\) is symmetric. Finally if \(G\cong H\) by \(f_1\) and \(H\cong J\) by \(f_2\) then by composition of bijections,  \(G\cong J\) by \(f_1\circ f_2\).
+\subsubsection*{Abelian property of isomorphisms}
+Isomorphic groups have share the same properties, a particularly useful result is that if we have \(G\cong H\) and \(G\) is abelian then \(H\) is also abelian.
+\subsection*{Image and kernel}
+Homomorphisms allow use to compare groups but we can also use them to generate new groups. Consider the homomorphism \(f:G\to H\), then there are new subgroups of \(G\) and \(H\) coming from \(f\) as follows:
+\[\ker f=\{g\in G: f(g)=e_H\}\]
+\[\text{im} f=\{h\in H:\exists\, g\in G,\ f(g)=h \}\]
+\subsubsection*{Example}
+Let \(G=H=\mathbb{Z}\) and consider the homomorphism defined by \(f:\mathbb{Z}\to \mathbb{Z}; \;f(r)=2r\), here:
+\[r\in \ker{f}\iff f(r)=2r=e_H=0\iff r=0\]
+\[r\in \text{im}(f)\iff \frac{r}{2}\in \mathbb{Z}\]
+Then we have:
+\[\ker(f)=\{0\}\]
+\[\text{im}(f)=2\mathbb{Z}\subset \mathbb{Z}\]
+\subsubsection*{Properties of image and kernel}
+There is one key property of the image and kernel that you need to know and that is that if \(f:G\to H\) is a homomorphism then:
+\[\ker(f)\leqslant G\]
+\[\text{im}(f)\leqslant H\]
+We can also frame the bijective requirement for a homomorphism to be an isomorphism in terms of the image and kernel. We already know:
+\[f\text{ surjective}\iff \text{im}(f)=H\]
+\[f\text{ injective}\iff \ker(f)=\{e_G\}\]
+Thus:
+\[G\cong H\iff \ker(f)=\{e_g\}\land \text{im}(f)=H\]
+\section{}
+ \end{document}
