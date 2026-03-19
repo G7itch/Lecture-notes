@@ -910,4 +910,65 @@ A larger \(\hat{\sigma^2}\) would indicate a worse model fit. Alternatively:
 \[\sum^n_{i=1}r_i^2=(n-1)s_x^2+\hat{\beta}_1^2(n-1)s_x^2-2\hat{\beta}_1(n-1)s_{xy}\]
 Since \(s_{xy}=\hat{\beta}_1s_x^2\):
 \[\hat{\sigma^2}=\frac{(n-1)}{(n-2)}\left(s_y^2-\hat{\beta}_1^2s_x^2\right)\]
+\subsection*{Inference about linear regression}
+If we look at our running example we a fitted regression line:
+\[\hat{y}=41.05+3.5x\]
+But now there are some questions that naturally arise such as:
+\begin{itemize}
+    \item How accurate is the slope?
+    \item How good is any particular guess?
+    \item What are the confidence intervals for individual countries?
+\end{itemize}
+To do inference we need to include the extra assumption that we previously left out, we need the distribution of each error to normal:
+\[\varepsilon_i\sim N(\mu,\sigma^2)\]
+Consequently, we have that
+\[Y_i|x_i\sim N(\beta_0+\beta_1x_i,\sigma^2)\]
+\subsection*{Checking normality}
+We can check if the errors are distributed normally or approximately normally using a quantile-quantile plot (Q-Q plot). These are graphs which theoretical quantiles plotted on the x-axis and residual quantiles plotted on the y-axis. Theoretical quantiles are calculated using the normal c.d.f, in particular we have:
+\[\Phi(x_i)=\frac{i-\frac{1}{2}}{n}\qquad i=1,2,...,n\]
+Where the values \(x_i\) are the theoretical quantiles. For the residual quantiles, we calculate the residuals as normal and then normalise them:
+\[r_i=\frac{y_i-\hat{y}_i}{\sqrt{\sigma}}\]
+Then we sort the residuals which we denote: \(r_{(i)}\), the Q-Q plot is then the points \((x_i,r_{(i)})\) plotted. If we have normal errors then the line through this graph should have a very strong positive correlation.
+\subsection*{Testing evidence for regression}
+Since we now impose the requirement that the error terms are distributed normally we can start to do some inference on the regression coefficients. In particular we have:
+\[\hat{\beta}_1=\frac{s_{xy}}{s_x^2}\sim N\left(\beta_1,\frac{\sigma^2}{(n-1)s_x^2}\right)\]
+We can use this distribution as a basis to ask inference questions about \(\beta_1\). Standardising gives us:
+\[z=\frac{\hat{\beta}_1-\beta_1}{\sigma/\sqrt{(n-1)s_x^2}}\sim N(0,1)\]
+Typically we do not actually know what \(\sigma^2\) is so we also have to estimate this, which means our test is normally:
+\[t=\frac{\hat{\beta}_1-\beta_1}{\hat{\sigma}/\sqrt{(n-1)s_x^2}}\sim t_{n-2}\]
+Which we can then use to construct confidence intervals for the mean:
+\[\hat{\beta}_1\pm t_{n-2,1-\alpha/2}\frac{\hat{\sigma}}{\sqrt{(n-1)}s_x^2}\]
+If \(\beta_1=0\) then there is no linear relationship. Using this fact, we can perform a hypothesis test to test for the existence of regression:
+\[H_0\!: \beta_1=0\]
+\[H_1\!: \beta_1\ne 0\]
+Assuming \(H_0\), we reject the null hypothesis if:
+\[|t|=\left|\frac{\hat{\beta}_1}{\hat{\sigma}/\sqrt{(n-1)s_x^2}}\right|\geq t_{n-2,1-\alpha/2}\]
+\subsection*{Confidence intervals for the mean}
+The variance of the fitted line \(Y_i=\hat{\beta}_0+\hat{\beta}_1X\) where \(X=x_0\) is:
+\[\Var{\hat{Y}|X=x_0}=\Var{\hat{\beta}_0+\hat{\beta}_1x_0}\]
+\[=\Var{\hat{\beta}_0}+x_0^2\Var{\hat{\beta}_1}+2x_0\text{cov}(\hat{\beta}_0,\hat{\beta}_1)\]
+\[=\frac{\sigma^2\sum x_i^2}{n(n-1)s_x^2}+\frac{x_0^2\sigma^2}{(n-1)s_x^2}-\frac{2x_0\sigma^2\bar{x}}{(n-1)s_x^2}\]
+\[=\frac{\sigma^2}{(n-1)s_x^2}\left(\frac{\sum x_i^2}{n}+x_0^2-2x_0\bar{x}\right)\]
+We can use the sample variance formula and simplify this as:
+\[\Var{\hat{Y}|X=x_0}=\sigma^2\left(\frac{1}{n}+\frac{(x_0-\bar{x})^2}{(n-1)s_x^2}\right)\]
+We can then use this variance to construct a confidence interval for the mean of \(Y\) at \(x_0\):
+\[(\hat{\beta}_0+\hat{\beta}_1x_0)\pm(t_{n-2,1-\alpha/2})\left(\hat{\sigma}\sqrt{\frac{1}{n}+\frac{(x_0-\bar{x})^2}{(n-1)s_x^2}}\right)\]
+These confidence intervals form a tight band around the point \(x_0\) and are the smallest when \(\bar{x}=x_0\), as you get further away from the mean they are less and less accurate.
+\subsection*{Prediction intervals for particular \(Y\)}
+The variance for any particular predicted \(\hat{y}\) value is the same as the error that comes from the mean with the addition of some built in uncertainty:
+\[\Var{\hat{y}|X=x_0}=\Var{\hat{Y}|X=x_0}+\Var{\varepsilon}\]
+\[=\sigma^2\left(1+\frac{1}{n}+\frac{(x_0-\bar{x})^2}{(n-1)s_x^2}\right)\]
+Notice that this always has some non-zero variance, as opposed to the mean variance which can tend to \(0\) with enough sample points. We can construct a confidence interval exactly like before using this variance. The width of this interval is smallest when \(\bar{x}=x_0\).
+\subsection*{ANOVA}
+Analysis of variance is another way of thinking about regression. The key question we are trying to answer with ANOVA is how much of the variability in the observed data can be explained by the regression model? We start with the total sum of squares:
+\[S(\text{total)}=\sum^n_{i=1}(y_i-\bar{y})^2=(n-1)s_y^2\]
+The total sum of squares is a measure of the total variability in the data, we can use a standard mathematical trick to split this sum into two parts:
+\[\sum^n_{i=1}(y_i-\bar{y})^2=\sum^n_{i=1}(y_i-\hat{y}_i)^2+\sum^n_{i=1}(\hat{y}_i-\bar{y})^2\]
+Where:
+\[\sum^n_{i=1}(y_i-\hat{y}_i)^2\]
+Is called the regression sum of squares and:
+\[\sum^n_{i=1}(\hat{y}_i-\bar{y})^2\]
+Is called the residual sum of squares. Essentially the regression sum of squares explains how much of the variability is explained by the regression model and the residual sum of squares is everything left over. A measure of how useful the regression model is the coefficient of determination:
+\[R^2=\frac{S(\text{regression)}}{S(\text{total})}\]
+It is important to consider \(R^2\) values in context, because what might sounds like a very strong \(R^2\) value might actually not be when thinking about desired tolerances or confidence intervals.
 \end{document}
