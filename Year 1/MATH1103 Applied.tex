@@ -1060,5 +1060,37 @@ To find \(x_n\) given \(x_0\) we repeatedly apply \(f\) to get the sequence of i
 \[x_n=f^n(x_0)\]
 The sequence of \(x_1,x_2,\dots\) is called the orbit of \(x_0\) under the map \(f\).
 \subsection*{Fixed points and stability}
-A fixed point of the map \(f\) is a point such that \(f(x^*)=x^*\) such that if \(x_n=x^*\) then \(x_{n+1}=x^*\). Fixed points are analogous to equilibrium points of differential equations. We can similarly look at the stability of fixed points of difference equations.
+A fixed point of the map \(f\) is a point such that \(f(x^*)=x^*\) such that if \(x_n=x^*\) then \(x_{n+1}=x^*\). Fixed points are analogous to equilibrium points of differential equations. We can similarly look at the stability of fixed points of difference equations. Suppose \(x^*\) is a fixed point, then \(f(x^*)=x^*\). Consider \(x_n=x^*+\delta_n\) where \(\delta_n\) is small. Then we use a Taylor expansion around \(x^*\):
+\[\delta_{n+1}=x_{n+1}-x^*=f(x^*+\delta_n)-x^*\]
+\[=f(x^*)+f'(x^*)\delta_n-x^*=f'(x^*)\delta_n\]
+The solution to this difference equation is:
+\[\delta_n=(f'(x^*))^n\delta_0\]
+We can perform some qualitative analysis on this and see that:
+\begin{itemize}
+    \item If \(|f'(x^*)|<1\) then \(\delta_n\to 0\) as \(n\to \infty\) so \(x^*\) is stable. If \(f'(x^*)=0\) then we call \(x^*\) super-stable because convergence happens very fast.
+    \item If \(|f'(x^*)|>1\) then \(x^*\) is unstable.
+    \item If \(|f'(x^*)|=1\) then \(x^*\) is neutrally stable and we need to look more closely at the non-linear behaviour to see what happens.
+\end{itemize}
+\subsection*{Cobweb diagrams}
+Cobweb diagrams offer a graphical method to see what happens when \(f\) is iterated. We draw the graphs \(y=f(x)\) and \(y=x\) and the fixed points happen at the intersection. For a given \(x_0\) we draw a line up to \(f(x)\) then a horizontal line to \(y=x\) and we then use that \(x\) value as our \(x_1\). We can repeat this process until we can clearly see convergence or divergence. Cobweb diagrams are very useful at getting a quick idea of the global and local non-linear behaviour.
+\subsubsection*{Examples}
+Consider \(x_{n+1}=\sin{x_n}\) with a fixed point \(x^*=0\). Unfortunately \(|f'(0)|=|\cos(0)|=1\) so the stability cannot be determined. The cobweb diagram shows us that \(x^*\) is in fact globally stable. Now consider \(x_{n+1}=\cos(x_n)\), as \(n\to\infty\) we have \(x_n\to 0.739...\), we know that the fixed point is stable and orbits spiral towards it. In general we have:
+\begin{itemize}
+    \item If \(-1<f'(x^*)<0\), orbits spiral towards fixed point.
+    \item If \(0<f'(x^*)<1\), orbits converge directly.
+\end{itemize}
+\subsection*{Periodic orbits}
+The map \(x_{n+1}=f(x_n)\) has a period \(k\) orbit if there is a set of values:
+\[x_1,x_2,\dots,x_k\]
+such that \(f(x_k)=x_1\) and \(f(x_j)=x_{j+1}\) for \(j=1,2,\dots, k-1\). A period \(k\) orbit is stable if \(x_j\) for \(1\leq j\leq k\) is a stable fixed point of \(f^k\), that is to say \(|f^{k'}(x_j)|<1\) for \(1\leq j\leq k\). Alternatively:
+\[|f'(x_1)f'(x_2)\cdots f'(x_k)|<1\]
+is stable if the period \(k\) orbit is stable.
+\subsection*{The logistic map}
+We left off our rabbit population example by noting that we should include a population dependent death rate. Consider the difference equation:
+\[N_{n+1}=(1+\bar{r})N_n-dN_n^2\]
+Which can be non-dimensionalised to:
+\[x_{n+1}=rx_n(1-x_n)\]
+This is known as the logistic map. We can see that there are fixed points at \(x_n=0\) and \(x_n=1-\frac{1}{r}\), the latter of which is only interesting for \(r>1\). We can use cobweb diagrams to explore the behaviour of the logistic map. We see that \(f(x)=rx(1-x)\) is a parabola with maximum \(r/4\) at \(x=1/2\) so we only consider \(1\leq r\leq 4\) which maps \([0,1]\) to itself.
+\[f'(x)=r(1-2x)\]
+The derivative is only negative for \(r<1\) and so that is the only time that \(x^*=0\) and unstable otherwise. When \(r>3\), neither fixed points are stable. For \(r\) slightly larger than \(3\) every initial condition approaches a period 2 orbit. If \(r\) is increased beyond \(1+\sqrt{6}\), the period 2 orbit becomes unstable and we instead get a stable period 4 orbit. If we keep increasing \(r\) to \(3.55\) then the period 4 orbit is replaced by a stable period \(8\) orbit and this effect continues up to a converging value \(r_{\infty}=3.5701....\). This effect is known as period doubling cascade and is best represented on a bifurcation diagram.
 \end{document}
