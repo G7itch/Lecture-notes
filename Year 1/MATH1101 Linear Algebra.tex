@@ -1,9 +1,13 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    allcolors=black
+}
 \title{\textbf{MATH1101 Linear Algebra Lecture Notes}}
 \author{Thomas Piercy}
 \date{\today{}}
-
 \newcommand{\df}[2]{\frac{\text{d}#1}{\text{d}#2}}
 \newcommand{\mat}[3]{\text{Mat}_{#1\times#2}(\mathbb{#3})}
 \newcommand{\arbvec}[2]{\ensuremath{\textbf{#1}_1,\textbf{#1}_2,\dots,\textbf{#1}_{#2}}}
@@ -814,4 +818,46 @@ If \(\dim(V)=\dim(W)\) then we can apply the rank nullity formula and see that \
 Let \(V\) be a finite dimensional vector space and \(\phi:V\to V\) be a linear map. Then \(\phi\) is called an endomorphism and we have \(\phi\) surjective \(\iff\phi\) injective.
 \subsection*{Definition}
 \(\lambda\in \mathbb{R}\) is called an eigenvalue of an endomorphism \(\phi:V\to V\) if there exists a non-zero vector \(\textbf{v}\in V\st \phi(\textbf{v})=\lambda\textbf{v}\). We call \(\textbf{v}\) the eigenvector of \(\phi\) that corresponds to the eigenvalue \(\lambda\).
+\subsubsection*{Example 1}
+Suppose we have a linear map:
+\[L_A:\mathbb{R}^2\to\mathbb{R}^2\]
+defined by:
+\[A=\begin{pmatrix}
+    0 & 1 \\
+    2 & 1
+\end{pmatrix}\]
+Consider:
+\[L_A\begin{pmatrix}
+    1 \\ -1
+\end{pmatrix}=\begin{pmatrix}
+    0 & 1 \\
+    2 & 1
+\end{pmatrix}\begin{pmatrix}
+    1 \\ -1
+\end{pmatrix}=\begin{pmatrix}
+    -1 \\ 1
+\end{pmatrix}=(-1)\begin{pmatrix}
+    1 \\ -1
+\end{pmatrix}\]
+\[L_A\begin{pmatrix}
+    1 \\ 2
+\end{pmatrix}=\begin{pmatrix}
+    0 & 1 \\
+    2 & 1
+\end{pmatrix}\begin{pmatrix}
+    1\\ 2
+\end{pmatrix}=\begin{pmatrix}
+    2 \\ 4
+\end{pmatrix}=2\begin{pmatrix}
+    1 \\2
+\end{pmatrix}\]
+Hence we can see based upon definitions that \(\textbf{v}_1=(1\quad -1)^T\) is an eigenvector with eigenvalue \(\lambda=-1\)
+and \(\textbf{v}_2=(1\quad 2)^T\) is the eigenvector with eigenvalue \(\lambda=2\).
+\subsubsection*{Example 2}
+Define a linear map:
+\[\phi:C^\infty(\mathbb{R})\to C^\infty(\mathbb{R})\]
+\[\textbf{f}\mapsto \df{}{x}\textbf{f}\]
+We claim that every \(\lambda\in \mathbb{R}\) is an eigenvalue of a corresponding eigenvector. Consider the vector \(\textbf{f}=e^{\lambda x}\in C^\infty(\mathbb{R})\) with \(\textbf{f}\ne 0\) then:
+\[\phi(\textbf{f}\,)=\df{}{x}\textbf{f}=\lambda e^{\lambda x}=\lambda \textbf{f}\]
+Therefore every \(\lambda\in \mathbb{R}\) is an eigenvalue to the eigenvector \(\textbf{f}\).
 \end{document}
