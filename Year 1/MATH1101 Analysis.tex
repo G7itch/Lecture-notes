@@ -819,4 +819,99 @@ Then \(f\) is symmetric.
 \[f_x=4x^3+2xy^2\]
 \[f_y=4y^2+2x^2y\]
 \[f_{xy}(a,b)=f_{yx}(b,a)=f_{xy}(b,a)=4ab\]
+\subsection*{Taylor's theorem in higher dimensions}
+Recall Taylor's formula around a point \(x_0\) in 1D:
+\[f(x)=\sum^n_{k=0}\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k+R_n\]
+Where:
+\[R_n=\frac{f^{(n+1)}(\xi)}{(n+1)!}(x-x_0)^{n+1}\]
+for some \(\xi\) between \(x\) and \(x_0\). Taylor's theorem in higher dimensions (in particular we are looking at \(d=2\)) is a generalisation of this.
+\subsubsection*{Definition}
+Let \(f:D\to\mathbb{R},\;D\subseteq \mathbb{R}^2\) be a function in \(C^{n+1}(D)\) and \((x_0,y_0),(x,y)\) points in \(D\), such that the straight line \(L\) from \((x_0,y_0)\) to \((x,y)\) is lies in D. Then there exists \((\xi,n)\) on \(L\) such that:
+\[f(x,y)=f(x_0,y_0)+\sum_{\substack{r,s\in \mathbb{N}\cup \{0\}\\ 1\leq r+s\leq n}}\pf{^{r+s}f(x_0,y_0)}{x^r\partial y^s}\frac{(x-x_0)^r}{r!}\frac{(y-y_0)^s}{s!}+R_n\]
+Where:
+\[R_n=\sum_{\substack{r+s=n+1}}\pf{^{r+s}f(x_0,y_0)}{x^r\partial y^s}\frac{(x-x_0)^r}{r!}\frac{(y-y_0)^s}{s!}\]
+For some \((\xi,n)\) on the line \(L\).
+\subsubsection*{Working formula}
+Similar to in 1D, the definition can often be unwieldy to work with so instead we have another formulation that we can use for calculations. In 2D this is:
+\[f(x,y)=f(x_0,y_0)+\left(f_x(x_0,y_0)(x-x_0)+f_y(x_0,y_0)(y-y_0)\right)\]
+\[+\frac{1}{2}(f_{xx}(x_0,y_0)(x-x_0)^2+f_{yy}(x_0,y_0)(y-y_0^2))\]
+\[+f_{xy}(x_0,y_0)(x-x_0)(y-y_0)+R_2\]
+Where:
+\[\frac{R_2}{(x-x_0)^2+(y-y_0)^2}\to 0\]
+as \((x,y)\to(x_0,y_0)\). Notice that since we require partial derivatives up to \(n+1\) to be continuous then we have \(f_{xy}=f_{yx}\) which had helped simplify this formula slightly.
+\subsubsection*{Example 1}
+\[f(x,y)=e^x\cos y\]
+\[(x_0,y_0)=(0,0)\]
+\[\left.\begin{cases}
+    f=e^x\cos{y} \\
+    f_x=-e^x\sin y \\
+    f_y=e^x\cos y \\
+    f_{xx} = e^x\cos y \\
+    f_{yy}=-e^x\cos{y} \\
+    f_{xy}=-e^x\sin y
+\end{cases}\right\rvert_{(0,0)}=\begin{cases}
+    1 \\
+    1 \\
+    0 \\
+    1 \\
+    -1 \\
+    0
+\end{cases}\]
+\[f(x,y)=1+x+\frac{1}{2}x^2-\frac{1}{2}y^2+R_2\]
+Where \(R_2\) is small compared to \(x^2+y^2\) as \((x,y)\to(0,0)\).
+\subsubsection*{Example 2}
+\[f(x,y)=x^2y^3\]
+\[(x_0,y_0)=(1,1)\]
+\[\left.\begin{cases}
+    f=x^2y^3 \\
+    f_x=2xy^3 \\
+    f_y=3x^2y^2 \\
+    f_{xx}=2y^3 \\
+    f_{yy} = 6x^2y \\
+    f_{xy}=6xy^2
+\end{cases}\right\rvert_{(1,1)}=\begin{cases}
+    1 \\ 2 \\ 3 \\ 2 \\ 6 \\ 6
+\end{cases}\]
+\[f(x,y)=1+2(x-1)+3(y-1)+\frac{1}{2}(2(x-1)^2+6(y-1)^2)+6(x-1)(y-1)+R_2\]
+\[f(x,y)=6-6x-9y+6xy+x^2+3y^2+R_2\]
+\subsubsection*{Example 3}
+\[f(x,y)=\sin x\cos{y}\]
+\[(x_0,y_0)=\left(-\frac{\pi}{2},0\right)\]
+\[\left.\begin{cases}
+    f=\sin{x}\cos{y} \\
+    f_x=\cos{x}\cos{y} \\
+    f_y=-\sin{x}\sin{y} \\
+    f_{xx}=-\sin{x}\cos{y} \\
+    f_{yy}=-\sin{x}\cos{y} \\
+    f_{xy}=-\cos{x}\sin{y}
+\end{cases}\right\rvert_{\left(-\frac{\pi}{2},0\right)}=\begin{cases}
+    -1 \\ 0 \\ 0 \\ 1 \\ 1 \\ 0
+\end{cases}\]
+\[f(x,y)=-1+\frac{1}{2}\left(x+\frac{\pi}{2}\right)^2+\frac{1}{2}y^2+R_2\]
+\subsection*{Gradient and Hessian}
+We can also write the second order expression as:
+\[f(x,y)=f(x_0,y_0)+\underline{G}\cdot \underline{v}+\frac{1}{2}\underline{v}\cdot H\underline{v}+R_2\]
+Where:
+\[\underline{v}=\begin{pmatrix}
+    x-x_0 \\
+    y-y_0
+\end{pmatrix}\]
+\(\underline{G}\) is known as the gradient of \(f\) and is calculated as:
+\[\underline{G}=\left.\begin{pmatrix}
+    f_x \\
+    f_y
+\end{pmatrix}\right\rvert_{(x_0,y_0)}\]
+The matrix \(H\) is known as the Hessian of \(f\) and is calculated as:
+\[H=\left.\begin{pmatrix}
+    f_{xx} & f_{xy} \\
+    f_{yx} & f_{yy}
+\end{pmatrix}\right\rvert_{(x_0,y_0)}\]
+This form of Taylor's formula is useful because it is easy to see how we can extend this for any function in \(\mathbb{R}^d\), thus enabling us to take expansions of higher dimensional functions.
+\subsection*{An interesting example}
+\[f(x,y)=e^{x+y}\]
+\[(x_0,y_0)=(0,0)\]
+\[f=f_x=f_y=f_{xx}=f_{xy}=f_{yy}\]
+Applying Taylor's formula gives us the expansion:
+\[f(x,y)=1+x+y+\frac{1}{2}x^2+\frac{1}{2}y^2+xy+R_2\]
+But notice that we could also substitute \(u=x+y\) and calculate the 1D expansion of the new function \(f(u)\). If we did this we would see that we end up with exactly the same expansion. Alternatively, we can separate \(f(x,y)\) into a product of 1D functions \(f(x,y)=g(x)h(y)\) and if we take the expansions of those 1D functions and multiply them together we would see that we get the 2D expansion of \(f(x,y)\) again.
 \end{document}
