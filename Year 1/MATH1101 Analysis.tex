@@ -901,7 +901,7 @@ Where:
     f_x \\
     f_y
 \end{pmatrix}\right\rvert_{(x_0,y_0)}\]
-The matrix \(H\) is known as the Hessian of \(f\) and is calculated as:
+Later we will see this again and denote the gradient of \(f\) as \(\nabla f\). The matrix \(H\) is known as the Hessian of \(f\) and is calculated as:
 \[H=\left.\begin{pmatrix}
     f_{xx} & f_{xy} \\
     f_{yx} & f_{yy}
@@ -914,4 +914,34 @@ This form of Taylor's formula is useful because it is easy to see how we can ext
 Applying Taylor's formula gives us the expansion:
 \[f(x,y)=1+x+y+\frac{1}{2}x^2+\frac{1}{2}y^2+xy+R_2\]
 But notice that we could also substitute \(u=x+y\) and calculate the 1D expansion of the new function \(f(u)\). If we did this we would see that we end up with exactly the same expansion. Alternatively, we can separate \(f(x,y)\) into a product of 1D functions \(f(x,y)=g(x)h(y)\) and if we take the expansions of those 1D functions and multiply them together we would see that we get the 2D expansion of \(f(x,y)\) again.
+\subsection*{Stationary points}
+We already know that the main goal of differentiation is to study functions and their turning points. We can extend lots of the methods for 1D into higher dimensions.
+\subsubsection*{Extreme value theorem}
+Let \(f:D\to\mathbb{R},\;D\subset\mathbb{R}^2\) be a continuous function on \(D\), where \(D\) is a closed rectangle of the form: \([a,b]\times [c,d]\). Then there is at least one in \(D\) where \(f\) takes on a maximum value and at least one point where \(f\) takes on a minimum value.
+\subsubsection*{Minima and Maxima}
+A point \((x_0,y_0)\in D\subseteq\mathbb{R}^2\) is called a local minimum of \(f:D\to\mathbb{R}\) if there exists \(\delta>0\) such that:
+\[f(x_0,y_0)\leq f(x,y)\]
+for all nearby points \((x,y)\in D\) with \(|x-x_0|<\delta\) and \(|y-y_0|<\delta\). Similarly \((x,y)\) is a local maximum if:
+\[f(x_0,y_0)\geq f(x,y)\]
+for all nearby \((x,y)\). If these inequalities are held strictly, then we talk about a strict local maximum/minimum. If \((x_0,y_0)\in D\) is a local minimum or maximum then:
+\[f_x(x_0,y_0)=f_y(x_0,y_0)=0\]
+\subsubsection*{Gradient}
+Let \(f:D\to \mathbb{R}^2,\;D\subseteq\mathbb{R}^2\) be a function whose first partial derivatives exist. The vector:
+\[\nabla f=\begin{pmatrix}
+    f_x \\
+    f_y
+\end{pmatrix}\]
+is called the gradient of \(f\). If \(f\) instead depended on \(d\) variables: \(x_1,x_2,\dots,x_d\) then the gradient of \(f\) would be written \(\nabla f=(f_{x_1},f_{x_2},\dots f_{x_d})^T\). A point \((x_0,y_0)\in D\) where \(\nabla f(x_0,y_0)=0\) is called a stationary point (or critical point) of \(f\).
+\subsection*{Classifying stationary points}
+\subsubsection*{The second derivative test}
+Let \(f\in C^2(D)\) with \(D\subseteq\mathbb{R}^2\). Let \((x_0,y_0)\in D\) be a stationary point of \(f\). Consider the quantity:
+\[\mathcal{D}(x,y)=f_{xx}f_{yy}-(f_{xy})^2\]
+Then the point \((x_0,y_0)\) is classified as follows:
+\begin{itemize}
+    \item If \(\mathcal{D}(x_0,y_0) >0\) and \(f_{xx}(x_0,y_0)> 0\) then \((x_0,y_0)\) is a strict local minimum.
+    \item If \(\mathcal{D}(x_0,y_0) >0\) and \(f_{xx}(x_0,y_0)< 0\) then \((x_0,y_0)\) is a strict local maximum.
+    \item If \(\mathcal{D}(x_0,y_0)<0\) then we have a saddle point.
+    \item If \(\mathcal{D}(x_0,y_0)=0\) then we have no information about the nature of the stationary point.
+\end{itemize}
+\subsubsection*{The Hessian matrix}
 \end{document}

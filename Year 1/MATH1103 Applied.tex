@@ -1098,4 +1098,108 @@ Which can be non-dimensionalised to:
 This is known as the logistic map. We can see that there are fixed points at \(x_n=0\) and \(x_n=1-\frac{1}{r}\), the latter of which is only interesting for \(r>1\). We can use cobweb diagrams to explore the behaviour of the logistic map. We see that \(f(x)=rx(1-x)\) is a parabola with maximum \(r/4\) at \(x=1/2\) so we only consider \(1\leq r\leq 4\) which maps \([0,1]\) to itself.
 \[f'(x)=r(1-2x)\]
 The derivative is only negative for \(r<1\) and so that is the only time that \(x^*=0\) and unstable otherwise. When \(r>3\), neither fixed points are stable. For \(r\) slightly larger than \(3\) every initial condition approaches a period 2 orbit. If \(r\) is increased beyond \(1+\sqrt{6}\), the period 2 orbit becomes unstable and we instead get a stable period 4 orbit. If we keep increasing \(r\) to \(3.55\) then the period 4 orbit is replaced by a stable period \(8\) orbit and this effect continues up to a converging value \(r_{\infty}=3.5701....\). This effect is known as period doubling cascade and is best represented on a bifurcation diagram.
+\section{Introduction to quantum mechanics}
+\subsection*{An incredibly brief history of quantum mechanics}
+Towards the end of the 19th century, physicists were interested in studying the "hot body problem", which involved looking at the amount of radiation being emitted from a hot body and the frequency of that radiation. The main model at the time was Rayleigh-Jeans law:
+\[B=\frac{2c}{\lambda^4}k_BT\]
+Which worked for a small band of frequencies but failed as the frequencies got smaller and smaller. In the 1900's, Max Planck was studying this problem and had an insight that each piece of radiation could be treated as a very small discrete packet of radiation, this led to him fitting a new model for the hot body problem that aligned much better with experimental results:
+\[E=hv=h\frac{c}{\lambda}\]
+\[h\sim 6.63\cdot 10^{-34}\text{ Js}\]
+\[B=\frac{2c}{\lambda^4}\frac{E}{e^{E/k_BT}-1}\]
+Where \(h\) is now known as Planck's constant. Physicists applied the same quantisation idea to other problems, including Albert Einstein's work on the photoelectric effect:
+\[p=\frac{h}{\lambda}\]
+After that various physicists developed mathematical tools to study these phenomenon before being consolidated into the first draft of what we know as quantum mechanics:
+\begin{itemize}
+    \item Schrödinger studied and formulated wave mechanics which looked at states evolving through time.
+    \item Heisenberg studied and formulated matrix mechanics which looked at operators evolving through time.
+    \item Dirac consolidated both ideas and published works on his quantum mechanics.
+\end{itemize}
+Throughout this introductory module we will look at 4 of the main postulates of quantum mechanics:
+\begin{enumerate}
+    \item States \(\longrightarrow\) Vectors
+    \item Observables \(\longrightarrow\) Matrices
+    \item Dynamics \(\longrightarrow\) ODEs
+    \item Measurements \(\longrightarrow\) Probability
+    \item Composition \(\longrightarrow\) Tensor product \footnote{We will not explore this postulate in great detail}
+\end{enumerate}
+\subsection*{Postulate 1}
+The state of an isolated quantum system at a fixed time can be represented by a state vector \(|\psi\rangle \in \mathcal{H}\). This is a unit vector belonging to a Hilbert space \(\mathcal{H}\) known as the "state space" of the system.
+\subsubsection*{Hilbert spaces and Bra-Ket notation}
+A Hilbert space is a complex vector space with an inner product. In particular:
+\[\dim\mathcal{H}=d\iff \mathcal{H}\cong \mathbb{C}^d\]
+An element of \(\mathcal{H}\) is a known as a "ket" and is a column vector written:
+\[|z\rangle =\begin{pmatrix}
+    z_0\\z_1\\\vdots\\z_{d-1}
+\end{pmatrix}\qquad z_i\in \mathbb{C},\ i=0,\,1,\dots d-1\]
+We can also have a row vector in the form of a "bra", which is the conjugated transpose of the ket and is written:
+\[\langle z|={(z_0\quad z_1\quad \cdots \quad z_{d-1})^*}=(\bar{z}_0\quad \bar{z}_1\quad \cdots \quad \bar{z}_{d-1})\]
+\subsubsection*{The inner product and norm}
+The inner product is defined on two vectors from a Hilbert space to a complex number:
+\[\mathcal{H}\times \mathcal{H}\to \mathbb{C}\]
+Take \(|z\rangle,\, |w\rangle \in\mathcal{H}\), the inner product is the "bra|ket", the composition of the bra and the ket:
+\[\langle w|z\rangle = (\bar{w}_0\quad \cdots \quad \bar{w}_{d-1})\begin{pmatrix}
+    z_0\\
+    \cdots \\
+    z_{d-1}
+\end{pmatrix}\]
+\[=\sum^{d-1}_{j=0}\bar{w}_jz_j\]
+Note that if our vectors only have real components then this is just the dot product. The norm of the vector \(|z\rangle\) is:
+\[\|z\|=\sqrt{\langle z\mid z\rangle }\]
+A unit vector is one such that its norm is \(1\).
+\subsubsection*{Properties of the inner product}
+Let \(|w\rangle,\, |z\rangle \in \mathcal{h}\) and \(\alpha\in \mathbb{C}\). Then:
+\begin{itemize}
+    \item \(\langle w| w\rangle \geq 0\)
+    \item \(\langle w|w\rangle=0\iff |w\rangle =\underline{0}\)
+    \item \(\langle w\mid \alpha z\rangle =\alpha\langle w\mid z\rangle\)
+    \item \(\langle w\mid z_1+z_2\rangle=\langle w\mid z_1\rangle +\langle w\mid z_2\rangle\)
+    \item \(\langle z\mid w\rangle = \langle w\mid z\rangle ^*\)
+    \item \(\langle \alpha w\mid z\rangle =\bar{\alpha}\langle w \mid z\rangle\)
+\end{itemize}
+\subsubsection*{Example}
+Assume \(\mathcal{H}\equiv \mathbb{C}^2\):
+\[|z\rangle =\begin{pmatrix}
+    1 \\ i
+\end{pmatrix}\]
+\[|w\rangle =\begin{pmatrix}
+    i \\ 1
+\end{pmatrix}\]
+\[\langle w\mid z\rangle =(-i\quad 1)\begin{pmatrix}
+    1 \\ i
+\end{pmatrix}=0\]
+In this case when the inner product is 0 we say the two vectors are orthogonal.
+\subsubsection*{Expanding in basis}
+We can choose any basis for a Hilbert space \(\mathcal{H}\), but we most commonly choose the standard/computational basis. Choosing our basis is useful because we can represent any vector as an expansion of our basis vectors:
+\[|e_1\rangle=\begin{pmatrix}
+    1\\0\\\vdots\\0
+\end{pmatrix},\quad |e_2\rangle =\begin{pmatrix}
+    0\\1\\\vdots\\0
+\end{pmatrix},\quad\cdots\quad|e_{d-1}\rangle=\begin{pmatrix}
+    0 \\0 \\ \vdots \\ 1
+\end{pmatrix}\]
+In particular for \(d=2\):
+\[|e_0\rangle = |0\rangle = \begin{pmatrix}
+    1 \\ 0
+\end{pmatrix}\]
+\[|e_1\rangle =|1\rangle =\begin{pmatrix}
+    0 \\ 1
+\end{pmatrix}\]
+To make our lives easier for computing we can require that our bases are orthonormal:
+\[\langle e_k\mid e_j\rangle =\delta_{jk}=\begin{cases}
+    1 & j=k \\
+    0 & j\ne k
+\end{cases}\]
+Additionally assuming the standard basis we can formalise our vector expansion as:
+\[|z\rangle =\sum^{d-1}_{j=0}c_j|e_j\rangle \]
+Where the \(c_j\) tell us our expansion coefficients under the standard basis. These coefficients are sometimes called Fourier amplitudes and we can find them by taking the inner product:
+\[\langle e_k\mid z\rangle = \langle e_k\mid \sum_{j}c_j|e_j\rangle\rangle \]
+\[=\sum_jc_j\langle e_k\mid e_j\rangle\]
+\[=\sum_jc_j\delta_{jk}=c_k\]
+Then:
+\[|z\rangle = \begin{pmatrix}
+    c_0\\
+    c_1\\
+    \vdots\\
+    c_{d-1}
+\end{pmatrix}\]
 \end{document}

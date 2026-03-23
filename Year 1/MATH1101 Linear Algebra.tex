@@ -814,6 +814,16 @@ We already have some conditions on the injectivity and surjectivity of linear ma
 \[\phi \text{ injective}\iff \ker(\phi)=\{0\}\iff\dim(\ker(\phi))=0\]
 \[\phi\text{ surjective}\iff \text{im}(\phi)=W\iff \dim(\text{im}(\phi))=W\]
 If \(\dim(V)=\dim(W)\) then we can apply the rank nullity formula and see that \(\phi\) is injective if and only if it is also surjective.
+\subsection*{The vector space Hom\((V,W)\)}
+Let \(V,W\) be finite dimensional vector spaces. We define:
+\[\text{Hom}_\mathbb{R}(V,W)=\{\phi:V\to W: \phi \text{ is a linear map}\}\]
+For all \(\lambda\in \mathbb{R}\) and \(\phi,\psi\in \text{Hom}_\mathbb{R}(V,W)\), define:
+\[(\phi+\psi)(v)=\phi(v)+\psi(v)\]
+\[(\lambda \phi)(v)=\lambda\phi(v)\]
+We claim that Hom\((V,W)\) is a vector space. To prove this most of the heavy lifting is done by first proving that \(\phi+\psi\) and \(\lambda\phi\) are themselves linear maps. We also have an important theorem to do with this vector space. Let \(V,W\) be vector spaces with \(\dim V=n\) and \(\dim W=m\), then for any choice of fixed bases for \(V\) and \(W\) there is an isomorphism:
+\[\text{Hom}(V,W)\to M_{m,n}(\mathbb{R})\]
+\[\phi=\phi_A\mapsto A\]
+In particular this means that \(\dim(\text{Hom}(V,W))=mn\). However it is very important to note that this isomorphism only exists when we fix our bases.
 \section{Eigenvectors and eigenvalues}
 Let \(V\) be a finite dimensional vector space and \(\phi:V\to V\) be a linear map. Then \(\phi\) is called an endomorphism and we have \(\phi\) surjective \(\iff\phi\) injective.
 \subsection*{Definition}
@@ -860,4 +870,18 @@ Define a linear map:
 We claim that every \(\lambda\in \mathbb{R}\) is an eigenvalue of a corresponding eigenvector. Consider the vector \(\textbf{f}=e^{\lambda x}\in C^\infty(\mathbb{R})\) with \(\textbf{f}\ne 0\) then:
 \[\phi(\textbf{f}\,)=\df{}{x}\textbf{f}=\lambda e^{\lambda x}=\lambda \textbf{f}\]
 Therefore every \(\lambda\in \mathbb{R}\) is an eigenvalue to the eigenvector \(\textbf{f}\).
+\subsection*{Calculating eigenvalues for 2D matrices}
+Recall from earlier we define an eigenvalue as a \(\lambda\) such that:
+\[Av=\lambda v\]
+This is equivalent to saying:
+\[(A-\lambda I)v=0\]
+We know that \(A\) is invertible so \(\det(A-\lambda I)=0\). In 2D we write:
+\[A=\begin{pmatrix}
+    a & b \\
+    c & d
+\end{pmatrix}\]
+Then:
+\[\det(A-\lambda I)=(a-\lambda)(d-\lambda)-bc=\lambda^2-(a+d)\lambda+(ad-bc)\]
+Finding the roots of this equation is equivalent to finding the eigenvalues of \(A\). Then there are at most 2 eigenvalues with:
+\[\lambda_{1,2}=\frac{(a+d)\pm\sqrt{(a+d)^2-4(ad-bc)}}{2}\]
 \end{document}
