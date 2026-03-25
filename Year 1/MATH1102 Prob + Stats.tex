@@ -976,4 +976,157 @@ Is called the regression sum of squares and:
 Is called the residual sum of squares. Essentially the regression sum of squares explains how much of the variability is explained by the regression model and the residual sum of squares is everything left over. A measure of how useful the regression model is the coefficient of determination:
 \[R^2=\frac{S(\text{regression)}}{S(\text{total})}\]
 It is important to consider \(R^2\) values in context, because what might sounds like a very strong \(R^2\) value might actually not be when thinking about desired tolerances or confidence intervals.
+\section*{Stochastic modelling}
+\subsection*{Discrete time stochastic process}
+A stochastic process is a family of random variables \(\{X_t:t\in T\}\) indexed by some parameter set \(T\). Usually \(t\) is called a time parameter. When \(T\) is countable \(\{X_t:t\in T\}\) is called a discrete-time process. When \(T=[0,\infty)\) or \((a,b)\) we call it a continuous-time process. An example of a stochastic process we might be interested in is the temperature at a given location at a given point.
+\subsection*{State space}
+The set \(S\) in which \(X_n\) takes value is called the state space of the process. We assume \(S\) is countable. We require that the random variables share a common state space
+\subsubsection*{Examples}
+\begin{itemize}
+    \item Roll a dice repeatedly. Let \(X_n\) be the value of the nth roll:
+        \[S=\{1,2,3,4,5,6\}\]
+    \item Toss a coin. Let \(X_n\) be the number of heads so far:
+        \[S=\{0,1,2,\dots\}\]
+    Note that in this case there is some dependence on our outcome. In particular:
+        \[m<n\implies X_m\leq X_n\]
+    \item Gamblers ruin: You got to casino with a set amount of money and bet the same amount of money repeatedly on the red roulette spin. You stop if you meet a target amount of money or you go bust. One such state space could look like:
+    \[S=\{0,10,20,\dots,2000\}\]
+    \[X_0=1000\]
+\end{itemize}
+\subsection*{Sample path}
+A sample path is a sequence of realised values of a stochastic process
+\subsubsection*{Example}
+Roll a die. Start on a score of \(X_0=0\) and keep rolling. \(X_n\) is the sum of the first \(n\) dice rolls. The state space is:
+\[S=\{0,1,2,\dots\}\]
+and we can explore what some paths may look like:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c c c c c c c}
+        \(n\) & 1 & 2 & 3 & 4 & 5 & 6 & \(\longrightarrow\) \\ \hline
+        \(X_n(\omega_1)\) & 4 & 7 & 11 & 12 & 13 & 17 \\ 
+        \(X_n(\omega_2)\) & 6 & 12 & 14 & 17 & 23 & 27 \\
+        \(X_n(\omega_3)\) & 5 & 11 & 16 & 19 & 20 & 25 \\
+        \(X_n(\omega_4)\) & 5 & 9 & 14 & 19 & 24 & 29 \\
+        \(X_n(\omega_5)\) & 6 & 12 & 17 & 20 & 22 & 24 \\
+        \(\downarrow\)
+    \end{tabular}
+\end{table}
+Where each \(X_n(\omega_i)\) is a different sample path.
+\subsection*{Markov process}
+For a discrete-time stochastic process \(\{X_n:n=0,1,2,...\}\), the Markov property says that for all \(n=0,1,2,...\) and for all \(x_0,x_1,...,x_{n+1}\in S\) we have:
+\[P[X_{n+1}=x_{n+1}\mid X_0=x_0, X_1=x_1,\dots,X_n=x_n]=P[X_{n+1}=x_{n+1}\mid X_n=x_n]\]
+A stochastic process satisfying the Markov property is known as a Markov process. Essentially what this says is that the future is only dependent on the present and nothing in the past. Looking back at the examples from before we can see that they are all examples of Markov processes, the first dice rolling one in particular is a trivial Markov process.
+\subsubsection*{Time homogeneity}
+A Markov process is called time homogenous if \(\forall n,k\geq 0\) and \(x,y\in S\):
+\[P[X_{n+k}=y\mid X_n=x]=P[X_k=y\mid X_0=x]\]
+In this case all that matters is the time step gap between events not when they actually happen.
+\subsection*{Simple random walk}
+Consider a walk on the integers, numbered left to right. We choose a starting point and the use a probability distribution to decide how to move along the line. We move and record our new position and then repeat. \(X_0=x\) represents our starting position and \(X_n\) is where we end up after \(n\) steps.
+\subsubsection*{Example - Ant escape}
+Imagine an ant in a tunnel. The ant wants to escape the tunnel and to do so it must move 10 units in a given direction. At each step the ant moves 1 unit towards or away from the exit. The ant needs to escape within 100 steps to survive. What we want to know is what is the probability that the ant escapes within those 100 steps given a probability distribution telling us how frequently the ant moves the correct way.
+\[X_0=0\]
+\[Z=\begin{cases}
+    +1 & \text{Probability }p \\
+    -1 & \text{Probability }q=1-p
+\end{cases}\]
+The position of the ant after \(n\) steps is:
+\[X_n=X_0+\sum^n_{i=1}Z_i=\sum^n_{i=1}Z_i\]
+\subsubsection*{Example - Gamblers ruin, roulette}
+A roulette wheel has 37 numbers: 1 green, 18 red and 18 black. Start with £\(1000\) and keep placing £\(10\) bets on red; stopping when you reach £\(2000\) or go bust (£\(0\)). 
+\begin{align*}
+    &\text{Probability of winning }=\frac{18}{37}=0.486 \\
+    &\text{Probability of losing }=\frac{19}{37}=0.514
+\end{align*}
+This is a random walk with a random stopping time. We have \(X_0=1000\) and our steps are distributed according to:
+\[Z=\begin{cases}
+    +10 & p=0.468 \\
+    -10 &  p=0.514
+\end{cases}\]
+We stop at \(\tau\):
+\[\tau=\min\{n:X_n=0\text{ or }X_n=2000\}\]
+We wish to ask what is the probability that the gambler is successful?
+\[P[X_\tau=2000]\]
+In general it may be beneficial to re-parametrise the model to work with steps of size 1 unit.
+\subsection*{Gamblers ruin - General solution}
+The formulation of the problem is as follows:
+\begin{enumerate}
+    \item An individual enters the casino with \(x\) units of wealth.
+    \item The individual places 1 unit bets with probability \(p\) such that if they win, their wealth increases by 1 unit and if they lose it decreases by 1 unit.
+    \item The individual stops when they have 0 units of wealth or they have hit their target goal of \(N\) units of wealth.
+\end{enumerate}
+Let \(E_k\) be the vent that the gambler leaves with \(N\) units of wealth given that they started with \(k\) units. Let \(\omega_k=P[E_k]\), we can calculate \(\omega_k\) as follows:
+\begin{enumerate}
+    \item Write down \(\omega_k\) in terms of \(\omega_{k+1}\) and \(\omega_{k-1}\)
+    \item Use \(p+q=1\) to find a difference equation
+    \item Substitute in boundary conditions
+    \item Start with the case \(p=q=0.5\) and then look at \(p\ne q\)
+\end{enumerate}
+Let \(A=\{\text{First bet success}\}\), then:
+\[\omega_k=P[E_k]=P[E_k\mid A]P[A]+P[E_k\mid A^c]P[A^c]\]
+\[=P[E_{k+1}]P[A]+P[E_{k-1}]P[A^c]\]
+\[\omega_k=p\omega_{k+1}+q\omega_{k-1}\]
+\[\implies (p+q)\omega_k=p\omega_{k+1}+q\omega_{k-1}\]
+\[\implies q(\omega_k-\omega_{k-1})=p(\omega_{k+1}-\omega_k)\]
+\[\implies \omega_{k+1}-\omega_k=\frac{q}{p}(\omega_k-\omega_{k-1})\]
+Using \(\omega_0=0\):
+\[\omega_{k+1}-\omega_k=\left(\frac{q}{p}\right)^k\omega_1\]
+We also know that we can write:
+\[\omega_{k+1}-\omega_1=(\omega_{k+1}-\omega_k)+(\omega_k-\omega_{k-1})+\cdots + (\omega_2-\omega_1)\]
+\[=\sum^k_{j=1}(\omega_{j+1}-\omega_j)\]
+\[=\sum^k_{j=1}\left(\frac{q}{p}\right)^jw_1\]
+Then:
+\[\omega_{k+1}=\omega_1\sum^k_{j=0}\left(\frac{q}{p}\right)^j\]
+\[\implies \omega_{k+1}=\begin{cases}
+    (k+1)\omega_1 & p=q=0.5 \\
+    \frac{1-\left(\frac{q}{p}\right)^{k+1}}{1-\frac{q}{p}}\omega_1 & p\ne q
+\end{cases}\]
+Finally, using \(\omega_N=1\), if \(p=q=0.5\) then:
+\[1=\omega_N=N\omega_1\implies \omega_1=\frac{1}{N}\implies \omega_k=\frac{k}{N}\]
+And if \(p\ne q\):
+\[1=\omega_N=\frac{1-\left(\frac{q}{p}\right)^{N}}{1-\frac{q}{p}}\omega_1\implies\omega_1=\frac{1-\left(\frac{q}{p}\right)}{1-\left(\frac{q}{p}\right)^N}\]
+\[\implies \omega_k=\frac{1-\left(\frac{q}{p}\right)^k}{1-\left(\frac{q}{p}\right)^N}\]
+\subsubsection*{Applied to the roulette example}
+\[k=x=100\]
+\[N=200\]
+\[p=\frac{18}{37}\implies \omega_k=\frac{1-\left(\frac{q}{p}\right)^{100}}{1-\left(\frac{q}{p}\right)^{200}}\]
+\[\implies P[E_k]=0.004466\]
+So we can see how the probability of winning shrinks hugely over the hundreds of steps.
+\section*{Financial modelling}
+One of the simplest financial models is the binomial model. Given that a stock is currently valued \(S_0=s\), the probability of an up move is \(p\) and the new value is \(u\times s\) for \(u>1\) and the probability of a down move is \(q=1-p\) and the new value is \(d\times s\) for \(0<d<1\). \(S_n\) is the value of the stock after \(n\) steps.
+\subsection*{Option pricing}
+A (European) call option allows an individual to buy a stock at a pre-determined price (strike price) \(k\), at a specified time in the future. A (European) put option allows an individual to sell a stock at a strike price at a specified time in the future. Note that you have the option to buy/sell at the strike price but not the obligation. A key question now is what is a fair price for an option?
+\subsubsection*{Call option pricing}
+Suppose you purchase a call option with strike price \(k\).
+\begin{itemize}
+    \item If \(S_N> k\) it is beneficial to exercise the option.
+    \item If \(S_N\leq k\) it is not beneficial.
+\end{itemize}
+Your expected profit is:
+\[C=E[\max\{S_n-k,0\}]\]
+\subsubsection*{Put option pricing}
+\begin{itemize}
+    \item If \(S_N\geq k\) it is not beneficial to exercise the option.
+    \item If \(S_N<k\) it is beneficial.
+\end{itemize}
+Your expected profit is:
+\[P=E[\max\{k-S_N,0\}]\]
+\subsubsection*{Example}
+Suppose that at a time \(0\), a stock is worth £80.
+\[S_0=80\]
+Every month the stock goes up by £4 with probability \(0.6\) or it goes down by £3 with probability \(0.4\). Somebody offers to buy our stock in 3 months for £85 and we wish to work out if this is a good deal. Let \(U\) be the number of up moves:
+\[U\sim N(3,0.6)\]
+Our expected profit is:
+\[P=E[\max\{k-S_3,0\}]\]
+So we wish to examine the distribution of \(S_3\):
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c c c c}
+        \(u\) & 0 & 1 & 2 & 3 \\ \hline
+        \(S_3\) & 71 & 78 & 85 & 92 \\
+        \(k-S_3\) & 14 & 7 & 0 & -7 \\
+        \(P(U=u)\) & \(0.4^3\) & \(3(0.4)^2(0.6)\) & \(3(0.4)(0.6)^2\) & \(0.6^3\)
+    \end{tabular}
+\end{table}
+\[P=(0.4)^3\times 14+3(0.4)^2(0.6)\times 7=2.912\]
+In this case we are expecting on average to turn a £\(2.91\) profit from a sale like this so we should take their offer.
 \end{document}
