@@ -971,4 +971,57 @@ Using this method of calculating determinants is clearly very useful for large m
     \item For any elementary matrix \(E\) we have \(\det A=0\iff \det EA=0\)
 \end{itemize}
 A further application of these is that we now don't even need to get our matrix into full row reduced echelon form we just need to make it triangular.
+Additionally we can comment on how determinants interact with each other:
+\begin{itemize}
+    \item \(\det A=0\iff \ker L_a\ne\{0\}\iff Av=\lambda v\) has a non-trivial solution.
+    \item \(\det(AB)=\det A\det B\).
+\end{itemize}
+\subsection*{Existence and uniqueness}
+So far we have simply assumed that the determinant exists and is unique. We can prove that this is indeed true inductively.
+\[n=1:\quad\det(a_1)=a_1, \text{ satisfies all properties trivially}\]
+\[n=2:\quad \det\begin{pmatrix}
+    a_{11} & a_{12} \\
+    a_{21} & a_{22}
+\end{pmatrix}\]
+\[=a_{11}(-1)^{1+1}\det a_{22}+a_{12}(-1)^{1+2}\det a_{21}\]
+\[=a_{11}a_{22}-a_{12}a_{21}\]
+Now we have to check that this determinant satisfies our properties:
+\begin{itemize}
+    \item Check determinant under swap operation:
+    \[\det\begin{pmatrix}
+        a_{21} & a_{22} \\
+        a_{11} & a_{12}
+    \end{pmatrix}=a_{21}a_{12}-a_{11}a_{22}=-(a_{11}a_{22}-a_{12}a_{21})\]
+    \item Check determinant under scalar multiplication:
+    \[\det\begin{pmatrix}
+        \lambda a_{11} & \lambda a_{12} \\
+        a_{21} & a_{22}
+    \end{pmatrix}=\lambda a_{11}a_{22}-\lambda a_{12}a_{21}=\lambda(a_{11}a_{22}-a_{12}a_{21})\]
+    \item Check the identity:
+    \[\det\begin{pmatrix}
+        1 & 0 \\
+        0 & 1
+    \end{pmatrix}=1-0=1\]
+    \item Check addition operation:
+    \[\det\begin{pmatrix}
+        a_{11}+\lambda a & a_{12}+\lambda b \\
+        a_{21} & a_{22}
+    \end{pmatrix}=\det\begin{pmatrix}
+        a_{11} & a_{12} \\
+        a_{21} & a_{22}
+    \end{pmatrix}+\lambda\det\begin{pmatrix}
+        a & b \\
+        a_{21} & a_{22}
+    \end{pmatrix}\]
+\end{itemize}
+Hence the determinant for \(n=2\) exists and is unique, we can induct on this and get the general result that for a matrix \(A\in M_{n,n}(\mathbb{R})\), remove row \(i\) and column \(j\) to form a new matrix:
+\[c_{ij}=(-1)^{i+j}\det{A_{ij}}\]
+\subsection*{The characteristic polynomial, eigenspaces and multiplicities}
+Let \(A\in M_{n,n}(\mathbb{R})\), we want to find \(\lambda\in \mathbb{R}\) and \(0\ne v\in \mathbb{R}^n\) with:
+\[Av=\lambda v\]
+We are only looking for non-trivial solutions so:
+\[\det (A-\lambda I_n)=0\]
+We call \(P_A(\lambda)=\det(A-\lambda I_n)\in \mathbb{R}[\lambda]\) the characteristic polynomial of \(A\). If \(P_A\) has a root \(\lambda_1\), the multiplicity of \(\lambda_1\) is the number of times it appears as a root. If the multiplicity of an eigenvalue is \(s>1\) then we call \(s\) the algebraic multiplicity. For \(A\in M_{n,n}(\mathbb{R})\) with \(\lambda\) being an eigenvalue then we define the eigenspace of \(A\) corresponding to \(\lambda\) as:
+\[E_\lambda=\{v\in\mathbb{R}^n:Av=\lambda v\}=\ker(L_{A-\lambda I_n})\]
+This is a vector space and \(\dim E_\lambda\) is known as the geometric multiplicity of \(\lambda\).
 \end{document}

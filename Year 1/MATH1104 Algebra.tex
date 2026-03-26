@@ -704,5 +704,23 @@ We may be interested in knowing which elements of a group may be generators. Con
 \[\langle 5\rangle =\mathbb{Z}/6\mathbb{Z}\]
 Both of these elements have order \(6\) and this is no coincidence. In general any element \(g\in G\) with,
 \[\text{ord}(g)=\text{ord}(G)\]
-will be a generator of \(G\). \(G\) is cyclic if and only if it has one such element.
- \end{document}
+will be a generator of \(G\). \(G\) is cyclic if and only if it has one such element. A corollary of this is that the group \(\langle\mathbb{Z}/n\mathbb{Z},+\rangle\) is cyclic.
+\subsection*{Homomorphisms on cyclic groups}
+Let \(G\) and \(H\) be groups and suppose \(G=\langle g\rangle\) is finite cyclic. Any homomorphism \(f:G\to H\) will be uniquely determined by the value of \(f(g)\). In particular there will be at most one homomorphism \(f:G\to H\) with \(f(g)=h\) for some fixed \(h\in H\). A natural question that then arises is when does this homomorphism exist? Let \(\langle g\rangle=G\) be a finite cyclic group and \(h\in H\), then there exists a homomorphism \(f:G\to H\) such that \(f(g)=h\) if and only if:
+\[\text{ord}(h) \text{ is finite and ord}(h)\mid \text{ord}(g)\]
+\subsection*{Classification of finite cyclic groups}
+Every finite cyclic group of order \(n\) is isomorphic to \(\langle\mathbb{Z}/n\mathbb{Z}\rangle\).
+\subsubsection*{Corollary}
+Any cyclic group is abelian.
+\subsection*{Finite abelian groups}
+Every finite abelian group \(G\) of order \(k\) is isomorphic to a group of the form:
+\[\mathbb{Z}/k_1\mathbb{Z}\times\mathbb{Z}/k_2\mathbb{Z}\times\cdots\times\mathbb{Z}/k_r\mathbb{Z}\]
+Where \(k_i>1\) and \(k_1k_2\cdots k_r=k\)
+\subsection*{Chinese remainder theorem}
+Let \(k,l\in\mathbb{N}\), then the lowest common multiple, lcm\((k,l)\) is the smallest positive integer that divides both \(k\) and \(l\). The order of the element:
+\[([1]_k,[1]_l)\in \mathbb{Z}/k\mathbb{Z}\times \mathbb{Z}/l\mathbb{Z}\]
+is lcm\((k,l)\). Now suppose \(k\) and \(l\) have no common factor, then there is an isomorphism:
+\[\mathbb{Z}/kl\mathbb{Z}\cong\mathbb{Z}/k\mathbb{Z}\times\mathbb{Z}/l\mathbb{Z}\]
+given by:
+\[f([r]_{kl})=([r]_k,[r]_l)\]
+\end{document}
