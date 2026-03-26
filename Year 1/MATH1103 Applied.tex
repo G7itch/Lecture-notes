@@ -13,6 +13,9 @@
 \newcommand{\bvec}[1]{\uvec{e}_#1}
 \newcommand{\df}[2]{\frac{\text{d}#1}{\text{d}#2}}
 \newcommand{\jaco}[1]{\text{D}\textbf{f}(\textbf{#1}^*)}
+\newcommand{\ket}[1]{\,|#1\rangle}
+\newcommand{\bra}[1]{\,\langle #1|}
+\newcommand{\braket}[2]{\,\langle #1\mid #2\rangle}
 
 \begin{document}
 \maketitle
@@ -1202,4 +1205,73 @@ Then:
     \vdots\\
     c_{d-1}
 \end{pmatrix}\]
+\subsection*{Two dimensional quantum systems}
+A special case we will look at lots in this module is when \(d=2\). These are known as "qubit" (quantum bit) systems and are very important in the field of quantum information and computing. Using the standard computational basis:
+\begin{align*}
+    &|e_0\rangle =|0\rangle =\begin{pmatrix}
+        1 \\ 0
+    \end{pmatrix} \\
+    &|e_1\rangle =|1\rangle =\begin{pmatrix}
+        0 \\ 1
+    \end{pmatrix}
+\end{align*}
+Then a general state is:
+\[\ket{\psi}=c_0\ket{0}+c_1\ket{1}\]
+This naturally introduces the notion of superposition, which is simply a consequence of the linearity of our Hilbert space. For the first postulate we require any state vector to be a unit vector so we need to normalise our general form:
+\[\|\psi\|=\sqrt{\braket{\psi}{\psi}}=1\]
+\[\braket{\psi}{\psi}=(\bar{c}_0\bra{0}+\bar{c}_1\bra{1})(c_0\ket{0}+c_1\ket{1})\]
+\[=\bar{c}_0c_0\braket{0}{0}+\bar{c}_0c_1\braket{0}{1}+\bar{c}_1c_0\braket{1}{0}+\bar{c}_1c_1\braket{1}{1}\]
+\[=\bar{c}_0c_0+\bar{c}_1c_1=|c_0|^2+|c_1|^2\]
+So for a normalised quantum state we need our coefficients such that:
+\[|c_0|^2+|c_1|^2=1\]
+We would like to come up with some general form for \(c_0\) and \(c_1\), ideally with as few degrees of freedom as possible. We already know we can represent a 2D quantum state with 4 parameters and using normalisation we can get that down to 3, however it turns out we can reduce it even more.
+\subsubsection*{Introducing a parametrisation}
+Let \(\gamma,\theta,\varphi\in \mathbb{R}\) with:
+\[c_0=e^{i\gamma}\cos\frac{\theta}{2}\]
+\[c_1=e^{i(\gamma+\varphi)}\sin\frac{\theta}{2}\]
+Notice that these are already normalised. Then:
+\[\ket{\psi}=c_0\ket{0}+c_1\ket{1}\]
+\[=e^{i\gamma}\cos\frac{\theta}{2}\ket{0}+e^{i(\gamma+\varphi)}\sin\frac{\theta}{2}\ket{1}\]
+\[=e^{i\gamma}\left(\cos\frac{\theta}{2}\ket{0}+e^{i\varphi}\sin\frac{\theta}{2}\ket{1}\right)\]
+Where \(e^{i\gamma}\) is known as the global phase factor. Two quantum states that differ only by a global phase factor are physically indistinguishable so we can set \(\gamma=0\) without loss of generality.
+\[\ket{\psi}=\cos\frac{\theta}{2}\ket{0}+e^{i\varphi}\sin\frac{\theta}{2}\ket{1}\]
+\[\theta\in [0,\pi],\qquad \varphi\in [0,2\pi)\]
+Now notice that we have managed to represent a quantum state in 2D using just two parameters -this is a very useful result and convenient representation. Also notice how we are representing a quantity of unit length using two angles, this indicates to us that there is probably a nice geometric picture if we use spherical coordinates. Indeed, we can map the complex Hilbert space to the real vector space of a unit sphere in \(\mathbb{R}^3\) usually called the "Bloch sphere".
+\[\ket{\psi}\in \mathcal{H}\cong \mathbb{C}^2\longmapsto \underline{r}\in \mathbb{R}^3\]
+Where \(\underline{r}\) can be represented in either Cartesian coordinates or spherical coordinates.
+\[\underline{r}=(r_x,\,r_y,\,r_z)\]
+\[\underline{r}=(\sin\theta\cos\varphi,\,\sin\theta\sin\varphi,\,\cos\theta)\]
+This vector representation is known as the "Bloch vector for the state \(\ket{\psi}\)". In this module we will only consider "pure states", where the Bloch vector lies on the surface of the Bloch sphere.
+\subsubsection*{Examples}
+\[\ket{0}=1\ket{0}+0\ket{1}\]
+\[\begin{cases}
+    \cos\frac{\theta}{2}=1 \\
+    e^{i\varphi}\sin\frac{\theta}{2}=0
+\end{cases}\implies \begin{cases}
+    \theta =0 \\
+    \varphi\in [0,2\pi)
+\end{cases}\]
+\[\underline{r}_{\ket{0}}=(0,0,1)\]
+Similarly:
+\[\underline{r}_{\ket{1}}=(0,0,-1)\]
+We are not limited to just looking at a basis given in the \(z\)-axis. In a bit of notational abuse we can consider:
+\[\ket{+}=\frac{1}{\sqrt{2}}\ket{0}+\frac{1}{\sqrt{2}}\ket{1}\]
+\[\begin{cases}
+    \cos{\frac{\theta}{2}}=\frac{1}{\sqrt{2}} \\
+    e^{i\varphi}\sin\frac{\theta}{2}=\frac{1}{\sqrt{2}}
+\end{cases}\implies \begin{cases}
+    \theta=\frac{\pi}{2} \\
+    \varphi=0
+\end{cases}\]
+\[\underline{r}_{\ket{+}}=(1,0,0)\]
+And likewise:
+\[\ket{-}=\frac{1}{\sqrt{2}}\ket{0}-\frac{1}{\sqrt{2}}\ket{1}\]
+\[\begin{cases}
+    \cos{\frac{\theta}{2}}=\frac{1}{\sqrt{2}} \\
+    e^{i\varphi}\sin\frac{\theta}{2}=-\frac{1}{\sqrt{2}}
+\end{cases}\implies \begin{cases}
+    \theta=\frac{\pi}{2} \\
+    \varphi=\pi
+\end{cases}\]
+\[\underline{r}_{\ket{+}}=(-1,0,0)\]
 \end{document}

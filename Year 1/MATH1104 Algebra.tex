@@ -666,5 +666,43 @@ We can also frame the bijective requirement for a homomorphism to be an isomorph
 \[f\text{ injective}\iff \ker(f)=\{e_G\}\]
 Thus:
 \[G\cong H\iff \ker(f)=\{e_g\}\land \text{im}(f)=H\]
-\section{}
+\section{Cyclic groups}
+\subsection*{An interesting isomorphism}
+Consider the groups \(\mathbb{Z}/4\mathbb{Z}\) and \((\mathbb{Z}/10\mathbb{Z})^\times=\{1,3,7,9\}\). Suppose:
+\[f:\mathbb{Z}/4\mathbb{Z}\to (\mathbb{Z}/10\mathbb{Z})^\times\]
+is a homomorphism such that \(f(1)=3\). Then by the homomorphism property:
+\begin{align*}
+    &f(0)=1 \\
+    &f(1)=3 \\
+    &f(2)=f(1+1)=f(1)\times f(1)=9 \\
+    &f(3)=f(1)^3=7
+\end{align*}
+In particular, \(f\) is completely determined by the value of \(f(1)\). This function is bijective and hence an isomorphism so:
+\[\mathbb{Z}/4\mathbb{Z}\cong (\mathbb{Z}/10\mathbb{Z})^\times\]
+\subsection*{Cyclic group definition}
+A cyclic group is "generated" from a single element by repeatedly applying the binary operation. Let \(G\) be a group and \(g\in G\):
+\[\langle g\rangle =\{g^r:r\in\mathbb{Z}\}\]
+\(g\) is called the generator of \(G\) if and only if \(G=\langle g\rangle\). Whenever a group \(G\) has at least one generator we say it is cyclic.
+\subsection*{Infinite cyclic groups}
+Consider the group \(\langle\mathbb{Z},+\rangle\), we have \(\mathbb{Z}=\langle 1\rangle\) so \(1\) is a generator. In fact we can show every infinite cyclic group is isomorphic to \(\langle\mathbb{Z},+\rangle\).
+\subsubsection*{Pf.}
+Let \(G\) be an infinite cyclic group. Then there is a \(g\in G\) such that:
+\[G=\langle g\rangle =\{\dots,\,g^{-1},\,e_G,\,g,\,g^2,\,\dots\}\]
+Define a mapping:
+\[f:\mathbb{Z}\to G;\;f(n):=g^n\]
+And check that \(f\) is a homomorphism:
+\[f(n+m)=f(n)f(m)=g^{n+m}\]
+\[f(0)=g^0=e_G\]
+So \(f\) is indeed a homomorphism, now we just need to check if \(f\) is bijective:
+\[f(n)=f(m)\implies g^n=g^m\implies g^{n-m}=e_G\]
+If \(n\ne m\) then \(g^{n-m+1}=g\) which contradicts our claim that \(G\) is infinite. Then \(f\) must be injective and since \(|\mathbb{Z}|=|G|\), we also have surjectivity. \(f\) is a bijective homomorphism so:
+\[G\cong \langle \mathbb{Z},+\rangle\]
+\[\blacksquare\]
+\subsection*{Finite cyclic groups}
+We may be interested in knowing which elements of a group may be generators. Consider for example the group \(\mathbb{Z}/6\mathbb{Z}\), the possible generators are:
+\[\langle 1\rangle=\mathbb{Z}/6\mathbb{Z}\]
+\[\langle 5\rangle =\mathbb{Z}/6\mathbb{Z}\]
+Both of these elements have order \(6\) and this is no coincidence. In general any element \(g\in G\) with,
+\[\text{ord}(g)=\text{ord}(G)\]
+will be a generator of \(G\). \(G\) is cyclic if and only if it has one such element.
  \end{document}
