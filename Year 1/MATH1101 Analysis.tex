@@ -960,4 +960,53 @@ When evaluated at \((x_0,y_0)\) we can see that \(\mathcal{D}=\det H\) and hence
     \item If \(H\) has a 0 eigenvalue or \(\mathcal{D}=0\) then the test is inconclusive.
 \end{itemize}
 We like to analyse stationary points using this method because it easily generalises to higher dimensional functions.
+\subsection*{Lagrange multipliers}
+Sometimes we are interested in optimising a function within a given constraint. The method of Lagrange multipliers provides a strategy for solving these problems.
+\subsubsection*{Lagrange multiplier theorem}
+Let \(f,g:D\to\mathbb{R},\;D\subseteq \mathbb{R}^2\) be functions in \(C^{1}(\mathbb{R})\). If \((x_0,y_0)\) is a critical point of \(f(x,y)\) among points such that \(g(x,y)=0\) with \(\nabla g\ne 0\), then there is \(\lambda_0\in\mathbb{R}\) such that \((x_0,y_0,\lambda_0)\) is a stationary point of:
+\[F(x,y,\lambda)=f(x,y)+\lambda g(x,y)\]
+\(\lambda\) is called the Lagrange multiplier and \(F\) is called the Lagrangian. This theorem also holds in cases that we have more than 1 constraint and more than two variables.
+\subsubsection*{Example 1}
+\[f(x,y)=x^2+y^2+z^2\]
+\[\text{Constraint}:\ g(x,y,z)=2x+3y-z-1=0\]
+\[\nabla g=(2,3,-1)\ne 0\]
+So we can apply the Lagrange multiplier method. We wish to minimise:
+\[F(x,y,z)=f(x,y)+\lambda g(x,y)\]
+\[=x^2+y^2+z^2+\lambda(2x+3y-z-1)\]
+\[\begin{cases}
+    F_x = 2x+2\lambda=0\implies \lambda =-x \\
+    F_y= 2y+3\lambda=0\implies \lambda=-\frac{2}{3}y \\
+    F_z=2z-\lambda\implies\lambda=2z \\
+    F_\lambda =g=2x+3y-z-1=0
+\end{cases}\]
+\[F_\lambda=0\implies 2x+\frac{9}{2}x+\frac{1}{2}x-1=0\]
+\begin{align*}
+    &x=\frac{1}{7} \\
+    &y=\frac{3}{14} \\
+    &z=-\frac{1}{14}
+\end{align*}
+So \((1/7\quad 3/14\quad -1/14)\) is the stationary point of \(f\) under \(g\), in particular it is a minimum.
+\subsubsection*{Example 2}
+\[f(x,y)=x+y\]
+\[\text{Constraint}:\ g(x,y)=x^2+4y^2-5=0\]
+\[\nabla g=(2x, 8y)\ne 0\text{ for } (x,y)\ne (0,0)\]
+Maximise:
+\[F(x,y,\lambda)=f(x,y)+\lambda g(x,y)\]
+\[=x+y+\lambda(x^2+4y^2-5)\]
+\[\begin{cases}
+    F_x=1+2\lambda x=0\implies x=-\frac{1}{2\lambda} \\
+    F_y=1+8\lambda y=0\implies y=-\frac{1}{8\lambda} \\
+    F_\lambda =g=x^2+4y^2-5=0
+\end{cases}\]
+\[F_\lambda =0\implies \left(-\frac{1}{2\lambda}\right)^2+4\left(-\frac{1}{8\lambda}\right)^2=5\]
+\[\lambda=\pm\frac{1}{4}\implies \begin{cases}
+    x= \mp 2 \\
+    y=\mp \frac{1}{2}
+\end{cases}\]
+\begin{align*}
+    &f\left(-2,-\frac{1}{2}\right)=-\frac{5}{2} \\
+    &f\left(2,\frac{1}{2}\right)=\frac{5}{2}
+\end{align*}
+Hence the maximum of \(f\) subject to \(g\) occurs at \(\left(2,\frac{1}{2}\right)\).
+\section{}
 \end{document}
