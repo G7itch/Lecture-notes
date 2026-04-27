@@ -1008,5 +1008,37 @@ Maximise:
     &f\left(2,\frac{1}{2}\right)=\frac{5}{2}
 \end{align*}
 Hence the maximum of \(f\) subject to \(g\) occurs at \(\left(2,\frac{1}{2}\right)\).
-\section{}
+\section{Multiple integration}
+\subsection*{Geometric interpretation}
+In 1D with a curve \(f\), the integral from \(a\) to \(b\) gives the area of the curve under \(f\):
+\[\int^b_af(x)\,\text{d}x\]
+In 2D, we have a surface instead of a curve and the integral gives the volume under it:
+\[\int_Df(x,y)\,\text{d}A\]
+Where \(\text{d}A\) is a small increment in 2D space.
+\subsection*{Riemann integrals in 2D}
+In 1D we used approximation by step functions to define the integral. In 2D we need to find "simple" functions that are constant on small 2D rectangles. Consider a rectangle \(R=[a,b]\times[c,d]\) in 2D space, then a function \(\phi:R\to\mathbb{R}\) is called a step functions if it can be written:
+\[\phi(x,y)=\phi_1(x)\phi_2(y)\]
+Where \(\phi_1,\phi_2\) are 1D step functions. We can now define the double integral over the rectangle:
+\[\int_R\phi(x,y)\,\text{d}A:=\sum^{N-1}_{k=0}\sum^{M-1}_{l=0}a_{kl}(x_{k+1}-x_k)(y_{l+1}-y_l)\]
+Where \(a_{kl}\) is the value of the step function. Note that this is our definition but not how we actually calculate them in practice.
+\subsubsection*{General functions on a bounded region}
+For a bounded function \(f:D\to \mathbb{R}\), \(D\subseteq R\) we define \(f_0:R\to\mathbb{R}\) by:
+\[f_0(x,y)=\begin{cases}
+    f(x,y) & (x,y)\in D \\
+    0 & (x,y)\notin D
+\end{cases}\]
+Then we define the upper double integral by:
+\[\bar{\int}_Df(x,y)\,\text{d}A=\inf\left\{\int_R\phi(x,y)\,\text{d}A:\phi\in T(R),\, \phi\geq f_0\right\}\]
+Similarly the upper double integral:
+\[\underline{\int}_Df(x,y)\,\text{d}A=\sup\left\{\int_R\psi(x,y)\,\text{d}A:\psi\in T(R),\, \psi\leq f_0\right\}\]
+A bounded function \(f:D\to \mathbb{R},\;D\subseteq R\) is Riemann integrable if:
+\[\underline{\int}_Df(x,y)\,\text{d}A=\bar{\int}_Df(x,y)\,\text{d}A\]
+and in this case:
+\[\int_Rf(x,y)\,\text{d}A:=\bar{\int}_Df(x,y)\,\text{d}A\]
+\subsubsection*{Alternative notation}
+Note that we can write the double integral over a domain \(D\subseteq\mathbb{R}^2\) in multiple ways, we can either write:
+\[\iint_Df(x,y)\,\text{d}A\]
+or,
+\[\int_Df(x,y)\,\text{d}A\]
+Over the years the top option has fallen out of favour with mathematicians due to how lazy we all are, but in particular because the study of higher dimension multiple integrals has become more popular so to save writing out \(d\) integral symbols we commonly only use one with the domain of integration as the subscript indicating what dimension we are working with. This is slightly more complicated since it requires a bit of inspection although this is preferred to rewriting integral symbols time and time again.
 \end{document}
