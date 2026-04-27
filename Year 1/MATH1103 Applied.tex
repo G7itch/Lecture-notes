@@ -171,7 +171,7 @@ Hence we can get the tangent vector directly when the parameter is not time but 
 Differentiating with respect to \(s\):
 \[\df{\uvec{t}}{s}\cdot\uvec{t}+\uvec{t}\cdot\df{\uvec{t}}{s}=0\]
 \[2\left(\df{\uvec{t}}{s}\cdot\uvec{t}\right)=0\]
-Therefore we have \(\df{\uvec{t}}{s}\) to be perpendicular to \(\uvec(t)\) and so normal to the trajectory. However it is not yet normalised. Its length defines the curvature and radius of curvature:
+Therefore we have \(\df{\uvec{t}}{s}\) to be perpendicular to \((\uvec{t})\) and so normal to the trajectory. However it is not yet normalised. Its length defines the curvature and radius of curvature:
 \[\left\vert\df{\uvec{t}}{s}\right\vert=\kappa(s)=\frac{1}{R(s)}\]
 The radius \(R\) is the radius of the circle touching the trajectory tangentially. The unit vector is now:
 \[\uvec{n}=\frac{\df{\uvec{t}}{s}}{\kappa(s)}\]
@@ -192,7 +192,7 @@ Suppose we have two coordinate systems: \(S\) and \(\Sigma\). These are both Car
 \[\Sigma:\underline{\rho}=\zeta\bvec{\zeta}+\eta\bvec{\eta}+\xi\bvec{\xi}\]
 We know that the origin of \(\Sigma\) has a representation in \(S\) which we denote \(\sigma\). We can see that a way to represent a fixed point in \(S\) could be:
 \[\underline{r}=\underline{\sigma}+\underline{\rho}\]
-If we divide by \(m\) and take the second time derivative, we can form newtons equations of motion in the new system.
+If we multiply by \(m\) and take the second time derivative, we can form newtons equations of motion in the new system.
 \[m\overset{..}{\underline{r}}=m\overset{..}{\underline{\sigma}}+m\overset{..}{\underline{\rho}}\]
 We can see that the first term is the force vector in the coordinate system \(S\) and on the right we have the force vector for the same force but in the system \(\Sigma\).
 \[\underline{F}(\underline{r})=\underline{\Phi}(\underline{\rho})=\underline{F}(\underline{\rho}+\underline{\sigma})\]
@@ -1274,4 +1274,137 @@ And likewise:
     \varphi=\pi
 \end{cases}\]
 \[\underline{r}_{\ket{+}}=(-1,0,0)\]
+\subsection*{Postulate 2}
+The second postulate states "Every experimentally observable quantity is described by a self-adjoint operator \(\hat{A}:\mathcal{H}\to\mathcal{H}\) acting as a linear transformation from the Hilbert space to itself."
+\subsubsection*{Operators as linear transformations}
+Consider the operator:
+\[\hat{A}:\mathcal{H}\to \mathcal{H}\]
+That maps a state in Hilbert space to a different state via:
+\[\ket{x}\in\mathcal{H}\overset{\hat{A}}{\longmapsto}\ket{y}=\hat{A}\ket{x}\]
+We can write the states \(\ket{x},\ket{y}\) in their vector-component form to view the operator as a linear transformation:
+\begin{align*}
+    &\ket{x}=\sum_jx_j\ket{e_j} \\
+    &\ket{y}=\sum_iy_i\ket{e_i}
+\end{align*}
+\[\hat{A}\ket{x}=\ket{y}\]
+Pre-multiply by the basis bra and simplify:
+\[\bra{e_i}\hat{A}\ket{x}=\braket{e_i}{y}\]
+\[\bra{e_i}\,\hat{A}\ket{\left(\sum_jx_j\ket{e_j}\right)}=y_i\]
+\[\sum_j\bra{e_i}\,\hat{A}\ket{e_j}x_j=y_i\]
+We should be able to see that this sum is better written with a matrix product:
+\begin{align*}
+    &A_{ij}=\bra{e_i}\,\hat{A}\ket{e_j} \\
+    &A=(A_{ij})
+\end{align*}
+Rewriting the above sum using this new matrix gives us:
+\[\sum_jA_{ij}x_j=y_i\]
+Leaving us the with the final matrix equation:
+\[y=Ax\]
+\[\underline{x}=\begin{pmatrix}
+    x_0 \\ x_1 \\ \vdots \\ x_{d-1}
+\end{pmatrix},\qquad \underline{y}=\begin{pmatrix}
+    y_0 \\ y_1 \\ \vdots \\ y_{d-1}
+\end{pmatrix}\]
+This shows us that we can conveniently represent the operator \(\hat{A}\) as the matrix \(A\).
+\subsubsection*{Adjoint matrices}
+Let \(A\) be a matrix with \(A=(A_{ij})\), we can construct the transpose matrix as \(A^T=(A_{ji})\) and the conjugate matrix as \(\bar{A}=(\bar{A}_{ij})\). Applying both operations at the same time gives us the so called adjoint matrix:
+\[A^\dagger=\bar{A^T}=\bar{A}^T=(\bar{A}_{ji})\]
+A matrix \(A\) is self adjoint if \(A=A^\dagger\), and similarly an operator \(\hat{A}\) is self adjoint if \(\hat{A}=\hat{A^\dagger}\).
+\subsection*{Qubit observables}
+We now know that observables can be represented by self-adjoint matrices and in fact all self-adjoint matrices of the appropriate size are observables. Consider the 2D case, we have:
+\[A=\begin{pmatrix}
+    A_{00} & A_{01} \\
+    A_{10} & A_{11}
+\end{pmatrix}=\begin{pmatrix}
+    \bar{A}_{00} & \bar{A}_{10} \\
+    \bar{A}_{01} & \bar{A}_{11}
+\end{pmatrix}=A^\dagger\]
+Then this places restrictions on the values in the matrix. We can write all of these constraints out:
+\[\begin{cases}
+    A_{00}=\bar{A}_{00} \\
+    A_{01} = \bar{A}_{10} \\
+    A_{10} = \bar{A}_{01} \\
+    A_{11} = \bar{A}_{11}
+\end{cases}\]
+And these simplify to requiring \(A_{00},A_{11}\in\mathbb{R}\) and \(A_{01}=\bar{A}_{10}\), hence:
+\[A=\begin{pmatrix}
+    A_{00} & A_{01} \\
+    \bar{A}_{01} & A_{11}
+\end{pmatrix}\]
+We need to pick a basis for this matrix and in general we pick perhaps a slightly unusual one - in particular we only really care about spanning all self-adjoint matrices. We can then write out an expression for \(A\) as an expansion in this basis:
+\[A=\frac{1}{2}(c_0I+c_x\sigma_x+c_y\sigma_y+c_z\sigma_z)\]
+Where \(c_0,c_x,c_y,c_z\in\mathbb{R}\) and \(\sigma_x,\sigma_y,\sigma_z\) are the pauli matrices:
+\begin{align*}
+    &\text{Pauli }x \text{ matrix: }\sigma_x=\begin{pmatrix}
+        0 & 1 \\
+        1 & 0
+    \end{pmatrix} \\
+        &\text{Pauli }y \text{ matrix: }\sigma_y=\begin{pmatrix}
+        0 & -i \\
+        i & 0
+    \end{pmatrix} \\
+        &\text{Pauli }z \text{ matrix: }\sigma_z=\begin{pmatrix}
+        1 & 0\\
+        0 & -1
+    \end{pmatrix}
+\end{align*}
+Notice that the Pauli matrices are themselves self-adjoint and hence observables. Physically the Pauli matrices describe the "spin" of a particle:
+\[\hbar=\frac{h}{2\pi}\]
+\[\hat{S}_k=\frac{\hbar}{2}\sigma_k\qquad k\in\{x,y,z\}\]
+\subsubsection*{Properties of Pauli matrices}
+We will make great use of this in the future to simplify expressions:
+\begin{itemize}
+    \item \(\sigma_k=\sigma_k^\dagger\)
+    \item Tr\((\sigma_k)=0\)
+    \item \(\sigma_k^2=I\)
+    \item The eigenvalues of \(\sigma_k\) are \(\pm1\)
+\end{itemize}
+\subsection*{Projection operators}
+Define an operator \(\hat{P}\) with two properties:
+\begin{itemize}
+    \item \(\hat{P}=\hat{P^\dagger}\)
+    \item \(\hat{P^2}=\hat{P}\)
+\end{itemize}
+Then \(\hat{P}\) is known as a projection operator and we can look at how it projects onto a state \(\ket{\psi}\):
+\[\hat{P}_\psi=\ket{\psi}\bra{\psi}\]
+Notice that this is the opposite of an inner product and instead of collapsing states into a real number this expands them into a matrix.
+\[\ket{\psi}=\cos{\frac{\theta}{2}}\ket{\psi}+e^{i\varphi}\sin{\frac{\theta}{2}}\ket{\psi}=\begin{pmatrix}
+    \cos\frac{\theta}{2} \\
+    e^{i\varphi}\sin{\frac{\theta}{2}}
+\end{pmatrix}\]
+\[\bra{\psi}=\begin{pmatrix}
+    \cos{\frac{\theta}{2}} & e^{-i\varphi}\sin{\frac{\theta}{2}}
+\end{pmatrix}\]
+\[\hat{P}_\psi=\begin{pmatrix}
+    \cos{\frac{\theta}{2}} & e^{-i\varphi}\sin{\frac{\theta}{2}}
+\end{pmatrix}\begin{pmatrix}
+    \cos\frac{\theta}{2} \\
+    e^{i\varphi}\sin{\frac{\theta}{2}}
+\end{pmatrix}\]
+\[\hat{P}_\psi=\begin{pmatrix}
+    \cos^2\frac{\theta}{2} & e^{-i\varphi}\cos\frac{\theta}{2}\sin\frac{\theta}{2} \\
+     e^{i\varphi}\cos\frac{\theta}{2}\sin\frac{\theta}{2} & \sin^2\frac{\theta}{2}
+\end{pmatrix}\]
+\[\hat{P}_\psi=\frac{1}{2}(I+r_x\sigma_x+r_y\sigma_y+r_z\sigma_z)\]
+Where the values \(r_x,r_y,r_z\) come from the Bloch vector of the state \(\ket{\psi}\):;
+\[\underline{r}=(r_x,r_y,r_z)=(\sin\theta\cos\varphi,\,\sin\theta\sin\varphi,\,\cos\theta)\]
+So we can see that this projection operator projects the state onto its Bloch vector.
+\subsection*{Diagonalisation}
+Matrix diagonalisation is very important in quantum mechanics and it allows us to work with the eigenvalues of the operator which is helpful for solving problems. Eigenvalues and eigenvectors work in exactly the same way with operators and states as they do with matrices and vectors:
+\[\hat{A}\ket{v_k}=\lambda_k\ket{v_k}\]
+Where
+\begin{align*}
+    &\{\ket{v_k}\}\text{ - The eigenvectors of }\hat{A} \\
+    &\{\lambda_k\}\text{ - The eigenvalues of }\hat{A}
+\end{align*}
+Note that matrix diagonalisation is covered in more detail in linear algebra. For this module, notice that we can write the operator as:
+\[\hat{A}=\sum_k\lambda_k\ket{v_k}\bra{v_k}\]
+\[A=\begin{pmatrix}
+    \lambda_0 \\
+     & \lambda_1 \\
+     & & \ddots \\
+     & & & \lambda_{d-1}
+\end{pmatrix}\]
+The reason we might want to diagonalise like this is to calculate functions of the operator, for this we need functional calculus and to apply the general result:
+\[f(\hat{A})=\sum_kf(\lambda_k)\ket{v_k}\bra{v_k}\]
 \end{document}
