@@ -1023,5 +1023,138 @@ We are only looking for non-trivial solutions so:
 \[\det (A-\lambda I_n)=0\]
 We call \(P_A(\lambda)=\det(A-\lambda I_n)\in \mathbb{R}[\lambda]\) the characteristic polynomial of \(A\). If \(P_A\) has a root \(\lambda_1\), the multiplicity of \(\lambda_1\) is the number of times it appears as a root. If the multiplicity of an eigenvalue is \(s>1\) then we call \(s\) the algebraic multiplicity. For \(A\in M_{n,n}(\mathbb{R})\) with \(\lambda\) being an eigenvalue then we define the eigenspace of \(A\) corresponding to \(\lambda\) as:
 \[E_\lambda=\{v\in\mathbb{R}^n:Av=\lambda v\}=\ker(L_{A-\lambda I_n})\]
-This is a vector space and \(\dim E_\lambda\) is known as the geometric multiplicity of \(\lambda\).
+This is a vector space and \(\dim E_\lambda\) is known as the geometric multiplicity of \(\lambda\). Let \(\lambda\) be an eigenvalue for the matrix \(A\), then let \(s_\lambda\) denote the algebraic multiplicity of \(\lambda\). Then:
+\[\dim E_\lambda \leq s_k\]
+\subsection*{Diagonalisation of square matrices}
+Let \(A,B,P\in M_{n,n}(\mathbb{R})\), where \(P\) is invertible such that:
+\[B=P^{-1}AP\]
+Then we say that \(A\) is similar to \(B\). Note that being similar is an equivalence relation and that similar matrices share eigenvalues. A matrix is said to be diagonalisable if it is similar to a diagonal matrix.
+\subsubsection*{Example}
+Let:
+\[A=\begin{pmatrix}
+    2 & 3 \\
+    3 & -6
+\end{pmatrix}\in M_{2,2}(\mathbb{R})\]
+We know that two linearly independent eigenvectors of \(A\) are:
+\[v_1=\begin{pmatrix}
+    3 \\ 1
+\end{pmatrix},\qquad v_2=\begin{pmatrix}
+    1 \\ -3
+\end{pmatrix}\]
+Now let:
+\[P=\begin{pmatrix}
+    3 & 1 \\
+    1 & -3
+\end{pmatrix}\]
+Then:
+\[P^{-1}AP=\begin{pmatrix}
+    3 & 0 \\
+    0 & -7
+\end{pmatrix}\]
+Which is a diagonal matrix and so \(A\) is diagonalisable. Also notice that the eigenvalues of \(P^{-1}AP\) are exactly the eigenvalues of \(A\).
+\subsubsection*{Powers of diagonalisable matrices}
+Knowing that a matrix is diagonalisable is extremely powerful and especially useful for calculating large powers of matrices. Consider a matrix \(A\) and raising it to some large power \(N\), then if \(A\) is diagonalisable we know we can write:
+\[B^N=(P^{-1}A^NP)^N\]
+Which simplifies to:
+\[B^N=P^{-1}A^NP\]
+Which is very useful since \(B^N\) is easy to calculate as it is a diagonal matrix. We can then rearrange for \(A^N\).
+\subsubsection*{Differential equations}
+This method of diagonalisation is also very useful for providing a change of coordinates for differential equations to make them much simpler, you can then convert back at the end to get the general solution to the initial differential equations.
+\subsection*{The diagonalisation theorem}
+A matrix \(A\in M_{n,n}(\mathbb{R})\) is diagonalisable if and only if \(A\) has \(n\) linearly independent eigenvectors. In this case we can write an invertible matrix \(P\) such that each column is a linearly independent eigenvector of \(A\) and then the matrix \(\Lambda=P^{-1}AP\) is diagonal with the corresponding eigenvalues of \(A\).
+\subsubsection*{Differential equations example}
+Let \(x(t),y(t),z(t)\) satisfy the system of differential equations:
+\begin{align*}
+    &\df{}{t}x=2x \\
+    &\df{}{t}y=x+4y-z \\
+    &\df{}{t}z=-2x-4y+4z
+\end{align*}
+With boundary conditions \(x(0)=y(0)=z(0)=1\). Then we can express this system in matrix form as:
+\[\df{}{t}\begin{pmatrix}
+    x \\ y \\ z
+\end{pmatrix}=\begin{pmatrix}
+    2 & 0 & 0 \\
+    1 & 4 & -1 \\
+    -2 & 4 & 4
+\end{pmatrix}\begin{pmatrix}
+    x \\ y \\ z
+\end{pmatrix}\]
+Then see that \(A\) is diagonalisable with:
+\[P=\begin{pmatrix}
+    1 & -2 & 0 \\
+    0 & 1 & 1 \\
+    1 & 0 & -2
+\end{pmatrix}\]
+\[P^{-1}AP=\begin{pmatrix}
+    2 & 0 & 0 \\
+    0 & 2 & 0 \\
+    0 & 0 & 6
+\end{pmatrix}\]
+Define new functions \(u,v,w\) as:
+\[\begin{pmatrix}
+    u \\ v \\ w
+\end{pmatrix}= P^{-1}\begin{pmatrix}
+    x \\ y \\ z
+\end{pmatrix}\]
+Then:
+\[\df{}{t}\begin{pmatrix}
+    u \\ v \\ w
+\end{pmatrix}=P^{-1}AP\begin{pmatrix}
+    u \\ v \\w
+\end{pmatrix}=\begin{pmatrix}
+    2 & 0 & 0 \\
+    0 & 2 & 0 \\
+    0 & 0 & 6
+\end{pmatrix}\begin{pmatrix}
+    u \\ v \\w
+\end{pmatrix}\]
+This is equivlant to the system:
+\begin{align*}
+    &\df{}{t}u=2u \\
+    &\df{}{t}v= 2v \\
+    &\df{}{t}w=6w
+\end{align*}
+This system is easy to solve and then we can find boundary conditions:
+\[\begin{pmatrix}
+    u(0) \\
+    v(0) \\
+    w(0)
+\end{pmatrix}=P^{-1}\begin{pmatrix}
+    x(0) \\
+    y(0) \\
+    z(0)
+\end{pmatrix}=\begin{pmatrix}
+    2 \\ 1/2 \\ 1/2
+\end{pmatrix}\]
+Then we have:
+\begin{align*}
+    &u=2e^{2t} \\
+    &v=\frac{1}{2}e^{2t} \\
+    &w=\frac{1}{2}e^{6t}
+\end{align*}
+Then all we need to do know is convert back to the original system:
+\[\begin{pmatrix}
+    x \\ y \\ z
+\end{pmatrix}=P\begin{pmatrix}
+    u \\ v \\ w
+\end{pmatrix}=\begin{pmatrix}
+    1 & -2 & 0 \\
+    0 & 1 & 1 \\
+    1 & 0 & -2
+\end{pmatrix}\begin{pmatrix}
+    u \\ v \\ w
+\end{pmatrix}=\begin{pmatrix}
+    u-2v \\
+    v+w \\
+    u-2w
+\end{pmatrix}\]
+Therefore:
+\begin{align*}
+    &x=e^{2t}\\
+    &y=\frac{1}{2}e^{2t}+\frac{1}{2}e^{6t} \\
+    &z=2e^{2t}-e^{6t}
+\end{align*}
+\subsubsection*{Corollary of diagonalisation theorem}
+Let \(A\in M_{n,n}(\mathbb{R})\) be a diagonalisable matrix with eigenvalues \(\lambda_1,\lambda_2,...,\lambda_n\). Then:
+\[\det(A)=\lambda_1\lambda_2\cdots\lambda_n\]
 \end{document}
