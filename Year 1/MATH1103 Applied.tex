@@ -1407,4 +1407,60 @@ Note that matrix diagonalisation is covered in more detail in linear algebra. Fo
 \end{pmatrix}\]
 The reason we might want to diagonalise like this is to calculate functions of the operator, for this we need functional calculus and to apply the general result:
 \[f(\hat{A})=\sum_kf(\lambda_k)\ket{v_k}\bra{v_k}\]
+\subsection*{Postulate 3}
+Postulate 3 states: "The time evolution of an isolated quantum system is described by a unitary transformation of the state space. More precisely, the state \(\ket{\psi}\) at a given time \(t\) depends on the state at an initial time and an evolution operator \(\hat{U}\)"
+\[\ket{\psi(t)}=\hat{U}(t,t_0)\ket{\psi(t_0)}\]
+\subsubsection*{Unitary operators}
+A unitary operator is one such that:
+\[\hat{A}\hat{A^\dagger}=\hat{A^\dagger}\hat{A}=\hat{I}\]
+We require certain operators to have this property because we want the norm of the state to be preserved over time.
+\[\|\psi(t)\|=\braket{\psi(t)}{\psi(t)}\]
+\[=\bra{\psi(t_0)}\hat{U^\dagger}\hat{U}\ket{\psi(t_0)}\]
+\[=\braket{\psi(t_0)}{\psi(t_0)}\]
+\subsection*{Schroedinger's equation}
+Schroedinger's equation helps us encapsulate information about a quantum state at a future time based on what it is at an initial time.
+\[i\hbar\df{}{t}\ket{\psi(t)}=\hat{H}\ket{\psi(t)}\]
+Where \(\hat{H}\) is the hamiltonian operator (the "energy observable") of the system and \(\hbar=\frac{h}{2}\), the reduced Planck's constant. It is often convenient to give \(\hat{H}\) in its diagonal representation, which we know exists and is real because \(\hat{H}\) is self adjoint. From this we can write the eigenvalue equation of \(\hat{H}\):
+\[\hat{H}\ket{\varepsilon_k}=E_k\ket{\varepsilon_k}\]
+Where the values \(E_k\) are called the energy levels of \(\hat{H}\) and \(\ket{\varepsilon_k}\) are the energy eigenstates.
+\subsubsection*{Solving the Schroedinger equation}
+First rearrange the equation to examine it's form:
+\[\df{}{t}\ket{\psi(t)}=-\frac{i}{\hbar}\hat{H}\ket{\psi(t)}\]
+This is just a first order ODE for the state \(\ket{\psi(t)}\), we can try an exponential ansatz and plug in initial conditions to get:
+\[\ket{\psi(t)}=\exp\left[\frac{-i}{\hbar}\hat{H}(t-t_0)\right]\ket{\psi(t_0)}\]
+See how the form of this equation is the same as the one we initially gave, then we have an explicit form for our time-evolution operator. First we must consider what it means to raise \(e\) to our operator \(\hat{H}\), which we can do with functional calculus:
+\[f(\hat{H})=\sum_kf(E_k)\ket{\varepsilon_k}\bra{\varepsilon_k}\]
+Then just substitute:
+\[\hat{U}(t,t_0)=\sum_k\exp\left[\frac{-i}{\hbar}E_k(t-t_0)\right]\ket{\varepsilon_k}\bra{\varepsilon_k}\]
+Finally we plug this back into our original equation to see how the state evolves in time:
+\[\ket{\psi(t)}=\left(\sum_k\exp\left[\frac{-i}{\hbar}E_k(t-t_0)\right]\ket{\varepsilon_k}\bra{\varepsilon_k}\right)\ket{\psi(t_0)}\]
+\subsubsection*{Example}
+Start with an initial state \(\ket{\psi(0)}=\ket{+}=\frac{1}{\sqrt{2}}(\ket{0}+\ket{1})\), and the Hamiltonian:
+\[\hat{H}=\frac{\hbar}{2}\sigma_z=\frac{\hbar}{2}\begin{pmatrix}
+    1 & 0 \\
+    0 & -1
+\end{pmatrix}\]
+We want to find an expression for \(\ket{\psi(t)}\). The first step is diagonalising the hamiltonian although in this case that is already done.
+\[\hat{H}=\sum_kE_k\ket{\varepsilon_k}\bra{\varepsilon_k}\]
+\[=\frac{\hbar}{2}\ket{0}\bra{0}-\frac{\hbar}{2}\ket{1}\bra{1}\]
+Now we can construct the time evolution operator:
+\[\hat{U}(t,0)=\exp\left(-\frac{i}{\hbar}\hat{H}t\right)\]
+\[=\exp\left(-\frac{i}{\hbar}\frac{\hbar}{2}t\right)\ket{0}\bra{0}+\exp\left(\frac{i}{\hbar}\frac{\hbar}{2}t\right)\ket{1}\bra{1}\]
+\[=e^{-\frac{it}{2}}\ket{0}\bra{0}+e^{\frac{it}{2}}\ket{1}\bra{1}\]
+Now we can plug into our time evolution equation to find the form of a future state:
+\[\ket{\psi(t)}=\left(e^{-\frac{it}{2}}\ket{0}\bra{0}+e^{\frac{it}{2}}\ket{1}\bra{1}\right)\left(\frac{1}{\sqrt{2}}\ket{0}+\frac{1}{\sqrt{2}}\ket{1}\right)\]
+\[=\frac{1}{\sqrt{2}}\left(e^{-\frac{it}{2}}\ket{0}+e^{\frac{it}{2}}\ket{1}\right)\]
+Alternatively we could have calculated this using the matrix form and applying the exponential to the matrix:
+\[\hat{U}(t,0)=\begin{pmatrix}
+    e^{-it/2} & 0 \\
+    0 & e^{it/2}
+\end{pmatrix}\]
+In general we can express the initial state as a superposition of the energy eigenstates:
+\[\ket{\psi(0)}=\sum_jc_j\ket{\varepsilon_k}\]
+\[c_j=\braket{\varepsilon_k}{\psi(0)}\]
+Then:
+\[\ket{\psi(t)}=\sum_jc_je^{-\frac{i}{\hbar}E_kt}\ket{\varepsilon_k}\]
+A special case of this is when the initial state is already an eigenstate, then:
+\[\ket{\psi(t)}\equiv\ket{\psi(0)}\]
+and \(\ket{\psi(0)}\) is called a stationary state.
 \end{document}

@@ -1129,4 +1129,103 @@ So we wish to examine the distribution of \(S_3\):
 \end{table}
 \[P=(0.4)^3\times 14+3(0.4)^2(0.6)\times 7=2.912\]
 In this case we are expecting on average to turn a £\(2.91\) profit from a sale like this so we should take their offer.
+\section*{PGFs and Branching Processes}
+\subsection*{Definition and motivation}
+Let \(X\) be a discrete random variable taking values in \(\{0,1,2,...\}\). The probability generating function of \(X\) is denoted \(\phi_X\) and is a function of the real variable \(s\) defined by:
+\[\phi_X(s)=E[s^X]=\sum_{k=0}^\infty p_X(k)s^k\]
+for all values of \(s\) such that this sum is finite. Notice that this is necessarily defined for \(s\in[-1,1]\) since:
+\[\sum^\infty_{k=0} |p_X(k)s^k|\leq\sum^\infty_{k=0}p_X(k)=1\]
+PGF's are useful for studying the properties of random variables and stochastic processes.
+\subsubsection*{Example - Poisson random variable}
+Suppose \(X\sim \text{Po}(\lambda)\), then the pgf of \(X\) is given by:
+\[\phi_X(s)=E[s^X]=\sum^\infty_{k=0}p_X(s)s^k\]
+\[=\sum^\infty_{k=0}\exp(-\lambda)\frac{\lambda^k}{\lambda!}s^k\]
+\[=\exp(-\lambda)\sum^\infty_{k=0}\frac{(\lambda s)^k}{k!}\]
+\[=\exp(-\lambda)\exp(\lambda s)\]
+\[=\exp([s-1]\lambda)\]
+\subsection*{Moments of the pgf and special cases}
+Let \(\phi^{(n)}_X(s)\) denote the \(n^{th}\) derivative of \(\phi_X(s)\). Then:
+\[\phi^{(n)}_X(1)=E[X(X-1)(X-2)\cdots(X-n+1)]\]
+for \(n=1,2,\dots\). Notice that there are some special cases of this:
+\begin{itemize}
+    \item \(E[X]=\phi'_X(1)\)
+    \item \(\Var{X}=\phi''_X(1)+\phi'_X(1)-[\phi'_X(1)]^2\)
+\end{itemize}
+\subsection*{Calculating probabilities from PGFs}
+The pmf of a random variable \(X\) is uniquely determined by its pgf with:
+\[p_X(n)=\frac{\phi^{(n)}_X(0)}{n!}\]
+Alternatively and perhaps more usefully, \(p_X(n)\) is given by the coefficient of \(s^n\) in the Maclaurin expansion of \(\phi_X(s)\).
+\subsection*{Sums of random variables}
+Let \(X_1,X_2,\dots,X_n\) be independent random variables and:
+\[Z=X_1+X_2+\cdots+X_n\]
+then:
+\[\phi_Z(s)=\prod^n_{i=1}\phi_{X_i}(s)\]
+This is particularly useful for certain distributions such as the Poisson distribution with:
+\[X\sim \text{Po}(\lambda),\quad Y\sim\text{Po}(\mu)\]
+\[Z=X+Y\]
+\[Z\sim \text{Po}(\lambda+\mu)\]
+\subsection*{Branching processes}
+Branching processes help us answer predicting future questions such as:
+\begin{itemize}
+    \item What will the population of the UK be in 2100?
+    \item How likely is it that I will have a (great-great-....) grandson with my family name?
+    \item If we introduce a disease into a population how likely is it that it will take off?
+\end{itemize}
+Let \(X_n\) denote the number of individuals alive in the \(n^{th}\) generation of the branching process, where \(X_0\) denotes the initial starting size. We very often assume \(X_0=1\). The number of offspring an individual has is distributed according to a discrete offspring distribution \(Z\), independent of the offspring of other individuals. For \(n\geq1\):
+\[X_n|\{X_{n-1}=j\}\overset{D}{=}\sum^j_{i=1}Z_i\]
+Or equivalently:
+\[X_n=\begin{cases}
+    \sum^{X_n-1}_{i=1}Z_{n,i}& X_{n-1}>0 \\
+    0 & X_{n-1}=0
+\end{cases}\]
+Where \(Z_{n,i}\) is the number of offspring of the \(i^{th}\) member of the \((n-1)^{th}\) generation. A useful tool for exploring branching processes is pgfs. Let \(p_k=P(Z=k)\) be the probability an individual has \(k\) offspring and let \(\textbf{p}=(p_0,p_1,\dots)\). Now let:
+\[\mu=E[Z]=\sum^\infty_{k=0}kp_k\]
+The branching process is said to be,
+\begin{itemize}
+    \item Sub-critical if \(\mu<1\)
+    \item Critical if \(\mu=1\)\
+    \item Super-critical if \(\mu>1\)
+\end{itemize}
+\subsection*{Law of total expectation}
+Suppose that \(X\) and \(Y\) are two random variables in the same probability space and that \(E[X]\) is defined, then:
+\[E[X]=E[E[X\mid Y]]\]
+Suppose \(Y\) takes values on \(\{0,1,2,...\}\) then:
+\[E[X]=\sum^\infty_{n=0}E[X\mid Y=n]P[Y=n]\]
+Starting from \(X_0=1\), for \(n=1,2,...\)
+\[E[X_n]=\mu^n\]
+and immediate consequence of this is:
+\[E[X_n]=\mu^n\to\begin{cases}
+    \infty& \mu>1\text{ (Super-critical)} \\
+    1 & \mu=1 \text{ (Critical)} \\
+    0 & \mu<1 \text{ (Sub-critical)}
+\end{cases}\]
+as \(n\to\infty\).
+\subsubsection*{Progeny of a branching process}
+The total progeny, \(T\) of a branching process is the total number of individuals ever alive in the branching process:
+\[T=\sum^\infty_{j=1}X_j\]
+\[E[T]=\begin{cases}
+    \frac{1}{1-\mu} & \mu<1 \\
+    \infty & \mu\geq 1
+\end{cases}\]
+A branching process is said to go extinct if \(X_n=0\) for some \(n>0\) Note that once \(X_n=0\) then all \(X_{n+i}=0\) for any \(i\geq 0\). If \(p_0=P(Z=0)=0\) then it is not possible for the population to go extinct.
+\subsection*{PGFs and branching processes}
+For \(0\leq s\leq 1\), let \(\phi_Z(s)\) be the pgf of \(Z\). The extinction probability for a branching process with offspring distribution \(Z\) is the smallest non-negative solution in \(0\leq s\leq 1\) such that:
+\[s=\phi_Z(s)\]
+Furthermore, if \(\mu<1\) then we are certain that the population will go extinct at some point in the future. If \(\mu>1\) we are not guaranteed that the population will go extinct although it still can.
+\subsubsection*{Observations of extinction criteria}
+\begin{itemize}
+    \item \(\phi_Z(1)=1\) so \(s=1\) is always a solution.
+    \item \(\phi_Z(s)\) is a convex function and so there are at most 2 solutions.
+    \item \(\phi'_Z(1)=\mu\). There is a second solution if and only if \(\mu>1\).
+    \item \(\phi_Z(0)=p_0\)
+\end{itemize}
+For \(0\leq s\leq 1\), let \(\phi_T(s)=E[s^T]\), then:
+\[\phi_T(s)=s\phi_Z(\phi_T(s))\]
+\subsection*{Multiple individuals in the initial population}
+So far we have only considered cases where \(X_0=1\), however we are often interested in cases where \(X_0\) follows some distribution or is equal to some value other than 1. We calculate quantities of interest by conditioning on the size of the initial generation.
+\[E[X_n\mid X_0=x]=x\mu^n\]
+Hence by the law of total expectation:
+\[E[X_n]=E[E[X_n\mid X_0]]=E[X_0\mu^n]=\mu^nE[X_0]\]
+Let \(\phi_0(s)=E[s^{X_0}]\), the pgf of the size of the initial generation. Then the probability of extinction is given by:
+\[\phi_0(\gamma)=E[\gamma^{X_0}]=\sum^\infty_{j=0}\gamma^jP(X_0=j)\]
 \end{document}
