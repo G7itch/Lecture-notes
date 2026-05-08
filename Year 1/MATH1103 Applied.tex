@@ -1463,4 +1463,78 @@ Then:
 A special case of this is when the initial state is already an eigenstate, then:
 \[\ket{\psi(t)}\equiv\ket{\psi(0)}\]
 and \(\ket{\psi(0)}\) is called a stationary state.
+\subsection*{Postulate 4}
+Let \(\hat{A}\) be an observable on a state space \(\mathcal{H}\) of a quantum system with spectral decomposition \(\hat{A}=\sum_ka_k\hat{P}_k\) where \(\{a_k\}\) is the set of all eigenvalues of \(\hat{A}\) and \(\hat{P}_k\) is the projector on the eigenstate corresponding to the eigenvalue \(a_k\).
+\begin{enumerate}
+    \item The possible outcomes of a measurement of \(\hat{A}\) are \(\{a_k\}\).
+    \item The result of the measurement is random and the probability of the outcome \(a_m\) is:
+    \[P(a_m)=\bra{\psi}\hat{P}_m\ket{\psi}\]
+    Where \(\ket{\psi}\) is the state of the system immediately before measurement.
+    \item If the measurement outcome is \(a_m\), then the state of the system immediately after measurement is:
+    \[\ket{\psi'}=\frac{\hat{P}_m\ket{\psi}}{\sqrt{\bra{\psi}\hat{P}_m\ket{\psi}}}\]
+\end{enumerate}
+These rules are collectively known as the "Born rule".
+\subsubsection*{Random outcomes}
+The randomness of outcomes is what historically made quantum mechanics so difficult to grasp and why so many scientists of the past disliked it so much. We can predict the probability of achieving each outcome:
+\[P(a_m)=\bra{\psi}\,\hat{P}_m\ket{\psi}\]
+\[=\braket{\psi}{V_k}\braket{V_k}{\psi}\]
+\[=|\braket{V_k}{\psi}|^2\]
+\subsubsection*{Measurement collapse}
+Another quirk of quantum mechanics is that measurement affects the state of the system - this is an open problem in quantum mechanics known as the measurement problem. We know that if our outcome is \(a_m\) then the system state is:
+\[\ket{\psi}\overset{\text{Collapse}}{\longrightarrow}\frac{\hat{P_k}\ket{\psi}}{\sqrt{\bra{\psi}\,\hat{P}_k\ket{\psi}}}\]
+\[=\frac{\ket{V_k}\bra{V_k}\ket{\psi}}{|\braket{V_k}{\psi}|^2}=\frac{\braket{V_k}{\psi}}{|\braket{V_k}{\psi}|}\ket{V_k}\]
+The fraction in front of the \(\ket{V_k}\) is a global phase factor and so is generally irrelevant, then we have:
+\[\ket{\psi}\overset{\text{Measure }\hat{A}}{\longrightarrow}\text{Collapse}\longrightarrow\ket{V_k}\]
+\subsection*{Measurement example for qubits}
+Consider the quantum system: \(\mathcal{H}=\mathbb{C}^2\), with a generic quantum state:
+\[\ket{\psi}=c_0\ket{0}+c_1\ket{1}\]
+in the computational basis, with \(c_0,c_1\in \mathbb{C}\) and \(|c_0|^2+|c_1|^2=1\). Then consider measuring the Pauli-z matrix:
+\[\hat{\sigma}_z=\begin{pmatrix}
+    1 & 0 \\
+    0 & -1
+\end{pmatrix}=(1)\ket{0}\bra{0}+(-1)\ket{1}\bra{1}\]
+So the possible outcomes are \(\{1,-1\}\), with probabilities:
+\[P(1)=|\braket{0}{\psi}|^2=|c_0|^2\]
+\[P(-1)=|\braket{1}{\psi}|^2=|c_1|^2\]
+If we find outcome \(1\) then:
+\[\ket{\psi}\to \ket{0}\]
+If we find outcome \(-1\) then:
+\[\ket{\psi}\to\ket{1}\]
+\subsubsection*{Note on wording}
+Note that asking to find the probability of the outcome \(a_m\) is equivalent to asking to find the probability that the quantum system is in the state \(\ket{V_k}\). Notice that if we write the state \(\ket{\psi}\) in the eigenbasis of the observable we wish to measure then the probability is just equal to the modulus of the coefficient squared:
+\[\ket\psi=\sum_kc_k\ket{V_k}\]
+\[P(\ket{V_k})=|c_k|^2\]
+\subsection*{The transition from probability to statistics}
+To see how quantum mechanics reflects classical mechanics we need to employ the law of large numbers and make the switch from a probabilistic perspective to a statistical one. Once we make a measurement we ruin the experiment since the state is now aligned with the eigenvector so will result in the same result on every subsequent measurement. If we reset the experiment and repeat lots of times we expect the distribution of our outcomes to be related to the initial probability of each outcome, we also hope that these will go to a nice Gaussian curve as the number of experiments increases. These Gaussian curves will have a certain mean:
+\[\langle a\rangle\]
+and standard deviation:
+\[\Delta a\]
+Classical predications are verified using lots of experiments:
+\[\langle a\rangle \to E[\hat{A}]=\langle \hat{A}\rangle\]
+\[(\Delta^2 a)\to (\Delta^2\hat{A})=E[\hat{A}^2]-E[\hat{A}]^2\]
+\subsubsection*{Expectation value of observable}
+\[\langle\hat{A}\rangle=\sum_ka_kP(a_k)\]
+\[=\sum_ka_k\bra{\psi}\hat{P}_k\ket{\psi}\]
+\[=\bra{\psi}\sum_ka_k\hat{P}_k\ket{\psi}\]
+\[=\bra{\psi}\hat{A}\ket{\psi}\]
+Similarly for the variance:
+\[\Delta\hat{A}^2=\bra{\psi}\hat{A}^2\ket{\psi}-(\bra{\psi}\hat{A}\ket{\psi})^2\]
+\subsubsection*{Example}
+Consider finding the expectation of the Pauli-z matrix. Then:
+\[\langle\sigma_z\rangle =\bra{\psi} \sigma_z\ket{\psi}\]
+\[=\begin{pmatrix}
+    \bar{c}_0 & \bar{c}_1
+\end{pmatrix}\begin{pmatrix}
+    1 & 0 \\
+    0 & -1
+\end{pmatrix}\begin{pmatrix}
+    c_0 \\
+    c_1
+\end{pmatrix}\]
+\[=|c_0|^2-|c_1|^2\]
+\subsection*{Expectations of Pauli matrices}
+There is a very useful property that we have that lets us say that once we have a quantum state in Bloch vector form: \(\ket{\psi}\to\underline{r}=(r_x,r_y,r_z)\) we have that:
+\[\langle\sigma_x\rangle =r_x\]
+\[\langle \sigma_y\rangle= r_y\]
+\[\langle \sigma_z\rangle =r_z\]
 \end{document}

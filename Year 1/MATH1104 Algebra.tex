@@ -723,4 +723,18 @@ is lcm\((k,l)\). Now suppose \(k\) and \(l\) have no common factor, then there i
 \[\mathbb{Z}/kl\mathbb{Z}\cong\mathbb{Z}/k\mathbb{Z}\times\mathbb{Z}/l\mathbb{Z}\]
 given by:
 \[f([r]_{kl})=([r]_k,[r]_l)\]
+\section{Cosets}
+\subsection*{Lagrange's Theorem}
+Let \(G\) be a finite group and \(H\leqslant G\) a subgroup. Then:
+\[\text{ord}(H)\mid \text{ord}(G)\]
+\subsection*{Cosets}
+If \(H\leqslant G\) and \(g\in G\), then the set:
+\[gH:=\{gh:h\in H\}\]
+is called the left coset of \(H\) in \(G\). Similarly:
+\[Hg:=\{hg:h\in H\}\]
+is the right coset. Note that if \(x\in H\) then \(xh=H\) and every coset has the same number of elements as \(H\).
+\subsubsection*{Defining an equivalence relation}
+We can use cosets to define an equivalence relation on \(G\) by:
+\[x\sim y\iff xH=yH\]
+Because of this relation, the left cosets form a partition of \(G\).
 \end{document}
