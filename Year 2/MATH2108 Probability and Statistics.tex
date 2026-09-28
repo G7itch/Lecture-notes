@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    allcolors=black
+}
+\title{\textbf{MATH2108 Methods for Probability and Statistics Lecture Notes}}
+\author{Thomas Piercy}
+\date{\today{}}
+
+\newcommand{\df}[2]{\frac{\text{d}#1}{\text{d}#2}}
+\newcommand{\seq}[2]{(#1_#2)_{#2\in\mathbb{N}}}
+\newcommand{\pf}[2]{\frac{\partial #1}{\partial #2}}
+\begin{document}
+\maketitle
+\hrulefill
+\tableofcontents
+\newpage
+\setstretch{1.5}
+\section{Bivariate Probability Distributions}
+\subsection{Background}
+Recall from Year 1, the notion of random variables and the sample space \(\Omega\). Consider the random variable \(X\):
+\[X:\Omega\to S\]
+If \(S\) is countable then \(X\) is discrete. If \(S\) is uncountable then \(X\) is continuous. Considering the likelihood of each event in the sample space for a discrete random variable, gives the probability mass function. We say that this pmf defines the distribution. We can define the cumulative distribution function to assign meaning to the random variable:
+\[F_X:\mathbb{R}\to[0,1]\]
+\[F_X(x)=P[X\leq x],\ x\in\mathbb{R}\]
+If \(X\) is continuous, we can further define the probability density function:
+\[f_X(x)=\df{F_X(x)}{x}\]
+\[\implies F_x(x)=\int^x_{-\infty}f_X(x)\,\text{d}x\]
+Whilst CDFs can be defined for discrete variables, it is important that our outcomes in this case are ordinal. If they are not then there is no meaning to the CDF.
+\subsection{Bivariate Distributions}
+\subsubsection*{Definitions}
+Often, we wish to consider more than one variable at the same time. In these cases, the variables may be correlated. Rather than considering each variable separately, we would like to consider their joint probability distributions. At the beginning of this module we are only going to lok at bivariate probability distributions.
+\\
+Suppose \(X\) and \(Y\) are two random variables. Then the joint CDF of \(X\) and \(Y\) is:
+\[F_{X,Y}(x,y)=P[X\leq x,\, Y\leq y]\qquad x,y\in\mathbb{R}\]
+\[F_{X,Y}:\mathbb{R}^2\to [0,1]\]
+Suppose \(F_{X,Y}\) is a joint CDF, then if there exists a function \(f_{X,Y}\) such that:
+\[F_{X,Y}(x,y)=\int^y_{-\infty}\int^x_{-\infty}f_{X,Y}(u,v)\,\text{d}u\,\text{d}v\]
+Then \(f_{X,Y}\) is the joint PDF of \(X\) and \(Y\), with:
+\[f_{X,Y}=\pf{^2F_{X,Y}(x,y)}{x\partial y}\]
+A bivariate PDF is a surface over the \((x,y)\) plane. This means that calculated probabilities are volumes under the surface, analogous to in 1D where probabilities are areas under the curve.
+\subsubsection*{Conditions of existence}
+For a joint PDF to be valid it must satisfy the following conditions:
+\begin{itemize}
+    \item \(f_{X,Y}(x,y)\geq 0\quad \forall(x,y)\in\mathbb{R}^2\)
+    \item \(\int^\infty_{-\infty}\int^\infty_{-\infty}f_{X,Y}(u,v)\,\text{d}u\,\text{d}v=1\)
+    \item \(\forall\,C\subseteq\mathbb{R}^2:\)
+    \[P[(X,Y)\in C]=\iint_{(x,y)\in C}f_{X,Y}(x,y)\,\text{d}x\,\text{d}y\]
+\end{itemize}
+\subsection{Marginal Distributions}
+We can also consider \(X\) and \(Y\) from a joint PDF separately. We may only be interested in one of the variables but need to acknowledge its connection to the other. The marginal PDFs of \(X\) and \(Y\) for a bivariate probability distribution are defined as:
+\begin{align*}
+    &f_X(x)=\int^\infty_{-\infty}f_{X,Y}(x,y)\,\text{d}y\\
+    &f_Y(y)=\int^\infty_{-\infty}f_{X,Y}(x,y)\,\text{d}x
+\end{align*}
+Likewise:
+\begin{align*}
+    &F_X(x)=F_{X,Y}(x,\infty)\\
+    &F_Y(y)=F_{X,Y}(\infty,y)
+\end{align*}
+\subsubsection*{Example}
+\[f_{X,Y}(x,y)=\begin{cases}
+    e^{-x-y} & x>0,\, y>0\\
+    0 & \text{otherwise}
+\end{cases}\]
+Then:
+\[f_X(x)=\int^\infty_{0}e^{-x-y}\,\text{d}y\]
+\[=\lim_{t\to\infty}\int^t_0e^{-x-y}\,\text{d}y\]
+\[=\lim_{t\to\infty}\left[-e^{-x-y}\right]^t_0\]
+\[=\lim_{t\to\infty}\left(-e^{-x-t}+e^{-x}\right)\]
+\[=e^{-x}\]
+Hence:
+\[f_X(x)=\begin{cases}
+    e^{-x} & x>0\\
+    0& \text{otherwise}
+\end{cases}\]
+Due to symmetry, the same argument applies for the marginal PDF of \(Y\).
+\end{document}
