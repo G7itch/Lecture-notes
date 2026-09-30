@@ -12,6 +12,9 @@
 \newcommand{\df}[2]{\frac{\text{d}#1}{\text{d}#2}}
 \newcommand{\seq}[2]{(#1_#2)_{#2\in\mathbb{N}}}
 \newcommand{\pf}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\dive}[1]{\underline{\nabla}\cdot\underline{#1}}
+\newcommand{\grad}[1]{\underline{\nabla}#1}
+\newcommand{\curl}[1]{\underline{\nabla}\times \underline{#1}}
 \begin{document}
 \maketitle
 \hrulefill
@@ -37,6 +40,22 @@ You need to be comfortable with the following:
     \item Change of variables via the Jacobian and integral transforms
     \item Multiple coordinate systems in \(\mathbb{R}^2\) and \(\mathbb{R}^3\)
 \end{enumerate}
+\subsubsection{Integral transform example}
+Find the area of the region \(R\) defined by:
+\[x\leq y^2\leq 2x,\qquad y\leq x^2\leq 2y\]
+Let \(u=x^2/y\) and \(v=y^2/x\). Then:
+\begin{align*}
+    &y^2=2x&\implies &v=2 \\
+    &y^2=x&\implies &v=1 \\
+    &y=x^2&\implies&u=1 \\
+    &y=x^2/2&\implies&u=2
+\end{align*}
+We know that:
+\[\iint_R\,\text{d}x\,\text{d}y=\iint_{S}|\underline{\underline{J}}|\,\text{d}u\,\text{d}v\]
+Where \(|\underline{\underline{J}}|\) is the determinant of the Jacobian matrix. However it is often easier to work with \(|\underline{\underline{J}}^{-1}|\), where we have the result:
+\[|\underline{\underline{J}}^{-1}|=\left|\pf{(u,v)}{(x,y)}\right|=\left|\begin{pmatrix}
+    \pf{u}{x} & \pf{u}{y} \\ \pf{v}{x} & \pf{v}{y}
+\end{pmatrix}\right|=|\underline{\underline{J}}|^{-1}\]
 \subsection{Other Coordinate Systems}
 Below are the coordinate systems you should be familiar with and able to use for this module:
 \begin{table}[H]
@@ -51,4 +70,79 @@ Below are the coordinate systems you should be familiar with and able to use for
     \end{tabular}
     \caption{Different coordinate systems in \(\mathbb{R}^2\) and \(\mathbb{R}^3\)}
 \end{table}
+\subsection{Scalar and Vector Fields}
+In an applied maths setting, fields can be thought of as functions of position. If the resulting quantity is a scalar we have a scalar field and similarly with a vector. An example might be a terrain map, consider the height \(h=h(x,y)\) above a terrain. This is clearly a scalar field and is denoted as such. Now consider the slope of all points on the terrain:
+\[\underline{s}=\underline{s}(x,y)=\left(\pf{h}{x},\,\pf{h}{y}\right)\]
+This is a vector field and is denoted with an underline to show that. We can obviously think of examples for many dimensions, but this module primarily focuses on \(\mathbb{R}^2\) and \(\mathbb{R}^3\).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/XYvectorfield (1).png}
+    \caption{The vector field \((x,y)\).}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/minusYXvectorfield.png}
+    \caption{The vector field \((-y,x)\), scaled for clarity.}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{ZXYvectorfield.png}
+    \caption{The vector field \((z,x,y)\). Complex fields can be described simply.}
+\end{figure}
+\subsection{Gradient of a Scalar Field}
+Consider a scalar field \(f(x,y,z)\). It's gradient is denoted \(\underline{\nabla}f\) and is the vector-valued functions:
+\[\grad{f}=\left(\pf{f}{x},\,\pf{f}{y},\,\pf{f}{z}\right)\]
+It's direction is that of the fastest increase of \(f\) and its magnitude is the size of this increase. It is orthogonal to the level surfaces of \(f\). Because it is a vector, we can project it in any direction we please and we call this the directional derivative:
+\[\underline{\hat{u}}\cdot\grad{f}\]
+Physically, this represents a normal vector to the curve/surface etc, which can then be normalised:
+\[\underline{\hat{n}}=\frac{\grad{f}}{\|\grad{f}\|}\]
+It is convenient to consider the gradient of \(f\) as the action of an "operator" \(\grad{}\) onto a field \(f\):
+\[\grad{}=\left(\pf{}{x},\,\pf{}{y}\,,\pf{}{z}\right)=\underline{i}\pf{}{x}+\underline{j}\pf{}{y}+\underline{k}\pf{}{z}\]
+\subsubsection{Divergence of a vector field}
+We can also apply the gradient operator to a vector field through means of a dot product. Consider the vector field \(\underline{A}=(A_x,A_y,A_z)\) and then construct:
+\[\dive{A}=\pf{A_x}{x}+\pf{A_y}{y}+\pf{A_z}{z}=\text{div} \underline{A}\]
+The divergence of a vector field \(A\) describes flux through a closed surface. It is also a vector field which shows if the underlying field is expanding (a positive div) or contracting (a negative div). The field is called solenoidal in a region if it's divergence there is exactly 0.
+\subsubsection*{Worked example 1}
+Find \(\underline{\hat{n}}\) to \(f=x^2+y^2-z\) at \((1,1,2)\).
+\[\grad{f}=(2x,2y,-1)\]
+\[\grad{f}(1,1,2)=(2,2,-1)\]
+\[\|\grad{f}\|=3\]
+\[\underline{\hat{n}}=\frac{\grad{f}}{\|\grad{f}\|}=\frac{1}{3}(2,2,-1)\]
+\subsubsection*{Worked example 2}
+Find the directional derivative at the origin of \(f=2x+y+z^2\) in the direction \((1,1,1)\)
+\[\underline{u}=(1,1,1)\implies \underline{\hat{u}}=\frac{1}{\sqrt{3}}(1,1,1)\]
+\[\underline{\hat{u}}\cdot\grad{f}=\frac{1}{\sqrt{3}}(1,\,1,\,1)\cdot(2,\,1,\,2z)\]
+\[\underline{\hat{u}}\cdot\grad{f}=\frac{2}{\sqrt{3}}+\frac{1}{\sqrt{3}}+\frac{2z}{\sqrt{3}}=\frac{2z+3}{\sqrt3}\]
+Hence at the origin, the directional derivative is:
+\[\frac{3}{\sqrt{3}}\]
+\subsubsection{Curl of a vector field}
+Exactly as we did with the scalar product, we can take a cross product of the gradient operator and a vector field \(\underline{A}=(A_x,A_y,A_z)\). This works exactly as you would expect although with some horrendous notation abuse:
+\[\curl{A}=\det\begin{pmatrix}
+    \underline{i} & \underline{j} & \underline{k} \\
+    \partial x & \partial y & \partial z \\
+    A_x & A_y & A_z
+\end{pmatrix}\]
+\[=\underline{i}\left(\pf{A_z}{y}-\pf{A_y}{z}\right)-\underline{j}\left(\pf{A_z}{x}-\pf{A_x}{z}\right)+\underline{k}\left(\pf{A_y}{x}-\pf{A_x}{y}\right)\]
+The curl describes the "rotation" or "twisting" of the underlying vector field. A field is called irrotational if it's curl is \(0\).
+\subsubsection*{Worked Example}
+Let \(\underline{A}=(x,y)\). Then:
+\[\curl{A}=\det\begin{pmatrix}
+    \underline{i} & \underline{j} & \underline{k} \\
+    \partial x& \partial y & \partial z \\
+    x & y & 0
+\end{pmatrix}= \underline{i}(0-0)-\underline{j}(0-0)+\underline{k}(0-0)=\underline{0}\]
+\subsection{The Laplacian}
+Consider taking the divergence of the gradient of a vector field. This is a perfectly mathematically acceptable operation and in fact has some important uses.:
+\[\dive{\nabla}f=\pf{^2f}{x^2}+\pf{^2f}{y^2}+\pf{^2f}{z^2}=\nabla^2f\]
+This is a scalar field! We can consider \(\nabla^2\) as an operator in it's own right and apply it to vector fields. This is an interesting property because it means that the operator can be used on both scalars and vectors in a very similar way.
+\begin{align*}
+    &\underline{u}=(u_1,u_2,u_3,\dots) \\
+    &\nabla^2\underline{u}=(\nabla^2u_1,\,\nabla^2u_2,\,\nabla^2u_3,\dots)
+\end{align*}
+Where each component is the Laplacian. The physical meaning of the Laplacian relates to diffusion - consider the divergence being a measure of if the vector field is expanding, and the Laplacian as a measure of how quickly it is expanding. The Laplacian is very important and comes up all the time: In particular it is important for diffusion equations such as the heat equation.
+\[\pf{u}{t}=D\pf{^2u}{x^2}\]
+\begin{align*}
+    &u(x,0)=f(x):=\text{hat function} \\
+    &u(0,t)=u(L,t)=0
+\end{align*}
 \end{document}
