@@ -109,4 +109,72 @@ If \(p(x),\, q(x),\, r(x)\) are all analytic at \(x=x_0\), then there exists a u
 For example:
 \[x^2y''+4xy'+2y=0\]
 Can not satisfy any initial conditions at \(x=0\), since \(p(x)=4/x\) is not analytic at \(x=0\). We can know this without even having to solve the equation, which can be very useful when dealing with complex ODEs. That isn't to say that the ODE doesn't have a general solution - it very well might. It is just that the general solution cannot also solve an IVP at certain points if non-analytical.
+\subsubsection{Fundamental set of solutions}
+Consider the equation:
+\[y''(x)+p(x)y'(x)+q(x)y=0\]
+The fundamental set of solutions links the initial conditions \(y(x_0)=A,\ y'(x_0)=B\) to the guaranteed two solutions \(y_1(x)\) and \(y_2(x)\). The FSS have the property that:
+\begin{align*}
+    &y_1(x_0)=1 & y_1'(x_0)=0 \\
+    &y_2(x_0)=0 & y_2'(x_0)=1
+\end{align*}
+Notice that this forces the Wronskian into an identity matrix. In particular this maps the IVP solution to the above equation:
+\[y(x)=Ay_1(x)+By_2(x)\]
+However note that this only applies to initial condition problems and not boundary condition problems which have their own set of methods for solving.
+\subsection{Solving constant-coefficient homogeneous 2nd order ODEs}
+Exactly the same as in Year 1, we take the equation:
+\[y''+p(x)y'+q(x)y=0\]
+With:
+\[p(x)=\frac{b}{a},\ q(x)=\frac{c}{a}\]
+Then:
+\[ay''+by'+c=0\]
+We use the ansatz \(y=e^{rx}\) where \(r\) is some constant. After substitution this leave us with:
+\[e^{rx}(ar^2+br+c)=0\]
+Which in turn forces the bracket to be \(0\) and this is known as our auxiliary equation. We have \(r_+\) and \(r_-\) from solving the quadratic equation although we might find it easier  to leave in the form \(r=\alpha+\beta\) where \(\alpha=\frac{-b}{2a}\) and \(\beta=\frac{\sqrt{b^2-4ac}}{2a}\).
+\subsubsection*{Case 1: \(\Delta>0\)}
+Here we have \(r_{\pm}\in\mathbb{R}\) and \(r_+\ne r_-\). We are left with the general solution:
+\[y(x)=Ae^{r_+x}+Be^{r_-x}=e^{\alpha x}[C\sinh{(\beta x)}+D\cosh{(\beta x)}]\]
+\subsubsection*{Case 2: \(\Delta=0\implies\beta=0\)}
+\[y(x)=Ae^{\alpha x}+Bxe^{\alpha x}\]
+\subsubsection*{Case 3: \(\Delta<0\implies\beta=i\gamma\)}
+\[y(x)=e^{\alpha x}[Ae^{i\gamma x}+Be^{-i\gamma x}]=e^{\alpha x}[C\sin{(\gamma x)}+D\cos{(\gamma x)}]\]
+\subsection{Change of Variables}
+The idea behind a change of variables is that we compute \(y(x)\) via an intermediary \(u(w(x))=u(w)\), where \(w\) is a given function. To perform the change, we need to know some derivatives and we can get these from chain and product rule applications. In the below working, a dotted derivative means a derivative with respect to \(w\) and a primed derivative means a derivative with respect to \(x\):
+\[\df{u}{x}=\df{u}{w}\df{w}{x}=\dot{u}\cdot w'(x)\]
+\[\df{^2u}{x^2}=\df{}{x}\left(\df{u}{x}\right)=\df{}{x}(\dot{u})w'(x)+\dot{u}w''(x)\]
+\[=\ddot{u}\cdot (w'(x))^2+\dot{u}\cdot w''(x)\]
+You need to memorise these equations, they are vital to the change of variables method and this module. When performing the change of variables, essentially just substitute \(y\) with \(u\) and the derivatives we calculated. This turns the ODE into another ODE in terms of \(u\).
+\subsubsection*{Example}
+Using \(w=x^2\), solve \(xy''(x)-y'(x)+4x^3y=0\).
+\begin{align*}
+    &w'(x)=2x \\
+    &w''(x)=2
+\end{align*}
+\[x\cdot[4x^2\cdot\ddot{u}+2\dot{u}]-[2x\cdot\dot{u}]+4x^3u=0\]
+This simplifies down to:
+\[4x^3(\ddot{u}+u)=0\]
+But since we want our solution to be valid for all \(x\), we are required to make the bracket \(0\). This is just solving a new ODE in terms of \(u\). Then:
+\[u(w)=C\sin(w)+D\cos(w)\implies y=C\sin(x^2)+D\cos(x^2)\]
+\subsection{Euler Equations}
+The next best thing after constant-coefficient ODEs are Euler equations. These also provide an auxiliary equation following an ansatz but it is different to the constant coefficient case. We need to be careful to state both our auxiliary equation and our ansatz that got us there in an exam. An Euler equation takes the form:
+\[ax^2y''(x)+bxy'(x)+cy=0\]
+with \(a,b,c\in\mathbb{R}\). Our ansatz is:
+\begin{align*}
+    &y=x^r \\
+    &y'=rx^{r-1} \\
+    &y''=r(r-1)x^{r-2}
+\end{align*}
+Substituting in gets us:
+\[x^r[ar(r-1)+br+c]=0\]
+Notice that the auxiliary equation is still a quadratic, but it is a different quadratic to before. Once again we have solutions of the form \(r=\alpha+\beta\) with:
+\begin{align*}
+    &\alpha=\frac{a-b}{2a}, & \beta=\frac{\sqrt{(b-a)^2-4ac}}{2a}
+\end{align*}
+Because we use the discriminant quite a lot, we can shorthand it to \(\Delta\).
+\subsubsection*{Case 1: \(\Delta>0\)}
+\[y(x)=Ax^{r_+}+Bx^{r_-}\]
+\subsubsection*{Case 2: \(\Delta=0\)}
+\[y(x)=x^r[A+B\log{x}]\]
+\subsubsection*{Case 3: \(\Delta<0\implies \beta=i\gamma\)}
+\[y(x)=x^\alpha[Ax^{i\gamma}+Bx^{-i\gamma}]=x^{\alpha}[A\sin{(\gamma\log x)+B\cos{(\gamma \log x)}}]\]
+Notice that the change of variables \(w=\log x\) is sufficient to turn an Euler equation into a constant-coefficient ODE.
 \end{document}
