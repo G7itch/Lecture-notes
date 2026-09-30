@@ -8,6 +8,7 @@
 \title{\textbf{MATH2104 Methods for Differential Equations Lecture Notes}}
 \author{Thomas Piercy}
 \date{\today{}}
+\setcounter{section}{-1}
 
 \newcommand{\df}[2]{\frac{\text{d}#1}{\text{d}#2}}
 \newcommand{\seq}[2]{(#1_#2)_{#2\in\mathbb{N}}}
@@ -18,5 +19,94 @@
 \tableofcontents
 \newpage
 \setstretch{1.5}
-
+\section{Key Module Information}
+\begin{itemize}
+    \item The exam questions in this module are often inspired by the questions in the additional reading section of the module syllabus. They are also taken from the problem sheets (sometimes without alteration).
+    \item This module will be heavily affected by strike action, so use the full lecture notes to keep up to date.
+    \item On the problem sheets, difficulty 2 questions are the same difficulty and detail as exam questions. Difficulty 3 questions are for further understanding of the material.
+\end{itemize}
+\section{Introduction to 2\textsuperscript{nd} Order ODEs}
+\subsection{Background}
+A differential equation (DE) is an equation involving derivatives. For example:
+\begin{align*}
+    &y''(x)+y(x)=0 && \text{(ODE)}\\
+    &\pf{u}{t}+\pf{u}{x}=0 && \text{(PDE)} \\
+    &u_t+u_x=0 && \text{(PDE)}
+\end{align*}
+The order of a DE is the highest derivative. This tells you the style and method for solving the equation.
+\begin{align*}
+    u_t=u_{xx} && \text{(2nd order PDE)}
+\end{align*}
+A DE is linear if the dependant variable and its derivatives only appear in a linear fashion. For example, Airy's equation:
+\[y''-xy=0\]
+Is linear. Most of this module only deals with linear ODEs. A DE is homogeneous if all terms in the DE involve the dependant variable (and/or its derivatives). Otherwise it is inhomogeneous.
+\begin{align*}
+    &y''+y=xy' && \text{homogeneous} \\
+    &u_{tt}=u_{xx}+e^{-t} && \text{inhomogeneous}
+\end{align*}
+Homogeneity also determines the method used to solve the DE.
+\subsection{First Order ODEs}
+First order ODEs are of the form:
+\[y'(x)=f(x,y)\]
+The form of \(f(x,y)\) gives us the solution methods:
+\begin{itemize}
+    \item Separable: \(f(x,y)=g(x)h(y)\), solve via integration.
+    \item Linear:
+    \begin{enumerate}
+        \item Transform into canonical form: \(y'+p(x)y=q(x)\).
+        \item Calculate integrating factor: \(r(x)=\exp(\int p(x)\,\text{d}x)\)
+        \item Multiply canonical ODE by integrating factor.
+        \item Notice that \((yr)'=y'\cdot r+y\cdot r\cdot p(x)\).
+        \item \([y(x)r(x)]'=q(x)r(x)\)
+        \item \(y(x)r(x)=\int q(x)r(x)\,\text{d}x\;+c\)
+    \end{enumerate}
+\end{itemize}
+\subsubsection*{Example}
+\[xy'-y=x^2\sin{x}\]
+\[y'-\frac{1}{x}=x\sin{x}\]
+\[r(x)=\exp{\left(\int -\frac{1}{x}\,\text{d}x\right)}\]
+\[r(x)=x^{-1}\]
+\[\left(\frac{y}{x}\right)'=\sin{x}\]
+\[\frac{1}{x}y=-\cos{x}+c\]
+\[y=x(c-\cos{x})\]
+\subsection{Second Order Linear ODEs}
+These equations have canonical form:
+\[y''+p(x)y'+q(x)y=r(x)\]
+There is no general method for solving 2nd order linear ODEs but we do know that a general solution would be compromised of two terms: A homogeneous component and a particular solution.
+\[y_g(x)=y_h(x)+Y(x)\]
+Where \(y_h(x)\) satisfies: \(y_h''+p(x)y_h'+q(x)y_h=0\) and we can express \(y_h\) in the form:
+\[y_h=Ay_1(x)+By_2(x)\]
+We can do this because of the linearity. What this means is that given two solutions that are "distinct enough" we can generate the entire class of solutions. Formally, "distinct enough" requires that the two solutions be linearly independent:
+\[c_1y_1(x)+c_2y_2(x)=0\iff c_1,c_2=0\]
+Linear independence also means that \(y_h\equiv 0\) is never included as one of the distinct solutions to the equation (since this gives us no information anyway).
+\subsubsection{The Wronskian}
+The Wronskian, \(W(y_1,y_2)\) in 2D, is defined as:
+\[W(x)=W(y_1,y_2)=\det\begin{pmatrix}
+    y_1(x) & y_2(x) \\
+    y_1'(x) & y_2'(x)
+\end{pmatrix}\]
+Notice that the order of the solutions does matter generally. It is important to remember which solution is which. If the Wronskian is non-zero, then the two solutions are linearly independant at a given point.
+\subsubsection{Analytic Functions (Applied Def)}
+A function \(f(x)\) is analytic at \(x=x_0\) if it can be expressed as a Taylor series at \(x=x_0\):
+\[f(x)=\sum^\infty_{n=0}a_n\cdot(x-x_0)^n\]
+Where:
+\[a_n=\frac{1}{n!}\cdot\lim_{x\to x_0}\df{^nf}{x^n}\]
+Some key examples to remember are:
+\begin{itemize}
+    \item Exponential, sinusoidal, and polynomial functions are analytic everywhere.
+    \item Irreducible rational functions are analytic everywhere except at roots (to avoid division by 0).
+    \item The rational functions \(x^q,\ q\notin \mathbb{N}\cup \{0\}\) are analytic for all \(x>0\) but not for \(x=0\). Similarly \(x^q\log(x)\) has this property.
+    \item Addition, multiplication, and composition of analytic functions is also analytic. It is possible (but not guaranteed) that analytic and non-analytic functions can combine to an analytic function. e.g \(\sin(x)/x\).
+\end{itemize}
+\subsubsection{Existence and Uniqueness}
+Consider a DE in canonical form:
+\[y''+p(x)y'+q(x)y=r(x)\]
+If \(p(x),\, q(x),\, r(x)\) are all analytic at \(x=x_0\), then there exists a unique solution \(y(x)\) satisfying the initial conditions:
+\begin{align*}
+    &y(x_0)=a \\
+    &y'(x_0)=b
+\end{align*}
+For example:
+\[x^2y''+4xy'+2y=0\]
+Can not satisfy any initial conditions at \(x=0\), since \(p(x)=4/x\) is not analytic at \(x=0\). We can know this without even having to solve the equation, which can be very useful when dealing with complex ODEs. That isn't to say that the ODE doesn't have a general solution - it very well might. It is just that the general solution cannot also solve an IVP at certain points if non-analytical.
 \end{document}

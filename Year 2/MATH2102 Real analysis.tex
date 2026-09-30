@@ -18,5 +18,25 @@
 \tableofcontents
 \newpage
 \setstretch{1.5}
-
+\section{Sequences, series, and limits}
+\subsection{Sequence Convergence Definition}
+A sequence \(\seq{a}{n}\) is said to converge to a limit \(L\), if \(\forall\,\varepsilon>0\) there exists an \(N\in\mathbb{N}\) such that \(\forall\,n\in\mathbb{N}\) with \(n\geq N\) there holds: 
+\[|a_n-L|<\varepsilon\]
+We write \(a_n\to L\) as \(n\to \infty\) or \(\lim_{n\to\infty}a_n=L\)
+\subsubsection*{Example}
+\[a_n=\frac{1}{\sqrt{n}}\]
+We want to show \(a_n\to 0\) as \(n\to\infty\). Let \(\varepsilon>0\). Define \(N=\lfloor \frac{1}{\varepsilon^2}\rfloor+1\). Then for \(n\geq N\):
+\[|a_n-0|=\frac{1}{\sqrt{n}}\leq\frac{1}{\sqrt{N}}<\varepsilon\]
+\[\blacksquare\]
+\subsubsection{Convergence to \(\infty\)}
+A sequence \(\seq{a}{n}\) converges to \(\infty\) if \(\forall K\in\mathbb{R}\) there exists \(N\in\mathbb{N}\) such that \(\forall n\geq N\) there holds \(a_n>K\). We write \(a_n\to\infty\) as \(n\to\infty\).
+\subsection{Convergence of Reciprocals}
+Let \(\seq{a}{n}\) be a sequence. If \(a_n>0,\ \forall n\in\mathbb{N}\), then \(a_n\to 0\iff \frac{1}{a_n}\to\infty\) as \(n\to\infty\).
+\subsection{Algebra of Limits}
+Similar to Core Mathematics in Year 1, we will make great use of algebra of limits in problem solving. A quick recap is that for sequences \(\seq{a}{n}\) and \(\seq{b}{n}\) with \(a_n\to a\) and \(b_n\to b\) as \(n\to \infty\) then we have the results:
+\begin{itemize}
+    \item \(a_n+b_n\to a+b\)
+    \item \((a_n)(b_n)\to ab\)
+    \item \(\frac{1}{a_n}\to\frac{1}{a}\) subject to some conditions: namely \(a_n\ne 0\) for all \(n\geq N\in\mathbb{N}\).
+\end{itemize}
 \end{document}
