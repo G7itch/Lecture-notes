@@ -177,4 +177,66 @@ Because we use the discriminant quite a lot, we can shorthand it to \(\Delta\).
 \subsubsection*{Case 3: \(\Delta<0\implies \beta=i\gamma\)}
 \[y(x)=x^\alpha[Ax^{i\gamma}+Bx^{-i\gamma}]=x^{\alpha}[A\sin{(\gamma\log x)+B\cos{(\gamma \log x)}}]\]
 Notice that the change of variables \(w=\log x\) is sufficient to turn an Euler equation into a constant-coefficient ODE.
+\subsection{Reduction of Order}
+Given one solution, \(y_1(x)\) that solves:
+\[y''+p(x)y'+q(x)y=0\]
+We ca find a second linearly independent solution:
+\[y_2(x)=u(x)\cdot y_1(x)\]
+Substituting this into our original ODE gives us:
+\[y''_1u+2y_1'u'+y_1u''+p(x)[y_1'u+y_1u']+q(x)\cdot y_1u=0\]
+\[\implies y_1u''+u'[2y_1'+p(x)y_1]+u[y''_1+p(x)y'_1+qy_1]=0\]
+Notice how we have a copy of our original ODE in canonical form, except with the function \(y_1(x)\). We know this function solves the ODE so we can substitute the right-hand side into our expression to clean it up.
+\[y_1u''+u'[2y_1'+p(x)y_1]=0\]
+Let \(v=u'\).
+\[y_1v'+v[2y_1'+p(x)y_1]=0\]
+Now notice that we have reduced the equation to a first order ODE. We need this ODE to be in canonical form and then we can use the integrating factor method to solve it.
+\[v'+v\left[\frac{2y_1'}{y_1}+p(x)\right]\]
+\begin{align*}
+    r(x)&=\exp\left(\int\frac{2y_1'}{y_1}+p(x)\,\text{d}x\right) \\
+    &=\exp\left(2\int\frac{y_1'}{y_1}\,\text{d}x+\int p(x)\,\text{d}x\right) \\
+    &=\exp\left(2\log(y_1)+\int p(x)\,\text{d}x\right) \\
+    &= y_1^2\exp\left(\int p(x)\,\text{d}x\right)
+\end{align*}
+Then multiplying through and integrating gets us:
+\[v(x)=u'(x)=\frac{C}{r(x)}=\frac{C}{y_1^2}\left(-\int p(x)\,\text{d}x\right)\]
+And now we have an explicit formula for \(u'(x)\) which means that integrating this gets us our helper function \(u(x)\) which allows us to work out the second solution.
+\[y_2(x)=u(x)\cdot y_1(x)\]
+\subsubsection*{Example, Euler equation}
+Consider the Euler equation:
+\[x^2y''+x(1-2m)y'+m^2y=0\]
+We use the \(x^r\) ansatz which leaves us with:
+\[r(r-1)+r(1-2m)+m^2=0\implies r=m\]
+So we have \(y_1(x)=x^m\). We can use reduction of order to find the second solution: Let \(y_2(x)=u(x)\cdot y_1(x)\).
+\[u'(x)=\frac{C}{x^{2m}}\exp{\left(-\int \frac{1-2m}{x}\,\text{d} x\right)}\]
+\[u'(x)=\frac{C}{x^{2m}}\exp((2m-1)\log(x))\]
+\[u'(x)=\frac{C}{x^{2m}}x^{2m-1}=\frac{C}{x}\]
+\[u'(x)=\frac{C}{x}\implies u(x)=C\log x\]
+Then \(y_2(x)=C\cdot x^m\log(x)\). Note that we do not need to introduce a second constant of integration here due to linearity.
+\subsection{Variation of Parameters}
+You may be wondering how to deal with inhomogeneous ODEs. For the ODE in canonical form:
+\[y''+p(x)y'+q(x)y=r(x)\]
+and given \(y_1(x), y_2(x)\) we can solve for a single particular solution that satisfies the inhomogeneity.
+\[Y(x)=u_1(x)y_1(x)+u_2(x)y_2(x)\]
+Using the general product rule we get:
+\begin{align*}
+    &[u_1''y_1+2u_1'y_1'+u_1y_1''+u_2''y_2+2u_2'y_2'+u_2y_2'']\\
+    &+p(x)[u_1'y_1+u_1y_1'+u_2'y_2+u_2y_2']\\
+    &+ q(x)[u_1y_1+u_2y_2]\\
+    &=r(x)
+\end{align*}
+This simplifies down to something also quite long and horrible but what is key is that we have one equation of two unknowns. Whilst in this undetermined form and with us being able to freely choose \(u_1\) and \(u_2\) we can impose our own additional condition to make the ODE easier to solve. In most cases we set:
+\[u_1'y_1+u_2'y_2=0\]
+so to remove the \(q(x)\) term in the ODE. This equation also provides us the differential equation:
+\[(u_1'y_1+u_2'y_2)'=0\]
+Which allows us to simplify our long and horrible ODE into a set of linear equations.
+\[\begin{cases}
+    u_1'y_1'+u_2'y_2'=r(x) \\
+    u_1'y_1+u_2'y_2=0
+\end{cases}\]
+Solving this system gives us:
+\[u'_1(x)[y_1y_2'-y_1'y_2]=-y_2(x)r(x)\]
+\[\implies u_1=-\int\frac{y_2(x)r(x)}{W(y_1,y_2)}\,\text{d}x\]
+Similarly we can work out \(u_2\). Finally we can substitute these functions back in to our definition of the particular solution \(Y(x)\) and we get:
+\[Y(x)=-y_1(x)\left[\int\frac{y_2(x)r(x)}{W(y_1,y_2)}\,\text{d}x\right]+y_2(x)\left[\int\frac{y_1(x)r(x)}{W(y_1,y_2)}\,\text{d}x\right]\]
+This, mercifully, is on the formula sheet.
 \end{document}

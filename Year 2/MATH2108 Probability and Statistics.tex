@@ -77,4 +77,70 @@ Hence:
     0& \text{otherwise}
 \end{cases}\]
 Due to symmetry, the same argument applies for the marginal PDF of \(Y\).
+\subsection{Functions of \(X\) and \(Y\)}
+Often we will have a function of random variables, for example:
+\[Z=g(X,Y)\]
+Where \(X\) and \(Y\) have the joint pdf \(f_{X,Y}(x,y)\). In this case we may wish to determine the CDF of this function:
+\[F_{Z}(z)=P[Z\leq z]=\iint_{\{(x,y):\; g(x.y)\leq z\}}f_{X,Y}(x,y)\,\text{d}x\,\text{d}y\]
+Note that this integral is sometimes very difficult or analytically impossible to solve. We will return to functions of random variables later in the module.
+\subsection{Independence}
+Let \(X\) and \(Y\) be continuous random variables. \(X\) and \(Y\) are said to be independent if:
+\[P[X\leq x\cap Y\leq y]=P[X\leq x]\cdot P[Y\leq y]\]
+That is:
+\[F_{X,Y}(x,y)=F_{X}(x)F_{Y}(y),\quad \forall (x,y)\in\mathbb{R}^2\]
+In words this means that having knowledge of the distribution of \(X\), tells us nothing about the distribution of \(Y\). We can formalise this into a somewhat more useful condition:
+\[X,Y\text{ are independent}\iff f_{X,Y}(x,y)=f_{X}(x)f_{Y}(y)\]
+Under some conditions, namely that \(F_{X,Y}\) is differentiable. In this module we do not need to worry about these conditions since all functions we encounter will be suitable "nice". If \(X\) and \(Y\) are independent then it follows:
+\[f_{X|Y}(x|y)=f_X(x)\]
+\[f_{Y|X}(y|x)=f_Y(y)\]
+\subsubsection*{Example}
+Determine if the random variables \(X\) and \(Y\) are independent given their joint pdf:
+\[f_{X,Y}(x,y)=\begin{cases}
+    8xy & 0<y<x<1 \\
+    0 & \text{otherwise}
+\end{cases}\]
+\[f_{X}(x)=\int^x_08xy\,\text{d}y=4x^3\]
+\[f_{X}(x)=\begin{cases}
+    4x^3 & 0<x<1 \\
+    0 & \text{otherwise}
+\end{cases}\]
+\[f_{Y}(y)=\int^1_y8xy\,\text{d}x=4y(1-y^2)\]
+\[f_{Y}(y)=\begin{cases}
+    4y(1-y^2) & 0<y<1 \\
+    0 & \text{otherwise}
+\end{cases}\]
+Clearly we have:
+\[f_{X,Y}(x,y)\ne f_{X}(x)f_{Y}(y)\]
+for some value \((x,y)\in\mathbb{R}^2\) so \(X\) and \(Y\) are not independent. We could have seen this before calculating however, by just checking the conditions of the joint pdf and noticing a relationship between the values of \(X\) and \(Y\).
+\section{Further Bi and Multivariate Probability Distributions}
+Suppose \(X\) and \(Y\) are independent and continuous with pdf's \(f_X(x)\) and \(f_Y(y)\) respectively. We want  to consider \(Z=X+Y\).
+\[F_Z(z)=\int^\infty_{-\infty}F_X(z-y)f_Y(y)\,\text{d}y\]
+It further follows that:
+\[f_{X+Y}(z)=\int^\infty_{-\infty}f_X(z-y)f_Y(y)\,\text{d}y\]
+\subsection{The Convolution Theorem}
+Suppose \(X\) and \(Y\) are independent and continuous with pdf's \(f_X(x)\) and \(f_Y(y)\) respectively. We want  to consider \(Z=X+Y\).
+\[f_{X+Y}(z)=\int^\infty_{-\infty}f_X(z-y)f_Y(y)\,\text{d}y=\int^\infty_{-\infty}f_X(x)f_Y(z-y)\,\text{d}x\]
+The function \(f_Z\) is called the convolution of \(f_X\) and \(f_Y\).
+\subsection{Functions of Independent Variables}
+If \(X\) and \(Y\) are independent random variables then the functions \(g_1(X)\) and \(g_2(Y)\) are independent for any "nice" functions \(g_1,g_2\). We do not need to define what constitutes a "nice" function in this module.
+\subsection{More Than Two Random Variables}
+Joint probability distributions may also be known as multivariate probability distributions. Throughout this module we will denote random variables as \(X_1,X_2,...,X_n\). Their joint CDF:
+\[F_{X_1,\dots,X_n}(x_1,\dots,x_n)=P[X_1\leq x_1,\dots,X_n\leq x_n]\]
+Their joint pdf is:
+\[f_{X_1,\dots,X_n}(x_1,\dots,x_n)=\pf{F_{X_1,\dots,X_n}(x_1,\dots,x_n)}{x_1\partial x_2\cdots \partial x_n}\]
+Marginals may be defined for subsets as well as single random variables:
+\[F_{X_1}(x_1)=F_{X_1,\dots, X_n}(x_1,\infty,\cdots,\infty)\]
+\[F_{X_1,X_2,X_4}(x_1,x_2,x_4)=F_{X_1,\dots, X_n}(x_1,x_2,\infty,x_4,\cdots,\infty)\]
+Similarly:
+\[f_{X_1}(x_1)=\int^{\infty}_{-\infty}\cdots\int^\infty_{-\infty}f_{X_1,\dots,X_n}(x_1,\dots, x_n)\,\text{d}x_2\cdots\text{d}x_n\]
+This notation gets quite cumbersome very quickly so we often use vector notation with multivariate distributions. We write \(\underline{X}=(X_1,\dots,X_n)^T\) and \(\underline{x}=(x_1,\dots,x_n)\). Then:
+\begin{align*}
+    &F_{\underline{X}}(\underline{x})=P[\underline{X}\leq \underline{x}] \\
+    &f_{\underline{X}}(\underline{x})=\pf{F_{\underline{X}}(\underline{x})}{x_1\partial x_2\cdots \partial x_n} \\
+    &P[\underline{X}\in C]=\int_{\underline{x}\in C}f_{\underline{X}}(\underline{x}),\quad C\subseteq \mathbb{R}^n
+\end{align*}
+\subsection{Mutual Independence}
+We have mutual independence if:
+\[F_{\underline{X}_{(r)}}(\underline{x}_{(r)})=\prod^{|\mathcal{X}_r|}_{j=1}F_{\underline{X}_{(r)_j}}(\underline{x}_{(r)_j})\]
+For each subset \(\mathcal{X}_{(r)}\) of \(\{X_1,X_2,\dots\}\). However this kind of sucks, so consider it in the same way as with two variables. We have independence if the joint pdf can be expressed as the product of all of the marginal pdf's. In words, we require that no finite combination of any random variables provides any information about the other variables. Mutual independence is a stronger condition than pairwise independence. The collection of random variables \(X_1,\dots,X_n\) are said to be independent and identically distributed if \(X_1,\dots,X_n\) are mutually independent.
 \end{document}
