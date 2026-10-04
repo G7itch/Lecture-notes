@@ -39,4 +39,77 @@ Similar to Core Mathematics in Year 1, we will make great use of algebra of limi
     \item \((a_n)(b_n)\to ab\)
     \item \(\frac{1}{a_n}\to\frac{1}{a}\) subject to some conditions: namely \(a_n\ne 0\) for all \(n\geq N\in\mathbb{N}\).
 \end{itemize}
+\subsection{Limits of Inequalities, Squeeze Theorem}
+If \(\seq{a}{n}\) and \(\seq{b}{n}\) are sequences with \(a_n\leq b_n\) for all \(n\) and \(a_n\to a\), \(b_n\to b\) as \(n\to\infty\) then \(a\leq b\). If \(\seq{a}{n},\,\seq{b}{n}\) and \(\seq{c}{n}\) are sequences with \(a_n\leq b_n\leq c_n\) for all \(n\) such that \(a_n\to L\) and \(c_n\to L\) as \(n\to\infty\), then we also have \(b_n\to L\) as \(n\to \infty\).
+\subsubsection*{Example}
+Let \(\seq{a}{n}=\frac{2^n}{n!}\). Then we have:
+\[0\leq \frac{2^n}{n!}\leq \frac{4}{n}\]
+However we know that \(\frac{4}{n}\to 0\) as \(n\to\infty\), then by extension we have \(a_n\to 0\) as \(n\to \infty\) by the squeeze theorem.
+\subsection{Ratio Test for Sequences}
+Let \(\seq{a}{n}\) be a sequence with \(a_n\geq 0\) for all \(n\). Assume the sequence of ratios:
+\[r_n=\frac{a_{n+1}}{a_n}\]
+converges to \(q\in[0,\infty]\). We have the following result:
+\[a_n\to\begin{cases}
+    0 & 0\leq q<1 \\
+    \infty & q>1 \\
+    \text{indeterminate} & q=1
+\end{cases}\]
+\subsubsection{Proof for \(q>1\) case}
+Let \(\seq{a}{n}\) be a sequence such that:
+\[\frac{a_{n+1}}{a_n}\to q>1\]
+Define a new value:
+\[s=\frac{1+q}{2}\]
+such that \(q>s>1\). Set:
+\[\varepsilon=\frac{q-1}{2}>0\]
+Then for \(n>N\) we have:
+\[\left|\frac{a_{n+1}}{a_n}-q\right|<\varepsilon\]
+\[\implies \frac{a_{n+1}}{a_n}>s>1\]
+\[\implies \frac{a_n}{a_N}>s^{n-N}\]
+\[\implies a_n>(a_Ns^{-N})s^n\]
+So from squeeze theorem, we have \(a_n\to \infty\) as \(n\to \infty\).
+\subsection{Standard Sequences}
+These sequences should be remembered and can be quoted without proof in an exam. Let \(K\in\mathbb{Z}\) then we have the following results:
+\[n^k\to\begin{cases}
+    0 & k<0 \\
+    1 & k=0 \\
+    \infty & k>0
+\end{cases}\]
+Let \(q>0\):
+\[q^n\to\begin{cases}
+    0 & q<1 \\
+    1 & q=1 \\
+    \infty & q>1
+\end{cases}\]
+Let \(q\leq 0\):
+\[q^n\to\begin{cases}
+    0 & q>-1 \\
+    \text{diverges} & \text{otherwise}
+\end{cases}\]
+Let \(0<q<1\) and \(K>0\):
+\[n^kq^n\to 0,\quad n\to\infty\]
+\subsubsection*{Example}
+Let \(\seq{a}{n}\) be a sequence with:
+\[a_n=\frac{2^n}{n!}\]
+Then we have:
+\[\frac{a_{n+1}}{a_n}=\left(\frac{2^{n+1}}{(n+1)!}\right)\left(\frac{n!}{2^n}\right)=\frac{2}{(n+1)}\to 0\text{ as }n\to\infty\]
+\[\therefore \frac{2^n}{n!}\to 0\text{ as }n\to\infty\]
+\subsection{Monotonicity}
+A sequence \(\seq{a}{n}\) is called monotone increasing if for all \(n\in\mathbb{N}\), we have \(a_n\leq a_{n+1}\). It is called monotone decreasing if for all \(n\in\mathbb{N}\), we have \(a_n\geq a_{n+1}\). Constant sequences are monotone. Sequences like \((-1)^n\) are neither increasing nor decreasing. If \(a_n > 0\) for all \(n\) then \(\seq{a}{n}\) is monotone increasing if and only if \(a_{n+1}/a_n\geq 1\) for all \(n\).
+\subsection{Supremum and Infimum}
+Let \(A\subseteq \mathbb{R}\) be a non-empty set. If \(A\) is bounded above it has a least upper bound \(\sup A\in \mathbb{R}\). We have \(s=\sup A\) if:
+\begin{align*}
+    &\forall x\in A,\ x\leq s \\
+    &\forall \varepsilon>0,\, \exists y\in A:\ y>s-\varepsilon
+\end{align*}
+If \(A\) is unbounded above, we write \(\sup A=+\infty\). If \(A\) is bounded below then it has a greatest lower bound \(\inf A\in\mathbb{R}\). We have \(l=\inf A\) if:
+\begin{align*}
+    &\forall x\in A,\ x\geq l \\
+    &\forall \varepsilon>0,\, \exists y\in A:\ y<l+\varepsilon
+\end{align*}
+If \(A\) is unbounded below, we write \(\inf A=-\infty\). We set:
+\begin{align*}
+    &\sup \emptyset =-\infty \\
+    &\inf \emptyset = +\infty
+\end{align*}
+For \(A\subseteq \mathbb{R}\) and \(A\ne\emptyset\), we have \(\inf A\leq \sup A\). If \(A\subseteq B\subseteq \mathbb{R}\) then \(\sup A\leq \sup B\) and \(\inf A \geq \inf B\). A monotone increasing sequence converges to it's supremum and a monotone decreasing sequence converges to it's infimum. A bounded monotone sequence always converges.
 \end{document}
