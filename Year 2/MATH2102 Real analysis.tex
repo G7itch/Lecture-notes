@@ -158,4 +158,41 @@ Notice that this definition does not require any information about the location 
 \end{itemize}
 \subsubsection{Completeness}
 A set \(A\) is called complete is every Cauchy sequence in \(A\) has a limit in \(A\).
+\subsection{Series}
+\subsubsection*{Revision}
+Recall that series are just the sequence of partial sums and their limit if it exists:
+\[\sum^\infty_{k=m}a_k:=\left(\sum^n_{k=m}a_k\right)_n\]
+Recall some of the common series and their convergence:
+\begin{align*}
+    &\sum^\infty_{k=0}q^k=\frac{1}{1-q} && |q|\leq 1 \\
+    &\sum^\infty_{k=0}\frac{x^k}{k!}=\exp(x) && x\in\mathbb{R} \\
+    &\sum^\infty_{k=1}\frac{1}{k^p}=\zeta(p)&&p>1 \text{ converges, } p\leq1 \text{ diverges} 
+\end{align*}
+In the case of the zeta series, note that when \(p=1\) we have the harmonic series.
+\subsection{Convergence Criteria of Series}
+Immediately we know that if the sequence \(a_k\) does not tend to \(0\) then the series:
+\[\sum^\infty_{k=0}a_k\]
+diverges. A series \(\sum^\infty_{k=m}a_k\) is convergent if and only if for every \(\varepsilon>0\) there is an \(N\in\mathbb{N}\) such that for all \(p,n\geq N\) we have:
+\[\left|\sum^p_{k=n}a_k\right|<\varepsilon\]
+This is equivalent to saying that the sequence of partial sums is a Cauchy sequence. We say that a series is absolutely convergent if:
+\[\sum^\infty_{k=m}|a_k|\]
+converges. An absolutely convergent series is convergent.
+\subsection{Comparison Theorem for Series}
+If \(0\leq a_k\leq b_k\) and \(\sum^\infty_{k=m}b_k\) converges, then \(\sum^\infty_{k=m}a_k\) converges also. Additionally the contrapositive is often a very useful statement: If \(\sum^\infty_{k=m}a_k\) diverges then \(\sum^\infty_{k=m}b_k\) also diverges.
+\subsubsection*{Example}
+Does the series:
+\[\sum^\infty_{k=1}\frac{\sin k}{3^k}\]
+converge? First the \(\sin k\) term is quite unpleasant because it can be positive or negative, so we can take the absolute value. Once we have done this we notice that it is also bounded, and using this fact we can force it less than a known converging sequence. Hence by comparison theorem and absolute convergence, the original series converges.
+\[\sum^\infty_{k=1}\left|\frac{\sin k}{3^k}\right|\leq \sum^\infty_{k=1}\left|\frac{1}{3^k}\right|\]
+\subsection{Root Test for Series}
+Let \((a_n)_n\) be a sequence and \(a=\limsup_{n\to\infty}(|a_n|)^{\frac{1}{n}}\in[0,\infty]\). If \(a<1\) then \(\sum^\infty_{k=m}a_k\) is absolutely convergent. If \(a>1\) then \(\sum^\infty_{k=m}a_k\) diverges. This \(\limsup_{n\to\infty}\) always exists.
+\subsubsection*{Example}
+\[\sum^\infty_{n=1}nq^n\]
+\[(n\cdot|q|^n)^\frac{1}{n}=|q|\cdot n^\frac{1}{n}\to |q|\]
+\[\limsup_{n\to\infty}(n\cdot|q|)^\frac{1}{n}=|q|\]
+Hence this series converges for \(|q|<1\) and diverges for \(|q|\geq 1\). 
+\subsection{Rules for Convergence for Power Series}
+If \(F(x)=\sum^\infty_{k=0}b_kx^k\) is a power series and \(L=\limsup_{n\to\infty}|b_n|^\frac{1}{n}\) then:
+\[L=\infty\implies F(x)\text{ converges only for }x=0\]
+If \(0<L<\infty\), then set \(R=\frac{1}{L}\). \(F(x)\) converges for \(|x|<R\) and diverges for \(|x|>R\). if \(L=0\) then \(F(x)\) converges for all \(x\in\mathbb{R}\). The number \(R\) is called the minimum convergence of \(F\).
 \end{document}
