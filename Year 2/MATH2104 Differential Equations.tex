@@ -239,4 +239,151 @@ Solving this system gives us:
 Similarly we can work out \(u_2\). Finally we can substitute these functions back in to our definition of the particular solution \(Y(x)\) and we get:
 \[Y(x)=-y_1(x)\left[\int\frac{y_2(x)r(x)}{W(y_1,y_2)}\,\text{d}x\right]+y_2(x)\left[\int\frac{y_1(x)r(x)}{W(y_1,y_2)}\,\text{d}x\right]\]
 This, mercifully, is on the formula sheet.
+\clearpage
+\section{Series Solutions}
+Sometimes all of our other solution methods fail but we still want to examine the behaviour of ODE solutions close to an expansion point \(x_0\). Throughout this chapter we will focus on the ODE:
+\[P(x)y''+Q(x)y'+R(x)y=0\]
+\subsection{Ordinary and Singular Points}
+For the above ODE, a point \(x_0\in\mathbb{C}\) is called an ordinary point if the functions \(Q(x)/P(x)\) and \(R(x)/P(x)\) are both analytic at \(x=x_0\). Otherwise \(x=x_0\) is a singular point. This definition can be cumbersome to use so for the purposes of this module we will use a looser definition. For the standard ODE we are dealing with in this module, a point \(x_0\in\mathbb{C}\) is called an ordinary point if:
+\begin{align*}
+  &\lim_{x\to x_0}\frac{Q(x)}{P(x)} \\
+  &\lim_{x\to x_0}\frac{R(x)}{P(x)}
+\end{align*}
+both exist. Otherwise we say \(x_0\) is a singular point. Furthermore if our the canonical form contains functions of \(\log(z)\) or \(z^q,\ q\ne\mathbb{N}\cup 0\), then \(x_0\) is singular. Note that this definition is certainly not true in general but suffices for this module.
+\subsubsection*{Example}
+\[y''+\log (x-2)y'+\sqrt{x^2+4}y=0\]
+\begin{align*}
+    &P(x)=1 \\
+    &Q(x)=\log(x-2) \\
+    &R(x)=\sqrt{x^2+4}
+\end{align*}
+Notice that \(Q(x)\) fails to be analytic when \(x=2\) and \(\sqrt{x^2+4}\) fails when \(x=\pm 2i\). This means the singular points are \(x_0=2,\pm 2i\).
+\subsection{Series Ansatz Formulation}
+For an ODE of the form:
+\[P(x)y''+Q(x)y'+R(x)y=0\]
+We have, by definition, that the functions in it's canonical form can be expressed as a Taylor series expanded about \(x=x_0\):
+\begin{align*}
+    &\frac{Q(x)}{P(x)}=\alpha_0+\alpha_1(x-x_0)+\dots \\
+    &\frac{R(x)}{P(x)}=\beta_0+\beta_1(x-x_0)+\dots
+\end{align*}
+Then close to \(x_0\) we can approximate the ODE as:
+\[y''+\alpha_0y'+\beta_0y+\cdots=0\]
+Which is a constant-coefficient ODE. We can then expect the solution \(y(x)\) to be analytic near \(x=x_0\) and so can be represented with a Taylor series:
+\[y(x)=\sum^\infty_{n=0}a_n(x-x_0)^n\]
+Then we can calculate the derivatives of this ansatz and substitute into the ODE. We then need to compare coefficients to find a recurrence relation.
+\subsubsection{Worked Example}
+We wish to consider the following ODE:
+\[(x^2+1)y''+y=0\]
+near to the point \(x=x_0\). \(x=x_0\) is an ordinary point so we can use the series expansion.
+\begin{align*}
+    &y(x)=\sum^\infty_{n=0}a_nx^n \\
+    &y'(x)=\sum^\infty_{n=0}na_nx^{n-1} \\
+    &y''(x)=\sum^\infty_{n=0}n(n-1)a_nx^{n-2}
+\end{align*}
+Substituting into the ODE we get:
+\[\sum^\infty_{n=0}x^2a_nn(n-1)x^{n-2}+\sum^\infty_{n=0}n(n-1)a_nx^{n-2}+\sum^\infty_{n=0}a_nx^n=0\]
+We need to shift the indices so that all of our monomials have the same power:
+\[\sum^\infty_{n=-2}(n+2)(n+1)a_{n+2}x^{n}\]
+We then need to move the first two terms to get back to the right starting index. We can then combine all of the summations:
+\[\sum^\infty_{n=0}x^n[(n+2)(n+1)a_{n+2}+(n(n-1)+1)a_n]=0\]
+We can then compare coefficients to get the following recurrence relation:
+\[a_{n+2}=-\frac{n^2-n+1}{(n+2)(n+1)},\quad n\geq 0\]
+Some recurrence relations are explicitly solvable whereas others we have to compute numerically. Since the relation holds for \(n\geq 0\), the first coefficient we can compute is \(a_{2}\). Then \(a_0\) and \(a_1\) are left to choose freely. We know a fundamental set of solutions exists due to the conditions of an ordinary point. Note that:
+\[y(0)=a_0\qquad y'(0)=a_1\]
+We can then find our two linearly independent solutions by first setting \(a_0=0\) with \(a_1\) free, and then setting \(a_1=0\) with \(a_0\) being free.
+\[y_1(x)=a_0\left[1-\frac{x^2}{2}+\frac{x^4}{8}+\cdots\right]\]
+\[y_2(x)=a_1\left[x-\frac{x^3}{6}+\frac{7x^5}{120}+\cdots\right]\]
+Note that sometimes \(y_1\) or \(y_2\) will either be a known infinite series or will be finite - implying the solution is a polynomial.
+\subsubsection*{Example}
+\[(x^2+1)y''+xy'-y=0,\quad x_0=0\]
+\[\lim_{x_0\to 0}\frac{x}{x^2+1}=0\]
+The limit exists so \(x_0\) is an ordinary point. We can construct a series ansatz:
+\[y(x)=\sum^\infty_{n=0}a_nx^n\]
+\[\sum^\infty_{n=0}n(n-1)a_nx^n+\sum^\infty_{n=0}n(n-1)a_nx^{n-2}+\sum^\infty_{n=0}na_nx^n-\sum^\infty_{n=0}a_nx^n=0\]
+\[\implies n(n-1)a_n+(n+2)(n+1)a_{n+2}+na_n-a_n=0\]
+\[\implies a_{n+2}=\frac{(1-n)a_n}{n+2},\quad n\geq 0\]
+Set \(a_1=0\) and let \(a_0\) be free. Then:
+\[a_2=\frac{a_0}{2}\implies a_4=-\frac{a_0}{8}\]
+\[a_{2n+1}=0\]
+\[\implies y_1(x)=a_0+\frac{x^2}2{a_0-\frac{x^4}{8}a_0+\cdots}\]
+Now set \(a_0=0\) and \(a_1\) free. Then \(a_{2n}=0\) which means that our choice for \(a_1\) solves the ODE in a polynomial way. We choose the simplest solution: \(a_1=1\). Then:
+\[y_2(x)=x\]
+\[y(x)=a_0\left[1+\frac{x^2}{2}-\frac{x^4}{8}+\cdots\right]+a_1x\]
+Notice that once we know a polynomial that explicitly solves the ODE, we can apply reduction of order to calculate the other one fully.
+\subsection{Minimum Radius of Convergence}
+As seen with series solutions expanded about ordinary points, we can (in theory), keep adding more and more terms to our series solution to improve the approximation of the true ODE solution near its expansion point. However, like a Taylor series, the functions local behaviour doesn't tell us anything about the global behaviour: notably we need to know what values our series solution agrees with the true ODE solution. For the ODE:
+\[p(x)y''+q(x)y'+r(x)y=0\]
+Its series solution expanded about the ordinary point \(x=x_0\) will converge to the true ODE solution on the domain \(|x-x_0|<R\), where \(R\) is the smallest distance in \(\mathbb{C}\) between \(x_0\) and any singular points \(x_s\) of the ODE.
+\[R=\min_{x_s}|x_0-x_s|\]
+The value \(R\) is known as the minimum radius of convergence.
+\subsubsection*{Examples}
+The minimum radius of convergence for the ODE:
+\[(x^2+1)y''+xy'-y=0,\quad x_0=0\]
+is calculated based on the singular points \(x=\pm i\). We have:
+\[R=|0-i|=|0+i|=1\]
+Hence the series solutions are only guaranteed to agree with the ODE solutions for \(|x|<1\). Note that the minimum radius of convergence \(R\) not only depends on the location of the singular points \(x_s\in\mathbb{C}\) but also on the expansion point \(x_0\).
+\subsection{Series Solutions at a Regular Singular Point}
+We have just looked at what we need to do if we want to expand around an ordinary point, and we have seen that we cannot use this method to expand around a singular point. However, expanding around a singular point is a valid mathematical concept and it may well be something we wish to do so we need a new technique to do so. We are still restricted to a specific kind of singular point, but we can at least do something.
+\subsubsection{Definitions}
+For the standard ODE we are looking at in this chapter, a singular point \(x_0\in\mathbb{C}\) is called regular if the functions:
+\begin{align*}
+    &\frac{Q(x)}{P(x)}(x-x_0) \\
+    &\frac{R(x)}{P(x)}(x-x_0)^2
+\end{align*}
+are both analytic at \(x=x_0\). Otherwise it is called an irregular singular point. For the purposes of this module, we will once again look at a simpler definition. A point \(x_0\in\mathbb{C}\) is a regular singular point if the limits:
+\begin{align*}
+    &\lim_{x\to x_0}\frac{Q(x)}{P(x)}(x-x_0) \\
+    &\lim_{x\to x_0}\frac{R(x)}{P(x)}(x-x_0)^2
+\end{align*}
+both exist. Likewise if we contain log functions or non natural powers we have \(z=0\) as an irregular singular point.
+\subsubsection*{Examples}
+Consider the ODE:
+\[(x^2+1)y''+xy'-y=0\]
+This has singular points at \(x=\pm i\) and we can classify those singular points as above:
+\begin{align*}
+    &\lim_{x\to i}\frac{x(x-i)}{x^2+1}=\frac{1}{2} \\
+    &\lim_{x\to i}\frac{-(x-i)^2}{x^2+1}=0
+\end{align*}
+Since both limits exist we say that \(x=i\) is a regular singular point. The same argument applies for \(x=-i\).
+\subsection{The Frobenius Method}
+In a similar way to ordinary point series solutions, we have:
+\[\frac{Q(x)}{P(x)}(x-x_0)=\alpha_0+\alpha_1(x-x_0)+\cdots\]
+\[\frac{R(x)}{P(x)}(x-x_0)^2=\beta_0+\beta_1(x-x_0)+\cdots\]
+Where \(\alpha\) and \(\beta\) are well defined constants. This means we can approximate the ODE with:
+\[(x-x_0)^2y''+\alpha_0(x-x_0)y'+\beta_0y+\cdots=0\]
+Which is an Euler ODE!. Therefore we expect our solution to be approximated by:
+\[(x-x_0)^r\]
+Where \(r\) solves the auxiliary equation: \(r(r-1)^2+\alpha_0r+\beta_0=0\). Provided that the two solutions of \(r\) that solve this equation are real and distinct, we have our series solution should be modified by a factor of \((x-x_0)^r\). This is known as the Frobenius method. For the ODE:
+\[P(x)y''+Q(x)y'+R(x)y=0\]
+the series solution expanded around the singular point \(x=x_0\) will be of the form:
+\[y(x)=(x-x_0)^r\sum^\infty_{n=0}a_n(x-x_0)^n\]
+with two real and distinct solutions to \(r\) occurring via solving the auxiliary equation.
+\subsubsection*{Example}
+Consider the ODE:
+\[4xy''+2y'+y=0\]
+around the point \(x_0=0\). We have that \(x_0=0\) is a regular singular point by looking at limits. Because of this, we can use the Frobenius method:
+\[y(x)=\sum^\infty_{n=0}a_nx^{n+r}\implies y'(x)=\sum^\infty_{n=0}(n+r)a_nx^{n+r-1}\]
+\[\implies y''(x)=\sum^\infty_{n=0}(n+r)(n+r-1)a_nx^{n+r-2}\]
+We can then substitute these terms into the ODE:
+\[\sum^\infty_{n=0}4(n+r)(n+r-1)a_nx^{n+r-1}+\sum^\infty_{n=0}2(n+r)a_nx^{n+r-1}+\sum^\infty_{n=0}a_nx^{n+r}=0\]
+Like before we need to match both monomial powers and starting indices:
+\[\underbrace{\alpha_0x^{r-1}[4r(r-1)+2r]}_{n=-1}+\sum^\infty_{n=0}x^{n+r}\{[4(n+r)(n+r+1)+2(n+r+1)]a_{n+1}+a_n\}\]
+Since each coefficient should be zero, we end up with two equations - one for \(r\) and one for the recurrence relation involving \(a_n\).
+\begin{align*}
+    &4r(r-1)+2r=0\implies r=0,\,\frac{1}{2} \\
+    &a_{n+1}=-\frac{a_n}{2(n+r+1)(2n+2r+1)},\ n\geq 0
+\end{align*}
+Notice that \(a_1\) is no longer a free parameter, because it is derived from \(a_0\). Instead we have the two values of \(r\) providing us with the two solutions. The first solution occurs when \(r=0\) and \(a_0\) is free:
+\[y_1(x)=x^0\cdot[a_0+a_1x+a_2x^2+\cdots]=a_0\left[1-\frac{x}{2}+\frac{x^2}{24}+\cdots\right]\]
+Our second solution occurs when \(r=\frac{1}{2}\) and \(a_0\) is free. Then our solution is:
+\[y_2(x)=x^\frac{1}{2}\cdot[a_0+a_1x+a_2x^2+\cdots]=a_0\sqrt{x}\left[1-\frac{x}{6}+\frac{x^2}{120}+\cdots\right]\]
+Note that the Frobenius method was absolutely vital to us getting the second series solution. Whilst we got lucky with the first solution looking like a regular series there is absolutely no requirement for this to be the case and we have seen that our second solution looked nothing like a standard series expansion.
+\subsection{Breakdown of the Frobenius Method}
+Note that we require the values of \(r\) to be real and distinct in the Frobenius method, but having real and distinct values still does not ensure the method works. Notice that:
+\begin{itemize}
+    \item When the roots of the auxiliary equation are complex, the resulting solution to the Euler equation is the sum of sinusoidal functions of logarithmic functions which fail to be analytic at \(x=x_0\) so we cannot use the Frobenius method.
+    \item When the roots \(r\) are not distinct, the solution to the Euler equation contains a logarithmic function which again fails to be analytic at \(x=x_0\).
+    \item When the roots \(r_+,r_-\) are real and distinct but differ by an integer amount the Frobenius method will not work. This is because the series terms will start to "overlap" between the two solutions, potentially making them not linearly independent, it could also cause clashes of monomial terms. Note that this is exactly why we cannot use the Frobenius method around ordinary points since it leaves us with the solutions \(r=0,1\) which will fail for the aforementioned reason.
+\end{itemize}
+There exists no robust methodology for dealing with series solutions of ODEs around irregular singular points, each one has to be dealt with in a unique way. When dealing with ODEs that satisfy the above conditions, additional modifications or unique methods will be required to solve the ODE.
 \end{document}

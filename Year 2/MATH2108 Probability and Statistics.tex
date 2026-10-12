@@ -112,6 +112,7 @@ Determine if the random variables \(X\) and \(Y\) are independent given their jo
 Clearly we have:
 \[f_{X,Y}(x,y)\ne f_{X}(x)f_{Y}(y)\]
 for some value \((x,y)\in\mathbb{R}^2\) so \(X\) and \(Y\) are not independent. We could have seen this before calculating however, by just checking the conditions of the joint pdf and noticing a relationship between the values of \(X\) and \(Y\).
+\clearpage
 \section{Further Bi and Multivariate Probability Distributions}
 Suppose \(X\) and \(Y\) are independent and continuous with pdf's \(f_X(x)\) and \(f_Y(y)\) respectively. We want  to consider \(Z=X+Y\).
 \[F_Z(z)=\int^\infty_{-\infty}F_X(z-y)f_Y(y)\,\text{d}y\]
@@ -143,4 +144,216 @@ This notation gets quite cumbersome very quickly so we often use vector notation
 We have mutual independence if:
 \[F_{\underline{X}_{(r)}}(\underline{x}_{(r)})=\prod^{|\mathcal{X}_r|}_{j=1}F_{\underline{X}_{(r)_j}}(\underline{x}_{(r)_j})\]
 For each subset \(\mathcal{X}_{(r)}\) of \(\{X_1,X_2,\dots\}\). However this kind of sucks, so consider it in the same way as with two variables. We have independence if the joint pdf can be expressed as the product of all of the marginal pdf's. In words, we require that no finite combination of any random variables provides any information about the other variables. Mutual independence is a stronger condition than pairwise independence. The collection of random variables \(X_1,\dots,X_n\) are said to be independent and identically distributed if \(X_1,\dots,X_n\) are mutually independent.
+\clearpage
+\section{Conditional Distributions}
+\subsection{Conditional PDFs}
+Suppose \(f_{X,Y}(x,y)\) is the joint pdf of the random variables \(X\) and \(Y\). If \(f_Y(y)\) is the marginal pdf of \(Y\) then the conditional pdf of \(X\) given \(Y\) is:
+\[f_{X|Y}(x|y)=\frac{f_{X,Y}(x,y)}{f_Y(y)}\]
+for \(y\) such that \(f_Y(y)>0\). This implies that:
+\[f_X(x)=\int^\infty_{-\infty}f_{X|Y}(x|y)f_Y(y)\,\text{d}y\]
+In some cases this form can be easier to calculate than using the joint pdf. Similarly this works for multivariate random variables:
+\[f_{X_2,\dots,X_n|X_1}(x_2,\dots,x_n|x_1)=\frac{f_{X_1,\dots,X_n}(x_1,\dots,x_n)}{f_{X_1}(x_1)}\]
+\subsection{Calculating Probabilities}
+If the random variables \(X\) and \((Y\) are such that \(f_{X|Y}(x|y)\) is the pdf of \(X\) conditional on \(Y\), then for \(C\subseteq\mathbb{R}\):
+\[P[X\in C| Y=y]=\int_C f_{X|Y}(x|y)\,\text{d}x\]
+\[F_{X|Y}(x|y)=\int^x_{-\infty}f_{X|Y}(u|y)\,\text{d}u\]
+Do not overthink this it just the same operation as calculating for a single variable. For the standard pdf of \(X\), we would compute \(P[X<1]\) as:
+\[P[X<1]=\int^1_{-\infty}f_X(x)\,\text{d}x\]
+For the conditional \(P[X<1|Y=y]\) we calculate in almost exactly the same way:
+\[P[X<1|Y=y]=\int^1_{-\infty}f_{X|Y}(x|y)\,\text{d}x\]
+Treat \(y\) as a constant since that is exactly what it is in this context.
+\subsubsection*{Example}
+\[f_{X,Y}(x,y)=\begin{cases}
+    x+y & 0\leq x,y\leq 1 \\
+    0&\text{otherwise}
+\end{cases}\]
+Then:
+\[f_Y(y)=\int^\infty_{-\infty}f_{X,Y}(x,y)\,\text{d}x\]
+\[f_Y(y)=\int^1_0x+y\ \text{d}x\]
+\[f_Y(y)=\begin{cases}
+    \frac{1}{2}+y&0\leq y\leq 1 \\
+    0 & \text{otherwise}
+\end{cases}\]
+If \(y\notin[0,1]\), then \(f_Y(y)=0\) and so the conditional pdf is not defined. Otherwise:
+\[f_{X|Y}(x|y)=\frac{x+y}{\frac{1}{2}+y}\]
+For \(x,y\in[0,1]\). We can now compute conditional probabilities:
+\[P[X\geq \frac{1}{2}|Y=\frac{1}{3}]=\int^1_{\frac{1}{2}}f_{X|Y=\frac{1}{3}}(x|y=\frac{1}{3})\,\text{d}x\]
+\[=\int^1_{\frac{1}{2}}\frac{2x+\frac{2}{3}}{\frac{5}{3}}\,\text{d}x\]
+\[=0.65\]
+\subsection{Independence}
+All of the following sentences are equivalent (provided all necessary functions exist):
+\begin{enumerate}
+    \item \(X\) and \(Y\) are independent
+    \item \(f_{X|Y}(x|y)=f_X(x),\ \forall x\in\mathbb{R},\  f_Y(y)>0\)
+    \item \(f_{Y|X}(y|x)=f_Y(y),\ \forall y\in\mathbb{R},\  f_X(x)>0\)
+\end{enumerate}
+\clearpage
+\section{Expectation}
+\subsection{Definition}
+For a single continuous random variable \(X\), with pdf \(f_X(x)\), we know it's expectation:
+\[\mathbb{E}(X)=\int^\infty_{-\infty}xf_X(x)\,\text{d}x\]
+Moreover:
+\[\mathbb{E}(g(X))=\int^\infty_{-\infty}g(x)f_X(x)\,\text{d}x\]
+We should always be mindful of the distribution to which our expectation relates. We can also consider expectation for the continuous random variables \(\underline{X}=(X_1,\dots,X_n)^T\). If \(\underline{X}\) is a multivariate random variable with pdf \(f_{\underline{X}}(\underline{x})\) and \(g:A\subseteq\mathbb{R}^n\to\mathbb{R}\) is a suitable function, then the expectation of \(g(\underline{X})\) is:
+\[\mathbb{E}(g(\underline{X}))=\int\cdots\int_{\mathbb{R}^n}g(\underline{x})f_{\underline{X}}(\underline{x})\,\text{d}x\]
+\subsubsection*{Example}
+\[f_{X,Y}(x,y)=\begin{cases}
+    \frac{1}{2}xy & 0\leq x\leq y\leq 2 \\
+    0&\text{otherwise}
+\end{cases}\]
+\[\mathbb{E}(2X+Y)=\int^2_0\int^y_0(2x+y)(\frac{1}{2}xy)\,\text{d}x\,\text{d}y\]
+\[=\int^2_0\frac{y^4}{3}+\frac{y^4}{4}\,\text{d}y=\frac{56}{15}\]
+To help you find the appropriate bounds of integration, consider what happens when you "squish" the function to the axis after integrating over one variable.
+\subsection{Linearity of Expectations}
+Since expectations are defined via integrals - and integrals are linear - we have:
+\[\mathbb{E}(ag_1(\underline{X})+bg_2(\underline{X})+c)=a\mathbb{E}(g_1(\underline{X}))+b\mathbb{E}(g_2(\underline{X}))+c\]
+Where \(g_1,g_2:A\subseteq \mathbb{R}^n\to \mathbb{R}\). Additionally, for any collection of random variables:
+\[\mathbb{E}\left(\sum^n_{i=1}X_i\right)=\sum^n_{i=1}\mathbb{E}(X_i)\]
+Note that this property holds without any conditions on independence.
+\subsection{Expectations of Functions}
+If \(X\) and \(Y\) are independent random variables, then for any functions \(g,h\):
+\[\mathbb{E}[g(X)h(Y)]=\mathbb{E}[(g(X)]\mathbb{E}[h(Y)]\]
+This comes from the integral definition, and the key property of independence.
+\[\int^\infty_{-\infty}\int^\infty_{-\infty}g(x)h(y)f_X(x)f_Y(y)\,\text{d}x\,\text{d}y\]
+\[=\int^\infty_{-\infty}g(x)f_X(x)\,\text{d}x\int^\infty_{-\infty}h(y)f_Y(y)\,\text{d}y\]
+\subsection{Covariance and Correlation}
+Suppose \(X\) and \(Y\) are two random variables. The covariance of \(X\) and \(Y\) is:
+\[\text{Cov}(X,Y)=\mathbb{E}[XY]-\mathbb{E}[X]\mathbb{E}[Y]\]
+This is clearly \(0\) if \(X\) and \(Y\) are independent but the converse is not true.
+\subsubsection{Properties of covariance}
+\begin{itemize}
+    \item \(\text{Cov}(X,X)=\text{Var}(X)\)
+    \item \(\text{Cov}(X,Y)=\text{Cov}(Y,X)\)
+    \item \(\text{Cov}(aX+b,\,cY+d)=ac\,\text{Cov}(X,Y)\)
+\end{itemize}
+For random variables \(X_1,\dots,X_m\) and \(Y_1,\dots,Y_n\) we have:
+\[\text{Cov}\left[\left(\sum^m_{i=1}a_iX_i\right),\,\left(\sum^n_{i=1}b_jY_j\right)\right]=\sum^m_{i=1}\sum^n_{j=1}a_ib_j\,\text{Cov}(X_i,Y_j)\]
+Using this it is not too hard to see that:
+\[\text{Var}\left(\sum^n_{i=1}a_iX_i\right)=\underbrace{\sum^n_{i=1}a_i^2\,\text{Var}(X_i)}_{i=j}+2\underbrace{\sum_{1\leq i< j\leq n}a_ia_j\,\text{Cov}(X_i,X_j)}_{i\ne j}\]
+Where the two comes from the symmetry of the variance-covariance matrix, which in turn exists because of commutativity. This means that without loss of generality we can set \(i<j\).
+\subsubsection*{Example}
+\begin{align*}
+    &\mathbb{E}[X]=1 && \text{Var}[X]=2 \\
+    &\mathbb{E}[Y]=2 && \text{Var}[Y]=4 \\
+    &\text{Cov}(X,Y)= 1
+\end{align*}
+We wish to compute Cov\((2X+Y,\,2Y-X)\):
+\[\text{Cov}\left(\sum^m_{i=1}a_iX_i,\, \sum^n_{j=1}b_jY_j\right)=\sum^m_{i=1}\sum^n_{j=1}a_ib_j\, \text{Cov}(X_i,Y_j)\]
+\begin{align*}
+    \text{Cov}(2X+Y,\,2Y-X)=&\\ 
+    &\underbrace{(2\cdot2)\text{Cov}(X,Y)}_{2X\cdot2Y} \\
+    +&\underbrace{(1\cdot2)\text{Var}(Y)}_{Y\cdot 2Y} \\
+    -&(1\cdot2)\text{Var}(X) \\
+    -&(1\cdot1)\text{Cov}(X,Y)\\
+    =&3\,\text{Cov}(X,Y)+2\,\text{Var}(Y)-2\,\text{Var}(X)=7
+\end{align*}
+\subsection{Variance-Covariance Matrix}
+For the multivariate random variable \(\underline{X}=(X_1,\dots,X_n)^T\), the variance-covariance matrix of \(\underline{X}\) is an \(n\times n\) matrix whose \((r,s)\) entry is given by \(\text{Cov}(X_r,X_s)\). It is denoted \(\Sigma\).
+\[\Sigma=\begin{pmatrix}
+    \text{Var}(X_1) & \text{Cov}(X_1,X_2) & \cdots & \text{Cov}(X_1,X_n) \\
+    \text{Cov}(X_2,X_1) & \text{Var} (X_2) & \cdots & \text{Cov}(X_2,X_n) \\
+    \vdots & \cdots & \ddots & \vdots \\
+    \text{Cov}(X_n,X_1) & \text{Cov}(X_n, X_2) & \cdots & \text{Var}(X_n)
+\end{pmatrix}\]
+Note that in order to calculate the variance-covariance matrix, we need the following information:
+\begin{align*}
+    &\mathbb{E}[X] && \mathbb{E}[X^2] \\
+    &\mathbb{E}[Y] && \mathbb{E}[Y^2] \\
+    &\mathbb{E}[XY]
+\end{align*}
+\subsubsection{An important lemma}
+If \(X\) and \(Y\) are two random variables such that \(\mathbb{E}[X]=\mathbb{E}[Y]=0\) and \(\text{Var}(X)=\text{Var}(Y)=1\) then:
+\[|\mathbb{E}[XY]|\leq 1\]
+You might be wondering when we have those conditions for this lemma to be true, and it turns out this is always the case after we have standardised the random variables. This is a useful operation we will do a lot so this lemma comes into effect more times than you would think.
+\subsection{Cauchy-Schwartz Inequality}
+For any pair of random variables \(X\) and \(Y\):
+\[|\text{Cov}(X,Y)|^2\leq \text{Var}(X)\text{Var}(Y)\]
+The real power of this statement is in the word "any".
+\subsection{Correlation}
+Sometimes we prefer to use a measure that is independent of the magnitude of the data. One such measure is the Pearson correlation:
+\[\rho(X,Y)=\frac{\text{Cov}(X,Y)}{\sqrt{\text{Var}(X)\text{Var}(Y)}}\]
+This is dimensionless and provides a measure of linear association between \(X\) and \(Y\).
+\begin{itemize}
+    \item \(|\rho|\leq 1\)
+    \item If \(X\) and \(Y\) are independent then \(\rho(X,Y)=0\) but the converse is not true.
+    \item For constants \(a,b,c,d\in\mathbb{R}\):
+    \[\rho(aX+b,\, cY+d)=\begin{cases}
+        \rho(X,Y)& ac>0 \\
+        -\rho(X,Y)&ac<0
+    \end{cases}\]
+\end{itemize}
+\clearpage
+\section{Conditional Expectation and Variance}
+\subsection{Conditional Expectation}
+Recall that the conditional pdf of random variables \(X\) and \(Y\) is given by:
+\[f_{X|Y}(x|y)=\frac{f_{X,Y}(x,y)}{f_Y(y)}\]
+subject to \(f_Y(y)>0\). Now suppose that \(X\) and \(Y\) are random variables. The conditional expectation of \(X\) given \(Y=y\) is:
+\[\mathbb{E}[X|Y]=\int^\infty_{-\infty}xf_{X|Y}(x|y)\,\text{d}x\]
+Notice that this is a one dimensional integral since we are conditioning on \(Y=y\) being constant. We can also assume \(Y\) remains a random variable by substituting \(y\) for \(Y\) in our expectation.
+\subsubsection*{Example}
+\[f_{X,Y}(x,y)=\begin{cases}
+    \frac{4x}{y} & 0\leq x< y \leq 1 \\
+    0&\text{otherwise}
+\end{cases}\]
+We wish to calculate \(\mathbb{E}[X|Y=y]\).
+\begin{align*}
+    f_Y(y)&=\int^\infty_{-\infty}\frac{4x}{y}\,\text{d}x \\\\
+    &=\int^y_0\frac{4x}{y}\,\text{d}x \\\\
+    &=\left[\frac{2x^2}{y}\right]^y_0 \\\\
+    &=\begin{cases}
+        2y & 0\leq y \leq 1 \\
+        0&\text{otherwise}
+    \end{cases}
+\end{align*}
+\[f_{X|Y}(x\mid y)=\frac{f_{X,Y}(x,y)}{f_Y(y)}\]
+When \(0<y\leq 1\) this is defined and we have:
+\[f_{X|Y}(x\mid y)=\begin{cases}
+    \frac{2x}{y^2} & 0<x<y \\
+    0&\text{otherwise}
+\end{cases}\]
+Finally we have:
+\[\mathbb{E}[X\mid Y=y]=\int^\infty_{-\infty}xf_{X|Y}(x\mid y)\,\text{d}x\]
+\[\mathbb{E}[X\mid Y=y]=\frac{2}{3}y\]
+If we were instead looking for \(Y\) to remain a random variable then:
+\[\mathbb{E}[X\mid Y]=\frac{2}{3}Y\].
+\subsubsection{Functions of \(X\)}
+We can also defined conditional random variables such as \(\mathbb{E}[X^2|Y]\) and indeed for any suitable function \(f(X)\) we can define \(\mathbb{E}[f(X)|Y]\). This naturally leads us to define conditional variances:
+\[\text{Var}[X|Y=y]=\mathbb{E}[X^2|Y=y]-(\mathbb{E}[X|Y=y])^2\]
+\subsection{The Tower Property}
+Because \(\mathbb{E}[X|Y]\) is in itself a random variable, we can take the expectation of it. If we do this, our expectation will be considering the marginal of \(Y\). When dealing with lots of these expectations, it may make sense to use the older notation \(\mathbb{E}_Y\) to denote which pdf our expectation is taken with respect to. For any pair of random variables \(X\) and \(Y\):
+\[\mathbb{E}[X]=\mathbb{E}[\mathbb{E}[X|Y]]\]
+Note that this holds for both discrete and continuous random variables and even if \(X\) and \(Y\) are not the same type. This is a very important result that gets used all the time.
+\subsubsection{Proof of the tower property}
+Consider \(\mathbb{E}[X|Y]\):
+\[\mathbb{E}[X|Y]=\int^\infty_{-\infty}xf_{X|Y}(x\mid y)\,\text{d}x = g(Y)\]
+This is a random variable and a function of \(Y\).
+\[\mathbb{E}[\mathbb{E}[X|Y]]=\mathbb{E}[g(Y)]\]
+\[\mathbb{E}[g(Y)]=\int^\infty_{\infty}g(y)f_Y(y)\,\text{d}y\]
+\[=\int^\infty_{-\infty}\mathbb{E}[X|Y=y]f_Y(y)\,\text{d}y\]
+\[=\int^\infty_{-\infty}\left\{\int^\infty_{-\infty}xf_{X|Y}(x\mid y)\,\text{d}x\right\}\,\text{d}y\]
+Note that:
+\[f_{X|Y}(x\mid y)=\frac{f_{X,Y}(x,y)}{f_Y(y)}\]
+\[\mathbb{E}[g(Y)]=\int^\infty_{-\infty}xf_{X,Y}(x,y)\,\text{d}x\,\text{d}y\]
+\[=\int^\infty_{-\infty}x\int^\infty_{-\infty}f_{X,Y}(x,y)\,\text{d}y\ \text{d}x\]
+\[=\int^\infty_{-\infty}xf_X(x)\,\text{d}x\]
+\[=\mathbb{E}[X]\]
+\subsubsection{Continuous case example}
+Suppose \(Y\sim\text{Gamma}(2,\theta)\) and \(X|Y=y\sim\text{Exp}(y)\). Then:
+\[\mathbb{E}[X|Y=y]=\frac{1}{y}\]
+\[\mathbb{E}[X]=\mathbb{E}[\mathbb{E}[X|Y=y]]=\mathbb{E}\left[\frac{1}{y}\right]\]
+\[\mathbb{E}\left[\frac{1}{Y}\right]=\int^\infty_{-\infty}\frac{1}{y}f_Y(y)\,\text{d}y\] 
+\[=\int^\infty_0\frac{1}{y}\theta^2ye^{-\theta y}\,\text{d}y\]
+\[=\theta\int^\infty_0\theta e^{-\theta y}\,\text{d}y\]
+\[=\theta\]
+Since the remaining integral is a pdf and so integrates to \(1\) over its entire domain.
+\subsection{Conditional Probabilities of Events}
+If \(X\) is a random variable and \(A\) is some event of interest then:
+\[\mathbb{P}[A]=\int^\infty_{-\infty}\mathbb{P}[A|X=x]f_X(x)\,\text{d}x\]
+This is analogous to the law of total probabilities in the discrete world. In particular we can consider the random variable:
+\[Y=\begin{cases}
+    1 & \text{If event A occurs} \\
+    0 & \text{otherwise}
+\end{cases}\]
+An extension of this, and another way of proving an old result, is that if \(X\) and \(Y\) are random variables, then:
+\[f_Y(y)=\int^\infty_{-\infty}f_{Y|X}(y\mid x)f_X(x)\,\text{d}x\]
 \end{document}

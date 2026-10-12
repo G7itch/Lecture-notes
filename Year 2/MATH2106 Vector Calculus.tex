@@ -145,4 +145,90 @@ Where each component is the Laplacian. The physical meaning of the Laplacian rel
     &u(x,0)=f(x):=\text{hat function} \\
     &u(0,t)=u(L,t)=0
 \end{align*}
+\subsection{Other Operations Involving \(\nabla\)}
+\subsubsection{The operator \(\underline{A}\cdot \underline{\nabla}\)}
+For any vector or vector field \(\underline{A}\), we can define \(\underline{A}\cdot \underline{\nabla}\). This is a new operator that can be applied to scalars or vectors:
+\[(\underline{A}\cdot\underline{\nabla})f=\left(A_x\pf{}{x}+A_y\pf{}{y}+A_z\pf{}{z}\right)f\]
+\[(\underline{A}\cdot\underline{\nabla})\underline{B}=\left(A_x\pf{\underline{B}}{x}+A_y\pf{\underline{B}}{y}+A_z\pf{\underline{B}}{z}\right)\]
+\subsubsection{The curl of a gradient vector field}
+The curl of a gradient vector field vanishes:
+\[\underline{\nabla}\times (\grad{f})=\underline{0}\]
+We say that a gradient field is necessarily irrotational. The converse of this statement is also true: if a vector field is irrotational, it can be written as the gradient of a scalar field - this result is helpful later in this module.
+\subsubsection{Divergence of a curl vector field}
+The divergence of a curl vector field vanishes:
+\[\underline{\nabla}\cdot(\curl{A})=0\]
+We say that curl vector fields are necessarily solenoidal. The converse is also true: if the divergence of a vector field is \(0\), then it can be written as a curl vector field.
+\subsubsection{Curl of a curl vector field}
+Since the curl of a vector field is its self a vector field, we can apply the curl operator to it again. After some messy calculations we get the following identity:
+\[\underline{\nabla}\times (\curl{A})=\underline{\nabla}(\dive{A})=-\nabla^2\underline{A}\]
+\clearpage
+\section{Line, Surface, and Volume Integrals}
+For most applications, line and surface integrals involve vector fields, while volume integrals are usually of scalar fields.
+\subsection{Line Integrals}
+\subsubsection{Ordinary definite integral}
+Think of the definition of an ordinary definite integral from calculus, taking the integral as the limit of infinitesimal areas.
+\[\int^b_af(x)\,\text{d}x:=\lim_{N\to \infty}\sum_if(x_i)\Delta x_i\]
+Obviously we do not use this definition to actually compute the integral, but it helps us understand what is happening conceptually.
+\subsubsection{Line integrals}
+We can apply the same sort of logic to line integrals. Lets start with \(C\in\mathbb{R}^3\), being an oriented curve, so that a direction of travel along the curve is specified. We will split the curve into small intervals, labelling each one with the index \(i=0,\dots,N\). If we let \(\underline{r}_i\) be the vector to the starting point of the  \(i^{th}\) interval. Let \(\underline{r}_{i+1}-\underline{r}_i=\underline{\text{d}r_i}\) be the vector pointing from the start of the \(i^{th}\) interval, to it's end. As our chosen intervals get smaller and smaller, the \(\underline{\text{d}r_i}\) get closer and closer to being tangential to \(C\). We can then define the line integral of the vector field \(\underline{A}(\underline{r})\) along the curve \(C\) as the following limit:
+\[\int_C\underline{A}(\underline{r})\cdot \underline{\text{d}r}:=\lim_{N\to\infty}\sum_i\underline{A}(\underline{r}_i)\cdot \underline{\text{d}r_i}\]
+\subsubsection{Parametrisation}
+Like before, we do not actually use this definition to compute a line integral. The actual practical prescription works like this: We need to describe \(C\) as a parametrised curve in \(\mathbb{R}^3\). All points \(\underline{r}\in C\) on the curve should be represented as:
+\[C=\{\underline{r}(t):t\in[a,b]\}\]
+where \(t\) is called the parameter along the curve. Note that their are many parametrisations that can be chosen for the curve, so we should aim to pick the one that makes further calculation as easy as possible for us.
+\subsubsection*{Example 1}
+Consider the curve that is the equation for a circle on the \((x,y,0)\) coordinate space:
+\[x^2+y^2=1\]
+The simplest choice for parametrising this curve which also makes it oriented is:
+\[x=\cos{t},\quad y=\sin{t},\quad t\in[0,2\pi)\]
+As the choice for \(t\) moves towards \(2\pi\) from \(0\), the circle is traversed anti-clockwise.
+\subsubsection*{Example 2}
+Consider a helix. A simple parametrisation is given by:
+\[x=R\cos{t},\quad y=R\sin{t},\quad z=at,\quad t\in(0,\infty)\]
+Where \(R\) and \(a\) are parameters of the helix and \(t\) is the parameter along the curve. We could have chosen any domain for \(t\), and this parameter also orients the curve.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/helix_r3.png}
+    \caption{A helix, constructed using the above parametrisation}
+\end{figure}
+\subsection{Line Integral as an Ordinary Definite Integral}
+Once we have chosen an appropriate parametrisation, we can compute the line integral of a vector field as follows:
+\[\int_C\underline{A}(\underline{r})\cdot\underline{\text{d}r}=\int^{t_{max}}_{t_{min}}\underline{A}(\underline{r}(t))\cdot\df{\underline{r}(t)}{t}\,\text{d}t\]
+In this equation, \(\underline{A}(\underline{r}(t))\) is the value of the vector field along the curve \(C\). The object \(\frac{\underline{\text{d}r}(t)}{dt}\) is another vector field the curve. If \(\underline{r}(t)\) defines a position, then \(\underline{\text{d}r}(t)/dt\) defines a velocity. This equation is independent of how we choose to parametrise the curve, which makes the quantity it computes - the line integral of a vector field - well defined.
+\subsubsection{Line integral example}
+Consider a curve \(C\), represented in parametrised form as:
+\[x=t,\quad y=t,\quad z=2t^2,\quad t\in[0,1]\]
+Consider the vector field \(\underline{A}=(y,z,x)\). We wish to compute the line integral of \(\underline{A}\) along the curve.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/lineintegral1.png}
+    \caption{The curve \(C\) over the vector field \(A\)}
+\end{figure}
+We first compute the velocity vector field along the curve:
+\[\df{\underline{r}(t)}{t}=\left(x'(t),\,y'(t),\,z'(t)\right)=(1,1,4t)\]
+We now need to evaluate the vector field at each point:
+\[\underline{A}(\underline{r}(t))=(t,\,2t^2,\,t)\]
+We can now compute the line integral:
+\[\int_C\underline{A}(\underline{r})\cdot\underline{\text{d}r}=\int^1_0(t,2t^2,t)\cdot(1,1,4t)\,\text{d}t\]
+\[=\int^1_0(t+6t^2)=6\]
+\subsubsection{Choose parametrisation example}
+In the above example, we were given a curve already parametrised. In this example, the curve will be given geometrically and we will need to choose our own parametrisation. Let \(\underline{A}=(y,x,z)\). Let \(C\) be the curve that connects the origin to the point \((1,2,3)\). The simplest parametrisation we can make is:
+\[\underline{r}(t)=(1,2,3),\quad t\in[0,1]\]
+Then the velocity vector is a constant vector in the direction of the line: \(\underline{r}'(t)=(1,2,3)\). The vector field along the curve is given by:
+\[\underline{A}(\underline{r}(t))=(2t,t,3t)\]
+Then the line integral is:
+\[\int^1_0(2t,t,3t)\cdot(1,2,3)\,\text{d}t=\int^1_013t\,\text{d}t=\frac{13}{2}\]
+\subsubsection{Closed curve line integral example}
+Let us integrate the vector field \(\underline{A}=(y,x,z)\) along a closed curve, which is the unit circle in the \(x - y\) plane. We will parametrise the circle in the simplest possible way:
+\[\underline{r}(t)=(\cos(t),\,\sin(t),\,0),\quad t\in[0,2\pi]\]
+The velocity vector field is then:
+\[\df{\underline{r}}{t}=(-\sin(t),\,\cos(t),\,0)\]
+The vector field along the curve is \(\underline{A}(\underline{r}(t))=(\sin(t),\,\cos(t),\,0)\). This means that the line integral is:
+\[\oint \underline{A}\cdot \underline{\text{d}r}=\int^{2\pi}_0-\sin^2(t)+\cos^2(t)\,\text{d}t=\int^{2\pi}_0\cos(2t)\,\text{d}t=0\]
+Note that we have used a new integral symbol. This is simply to note that we are integrating along a closed curve. An integral of this type is often called circulation for the vector field. Vector fields with 0 circulation will become important later.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/circulationexample.png}
+    \caption{Example of a closed curve line integral over the vector field \(\underline{A}\)}
+\end{figure}
 \end{document}

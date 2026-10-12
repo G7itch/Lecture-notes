@@ -112,4 +112,50 @@ If \(A\) is unbounded below, we write \(\inf A=-\infty\). We set:
     &\inf \emptyset = +\infty
 \end{align*}
 For \(A\subseteq \mathbb{R}\) and \(A\ne\emptyset\), we have \(\inf A\leq \sup A\). If \(A\subseteq B\subseteq \mathbb{R}\) then \(\sup A\leq \sup B\) and \(\inf A \geq \inf B\). A monotone increasing sequence converges to it's supremum and a monotone decreasing sequence converges to it's infimum. A bounded monotone sequence always converges.
+\subsection{Limit Points}
+A number \(a\in\mathbb{R}\) is called a limit point or partial limit of the sequence \(\seq{a}{n}\) if \(\forall\varepsilon>0\) and \(\forall N\in\mathbb{N}\), \(\exists\, n\geq N\) such that:
+\[|a_n-a|<\varepsilon\]
+Note the key difference between this and the standard limit definition is that in the limit definition we require \(\forall\varepsilon>0, \exists N\in\mathbb{N}: \forall n\geq N\cdots\). Let \(\seq{a}{n}\) be a convergent sequence with limit \(L\). Then \(a\in\mathbb{R}\) is a limit point if and only if \(a=L\).
+\subsubsection{Intuition}
+For any property \(A(n)\), the statement: \(\forall N\in\mathbb{N}\) s.t. \(\exists n\geq N\) when \(A(n)\), is the same as saying there are infinitely many \(n\in\mathbb{N}\) for which \(A(n)\) holds.
+\subsubsection*{Example}
+Let \(\seq{a}{n}\) be a sequence with \(a_n=(-1)^n+\frac{1}{n}\). We claim the limit points are \(-1\) and \(1\). Let \(\varepsilon>0\) and let \(N\in\mathbb{N}\), then:
+\[n=2\left(N+\left\lfloor\frac{1}{\varepsilon}\right\rfloor\right)+1\implies|a_n-(-1)|<\varepsilon\]
+\[n=2\left(N+\left\lfloor\frac{1}{\varepsilon}\right\rfloor\right)\implies|a_n-1|<\varepsilon\]
+\subsection{Subsequences}
+Let \(\seq{a}{n}\) be a sequence and \(\seq{n}{k}\) be an increasing sequence of natural numbers. Then the sequence \(\seq{a}{{n_k}}\) is called a subsequence of \((a_n)\). For example:
+\[\left(\frac{1}{n^2}\right)_n\ \text{is a subsequence of}\ \left(\frac{1}{n}\right)_n\]
+\subsubsection{Limit points and subsequences}
+Let \(\seq{a}{n}\) be sequence and \(a\in \mathbb{R}\). Then \(a\) is a limit point of \((a_n)\) if and only if there is a subsequence \(\seq{a}{{n_k}}\) that converges to \(a\). This is proved via the squeeze theorem. Additionally, let \(\seq{a}{n}\) be a sequence then \(a_n\) has a subsequence with \(a_{n_k}\to\infty\) as \(k\to\infty\) if and only if \(a_n\) is unbounded from above. Similarly for \(a_{n_k}\to-\infty\) if \(a_n\) is unbounded from below
+\subsection{\(\limsup\) and \(\liminf\)}
+Let \((a_n)_{n\geq p}\) be a sequence. Set \((b_m):=\sup_{k\geq m}a_k\) then \((b_m)_m\) is a decreasing sequence. Similarly \(c_m:=\inf_{k\geq m}a_k\) is an increasing sequence. Let \((a_n)_{n\geq p}\) be a sequence. We define:
+\[\limsup_{n\to\infty}a_n:=\inf_{m\geq p}\sup_{k\geq m}a_k\]
+\[\liminf_{n\to\infty}a_-n:=\sup_{m\geq p}\inf_{k\geq m}a_k\]
+\subsubsection*{Example}
+If \(\seq{a}{n}\) is such that \(a_n=(1+\frac{1}{n})(-1)^n\). Then:
+\[a_n=\left(-2,\frac{3}{2},-\frac{4}{3},\frac{5}{4},-\frac{6}{5},\dots\right)\]
+Then from our above definition:
+\[b_n=\left(\frac{3}{2},\frac{3}{2},\frac{5}{4},\frac{5}{4},\dots\right)\]
+\[c_n=\left(-2,-\frac{4}{3},-\frac{4}{3},-\frac{6}{5},\dots\right)\]
+\[\limsup_{n\to\infty}a_n=\lim_{n\to\infty}b_n=1\]
+\[\liminf_{n\to\infty}a_n=\lim_{n\to\infty}c_n=-1\]
+You can think of this like looking at progressively smaller sets of the sequence starting at index \(0\), and then going to index \(1\) and so on, and then taking the supremum or infimum of the resulting set.
+\subsubsection{Bounded sequences}
+Let \(\seq{a}{n}\) be a bounded sequence. Then \(L^-=\liminf_{n\to\infty}a_n\) and \(L^+=\limsup_{n\to\infty}a_n\) are limit points of \(a_n\). The sequence \(\seq{a}{n}\) is bounded from above if and only if \(\limsup_{n\to\infty}a_n<\infty\), and likewise for bounded from below.
+\subsection{Bolzano-Weierstra\ss}
+Every bounded sequence has a convergent subsequence.
+\subsection{Maximums and Minimums}
+Let \(\seq{a}{n}\) be a bounded sequence. Let \(L=\liminf_{n\to\infty}a_n\) and \(M=\limsup_{n\to\infty}a_n\), then for any \(\varepsilon>0\), there are only finitely many \(n\in\mathbb{N}\) with \(a_n<L-\varepsilon\) or \(a_n>M+\varepsilon\). In particular \(L,M\) are the smallest and largest points of \(a_n\) respectively.
+\subsection{Cauchy Sequences}
+A sequence \(\seq{a}{n}\) of real numbers is called a Cauchy sequence if \(\forall \varepsilon>0,\ \exists N\in\mathbb{B}:\ \forall n,m\geq N\),
+\[|a_n-a_m|<\varepsilon\]
+Notice that this definition does not require any information about the location of the sequence and it does not require any particular limit. For example \(a_n=2^{-n}\) is a Cauchy sequence.
+\subsubsection{Properties of Cauchy sequences}
+\begin{itemize}
+    \item Every convergent sequence is a Cauchy sequence.
+    \item Every Cauchy sequence is bounded.
+    \item Every Cauchy sequence in \(\mathbb{R}\) has a limit in \(\mathbb{R}\).
+\end{itemize}
+\subsubsection{Completeness}
+A set \(A\) is called complete is every Cauchy sequence in \(A\) has a limit in \(A\).
 \end{document}
