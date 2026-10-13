@@ -1,5 +1,5 @@
 \documentclass[12pt]{article}
-\usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float}
+\usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float,esint}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -231,4 +231,64 @@ Note that we have used a new integral symbol. This is simply to note that we are
     \includegraphics[width=1\linewidth]{Year 2/Images/circulationexample.png}
     \caption{Example of a closed curve line integral over the vector field \(\underline{A}\)}
 \end{figure}
+\subsection{Surface Integrals}
+\subsubsection{Year 1 revision}
+Recall from last year that surface integrals can be defined by the way of a limiting process:
+\[\iint f(x,y)\,\text{d}x\,\text{d}y=\lim_{N\to\infty}\sum_i f(x_i,y_i)\Delta A_i\]
+This is not how we actually compute them though:
+\[\iint_Df(x,y)\,\text{d}x\,\text{d}y=\int^d_c\left\{\int^{S_+(y)}_{S_-(y)}f(x,y)\,\text{d}x\right\}\,\text{d}y\]
+It is often convenient to change coordinate systems to make this integral easier to compute.
+\subsubsection{Motivating examples and a word on other integrals}
+Example problems that make use of surface integrals relevant to this module include: fluid flowing through a structure / flux through a surface. Similar to line integrals, there are many other surface integrals that we can take although the standard dot product one is generally seen as the most physically useful. That being said any valid integral you can construct you can also compute. Similar to line integrals, we have a new notation for closed surface integrals:
+\[\oiint_S\underline{F}\cdot\underline{n}\,\text{d}S\]
+\subsection{Computing surface integrals}
+How do we actually compute surface integrals? Like line integrals, we need to parametrise the surface so that we can express the integral:
+\[\iint_S\underline{u}(\underline{r}(x,y))\cdot\underline{n}\,\text{d}S\]
+as the integral:
+\[\iint \underline{u}(\underline{r}(u,v))\cdot\underline{n}\,\text{d}u\,\text{d}v\]
+Where the normal to the surface \(\underline{n}\) is given by:
+\[\pf{\underline{r}}{u}\times \pf{\underline{r}}{v}\]
+\subsubsection{Standard transform example}
+Compute the integral \(\iint_S\underline{A}\cdot\underline{n}\,\text{d}S\), of the vector field \(\underline{A}=(x,\,z,\,-y)\) over the curved surface of the cylinder \(x^2+y^2=1\) between \(z=0\) and \(z=1\) oriented with the normal facing outwards.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/cylindernormal.png}
+    \caption{The cylinder in question, marked with the normals that we are considering.}
+\end{figure}
+We know that an appropriate parametrisation would be putting the surface into cylindrical coordinates:
+\[\begin{cases}
+    x=\rho\cos\phi \\
+    y=\rho \sin\phi \\
+    z=z
+\end{cases}\]
+On our surface we have \(\rho=1,\ \phi\in[0,2\pi),\ z\in[0,1]\). Our surface can be given in cylindrical coordinates as:
+\[\underline{r}(\phi,z)=(\cos\phi,\, \sin\phi,\, z)\]
+Since we want our normal to be tangential to the plane:
+\[\underline{n}=\pf{\underline{r}}{\phi}\times\pf{\underline{r}}{z}=\pm((-\sin\phi,\, \cos\phi,\,0)\times (0,0,1)) \]
+We take the positive sign since we require our normal be pointing outwards. You can always check what direction your normals are pointing by substituting in an appropriate point on the surface. Finally we can do our surface integral:
+\[\iint_S\underline{A}\cdot\underline{n}\,\text{d}S=\int^{2\pi}_0\int^1_0\underline{A}(\underline{r})\cdot\underline{n}\,\text{d}z\,\text{d}\phi\]
+\[\underline{A}(\underline{r})=(\cos\phi,\, z,\, -\sin\phi)\]
+\[\text{d}S=\rho \text{d}\phi\text{d}z\]
+\[\int^{2\pi}_0\int^1_0(\cos\phi,\, z,\, -\sin\phi)\cdot (\cos\phi,\, \sin\phi,\, 0)\,\text{d}z\,\text{d}\phi\]
+\[=\int^{2\pi}_0\left[z\cos^2\phi+\frac{z^2}{2}\sin\phi\right]^1_0\,\text{d}\phi\]
+\[=\left[\frac{1}{4}\sin2\phi+\frac{\phi}{2}-\frac{1}{2}\cos\phi \right]^{2\pi}_0=\pi\]
+Notice that here we made the standard integral transform from Cartesian to cylindrical coordinates. This transform is given in the formula sheet but if you need to derive it, then it comes from the Jacobian.
+\subsubsection{Non-standard transform example}
+Find the surface integral of \(\underline{A}=\underline{r}\) over \(z=1-x^2-y^2\) with \(z>0\) and the normal pointing outwards.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Year 2/Images/parabaloid.png}
+    \caption{We are only considering the paraboloid where \(z>0\)}
+\end{figure}
+Note that there doesn't seem to be an obvious parametrisation that we can make so we will just leave it in \(x,y\):
+\[\underline{r}=(x,y,1-x^2-y^2);\quad x^2+y^2\leq 1\]
+We need to find our \(\underline{n}\):
+\[\pf{\underline{r}}{x}\times \pf{\underline{r}}{y}=(1,0,-2x)\times(0,1,-2y)\]
+\[\underline{n}=\pm(2x,2y,1)\]
+Since we require the outward normal we have \(\underline{n}=(2x,2y,1)\). Then:
+\[I=\iint_S\underline{A}\cdot \underline{n}\,\text{d}S=\iint_S(x,y,1-x^2-y^2)\cdot (2x,2y,1)\,\text{d}x\,\text{d}y\]
+\[=\iint_Sx^2+y^2+1\,\text{d}x\,\text{d}y\]
+Now we can see an appropriate transform to make our integrating domain simpler - we can convert to polar coordinates.
+\[=\int^{2\pi}_{0}\int^1_0\rho(\rho^2+1)\,\text{d}\rho\,\text{d}\phi\]
+\subsection{Volume integrals}
 \end{document}
