@@ -291,4 +291,60 @@ Since we require the outward normal we have \(\underline{n}=(2x,2y,1)\). Then:
 Now we can see an appropriate transform to make our integrating domain simpler - we can convert to polar coordinates.
 \[=\int^{2\pi}_{0}\int^1_0\rho(\rho^2+1)\,\text{d}\rho\,\text{d}\phi\]
 \subsection{Volume integrals}
+Consider a volume \(V\) and a density \(\rho(\underline{r})\). If we split the object into sufficiently small 'volume elements' then the density in that region will be approximately constant. In this tune we can think of the mass of the object as the result of a limiting process:
+\[M_i=\sum^N_{i=1}\rho(\underline{r}_i)\delta V_i\]
+\[M=\iiint_V\rho \,\text{d}V=\lim_{N\to\infty}\sum_{i=1}\rho(\underline{r}_i)\delta V_-i\]
+Often we will only write one integral sign since the dimension is implied by the domain of integration, this can tidy up our notation somewhat. Similar to surface and line integrals we need a new method to actually compute these integrals. This is exactly as you would expect and follows the same procedure from year 1 analysis.
+\[\int _Vf(\underline{r})\,\text{d}x\,\text{d}y\,\text{d}z=\int_{V'}f(\underline{u}(u,v,w))\left|\pf{(x,y,z)}{(u,v,w)}\right|\,\text{d}u\,\text{d}v\,\text{d}w\]
+This is exactly what performing a surface integral looked like, here we just have an extra dimension.
+\subsubsection{Unit sphere example}
+Find the volume of the unit sphere.
+\[x=r\sin\theta\cos\phi\]
+\[y=r\sin\theta\sin\phi\]
+\[z=r\cos\theta\]
+\[r\in[0,1] \quad \theta\in[0,\pi] \quad \phi\in[0,2\pi)\]
+Then via the Jacobian we can see:
+\[\text{d}V=\text{d}x\text{d}y\text{d}z=r^2\sin\theta\, \text{d}r\,\text{d}\theta\,\text{d}\phi\]
+\[\text{Volume}=\iiint_V\text{d}V=\iiint_V\text{d}x\,\text{d}y\,\text{d}z\]
+\[=\int^1_0\int^\pi_0\int^{2\pi}_0r^2\sin\theta\,\text{d}\phi\,\text{d}\theta\,\text{d}r\]
+\subsubsection{Cube example}
+Consider a solid cube bounded by \(0\leq x,y\leq 1)\) with density function \(\rho=1+xyz\). The mass of this cube is given by:
+\[M=\iiint_V(1+xyz)\,\text{d}V\]
+\[M=\int^1_0\int^1_0\int^1_0(1+xyz)\,\text{d}x\,\text{d}y\,\text{d}z\]
+\subsection{Coordinate-free Div and Curl}
+Recall that the divergence measures the flux of a vector field through a surface. It can then be written as a surface integral:
+\[\dive{A}:=\lim_{\delta V\to 0}\frac{1}{\delta V}\oiint_{\delta S}\underline{A}\cdot \underline{n}\,\text{d}S \]
+The curl describes rotation around an axis - we define this by way of a line integral around a closed surface:
+\[\underline{n}\cdot (\curl{A}):=\lim_{\delta Ss\to 0}\frac{1}{\delta S}\oint_{\delta S}\underline{A}\cdot \underline{\text{d}r}\]
+Similar to a ll of the theory we have covered so far in this module, these definitions are not useful for actually computing values but rather are just there for completeness. These definitions may be assessed and are useful because they provide a coordinate free description of both div and curl.
+\subsection{Conservative Vector Fields}
+A vector field \(\underline{A}\) is conservative if:
+\[\oint_C\underline{A}\cdot \underline{\text{d}r}=0\]
+Under some suitable \(C\). These conditions are generally that \(C\) is smooth and closed although more specific conditions may apply - these are not stated in the complete lecture notes. Equivalently, a vector field is conservative if it's line integral is path-independent:
+\[\int_{C_1}\underline{A}\cdot\underline{\text{d}r}=\int_{C_2}\underline{A}\cdot\underline{\text{d}r}\]
+We can show that we can construct the path independence property from the circulation property. Let \(\underline{A}=\underline{\nabla}f\), then:
+\[\oint_C\underline{A}\cdot\underline{\text{d}r}=\int_C\grad{f}\cdot\underline{\text{d}r}\]
+\[=\int^{t_{max}}_{t_{min}}\grad{f}\cdot \df{\underline{r}}{t}\text{d}t=\int^{t_{max}}_{t_{min}}\df{}{t}\left(f(\underline{r}(t))\right)\]
+\[=f(\underline{r}(t_{max}))-f(\underline{r}(t_{min}))\]
+Clearly if the circulation is 0, then we have the scalar field evaluated at the endpoints to be the same:
+\[f(\underline{r}(t_{max}))=f(\underline{r}(t_{min}))\]
+\subsubsection{Example applying conservative properties} 
+Consider the vector field \(\underline{A}=(x^2,y^2)\) and the curve:
+\[C=\{(x,y):x^2+y^2=1,\ y\geq 0\}\]
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/conservativefields.png}
+    \caption{The curve \(C\), over the vector field \(A\)}
+\end{figure}
+We can choose an appropriate parametrisation (in this case, polar) and find that:
+\[\underline{r}(t)=(\cos(t),\sin(t))\implies \underline{r}'(t)=(-\sin(t),\cos(t))\]
+\[\underline{A}(\underline{r}(t))=(\cos^2(t),\,\sin^2(t))\]
+\[I=\int^\pi_0(\cos^2(t),\, \sin^2(t))\cdot (-\sin(t),\,\cos(t))\,\text{d}t=-\frac{2}{3}\]
+Is there an easier way to solve this problem? Yes there is! Notice that:
+\[\curl{A}=0\iff \exists\,\phi:\; \underline{A}=\grad{\phi}\]
+We can find this \(\phi\) by an algorithmic approach or, in this case, by inspection.
+\[\phi=\left(\frac{x^3}{3}+\frac{y^3}{3}\right)\]
+Since we have \(\underline{A}\) conservative then the value of the line integral depends only on endpoints:
+\[I=\phi(-1,0)-\phi(1,0)=-\frac{2}{3}\]
+This is clearly a much more elegant solution and may take significantly less working depending on how complex the integral is.
 \end{document}
