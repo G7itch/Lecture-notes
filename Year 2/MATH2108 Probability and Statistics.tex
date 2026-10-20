@@ -356,4 +356,143 @@ This is analogous to the law of total probabilities in the discrete world. In pa
 \end{cases}\]
 An extension of this, and another way of proving an old result, is that if \(X\) and \(Y\) are random variables, then:
 \[f_Y(y)=\int^\infty_{-\infty}f_{Y|X}(y\mid x)f_X(x)\,\text{d}x\]
+\subsection{Wald's Equation}
+Suppose \(X_1,X_2,\dots\) are a sequence of i.i.d random variables and \(N\) is some non-negative integer valued random variable, independent of the sequence. Then if:
+\[T=\sum^N_{i=1}X_i\]
+We have:
+\[\mathbb{E}[T]=\mathbb{E}[N]\mathbb{E}[X_1]\]
+This comes from applying the tower property and independence. Note that if \(N=0\) we define \(T=0\).
+\subsubsection*{Example}
+Suppose a hen lays \(N\) eggs a week and \(X_i\) is the weight of the \(i^{th}\) egg. We want to know the average total weight of all eggs in one week.
+\[N\sim \text{Po}(\lambda)\]
+\[X_i\sim N(\mu,\,\sigma^2)\]
+\[T=\sum^N_{i=1}X_i\]
+\[\mathbb{E}[T]=\mathbb{E}[N]\mathbb{E}[X_1]=\lambda\mu\]
+Notice that this makes sense physically. This statement says that the average total weight of eggs per week is the average amount of eggs multiplied by the average weight of one egg.
+\subsection{More Properties of Expectations}
+For constants \(a,b\in\mathbb{R}\) and random variables \(X,Y,Z\):
+\begin{itemize}
+    \item \(\mathbb{E}[aX+bY|Z]=a\mathbb{E}[X|Z]+b\mathbb{E}[Y|Z]\)
+    \item If \(Y\geq 0\) then \(\mathbb{E}[Y|X]\geq 0\)
+    \item For \(a\in\mathbb{R}\), \(\mathbb{E}[a|X]=a\)
+    \item If \(X\) and \(Y\) are independent then \(\mathbb{E}[X|Y]=\mathbb{E}[X]\)
+    \item For any 'nice' \(g\): \(\mathbb{E}[Xg(Y)|Y]=g(Y)\mathbb{E}[X|Y]\)
+    \item For random variables \(X,Y,Z\):
+    \[\mathbb{E}[X|Z]=\mathbb{E}[\mathbb{E}[X|Y,Z]\mid Z]=\mathbb{E}[\mathbb{E}[X|Z]\mid Y,Z]\]
+\end{itemize}
+\subsection{Conditional Variance}
+For the random variables \(X\) and \(Y\) we have already seen that we can construct the conditional variance of \(X|Y\):
+\[\text{Var}[X|Y]=\mathbb{E}[X^2|Y]-(\mathbb{E}[X|Y])^2\]
+For any random variables \(X\) and \(Y\) where \(\text{Var}[X]\) is defined:
+\[\text{Var}[X]=\mathbb{E}[\text{Var}[X|Y]]+\text{Var}[\mathbb{E}[X|Y]]\]
+This equation is incredibly useful.
+\subsubsection{Proof}
+\[\mathbb{E}[\text{Var}[X|Y]]=\mathbb{E}[\mathbb{E}[X^2|Y]-\mathbb{E}[X|Y]^2]\]
+Via the tower property, this simplifies:
+\[\mathbb{E}[\text{Var}[X|Y]]=\mathbb{E}[X^2]-\mathbb{E}[\mathbb{E}[X|Y]^2]\]
+Now consider:
+\[\text{Var}[\mathbb{E}[X|Y]]=\mathbb{E}[\mathbb{E}[X|Y]^2]-\mathbb{E}[\mathbb{E}[X^2|Y]]\]
+Which again simplifies, via the tower property:
+\[\text{Var}[\mathbb{E}[X|Y]]=\mathbb{E}[\mathbb{E}[X|Y]^2]-\mathbb{E}[X^2]\]
+Then we have the statement:
+\[\text{Var}[X]=\mathbb{E}[X^2]-\mathbb{E}[\mathbb{E}[X|Y]^2]+\mathbb{E}[\mathbb{E}[X|Y]^2]-\mathbb{E}[X]^2\]
+\[\text{Var}[X]=\mathbb{E}[X^2]-\mathbb{E}[X]^2\]
+Which means we have recovered the definition we know and love.
+\[\blacksquare\]
+\clearpage
+\section{Probability Generating Functions}
+\subsection{Motivation}
+Generating functions help us extract or compute helpful properties and statistics of random variables. In MATH1102, probability generating functions were covered for discrete random variables. In this module we look at the more general moment generating functions with an emphasis on continuous variables.
+\subsection{Moment Generating Functions}
+For any random variable \(X\), the moment generating function (MGF) of \(X\) is the function:
+\[M_X:A\subseteq \mathbb{R}\to[0,\infty)\]
+with:
+\[M_X(t)=\mathbb{E}\left[e^{tX}\right]\]
+The MGF is defined as long as this expectation exists and is finite in an open interval around \(t=0\).
+\subsubsection{Computing a MGF}
+Let \(X\sim N(0,1)\). We wish to determine the MGF of \(X\).
+\[f_X(x)=\frac{1}{\sqrt{2\pi}}\exp\left(-\frac{x^2}{2}\right),\quad x\in\mathbb{R}\]
+\[M_X(t)=\mathbb{E}\left[e^{tX}\right]\]
+\[M_X(t)=\int^\infty_{-\infty}e^{tx}\frac{1}{\sqrt{2\pi}}\exp\left(-\frac{x^2}{2}\right)\,\text{d}x\]
+\[=\int^\infty_{-\infty}\frac{1}{\sqrt{2\pi}}\exp\left(-\frac{x^2}{2}+tx\right)\,\text{d}x\]
+\[=e^{\frac{t^2}{2}}\int^\infty_{-\infty}\frac{1}{\sqrt{2\pi}}\exp\left(-\frac{1}{2}(x-t)^2\right)\,\text{d}x\]
+Notice that we have intentionally kept the constant inside the integral because now we have it in a form we can easily compute. This is because the integrand is the pdf of the distribution \(N(t,1)\) and as such since we are integrating over it's entire domain, we are just left with \(1\). Thus:
+\[M_X(t)=e^{\frac{t^2}{2}}\]
+\subsubsection{MGF with restricted domain}
+Consider \(Y\sim\text{Exp}(\lambda)\). The MGF of \(Y\) is then given by:
+\[M_Y(t)=\mathbb{E}[e^{tY}]=\int^\infty_0e^{ty}\lambda e^{-\lambda y}\,\text{d}y\]
+\[=\lambda\int^\infty_0e^{y(t-\lambda)}\,\text{d}y\]
+But notice that this integral will not be finite if we do not have \(t<\lambda\). Under this condition:
+\[t\in(-\infty, \lambda)\]
+We also know from the pdf of \(Y\) that:
+\[\lambda > 0\]
+Luckily in this case, this guarantees that we have an open interval around \(t=0\) for which the integral is finite and so the MGF exists. It is possible that either our conditions on \(t\), or our integrand do not satisfy this open-interval requirement and hence the MGF does not exist.
+\subsection{Properties of MGFs}
+\begin{itemize}
+    \item \(M_X(0)=1\), for any random variable \(X\).
+    \item We can take derivatives of our MGF, subject to the definition:
+    \[M_X^{(n)}(t)=\pf{^nM_X(t)}{t^n}\]
+    and in this case:
+    \[M_X^{(n)}(t)=\mathbb{E}[X^ne^{tX}]\]
+    Notice that when \(t=0\), we recover the \(n^{th}\) moment of \(X\).
+\end{itemize}
+\subsection{Taylor Expansions of MGFs}
+Recall that the Maclaurin expansion of \(f(t)=e^{tx}\) is given by:
+\[e^{tx}=\sum^\infty_{n=0}\frac{x^n}{n!}t^n\]
+and then:
+\[M_X(t)=\mathbb{E}[e^{tX}]=\int^\infty_{-\infty}\left(\sum^\infty_{n=0}\frac{x^n}{n!}t^n\right)\, f_X(x)\,\text{d}x\]
+\[=\sum^\infty_{n=0}\frac{t^n}{n!}\int^\infty_{-\infty}x^nf_X(x)\,\text{d}x=\sum^\infty_{n=0}\frac{\mathbb{E}[X^n]}{n!}t^n\]
+This strategy can be very useful to find the moments of \(X\), or maybe find a general formula for them.
+\subsubsection*{Example}
+Let \(M_Y(t)=\frac{\lambda}{\lambda - t}\). Then:
+\[M_Y(t)=n!\lambda(\lambda-t)^{-(n+1)}\]
+\[M_Y(t)=\sum^\infty_{n=0}\frac{M_Y^{(n)}(0)}{n!}t^n=\sum^\infty_{n=0}\frac{1}{\lambda^n}t^n\]
+Equating coefficients allows us to see:
+\[\frac{\mathbb{E}[X^n]}{n!}=\frac{1}{\lambda^n}\implies \mathbb{E}[X^n]=\frac{n!}{\lambda^n}\]
+\subsection{Uniqueness of MGFs}
+Suppose that \(X\) and\(Y\) are random variables with MGFs \(M_X(t)\) and \(M_Y(t)\) respectively. Then \(X\) and \(Y\) have the same distribution if and only if \(M_X(t)=M_Y(t)\) for all \(t\) in an open interval containing 0. Note that this theorem does not mean that random variables with the same moments have the same distribution.
+\subsection{Linear Transformations}
+If a random variable \(X\) has MGF \(M_X(t)\) then the MGF of \(Y=a+bX\) is:
+\[M_Y(t)=e^{at}M_X(bt)\]
+\subsection{Joint Probability Distributions: MGFs}
+Suppose \(\underline{X}=(X_1,\dots,X_n)^\mathrm{T}\) is a multivariate random variable with joint pdf \(f_{\underline{X}}(\underline{x})\). Define \(\underline{t}=(t_1,\dots,t_n)^\mathrm{T}\), then:
+\[M_{\underline{X}}(\underline{t})=\mathbb{E}[e^{\underline{t}^{\mathrm{T}}\underline{x}}]=\mathbb{E}[e^{t_1X_1+\cdots+t_nX_n}]\]
+as long as \(\mathbb{E}[e^{\underline{t}^{\mathrm{T}}\underline{x}}]\) exists and is defined in an open region around:
+\[t_1=\cdots = t_n=0\]
+\subsubsection{Properties of joint MGFs}
+\begin{itemize}
+    \item \(M_{\underline{X}}(\underline{t})=M_{\underline{Y}}(\underline{t})\iff F_{\underline{X}}(\underline{x})=F_{\underline{Y}}(\underline{y})\)
+    \item The marginal MGF of \(X_i\) can be recovered by setting all \(t_j=0\) where \(j\ne i\):
+    \[M_{X_i}(0,\dots,t,\,\dots,0)=\mathbb{E}[e^{t_iX_i}]\]
+    \item We can find moments by taking partial derivatives and evaluating at \(\underline{t}=0\):
+    \[\pf{^{(n)}M_{\underline{X}}(\underline{t})}{t_i}\bigr|_{\underline{t}=0}=\mathbb{E}[X_i^n]\]
+    \item The random variables \(X_1,\dots,X_n\) are mutually independent if and only if:
+    \[M_{X_1,\dots,X_n}(\underline{t})=\prod^n_{i=1}M_{X_i}(t_i)\]
+\end{itemize}
+\subsection{Sums of Independent Random Variables}
+If \(X_1,\dots, X_n\) are mutually independent random variables and \(Y\) is defined such that:
+\[Y=\sum^n_{i=1}c_iX_i\]
+Where \(c_1,\dots,c_n\in\mathbb{R}\) are constants. Then the MGF of \(Y\) is:
+\[M_Y(t)=\prod^n_{i=1}M_{X_i}(c_it_i)\]
+A special case is when \(c_1=\cdots=c_n=1\).
+\subsubsection{Proof of sums of normal i.i.d variables}
+Suppose that \(X_i\sim N(\mu_i,\sigma^2_i)\) for \(i\in\{1,\dots,n\}\) with \(X_1,\dots, X_n\) mutually independent. Then let:
+\[Y=\sum^n_{i=1}X_i\]
+and recall:
+\[M_Y(t)=\prod^n_{i=1}M_{X_i}(t)\]
+We can find via integration that:
+\[M_{X_i}(t)=\exp\left(\mu_i t+\frac{1}{2}\sigma_i^2t^2\right)\]
+Then:
+\[\prod^n_{i=1}M_{X_i}(t)=\prod^n_{i=1}\exp\left(\mu_it+\frac{1}{2}\sigma_i^2t^2\right)\]
+\[=\exp\left(\mu_1t+\frac{1}{2}\sigma_1^2t^2+\cdots+\mu_nt+\frac{1}{2}\sigma_n^2t^2\right)\]
+\[=\exp\left((\mu_1+\cdots\mu_n)t+\frac{1}{2}(\sigma_1^2+\cdots\sigma^2_n)t^2\right)\]
+Let:
+\begin{align*}
+    \mu^*=\sum^n_{i=1}\mu_i&&(\sigma^{2})^*=\sum^\infty_{i=1}\sigma^2_i
+\end{align*}
+Then:
+\[M_Y(t)=\exp\left(\mu^*t+\frac{1}{2}(\sigma^2)^*t^2\right)\]
+Which, by the uniqueness of MGFs, is the MGF for a normal distribution. Hence:
+\[Y=\sum^n_{i=1}X_i\sim N(\mu_1+\cdots+\mu_n,\, \sigma^2_1+\cdots\sigma^2_n)\]
+Note that we can extend this proof rather simply to show the central limit theorem.
 \end{document}

@@ -195,4 +195,40 @@ Hence this series converges for \(|q|<1\) and diverges for \(|q|\geq 1\).
 If \(F(x)=\sum^\infty_{k=0}b_kx^k\) is a power series and \(L=\limsup_{n\to\infty}|b_n|^\frac{1}{n}\) then:
 \[L=\infty\implies F(x)\text{ converges only for }x=0\]
 If \(0<L<\infty\), then set \(R=\frac{1}{L}\). \(F(x)\) converges for \(|x|<R\) and diverges for \(|x|>R\). if \(L=0\) then \(F(x)\) converges for all \(x\in\mathbb{R}\). The number \(R\) is called the minimum convergence of \(F\).
+\subsection{Leibniz Criterion / Alternating Series Test}
+If \(\seq{a}{k}\) is a sequence of positive numbers for some index \(k\geq m\) that tend to 0 monotonically. I.e. if \(a_k\to0\) and \(0<a_{k+1}\leq a_k\) for all \(k\geq m\) then:
+\[\sum^\infty_{k=m}(-1)^ka_k\]
+converges. Note that knowledge about these kinds of series are incredibly useful as they can give us information about series that aren't absolutely convergent. For example:
+\[1-\frac{1}{2}+\frac{1}{3}-\frac{1}{4}+\frac{1}{5}-\cdots=\log(2)\]
+Notice that series of these kinds are bound by the first two partial sums.
+\subsection{The Dirichlet \(\eta\) Function}
+The Dirichlet \(\eta\) function converges for \(p>0\):
+\[\eta(p)=\sum^\infty_{n=1}\frac{(-1)^{n+1}}{n^p}\]
+Notice that this function automatically converges for \(p>1\) since in this case the absolute value makes the function into a \(\zeta(p)\) series. Furthermore we can see that we can apply the alternating series test:
+\[\left|\frac{(-1)^{n+1}}{n^p}\right|=\frac{1}{n^p}\to 0\]
+\[\frac{1}{(n+1)^p}\leq \frac{1}{n^p}\]
+And hence the series converges by the alternating series test.
+\subsection{Grouping of Terms}
+If we think of a series as an infinite sum, then a natural question that arises is whether the same rules of association and commutativity exist. For example consider:
+\[\sum^\infty_{n=0}(-1)^n=1-1+1-1+\cdots\]
+This series diverges but the following groupings converge:
+\[(1-1)+(1-1)+\cdots =0\]
+\[1+(-1+1)+(-1+1)+\cdots=0\]
+In general if a series converges then all of the series created by grouping terms also converge to the same limit.
+\clearpage
+\section{Continuity, differentiation, convexity and inequalities}
+\subsection{Intervals}
+Throughout this section, \(I\) specifies an interval \((a,b)\) where \(x\in I\implies a<x<b\). \(x_0\) is a boundary point if \(x_0=a\) or \(x_0=b\).
+\subsection{Function Limit Definition}
+The function \(f:I\,\backslash\,\{x_0\}\to\mathbb{R}\) converges to a limit \(L\) at \(x_0\) if for all \(\varepsilon>0\), there exists a \(\delta>0\) such that for \(x\in I\):
+\[|x-x_0|<\delta\implies |f(x)-L|<\varepsilon\]
+We write \(\lim_{x\to x_0}f(x)=L\).
+\subsection{Limit Definition via Sequences}
+We have \(\lim_{x\to x_0}f(x)=L\) if and only if for all sequences \(\seq{x}{n}\) with \(x_n\in I\,\backslash\,\{x_0\}\) and \(x_n\to x_0\) as \(n\to \infty\) then \(f(x_n)\to L\).
+\subsection{Continuity Definition}
+A function \(f:I\to\mathbb{R}\) is continuous at \(x_0\in I\) if \(\lim_{x\to x_0}f(x)=f(x_0)\). \(f\) is continuous on \(I\) if it is continuous at every point \(x_0\in I\).
+\subsection{Maximum and Minimum Attainment}
+If \(a<b\) and \(f\) is continuous on \([a,b]\) then \(f\) attains its maximum and minimum. That is to say there exists \(s,\,t\in [a,b]\) such that for all \(x\in [a,b]\):
+\[f(t)\leq f(x)\leq f(s)\]
+This conclusion can fail if any one of the conditions do not hold.
 \end{document}

@@ -386,4 +386,176 @@ Note that we require the values of \(r\) to be real and distinct in the Frobeniu
     \item When the roots \(r_+,r_-\) are real and distinct but differ by an integer amount the Frobenius method will not work. This is because the series terms will start to "overlap" between the two solutions, potentially making them not linearly independent, it could also cause clashes of monomial terms. Note that this is exactly why we cannot use the Frobenius method around ordinary points since it leaves us with the solutions \(r=0,1\) which will fail for the aforementioned reason.
 \end{itemize}
 There exists no robust methodology for dealing with series solutions of ODEs around irregular singular points, each one has to be dealt with in a unique way. When dealing with ODEs that satisfy the above conditions, additional modifications or unique methods will be required to solve the ODE.
+\clearpage
+\section{Fourier Series}
+\subsection{Introduction}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Year 2/Images/sduijfozunod1.png}
+    \caption{You like Fourier series, don't you?}
+\end{figure}
+As we have just seen, series solutions are a good way to approximate ODE solutions, particular when we expect them to behave similarly to their Taylor series expansions. However we have also covered the minimum radius of convergence which details how these solutions rapidly lose accuracy away from the expansion point. This can be a particular problem for bounded and periodic functions. Mathematically, a function is \(T\)-periodic if for all \(x\):
+\[f(x+T)=f(x)\]
+In particular we will focus on piecewise continuous and differentiable periodic functions which are functions that can be partitioned into sub-domain intervals in which the function is differentiable. We are allowed jump discontinuities however. In this chapter we study how we can approximate these functions by infinite series of sinusoidal functions. The following integrals will become very helpful:
+\[\int^\pi_{-\pi}\sin(mx)\cos(nx)\,\text{d}x=0\]
+\[\int^\pi_{-\pi}\sin(nx)\,\text{d}x=\int^\pi_{-\pi}\cos(nx)\,\text{d}x=0\]
+\[\int^\pi_{-\pi}\cos(0x)\,\text{d}x=\int^\pi_{-\pi}\,\text{d}x=2\pi\]
+\[\int^\pi_{-\pi}\cos(mx)\sin(nx)\,\text{d}x=\begin{cases}
+    \pi,& n=m \\
+    0, & n\ne m
+\end{cases}\]
+\[\int^\pi_{-\pi}\sin(mx)\sin(nx)\,\text{d}x=\begin{cases}
+    \pi,&n=m \\
+    0,&n\ne m
+\end{cases}\]
+Crucial to demonstrating these facts is knowledge about whether the integrand is even or odd, and what happens when we integrate across a symmetric domain.
+\subsection{The Kronecker Delta Function}
+We can simplify some of the notation that appears in these integrals by making use of the Kronecker Delta function \(\delta_{nm}\) defined as:
+\[\delta_{nm}=\delta_{mn}:=\begin{cases}
+    1, & n=m \\
+    0, & n\ne m
+\end{cases}\]
+For example, we could rewrite one of the trigonometric integrals as the following:
+\[\int^\pi_{-\pi}\cos(mx)\,\text{d}x=2\pi\delta_{m0}\]
+Also note another property of the Kronecker delta - it can "sift" out terms in a sum.
+\[\sum^\infty_{n=0}a_n\delta_{nm}=a_0\cdot0+a_1\cdot0+\cdots+a_m\cdot 1=a_m\]
+\subsection{Fourier Series of \(2\pi\)-periodic Functions}
+For a piecewise continuous and differentiable \(2\pi\)-periodic functions \(f(x)\), the Fourier series of \(f(x)\) is given as:
+\[\frac{a_0}{2}+\sum^\infty_{n=1}[a_n\cos(nx)+b_n\sin(nx)]\]
+Where the Fourier cosine coefficients \(a_n\) are defined as:
+\[a_n=\frac{1}{\pi}\int^\pi_{-\pi}f(x)\cos(nx)\,\text{d}x,\quad n=0,1,2,\dots\]
+Whereas the Fourier sine coefficients \(b_n\) are defined as:
+\[b_n=\frac{1}{\pi}\int^\pi_{-\pi}f(x)\sin(nx)\,\text{d}x,\quad n=1,2,\dots\]
+Notice that the Fourier series does not change when a single point is modified or removed from it's domain of integration. What this means is that any information about piecewise discontinuities of \(f(x)\) is lost.
+\subsection{Key Properties of Fourier Series}
+\begin{enumerate}
+    \item If \(f(x)\) is a combination of sinusoidal functions, then it's Fourier series is identically \(f(x)\), and the coefficients can be read off directly.
+    \item Since \(f(x)\) and \(\cos(nx)\) are both \(2\pi\)-periodic, its Fourier coefficient integrals can be evaluated over and domain with full period length:
+    \[a_n=\frac{1}{\pi}\int^\pi_{-\pi}f(x)\cos(nx)\,\text{d}x=\frac{1}{\pi}\int^{\theta+2\pi}_\theta f(x)\cos(nx)\,\text{d}x\]
+    A similar argument can be made for \(b_n\).
+    \item If \(f(x)\) is an odd function, we have \(f(x)\cos(nx)\) is also an odd function and thus \(a_n=0\) over a symmetric domain. Furthermore, since \(f(x)\sin(nx)\) is an even function and so:
+    \[b_n=\frac{1}{\pi}\int^\pi_{-\pi}f(x)\sin(nx)\,\text{d}x=\frac{2}{\pi}\int^\pi_0f(x)\sin(nx)\,\text{d}x\]
+    \item If \(f(x)\) is an even function, we have \(f(x)\sin(nx)\) is an odd function and thus \(b_n=0\). Furthermore, since \(f(x)\cos(nx)\) is also even, we have that:
+    \[a_n=\frac{1}{\pi}\int^\pi_{-\pi}f(x)\cos(nx)\,\text{d}x=\frac{2}{\pi}\int^\pi_{-\pi}f(x)\cos(nx)\,\text{d}x\]
+    \item The constant Fourier series term, \(\frac{a_0}{2}\), is always equal to the average value of \(f(x)\) over a full period:
+    \[\frac{a_0}{2}=\frac{1}{2\pi}\int^\pi_{-\pi}f(x)\cos(0x)\,\text{d}x=\frac{1}{2\pi}\int^\pi_{-\pi}f(x)\,\text{d}x\]
+    \item There are infinitely many functions with the same Fourier series. This is because Fourier integrals lose all information about pointwise discontinuities during the computation. Then for all \(2\pi\)-periodic functions \(f(x)\), the function:
+    \[g(x)=\begin{cases}
+        f(x) & x\ne a+2n\pi \\
+        kf(a) & x=a+2n\pi
+    \end{cases}\quad g(x+2\pi)=g(x)\]
+\end{enumerate}
+\subsubsection{Fourier series of the square wave}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/squarewave.png}
+    \caption{A square wave with it's 2-term and 9-term Fourier series}
+\end{figure}
+In this example, we will find the Fourier series of the square wave function:
+\[f(x)=\begin{cases}
+    1 & 0<x<\pi \\
+    0& \pi<x<2\pi
+\end{cases}\quad f(x+2\pi)=f(x)\]
+This specific square wave is neither odd nor even so there are no immediate results we can garner from the equations. We will have to compute coefficients. We will also choose to integrate over \([0,2\pi]\) since this interval defines the "base" domain for which \(f(x)\) is defined. Lets start with the cosine coefficients:
+\[a_m=\frac{1}{\pi}\int^{2\pi}_0f(x)\cos(nx)\,\text{d}x=\frac{1}{\pi}\int^\pi_0\cos(nx)\,\text{d}x=\frac{sin(nx)}{n\pi}\bigr|^\pi_0=0\]
+Note that we only have this when \(n\ne 0\) otherwise we would be evaluating a division by 0. Because of this we need to calculate \(a_0\) separately.
+\[a_0=\frac{1}{\pi}\int^{2\pi}_0f(x)\cos(0x)\,\text{d}x=\frac{1}{\pi}\int^{2\pi}_0f(x)\,\text{d}x=1\]
+Now we need to compute the Fourier since coefficients:
+\[b_n=\frac{1}{\pi}\int^{2\pi}_0f(x)\sin(nx)\,\text{d}x=\frac{1}{\pi}\int^\pi_0\sin(nx)\,\text{d}x=\frac{-\cos(n\pi)}{n\pi}\bigr|^\pi_0\]
+\[\frac{-\cos(n\pi)}{n\pi}\bigr|^\pi_0=\frac{1-\cos(n\pi)}{n\pi}=\frac{1-(-1)^n}{n\pi}\]
+Note that this last simplification step is very commonly done when dealing with Fourier series. Putting this altogether, we can see that the Fourier series for our example square wave is:
+\[f(x)\sim \frac{1}{2}+\sum^\infty_{n=1}\frac{[1-(-1)^n]\sin(nx)}{n\pi}\]
+\subsection{Fourier Convergence Theorem}
+As we have already seen, the Fourier series of a function loses all information about piecewise discontinuities. Furthermore, piecewise discontinuities do not change the value of the resulting integral and so are not accurately captured in the first place. Nevertheless it is still possible to determine the behaviour of a Fourier series at a jump discontinuity. This is known as the Fourier convergence theorem: For a piecewise continuous and differentiable \(2\pi\)-periodic function \(f(x)\), suppose that it's \(N^{th}\) partial Fourier series \(S_N(x)\) is given as:
+\[S_N(x)=\frac{a_0}{2}+\sum^N_{n=1}[a_n\cos(nx)+b_n\sin(nx)]\]
+The Fourier convergence theorem states that:
+\[\lim_{N\to\infty}S_N(x)=\frac{f(x+)+f(x-)}{2},\quad \forall x\]
+Where \(f(x+)\) and \(f(x-)\) denote the one-sided limits of \(f(z)\) at \(z=x\):
+\begin{align*}
+    f(x+):=\lim_{z\to x^+}f(z) && f(x-):=\lim_{z\to x^-}f(z)
+\end{align*}
+In words, the Fourier series of \(f(x)\) converges to exactly \(f(x)\) for all points that are continuous and converges to the average of it's one-sided limits at jump discontinuities. We can use the symbol \(\sim\) to denote equality up to discontinuity.
+\[f(x)\sim\frac{a_0}{2}+\sum^\infty_{n=1}[a_n\cos(nx)+b_n\sin(nx)]\]
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Year 2/Images/FCT_demo.png}
+    \caption{The Fourier series will converge to the midpoint of the discontinuity}
+\end{figure}
+\subsubsection{Evaluating infinite series using FCT}
+Consider the square wave we looked at earlier. We wish to use the FCT to determine the value of the infinite sum:
+\[S=\sum^\infty_{m=0}\frac{(-1)^m}{2m+1}\]
+At first glance, this sum bears no resemblance to our Fourier series for the square wave. However consider that the Fourier series of the square wave is continuous at \(x=\frac{\pi}{2}\) with \(f(\frac{\pi}{2})=1\). Also notice that not all values of \(n\) contribute any terms to our Fourier series of \(f(x)\). In particular:
+\[1-(-1)^n=\begin{cases}
+    0 & n\text{ even} \\
+    2& n\text{ odd}
+\end{cases}\]
+Then we only need sum of over odd values of \(n\) and now we should notice a familiar series:
+\[1=\frac{1}{2}+\sum^\infty_{m=0}\frac{2}{(2m+1)\pi}\sin\left(\frac{(2m+1)\pi}{2}\right)=\frac{1}{2}+\frac{2}{\pi}\sum^\infty_{m=0}\frac{(-1)^m}{2m+1}\]
+To see that last simplification step, consider the bounds of the \(\sin\) term and what values it can take for \(m\in\mathbb{Z}\). Therefore:
+\[1=\frac{1}{2}+\frac{2S}{\pi}\implies S=\frac{\pi}{4}\]
+\subsection{Continuous vs Piecewise Continuous Functions}
+A natural question would be is it possible to identify when a function has piecewise discontinuities from its Fourier series. The answer is yes! Consider the triangle wave function as an example:
+\[g(x)=\begin{cases}
+    \frac{\pi}{2}+x& -\pi\leq x<0 \\
+    \frac{\pi}{2}-x & 0\leq x< \pi
+\end{cases},\quad g(x+2\pi )=g(x)\]
+We can see by inspection that the function \(g(x)\) is continuous for all \(x\). It is also even, which lets us know that all \(\sin\) terms in the Fourier series will be \(0\):
+\[b_n=0\]
+We can work through the integrals and eventually find that the Fourier series of \(g(x)\) is given by:
+\[g(x)=\frac{2}{\pi}\sum^\infty_{n=1}\frac{[1-(-1)^n]\cos(nx)}{n^2}\]
+Now notice the coefficients \(a_n\) and how quickly they decay. In the case of the triangle wave, the \(a_n\) coefficients decay proportional to \(n^{-2}\). This is certainly faster than that of the square wave which decayed proportional to \(n^{-1}\). This has a dramatic effect on how quickly the Fourier series converges to the function. Decay rates are key characteristics of Fourier series that indicate if a Fourier series represents a function that is continuous everywhere or piecewise continuous. The TLDR of this is that if the decay rate of either Fourier coefficients is proportional to \(n^{-1}\), then the function \(f(x)\) contains piecewise discontinuities.
+\subsection{Gibbs Phenomenon}
+As we just mentioned, the decay rate of the Fourier coefficients is critical to describing the nature of the original function. There are some other peculiarities that arise at points of discontinuity due to bounded sinusoidal functions being multiplied with coefficients that produce conditionally convergent or divergent infinite series. Essentially the more terms that we have, the more they really want to diverge at points of discontinuity but can't because they are bounded. What this leads to is known as Gibbs Phenomenon and is when the Fourier series cannot accurately approximate a function in the lead up to a jump discontinuity and is has a guaranteed overshoot/undershoot amount.
+\begin{figure}
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/Gibbs.png}
+    \caption{Gibbs Phenomenon doesn't disappear with more terms.}
+\end{figure}
+In signal processing, these overshoots and undershoots are sometimes referred to as "chirping". Notably Gibbs Phenomenon does not vanish as more and more terms of the Fourier series are added.
+\subsection{Fourier Series of \(2L\)-periodic Functions}
+Not all functions are going to have a period of \(2\pi\), so we present the same results for periodic functions with any given finite period \(T=2L\). Fortunately we can construct the linear map \(y=\frac{\pi x}{L}\) which maps \([-L,L]\) to \([-\pi,\pi]\) and from there we can use all of the same results. These are stated on the formula sheet:
+\[f(x)\sim \frac{a_0}{2}+\sum^\infty_{n=0}\left[a_n\cos\left(\frac{n\pi x}{L}\right)+b_n\sin\left(\frac{n\pi x}{L}\right)\right]\]
+Where the coefficients are defined as:
+\[a_n=\frac{1}{L}\int^L_{-L}f(x)\cos\left(\frac{n\pi x}{L}\right)\,\text{d}x,\quad n\geq 0\]
+\[b_n=\frac{1}{L}\int^L_{-L}f(x)\sin\left(\frac{n\pi x}{L}\right)\,\text{d}x,\quad n\geq 1\]
+Notice that we retrieve the original definition by setting \(L=\pi\). It is very important to remember that \(L\) is the half-period of the function and not the entire period. If in doubt, think back to how \(\pi\) behaves for the \(2\pi\)-periodic functions.
+\subsubsection{Example of a non-standard period function}
+In this example we will consider the Fourier series of the "sawtooth" wave defined as:
+\[h(x)=x,\quad x\in(-1,1),\quad h(x+2)=h(x)\]
+Notice that the period is \(2\) which implies the half period \(L=1\). Additionally notice that the function is odd so \(a_n=0\). We compute the sine coefficients:
+\[b_n=\frac{1}{1}\int^{1}_{-1}h(x)\sin(n\pi x)\,\text{d}x=2\int^1_0x\sin( n\pi x)\,\text{d}x\]
+\[b_n=\frac{2(-1)^{n+1}}{n\pi}\]
+Then the Fourier series of the sawtooth function is:
+\[h(x)\sim\frac{2}{\pi}\sum^\infty_{n=1}\frac{(-1)^{n+1}}{n}\sin(n\pi x)\]
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Year 2/Images/sawwtooth.png}
+    \caption{Sawtooth function and its Fourier series.}
+\end{figure}
+\subsection{Period Extensions of Non-periodic Functions}
+In this section, we consider ways to extend a non-periodic function into a periodic one. This might seem redundant at this stage but is crucial for our later work. Consider a function \(f(x)\) that is defined on \((0,L)\) noting that our endpoints are not included. There are 3 natural extensions to turn a \(f(x)\) into a periodic function.
+\subsubsection{Identity reflection}
+In this case we extend the function by just repeating it over an extended domain:
+\[\tilde{f}(x)=f(x);\; x\in(0,L),\quad \tilde{f}(x+L)=\tilde{f}(x)\]
+This formulation is very important because it allows us to find the Fourier coefficients on any domain of width \(L\), so trivially we can take \((0,L)\) - which is the original domain of the function - hence we can extract information from only the non-periodic segment since \(\tilde{f}(x)=f(x)\) on this domain.
+\subsubsection{Odd periodic extension}
+In this case we define the periodically-extended function \(f_o(x)\) as:
+\[f_o(x)=\begin{cases}
+    f(x)&x\in(0,L) \\
+    -f(-x) & x\in(-L,0)
+\end{cases},\quad f_o(x+2L)=f_o(x)\]
+Notice we now have an odd function defined in the domain \((-L,L)\). This new function is periodic. Once again we can now compute Fourier coefficients. In this case we have \(a_n=0\):
+\[f_o(x)\sim\sum^\infty_{n=1}b_n\sin\left(\frac{n\pi x}{L}\right)\]
+We have \(f_o(x)=f(x)\) on the domain \((0,L)\).
+\subsubsection{Even periodic extension}
+Define the even periodically-extended function \(f_e(x)\) as:
+\[f_e(x)=\begin{cases}
+    f(x)&x\in(0,L)\\
+    f(-x) & x\in(-L,0)
+\end{cases},\quad f_e(x+2L)=f_e(x)\]
+Since \(f_e(x)\) is by definition an even function, we have \(b_n=0\) and thus the Fourier series is:
+\[f_e(x)\sim\frac{a_0}{2}+\sum^\infty_{n=1}a_n\cos\left(\frac{n\pi x}{L}\right)\]
+Notice again \(f_e(x)=f(x)\) only on \((0,L)\)
+\clearpage
+\section{Introduction to PDEs}
 \end{document}
