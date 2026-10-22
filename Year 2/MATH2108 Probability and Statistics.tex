@@ -495,4 +495,123 @@ Then:
 Which, by the uniqueness of MGFs, is the MGF for a normal distribution. Hence:
 \[Y=\sum^n_{i=1}X_i\sim N(\mu_1+\cdots+\mu_n,\, \sigma^2_1+\cdots\sigma^2_n)\]
 Note that we can extend this proof rather simply to show the central limit theorem.
+\subsubsection{Sums of \(\chi^2\) random variables}
+Suppose the random variables \(X_1,\dots,X_n\) are mutually independent with \(X_i\sim\chi^2_{\nu_i}\) for \(i\in\{1,\dots,n\}\). Note that \(X_1,\dots,X_n\) are not iid since the degrees of freedom vary between each variable. We have that:
+\[M_{X_i}(t)=\frac{1}{(1-2t)^{\frac{\nu_i}{2}}},\quad t<\frac{1}{2}\]
+Consider \(S=\sum^n_{i=1}X_i\):
+\[M_S(t)=\mathbb{E}[e^{tS}]\]
+\[=\mathbb{E}[e^{t(X_1+\cdots+X_n)}]\]
+\[=\mathbb{E}[e^{tX_1}]\cdot\mathbb{E}[e^{tX_2}]\cdots\mathbb{E}[e^{tX_n}]\]
+\[=\prod^n_{i=1}\mathbb{E}[e^{tX_i}]\]
+\[=\prod^n_{i=1}M_{X_i}(t)\]
+Therefore:
+\[M_S(t)=\prod^n_{i=1}\frac{1}{(1-2t)^{\frac{\nu_i}{2}}},\quad t<\frac{1}{2}\]
+\[=(1-2t)^{-\frac{1}{2}\sum^n_{i=1}\nu_i}\]
+Notice that this has the functional form of a MGF of a \(\chi^2\) distribution. Since MGFs uniquely defined distributions, we have:
+\[S\sim\chi^2_r\]
+Where \(r=\sum^n_{i=1}\nu_i\). This is a very important result that we will use extensively in statistics.
+\subsection{Probability Generating Functions Recap}
+Recall that for a random variable \(X\) that takes values in a subset of \(\{0,1,2,\dots\}\) with probability mass function \(p_X(x)\): The PGF of \(X\), \(\phi_X:[0,1]\to[0,1]\) is defined as:
+\[\phi_X(s)=\mathbb{E}[s^X]=\sum^\infty_{x=0}s^xp_X(x)\]
+PGFs have some nice properties:
+\begin{itemize}
+    \item \(p_X(t)=p_Y(t)\iff\phi_X(s)=\phi_Y(s)\)
+    \item \(\phi_X(1)=1\)
+    \item \(\phi^{(n)}_X(1)=\mathbb{E}[X(X-1)\cdots(X-(n-1))]\)
+    \item \(\phi^{(n)}_X(0)=n!P[X=x]\)
+    \item If \(X_1,\dots,X_n\) are independent then \(Y=\sum^n_{i=1}X_i\) has PGF:
+    \[\phi_Y(s)=\prod^n_{i=1}\phi_{X_i}(s)\]
+\end{itemize}
+Notice the following relationship between PGFs and MGFs:
+\[M_X(t)=\phi_X(e^t)\iff M_X(\log s)=\phi_X(s)\]
+Where both the MGF are PGF are suitably defined.
+\clearpage
+\section{Inequalities and Limit Theorems}
+\subsection{Motivation}
+Sometimes we cannot compute probabilities exactly. In cases like this, we may still be interested in placing a bound on the probability of an event.
+\subsection{Markov's Inequality}
+Suppose \(X\geq 0\) is a random variable and \(c>0\) is a constant, then:
+\[P[X\geq c]\leq\frac{\mathbb{E}[X]}{c}\]
+\subsubsection{Proof}
+Suppose \(X\geq 0\) is a random variable and \(c>0\) is a constant. Let \(Y\) be a random variable defined by:
+\[Y=\begin{cases}
+    1 & X\geq c \\
+    0 & X < c
+\end{cases}\]
+Then we have \(Y\sim\text{Bernoulli}(p)\), where \(p=P[Y=1]=P[X\geq c]\). Consider \(\mathbb{E}[Y]\):
+\[\mathbb{E}[Y]=\sum_yyP[Y=y]=P[Y=1]=P[X\geq c]\]
+\[X\geq c\implies X\geq cY\]
+\[\implies \mathbb{E}[X]\geq \mathbb{E}[cY]\]
+\[\implies\mathbb{E}[X]\geq c\cdot\mathbb{E}[Y]\]
+\[\implies \frac{\mathbb{E}[X]}{c}\geq P[X\geq c]\]
+\subsubsection{Example}
+Suppose \(X\) is a random variable representing the annual income of a worker in the UK. We wish to determine an upper bound for the proportion of the population that earns more than 3 times the mean annual income. In symbols, we wish to calculate:
+\[P[X\geq 3\mathbb{E}[X]]\]
+\(X\geq0\) and so \(\mathbb{E}[X]>0\), hence we can use Markov's inequality:
+\[P[X\geq 3\mathbb{E}[X]]\leq \frac{\mathbb{E}[X]}{3\mathbb{E}[X]}=\frac{1}{3}\]
+So less than a third of the population earn more than 3 times the mean annual income. A quick sanity check tells us that makes sense, especially since our choice of average as the mean.
+\subsection{Chebyshev's Inequality}
+If \(X\) is a random variable with mean \(\mu\) and variance \(\sigma^2\) and \(c\) is a constant, then:
+\[P[|X-\mu|\geq c]\leq\frac{\sigma^2}{c^2}\]
+What this says in words is that we can put a bound on the probability we will be some given distance away from the mean given some information about the distribution of our random variable. Unlike Markov's, Chebyshev's holds for negative \(X\).
+\subsubsection{Proof}
+Let \(X\) be a random variable with mean \(\mu\) and variance \(\sigma^2\) and \(c\) is a constant, then notice that:
+\[P[|X-\mu|\geq c]=P[(X-\mu)^2\geq c^2]\]
+Since \((X-\mu)^2\geq 0\), we can apply Markov's inequality to this:
+\[P[(X-\mu)^2\geq c^2]\leq \frac{\mathbb{E}[(X-\mu)^2]}{c^2}\]
+A little bit of cleaning up gets us directly to Chebyshev's inequality:
+\[P[|X-\mu|\geq c]\leq\frac{\sigma^2}{c^2}\]
+\subsubsection{Example and comparison to Markov's}
+Suppose we have the random variable \(X\sim\text{Exp}\left(\frac{1}{2}\right)\) and we wish to calculate \(P[X\geq 10]\). We can directly apply Markov's inequality to get:
+\[P[X\geq 10]\leq \frac{2}{10}=\frac{1}{5}\]
+We can then apply Chebyshev's inequality to see:
+\[P[|X-2|\geq c]\leq \frac{4}{c^2}\]
+We can find the appropriate \(c\) by expanding the absolute value:
+\[P[\{x-2\leq -c\}\cup\{x-2\geq 2\}]\]
+Choose \(c=8\):
+\[P[\{X\leq-6\}\cup\{X\geq 10\}]\]
+Apply properties of the union and notice that since \(X\) takes an exponential distribution it cannot have a negative value:
+\[P[|X-2|\geq 8]=P[X\geq 10]\]
+\[P[X\geq 10]\leq \frac{4}{64}=\frac{1}{16}\]
+Notice that Chebyshev's inequality has given us a tighter bound than Markov's gave - this is due to it requiring more information about the distribution of \(X\) to calculate.
+\subsection{Weak Law of Large Numbers}
+Suppose \(X_1,\dots,X_n\) are iid with \(\mathbb{E}[X_i]=\mu\) and \(\text{Var}[X_i]=\sigma^2<\infty\). Then for any \(\varepsilon>0\):
+\[\lim_{n\to\infty}P\left[\left|\frac{X_1+\cdots+X_n}{n}-\mu\right|>\varepsilon\right]=0\]
+The weak law of large numbers if often described in words as the property "converges in probability". In words essentially the law says that the sample mean of a set of iid random variables converges to the true mean of one variable in that we can get arbitrarily close for a large enough sample size. We would say \(\bar{X}\) converges in probability to \(\mu\). We may write this as:
+\[\bar{X}\overset{p}{\to}\mu,\quad n\to\infty\]
+\subsection{Strong Law of Large Numbers}
+Suppose that \(X_1,\dots,X_n\) are iid with \(\mathbb{E}[X_i]=\mu\) and \(\text{Var}[X_i]=\sigma^2<\infty\). Then:
+\[P\left[\lim_{n\to\infty}\frac{X_1+\cdots+X_n}{n}=\mu\right]=1\]
+Notice that the strong law of large numbers implies the weak law but not the other way around. We describe the strong law of large numbers in words as the property 'almost sure convergence'. The law says that as we increase our sample size to infinity, the sample mean will exactly equal the true mean of one variable. We may write this as:
+\[\bar{X}\overset{a.s}{\to}\mu,\quad n\to\infty\]
+Neither of these laws tell us anything about the variability of \(\bar{X}\). To comment on this we need to use the property known as convergence in distribution.
+\subsection{Convergence in Distribution}
+Suppose \(X_1,\dots,X_n\) is a sequence of random variables with CDFs: \(F_1,\dots,F_n\) and \(X\) is a random variable with CDF \(F\). Then we say \(X_n\) converges in distribution to \(X\) as \(n\to\infty\) if:
+\[\lim_{n\to\infty}F_n(x)=F(x)\]
+Alternatively:
+\[\lim_{n\to\infty}M_{X_n}(t)=M_X(t)\]
+We often write this property as:
+\[X_n\overset{D}{\to}X,\quad n\to\infty\]
+\subsubsection{Example: binomial to Poisson}
+Suppose \(X_n\sim\text{Bin}(n,\,\frac{\lambda}{n})\). Now let \(Y\sim\text{Bin}(n,\,p)\).
+\[M_Y(t)=\mathbb{E}[e^{tY}]\]
+\[=\sum^n_{y=0}e^{ty}P[Y=y]\]
+\[=\sum^n_{y=0}\binom{n}{y}(pe^t)^y(1-p)^{n-y}\]
+\[=(pe^t+1-p)^n\]
+Then:
+\[M_{X_n}(t)=\left(1+\frac{\lambda}{n}e^t-\frac{\lambda}{n}\right)^n\]
+\[=\left(1+\frac{\lambda(e^t-1)}{n}\right)^n\]
+As \(n\to\infty\) we have \(M_{X_n}(t)\to\exp(\lambda(e^t-1))\). However this is the functional form of a Poisson MGF with mean \(\lambda\). Thus:
+\[\lim_{n\to\infty}M_{X_n}(t)=M_X(t)\]
+So \(X_n\overset{D}{\to}X\) as \(n\to\infty\).
+\subsection{Central Limit Theorem}
+Suppose \(X_1,\dots,X_n\) are iid with finite mean \(\mu\) and finite variance \(\sigma^2\). If:
+\[S_n=\sum^n_{i=1}X_i\]
+and:
+\[Z_n=\frac{S_n-n\mu}{\sigma\sqrt{n}}\]
+We have:
+\[Z_n\overset{D}{\to}Z\sim N(0,1)\]
+This is a hugely important result and notice how little restrictions there are on the random variables themselves. This makes the theorem widely applicable.
+\clearpage
+\section{Multivariate Normal Distribution}
 \end{document}

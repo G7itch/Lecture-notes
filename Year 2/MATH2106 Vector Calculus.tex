@@ -421,7 +421,25 @@ Notice that in this case \(LHS\ne RHS\) and stokes' theorem doesn't hold. This i
 \subsection{Green's Theorem}
 Set \(\underline{A}=(F(x,y), G(x,y),0)\), \(S\) in the \(x-y\) plane and \(\underline{n}=(0,0,1)\). Then:
 \[\iint_SG_x-F_y\,\text{d}x\,\text{d}y=\oint_CF\,\text{d}x+G\,\text{d}y\]
+Notice that Green's theorem is essentially just Stokes' theorem in 2D. There are multiple functional forms of Green's theorem but both involve this notion of the circulation density, \(G_x-F_y\). The above result is known as Green's theorem in "divergence-flux" form.
 \subsection{Constant Vector-Scalar Fields}
 Set \(\underline{A}=\underline{a}f\) where \(\underline{a}\) is a constant vector and \(f\) is a scalar field. Then:
 \[\iint_S\underline{n}\times \grad{f}\,\text{d}S=\oint_Cf\,\underline{\text{d}r}\]
+Another key result derived from Stokes' theorem is:
+\[\oint_C\underline{r}\cdot\underline{\text{d}}=0\]
+Where \(\underline{r}\) is a position vector. Additionally:
+\[\oiint_S\,(\curl{A})\cdot \underline{n}\,\text{d}S=0\]
+Since a closed surface inherently has no boundary to integrate over.
+\subsection{Gauss's Theorem / Divergence Theorem}
+Our final important integral theorem is known as the divergence theorem. We require a continuously differentiable vector field \(\underline{A}\) over a three dimensional region \(V\), then the theorem states:
+\[\iiint_V\dive{A}\,\text{d}V=\oiint_S\underline{A}\cdot\underline{n}\,\text{d}S\]
+We orient our surface such that \(\underline{n}\) points outwards. Same for Stokes', we require the surface \(S\) to be smooth, oriented and closed.
+\subsubsection{Informal Proof}
+The divergence of \(\underline{F}\) at a point \(P\) is defined as:
+\[\dive{A}=\lim_{\delta V\to 0}\frac{1}{\delta V}\oiint_{\delta S}\underline{A}\cdot\underline{n}\,\text{d}S \]
+Where the volume \(\delta V\) contains the point \(P\), is enclosed by the surface \(\delta S\), and the normal vector \(\underline{n}\) to \(\delta S\) points outwards. Notice the left hand side of the divergence theorem is a volume integral of the divergence, which is the limit of a sum:
+\[\iiint_V \dive{A}\,\text{d}V=\lim_{N\to\infty}\sum^N_{i=1}(\dive{A})_i\delta V_i=\lim_{N\to\infty}\sum^N_{i=1}\oiint_{\delta S_i}\underline{A}\cdot\underline{n}\,\text{d}S\]
+Similar to Stokes', the internal components cancel and so we are left exclusively with those on the boundary. 
+\subsubsection{Unifying theory}
+Generally, Green's, Stokes' and Gauss's theorem all come from the same underlying theory. This is, that integrating a differential operator (div, curl, or grad) acting on a field \(\underline{F}\) over a domain \(D\) is the same as adding the field components along the boundary. The interpretation of this depends on the type of object we are looking at specifically. This is also dependant on some conditions like smoothness as well. Overall, these are generalisations of the fundamental theorem of calculus
 \end{document}
