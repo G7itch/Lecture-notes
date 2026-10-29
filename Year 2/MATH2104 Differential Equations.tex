@@ -558,5 +558,74 @@ Since \(f_e(x)\) is by definition an even function, we have \(b_n=0\) and thus t
 Notice again \(f_e(x)=f(x)\) only on \((0,L)\)
 \clearpage
 \section{Introduction to PDEs}
+A partial differential equation involves a dependant variable that itself depends on multiple variables. An example we will look at later is the diffusion equation:
+\[u_{t}=Du_{xx}\]
+As such \(u\) depends on both space, \(x\), and time, \(t\). There are several different canonical forms of PDEs which all require different conditions to be met to produce a solution. Initial conditions also appear in PDEs but we additionally have boundary conditions which are differential conditions appearing in PDEs. Generally we use two boundary conditions at the endpoints of a spacial domain - hence boundary conditions provide information about the solution at two different points in space and initial conditions provide information about the solution at a single point in time.
+\subsection{Classification}
+To know the correct amount and type of initial/boundary conditions required to produce a solution, we have to classify the PDE. The general form of a second-order linear PDE is:
+\[a(x,y)\pf{^2u}{x^2}+b(x,y)\pf{^2u}{x\partial y}+c(x,y)\pf{^2u}{y^2}=f\left(x,y,u,\pf{u}{x},\pf{u}{y}\right)\]
+Here \(x,y\) are independent variables. To classify the PDE we look at the discriminant function:
+\[\Delta(x,y):=b(x,y)^2-4a(x,y)c(x,y)\]
+Note that \(f\) does not appear in the discriminant function and so does not change the classification of the PDE.
+\subsubsection{Case 1: \(\Delta>0\)}
+In this case the PDE is said to be hyperbolic and we need two initial conditions and two boundary conditions. For example consider the wave equation:
+\[u_{tt}=v^2u_{xx},\quad v>0\]
+This equation is hyperbolic everywhere so we employ two initial conditions (generally at \(t=0\)) and two boundary conditions (at the endpoints of the spacial domain in \(x\)).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/Waveequation.png}
+    \caption{An specific wave equation with time plotted as an axis.}
+\end{figure}
+\subsubsection{Case 2: \(\Delta=0\)}
+In this case, we say the PDE is parabolic and we employ one initial condition and two boundary conditions. For example the diffusion equation is parabolic everywhere.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/Diffusion.png}
+    \caption{The diffusion equation is parabolic.}
+\end{figure}
+\subsubsection{Case 3: \(\Delta<0\)}
+IN this case the PDE is said to be elliptic and we employ only boundary conditions. For example, Laplace's equation in Cartesian coordinates is:
+\[u_{xx}+u_{yy}=0\]
+This equation is elliptic everywhere and thus we employ boundary conditions at the endpoints of both \(x\) and \(y\).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/laplace.png}
+    \caption{Laplace's equation is elliptic and we will study it in more detail later.}
+\end{figure}
+When a PDE is coupled with its initial and boundary conditions we refer to it and an "initial boundary value problem" (IBVP). In the case of elliptic PDEs this is just a boundary value problem (BVP) due to the absence of initial conditions.
+\subsection{Principle of Superposition}
+Like in ODEs, linear PDEs can obey the obey the principle of superposition - provided that the function \(f\) only contains \(u,u_x\) and \(u_y\) in a linear fashion and is homogenous:
+\[a(x,y)\pf{^2u}{x^2}+b(x,y)\pf{^2u}{x\partial y}+c(x,y)\pf{^2u}{y^2}=f(x,y)u+g(x,y)\pf{u}{x}+h(x,y)\pf{u}{y}\]
+Then if \(\phi_1(x,y)\) and \(\phi_2(x,y)\) both satisfy the above, any linear combination of \(\phi_1\) and \(\phi_2\) will also satisfy the PDE. Notice that we get no information about any initial or boundary conditions - in general we cannot form a principle of superposition statement for PDEs that includes the initial conditions.
+\subsection{Homogeneous Boundary Conditions}
+A homogeneous boundary condition is one such that if \(\phi(x)\) satisfies the given boundary condition at \(x=a\) then \(A\phi(x)\) also satisfies the same condition for \(x=a\) and any \(A\in\mathbb{R}\). For example:
+\[\phi(1)=0\]
+is an HBC since \(A\phi(1)=1\cdot 0=0\) for all \(A\). However:
+\[\phi(0)=1\]
+is inhomogeneous since \(A\cdot\phi(0)=A\cdot 1=A\). Throughout this module we will include many HBC's throughout this module:
+\begin{align*}
+    &\phi(0)=0,\quad \phi(L)=0 && \text{(Dirichlet boundary conditions)} \\
+    &\phi'(0)=0,\quad \phi'(L)=0 && \text{(Neumann boundary conditions)} \\
+    &\phi(x+2\pi)=\phi(x),\  \forall x\in \mathbb{R} && \text{(Periodic boundary condition)} \\
+    &\phi(x) \text{ bounded as } x\to 0 && \text{(Boundedness argument)} \\
+    &\phi'(0)=k\phi(0) && \text{(Robin boundary condition)}
+\end{align*}
+\subsubsection{Principle of superposition for BVPs with HBCs}
+Suppose the functions:
+\[\{\phi_n(x,y)\}^\infty_{n=0}\]
+each solve the canonical homogeneous PDE and each satisfy all associated HBCs individually. Then any linear combination of the solutions:
+\[u(x,y)=\sum^\infty_{n=0}\alpha_n\phi_n(x,y)\]
+also solves both the PDE and all HBCs.
+\subsection{Boundary Value Problems with HBCs}
+Unlike initial value problems - which have unique solutions from the uniqueness and existence theorem - boundary value problems can have infinitely many solutions. Consider the BVP:
+\begin{align*}
+    y''(x)=-y(x) && y(0)=0 && y(\pi)=0
+\end{align*}
+Any solution of the form \(y(x)=A\sin(x)\) for \(A\in\mathbb{R}\) will satisfy this equation and the boundary conditions. Contrastingly, the BVP:
+\begin{align*}
+    y''(x)=y(x) && y(0)=0 && y(\pi)=0
+\end{align*}
+has the unique solution \(y(x)=0\). This trivial solution is usually ignored as it provides no information.
+\subsection{Eigenvalue Problems}
 
 \end{document}

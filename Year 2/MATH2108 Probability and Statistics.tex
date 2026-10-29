@@ -614,4 +614,173 @@ We have:
 This is a hugely important result and notice how little restrictions there are on the random variables themselves. This makes the theorem widely applicable.
 \clearpage
 \section{Multivariate Normal Distribution}
+\subsection{Introduction and Notation}
+The multivariate normal distribution is a multidimensional generalisation of the the univariate normal distribution. Suppose \(\Sigma\) is an \(n\times n\) real valued matrix. Then \(\Sigma\) is called positive definite if for all \(\underline{X}\in\mathbb{R}^n\) with \(\underline{X}\ne 0\)::
+\[\underline{X}^T\Sigma \underline{X}>0\]
+An affine transformation \(T:\mathbb{R}^n\to\mathbb{R}^m\) takes the form:
+\[\underline{X}\mapsto A\underline{X} +\underline{b}\]
+Where:
+\begin{align*}
+    A\in\mathbb{R}^{m\times n} && \underline{b}\in\mathbb{R}^m
+\end{align*}
+The rank of \(A\) is the maximum number of linearly independent columns.
+\subsection{Definition}
+The multivariate random variable \(\underline{X}=(X_1,\dots,X_n)^T\) has an \(n\)-dimensional multivariate normal distribution if:
+\[\underline{X}=\underline{\mu}+A\underline{Z}\]
+We have \(\underline{\mu}=(\mu_1,\dots,\mu_n)^T\) is a column vector of means. \(A\in\mathbb{R}^{m\times n}\) has rank \(k\leq n\) and we have \(\underline{Z}=(Z_1,\dots,Z_n)^T\) as a vector of independent standard normal random variables. Notice:
+\[\mathbb{E}[\underline{X}]=\mathbb{E}[\underline{\mu}+A\underline{Z}]=\underline{\mu}+A\mathbb{E[\underline{Z}]}=\underline{\mu}\]
+\[\text{Var}[\underline{X}]=A\text{Var}[\underline{Z}]A^T=AA^T\]
+Set \(\Sigma=AA^T\) then we write:
+\[\underline{X}\sim \mathcal{N}_n(\underline{\mu},\Sigma)\]
+\subsection{Probability Density Function}
+If \(\Sigma\) is full rank then it is positive definite and invertible. Therefore the pdf of \(\underline{X}\) is:
+\[f_{\underline{X}}(\underline{x})=(2\pi)^{-\frac{n}{2}}|\Sigma|^{-\frac{1}{2}}\exp\left(-\frac{1}{2}(\underline{x}-\underline{\mu})^T\Sigma^{-1}(\underline{x}-\underline{\mu})\right)\]
+If \(\Sigma\) is not full rank then \(\Sigma^{-1}\) doesn't exist and so the pdf takes a much more complex form.
+\subsection{MGF}
+Because \(\underline{Z}=(Z_1,\dots,Z_n)^T\) is a collection of independent random variables we have:
+\[M_{\underline{Z}}(\underline{t})=\prod^n_{i=1}M_{Z_i}(t_i)\]
+Additionally we know:
+\[\underline{Z}\sim \mathcal{N}_n(\underline{0}, I_n)\]
+\[M_{\underline{Z}}(\underline{t})=\exp \left(\frac{1}{2}\sum^n_{i=1}t_i^2\right)\]
+Consider \(\underline{X}=\underline{\mu}+A\underline{Z}\). Then:
+\[M_{\underline{X}}(\underline{t})=\mathbb{E}[\exp(\underline{t}^T(\underline{\mu}+A\underline{Z}))]=e^{\underline{t}^T\underline{\mu}}M_{\underline{Z}}(A^T\underline{t})\]
+\[M_{\underline{X}}(\underline{t})=\exp\left(\underline{t}^T\underline{\mu}+\frac{1}2{\underline{t}^T\Sigma\underline{t}}\right)\]
+This is the MGF of \(\underline{X}\sim\mathcal{N}_n(\underline{\mu},\Sigma)\).
+\subsubsection{Using the MGF to find moments}
+It can be helpful to rewrite the MGF in component form:
+\[M_{\underline{X}}(\underline{t})=\exp\left(\sum^n_{i=1}t_i\mu_i+\frac{1}{2}\sum^n_{i=1}\sum^n_{j=1}t_i\sigma_{ij}t_j\right)\]
+Where \(\sigma_{ij}\) are the \((i,j)^{th}\) element of \(\Sigma\).
+\[\Sigma=\begin{pmatrix}
+    \sigma_{11}&\cdots&\sigma_{1n} \\
+    \vdots & \ddots & \vdots \\
+    \sigma_{n1} & \cdots & \sigma_{nn}
+\end{pmatrix}\]
+We need to differentiate \(M_{\underline{X}}(\underline{t})\) with respect to \(t_r\), \(r\in\{1,\dots,n\}\).
+\[\pf{}{t_r}M_{\underline{X}}(\underline{t})=(\mu_r+\sum^n_{i=1}t_i\sigma_{ir})M_{\underline{X}}(\underline{t})\]
+\[\mathbb{E}[X_r]=\mu_rM_{\underline{X}}(\underline{0})=\mu_r\]
+\[\mathbb{E}[X_rX_s]=\pf{^2}{t_st_r}M_{\underline{X}}(\underline{t})\bigr|_{t=0}=\sigma_{sr}+\mu_s\mu_r\]
+Then \(\text{Cov}(X_s,X_r)=\sigma_{sr}\).
+\subsection{Bivariate Normal Distribution}
+When \(n\) is small we can write out the variance-covariance matrix and pdf explicitly. When \(n=2\) we hae a bivariate normal distribution:
+\[\underline{X}\sim \mathcal{N}_2(\underline{\mu},\Sigma)\]
+Where:
+\begin{align*}
+    \underline{X}=\begin{pmatrix}
+        X_1 \\
+        X_2
+    \end{pmatrix} && \underline{\mu}=\begin{pmatrix}
+        \mu_1 \\
+        \mu_2
+    \end{pmatrix}
+\end{align*}
+\[\Sigma=\begin{pmatrix}
+    \sigma_1^2 && \rho\sigma_1\sigma_2 \\
+    \rho\sigma_1\sigma_2 && \sigma_2^2
+\end{pmatrix}\]
+\(\Sigma\) is non-singular if and only if \(|\rho|<1\) which makes sense since \(\rho=1\) implies that the variables have no independence. Note that if \(\rho=0\) then:
+\[f_{\underline{X}}(\underline{x})=f_{X_1}(x_1)f_{X_2}(x_2)\]
+\begin{align*}
+    X_1\sim \mathcal{N}(\mu_1,\sigma_1^2) && X_2\sim\mathcal{N}(\mu_2,\sigma_2^2)
+\end{align*}
+Notice this does not hold generally.
+\subsubsection{Properties}
+Suppose \(X\sim \mathcal{N}_n(\underline{\mu},\Sigma)\) and \(\underline{Y}=C\underline{X}+\underline{b}\) with:
+\begin{align*}
+    \underline{b}\in\mathbb{R}^m && C\in\mathbb{\mathbb{R}^{m\times n}}  
+\end{align*}
+Then:
+\[\underline{Y}\sim\mathcal{N}_m(C\underline{\mu}+\underline{b},\  C\Sigma C^T)\]
+If you want to calculate marginals, you can take an affine transformation with \(\underline{b}=0\) and \(C\) a \(1\times n\) matrix with \(1\) in column \(r\) and \(0\) elsewhere. Then:
+\[Y=C\underline{X}+\underline{b}=X_r\]
+\subsubsection*{Example}
+Suppose \(\underline{X}=(X_1,X_2,X_3)^T\), \(\underline{\mu}=(\mu_1,\mu_2,\mu_3)^T\) and \(\Sigma\) be the positive definite matrix:
+\[\Sigma=\begin{pmatrix}
+    \sigma_1^2 & \gamma_{12} & \gamma_{13} \\
+    \gamma_{21} & \sigma_{2}^2 & \gamma_{23} \\
+    \gamma_{31} & \gamma_{32} & \sigma_{3}^2
+\end{pmatrix}\]
+We want to find the distribution of \((X_2,X_3)^T\). Let \(\underline{Y}=C\underline{X}\) where:
+\[C=\begin{pmatrix}
+    0 & 1 & 0 \\
+    0 & 0 & 1
+\end{pmatrix}\]
+\(\underline{Y}\) is an affine transformation of a multivariate normal distribution. Hence \(\underline{Y}\) has a bivariate normal distribution.
+\[\underline{Y}\sim\mathcal{N}_2(\mathbb{E}[\underline{Y}],\, \text{Var}[\underline{Y}])\]
+\[\mathbb{E}[\underline{Y}]=C\mathbb{E}[\underline{X}]=\begin{pmatrix}
+    X_2 \\
+    X_3
+\end{pmatrix}\]
+\[\text{Var}[\underline{Y}]=C\text{Var}[\underline{X}]C^T=\begin{pmatrix}
+    \sigma_2^2 & \sigma_{23} \\
+    \sigma_{32} & \sigma_3^2
+\end{pmatrix}\]
+\subsection{Independence}
+Suppose \(\underline{X}=(X_1,\dots,X_n)^T\) are such that \(\underline{X}\sim\mathcal{N}_n(\underline{\mu}, \Sigma)\). Then the components \(X_1,\dots ,X_n\) are independent if and only if they are uncorrelated.
+\subsection{Conditional distributions}
+We can compute multivariate conditional distributions. We do this with exactly the same method as normal, using the joint and marginal distributions. In the bivariate normal case:
+\[X_2|X_1=x_1\sim \mathcal{N}(\mu_2+\rho\frac{\sigma_2}{\sigma_1}(x_1-\mu_1),\  \sigma_2^2(1-\rho^2))\]
+\subsection{Degenerative case}
+So far we have only considered cases where \(\Sigma\) is full rank. If \(\Sigma\) is not full rank then whilst we still have:
+\[\underline{X}=\underline{\mu}+A\underline{Z}\]
+However, whilst \(\underline{X}\) appears to take values in \(\mathbb{R}^n\), it actually only exists in \(\mathbb{R}^k,\ k<n\) because we can always construct the other variables using the first \(k\). This reduces the dimensions of the dataset / problem.
+\clearpage
+\section{Transformations of Random Variables}
+\subsection{One-dimensional Transformations}
+Suppose \(X\) is a continuous random variable with known pdf. We define the random variable:
+\[Y=g(X)\]
+for some function \(g:\mathbb{R}\to\mathbb{R}\). If we wish to know the pdf of \(Y\) we might take the following steps:
+\begin{enumerate}
+    \item Determine the possible values/support for \(Y\).
+    \item For each \(y\), consider \(F_Y(y)\).
+    \item Note that the event \(\{Y\leq y\}\) is equivalent \(\{X\leq g^{-1}(y)\}\).
+    \item Deduce \(F_Y(y)=F_X(g^{-1}(y))\).
+    \item Differentiate to get \(f_Y(y)\).
+\end{enumerate}
+\subsubsection{Example}
+Suppose \(X\) is a random variable such that \(X\sim\text{Exp}(\lambda)\) with \(\lambda >0\). We wish to find the pdf of \(Y=cX\) where \(c>0\) is a constant. First realise that \(Y\) can take any positive value and note that \(f_Y(y)=0\) when \(y\leq 0\). If \(y>0\):
+\[F_Y(y)=P[Y\leq y]=P[cX\leq y]=P\left[X\leq \frac{y}{c}\right]\]
+\[P\left[X\leq \frac{y}{c}\right]=\int^{\frac{y}{c}}_0f_X(x)\,\text{d}x=1-e^{-\frac{\lambda y}{c}}\]
+\[f_Y(y)=F'_Y(y)=\frac{\lambda}{c}e^{-\frac{\lambda y}{c}}\]
+\[f_Y(y)=\begin{cases}
+    \frac{\lambda}{c}e^{-\frac{\lambda y}{c}}& y>0 \\
+    0 & \text{otherwise}
+\end{cases}\]
+This means that \(Y\sim \text{Exp}\left(\frac{\lambda}{c}\right)\).
+\subsection{Monotone Transformations}
+It should be clear that we can only follow a method like this when our function has a well defined inverse. This is certainly not the case all the time, however it is true when we have a strictly monotone function. In higher dimensions we require injectivity to ensure that our function has an inverse. Suppose \(X\) is a continuous random variable with support \(A\) and \(g:A\to\mathbb{R}\) is a strictly monotonic function that is differentiable on \(A\). Then the pdf of \(Y=g(X)\) is:
+\[f_Y(y)=\begin{cases}
+    f_X(g^{-1}(y))\left|\pf{}{y}g^{-1}(y)\right| & y\in g(A) \\
+    0&\text{otherwise}
+\end{cases}\]
+\subsubsection{The standard normal}
+We can use the above formula to prove that a standard transformation results in a normal distribution. Suppose \(X\sim N(\mu, \sigma^2)\) and \(Y=g(X)=\frac{X-\mu}{\sigma}\). Then it shouldn't be hard to see that \(g(X)\) is strictly increasing and \(A=g(A)\) is the support of \(Y\).
+\[g^{-1}(y)=\sigma y+\mu\]
+Then:
+\[f_Y(y)=\begin{cases}
+    f_X(\sigma y+\mu)|\sigma| & y\in A \\
+    0 & \text{otherwise}
+\end{cases}\]
+\[f_Y(y)=\begin{cases}
+    \frac{1}{\sqrt{2\pi}}\exp\left(-\frac{y^2}{2}\right) & y\in\mathbb{R} \\
+    0 & \text{otherwise}
+\end{cases}\]
+Then through the uniqueness of PDFs we can see that \(Y\sim N(0,1)\).
+\subsection{Two-dimensional Transformations}
+Suppose that the transformation \(T:(x_1,x_2)\mapsto(y_1,y_2)\) exists and is injective. Then \(T\) has an inverse:
+\[T^{-1}=H:(y_1,y_2)\mapsto(x_1,x_2)\]
+\[H(y_1,y_2)=\begin{pmatrix}
+    H_1(y_1,y_2) \\
+    H_2(y_1,y_2)
+\end{pmatrix}\]
+The Jacobian of \(H\) is:
+\[J_H=\begin{pmatrix}
+    \pf{H_1}{y_1} & \pf{H_1}{y_2} \\
+    \pf{H_2}{y_1} & \pf{H_2}{y_2} 
+\end{pmatrix}\]
+Suppose \((X_1,X_2)^T\) is a bivariate random variable joint pdf \(f_{X_1,X_2}(x_1,x_2)\) and support \(A\subseteq\mathbb{R}^2\). If \(T:A\to\mathbb{R}^2\) is injective then \((Y_1,Y_2)=T(X_1,X_2)\) has joint pdf:
+\[f_{Y_1,Y_2}(y_1,y_2)=\begin{cases}
+    |\det J_H|f_{X_1,X_2}(H_1,H_2) & (y_1,y_2)\in T(A) \\
+    0& \text{otherwise}
+\end{cases}\]
+Note that this extends into higher dimensions by simply increasing the dimensions of all vectors, functions and Jacobian.
 \end{document}

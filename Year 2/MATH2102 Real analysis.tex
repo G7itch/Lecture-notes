@@ -231,4 +231,76 @@ A function \(f:I\to\mathbb{R}\) is continuous at \(x_0\in I\) if \(\lim_{x\to x_
 If \(a<b\) and \(f\) is continuous on \([a,b]\) then \(f\) attains its maximum and minimum. That is to say there exists \(s,\,t\in [a,b]\) such that for all \(x\in [a,b]\):
 \[f(t)\leq f(x)\leq f(s)\]
 This conclusion can fail if any one of the conditions do not hold.
+\subsection{Intermediate Value Theorem}
+Let \(a<b\) and \(f:[a,b]\to\mathbb{R}\) continuous everywhere on \([a,b]\). Then if \(f(a)<z<f(b)\) or \(f(a)>z>f(b)\). Then there exists \(x\in(a,b)\) with \(f(x)=z\). Essentially what this is saying is that when we have a continuous function, we cannot "skip" over any values. We must attain every value in between on the interval.
+\subsection{Differentiable Functions}
+A function \(f:I\to\mathbb{R}\) is differentiable at \(x_0\in I\) with derivative \(f'(x_0)\) if:
+\[\frac{f(x)-f(x_0)}{x-x_0}\to f'(x_0)\]
+as \(x\to x_0\).
+\subsection{Derivatives at Local Extremum}
+Let \(I\subseteq \mathbb{R}\) be an interval and \(f:I\to\mathbb{R}\). If \(f\) has a local extremum at \(x_0\in I\) where \(x_0\) is not an endpoint. Then if \(f\) is differentiable at \(x_0\) we have \(f'(x_0)=0\).
+\subsection{Rolle's Theorem}
+Let \(f:[a,b]\to\mathbb{R}\) be continuous on \([a,b]\) and differentiable on \((a,b)\). If \(f(a)=f(b)\) then there exists \(\zeta\in(a,b)\) with \(f'(\zeta)=0\).
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/Rolles.png}
+    \caption{Diagram demonstrating Rolle's Theorem}
+\end{figure}
+\subsection{Mean Value Theorem}
+Let \(f:[a,b]\to\mathbb{R}\) be continuous on \([a,b]\) and differentiable on \((a,b)\). There exists \(\zeta\in(a,b)\) with:
+\[f'(\zeta)=\frac{f(b)-f(a)}{b-a}\]
+In plain words, this says that when we have an interval and a continuous function, we can find a point where the tangent line is equal in gradient to the straight line connecting the endpoints.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/MVT.png}
+    \caption{The mean value theorem in action}
+\end{figure}
+\subsubsection{Corollary}
+\begin{itemize}
+    \item If \(f'(t)\geq 0\) for all \(t\in[a,b]\) then \(f\) is monotone increasing.
+    \item If \(f'(t)> 0\) for all \(t\in[a,b]\) then \(f\) is strictly increasing.
+    \item If \(f'(t)\leq 0\) for all \(t\in[a,b]\) then \(f\) is monotone decreasing.
+    \item If \(f'(t)< 0\) for all \(t\in[a,b]\) then \(f\) is strictly decreasing.
+    \item If \(f'(t)=0\) for all \(t\in [a,b]\) then \(f\) is constant.
+\end{itemize}
+\subsection{Bernoulli's Inequality}:
+Bernoulli's inequality states that for \(a>0\) and \(x\in[-1,\infty)\):
+\[1+ax\leq(1+x)^a,\quad a>1\]
+\[1+ax\geq(1+x)^a,\quad a\leq1\]
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/Bernoullis.png}
+    \caption{Bernoulli's inequality}
+\end{figure}
+\subsection{Taylor's Theorem}
+Let \(I\) be an interval, \(f\) be a function \(n+1\) times differentiable on \(I\) and \(x_0\in I\). Let \(x\in I,\ x\ne x_0\), then there exists \(\zeta\in I\) between \(x_0\) and \(x\) such that:
+\[f(x)=P_n(x)+\frac{f^{(n+1)}(\zeta)}{(n+1)!}(x-x_0)^{n+1}\]
+Where:
+\[P_n(x)=\sum^n_{k=0}\frac{f^{(k)}(x_0)}{k!}(x-x_0)^k\]
+is the \(n^{th}\) Taylor polynomial of \(f\) at \(x_0\).
+Notice that sometimes our error term can help us put a bound on how accurate our polynomial is and for what values of \(x\) it holds for.
+\subsubsection{Corollary: L'H\^opitals' rule}
+Let \(f\) and \(g\) be \(n\) times differentiable with continuous derivatives, \(f(x_0)=g(x_0)\) and \(f^{(k)}(x_0)=g^{(k)}(x_0)\) for all derivatives of order \(k=1,\dots,n-1\). If \(g^{(n)}(x_0)\ne 0\), then:
+\[\lim_{x\to x_0}\frac{f(x)}{g(x)}=\frac{f^{(n)}(x_0)}{g^{(n)}(x_0)}\]
+L'H\^opitals' rule is proved using Taylor polynomials.
+\subsubsection*{Example}
+\[\lim_{x\to 0}\frac{\sin x-x}{\exp(x)-1-x-x^2/2}\]
+\[f(x)=\sin x-x\]
+\[f'''(x)=-\cos(x)\implies f'''(0)=-1\]
+\[g(x)=\exp(x)-1-x-x^2/2\implies g(0)=0\]
+\[g'(x)=\exp(x)-1-x\implies g'(0)=0\]
+\[g''(x)=\exp(x)-1\implies g''(0)=1\]
+\[g'''(x)=\exp(x)\implies g'''(0)=1\]
+Then applying L'H\^opitals' rule gives:
+\[\lim_{x\to 0}\frac{\sin x-x}{\exp(x)-1-x-x^2/2}=\frac{-1}{1}=-1\]
+\subsection{Convex and Concave Functions}
+Let \(I\subseteq \mathbb{R}\) be an interval and \(f:I\to\mathbb{R}\). \(f\) is called convex if for all \(x_1,\,x_2\in I\) and for all \(t\in [0,1]\) we have:
+\[f(tx_1+(1-t)x_2)\leq tf(x_1)+(1-t)f(x_2)\]
+If \(-f\) is convex, then \(f\) is called concave. Here, the \(t\) helps parametrise the straight line between the two points \(x_1,x_2\). Essentially we are saying that if the straight line connecting \(x_1\) and \(x_2\) is above the curve they lie on, then the curve is called convex.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/concaveconvex.png}
+    \caption{Left: Convex function. Right: Concave function}
+\end{figure}
+Note that if a function is both convex and concave then it must be affine linear.
 \end{document}
