@@ -626,6 +626,77 @@ Any solution of the form \(y(x)=A\sin(x)\) for \(A\in\mathbb{R}\) will satisfy t
     y''(x)=y(x) && y(0)=0 && y(\pi)=0
 \end{align*}
 has the unique solution \(y(x)=0\). This trivial solution is usually ignored as it provides no information.
-\subsection{Eigenvalue Problems}
-
+\subsection{The Heat/Diffusion Equation}
+In this section we will solve the heat equation IBVP:
+\[u_t=u_{xx},\qquad 0<x<L,\,t>0\]
+\begin{align*}
+    u(0,t)=0 && u(L,t)=0 && u(x,0)=f(x)
+\end{align*}
+Notice that the solution will completely change with different boundary conditions compared to initial conditions which just change the solution up to constant factors. We start by applying the separation principle:
+\[u(x,t)=X(x)T(t)\]
+\[\pf{u}{t}=X(x)T'(t)\]
+\[\pf{^2u}{x^2}=X''(x)T(t)\]
+\[X(x)T'(t)=X''(x)T(t)\]
+We are going to rearrange this equation so that the variables are separated.
+\[\frac{T'(t)}{T(t)}=\frac{X''(x)}{X(x)}=-\lambda\]
+The \(-\lambda\) term is a constant and comes up because we know that the only way for those two fractions to be equal is if they are both constant.
+\begin{align*}
+    &T'(t)=-\lambda T(t) \\
+    &X''(x)=-\lambda X(x)
+\end{align*}
+We can now apply our boundary conditions. We should always apply boundary conditions at this stage and not initial conditions.
+\[u(0,t)=u(L,t)=0\]
+\[X(0)=X(L)=0\]
+This is now a boundary value problem for \(X\). We can solve it in the usual way, by making an ansatz for \(X(x)\), in this case we will choose an exponential ansatz:
+\[X(x)\overset{?}{=}e^{rx}\]
+Then:
+\[r^2=-\lambda\implies r=\sqrt{-\lambda}\]
+The form that \(r\) takes will depend on what \(\lambda\) is.
+\subsubsection{Case 1: \(\lambda<0\)}
+When \(\lambda<0\) we have:
+\[r_{\pm}\in\mathbb{R},\ r_+\ne r_-\]
+\[X(x)=A\cosh(\sqrt{-\lambda}x)+B\sinh(\sqrt{-\lambda}x)\]
+We prefer using the hyperbolic formulation here because it makes applying boundary conditions easier.
+\[X(0)=0\implies A=0\]
+\[X(L)=0\implies B\sinh(\sqrt{-\lambda}L)=0\]
+Naturally we are not interested in \(B=0\) so we want \(\sinh(\sqrt{-\lambda}L)=0\) and this only happens when:
+\[\sqrt{-\lambda}L=0\]
+However we know \(L\ne 0\) from definition and similarly we have stipulated that \(\lambda<0\). So the only way to make this equation true is if \(B=0\) and this leaves us with the boring solution:
+\[X(x)=0\]
+\subsubsection{Case 2: \(\lambda=0\)}
+\[X(x)=A+Bx\]
+\[X(0)=0\implies A=0\]
+\[X(L)=0\implies BL=0\implies B=0\]
+\[\therefore\]
+\[X(x)=0\]
+Note that this case can occasionally give very important information so we need to remember to check if even if it is likely that it will result in a trivial solution.
+\subsubsection{Case 3: \(\lambda>0\)}
+When \(\lambda>0\) we have:
+\[r_{\pm}\in \mathbb{C}\]
+\[X(x)=A\cos(\sqrt{\lambda}x)+B\sin(\sqrt{\lambda}x)\]
+\[X(0)=0\implies A=0\]
+\[X(L)=0\implies B\sin(\sqrt{\lambda}L)=0\]
+Hence either \(B=0\) for the trivial solution, or:
+\[\sqrt{\lambda}L=n\pi\]
+\[\lambda_n=\frac{n^2\pi^2}{L^2},\quad n\in\mathbb{N}\]
+Where the domain of \(n\) is very important and in this case is natural. This is to exclude the point \(0\) since it is covered by case 2 and due to any negative values of \(n\) taking on a positive value due to \(n^2\). It might not be immediately clear but the values \(\lambda_n\) are eigenvalues.
+\[\therefore\]
+\[X_n(x)=B_n\sin\left(\frac{n\pi}{L}x\right)\]
+Which are the eigenfunctions defined for the values \(n\). Now that we have \(X(x)\) and \(\lambda\), we can solve for \(T(t)\):
+\[T'(t)=-\frac{n^2\pi^2}{L^2}T(t)\implies T(t)=\exp\left(-\frac{n^2\pi^2}{L^2}t\right)\]
+Finally we can construct our family of solutions:
+\[u_n(x,t)=C_nB_n\exp\left(-\frac{n^2\pi^2}{L^2}t\right)\sin\left(\frac{n\pi x}{L}\right)\]
+It is important to note that this is not the solution to the PDE. This is the general form of a particular solution, but the general solution takes the form:
+\[u(x,t)=\sum^\infty_{n=1}\alpha_n\exp\left(-\frac{n^2\pi^2}{L^2}t\right)\sin\left(\frac{n\pi x}{L}\right)\]
+Noting the index starting from \(1\) due to how \(n\) is defined. Finally we can calculate our coefficients by applying the initial conditions.
+\[u(x,0)=f(x)=\sum^\infty_{n=1}\alpha_n\sin\left(\frac{n\pi x}{L}\right)\]
+It might not be immediately clear from here how to extract the coefficients \(\alpha_n\), however note that this form looks a lot like a Fourier series. In this case we can multiply both sides by a \(\sin\) term and then integrate - this will recover the integral form of a Fourier coefficient.
+\[\int^L_0f(x)\sin\left(\frac{m\pi x}{L}\right)\,\text{d}x=\sum^\infty_{n=1}\alpha_n\left(\int^L_0\sin\left(\frac{n\pi x}{L}\right)\sin\left(\frac{m\pi x}{L}\right)\,\text{d}x\right)\]
+It looks like we have just made it so much more complicated but this integral is actually a standard result from the notes and simplifies very nicely:
+\[\int^L_0f(x)\sin\left(\frac{m\pi x}{L}\right)\,\text{d}x=\sum^\infty_{n=1}\alpha_n\frac{L}{2}\delta_{nm}=\frac{L}{2}\alpha_m\]
+This last result comes from the sifting property of the Kronecker-delta. Then we finally have our solution to the IBVP:
+\[u(x,t)=\sum^\infty_{n=1}\alpha_n\exp\left(-\frac{n^2\pi^2}{L^2}t\right)\sin\left(\frac{n\pi x}{L}\right)\]
+Where:
+\[\alpha_n=\frac{2}{L}\int^L_0f(x)\sin\left(\frac{n\pi x}{L}\right)\,\text{d}x\]
+The final step involved a small notation change but we can do this because \(m\) was just acting as a dummy variable.
 \end{document}

@@ -442,4 +442,55 @@ Where the volume \(\delta V\) contains the point \(P\), is enclosed by the surfa
 Similar to Stokes', the internal components cancel and so we are left exclusively with those on the boundary. 
 \subsubsection{Unifying theory}
 Generally, Green's, Stokes' and Gauss's theorem all come from the same underlying theory. This is, that integrating a differential operator (div, curl, or grad) acting on a field \(\underline{F}\) over a domain \(D\) is the same as adding the field components along the boundary. The interpretation of this depends on the type of object we are looking at specifically. This is also dependant on some conditions like smoothness as well. Overall, these are generalisations of the fundamental theorem of calculus.
+\clearpage
+\section{Curvilinear Coordinates}
+\subsection{Introduction and Definitions}
+Most of the time in this module we have been looking at Cartesian coordinates but we might want to look at other coordinates ones. In particular coordinates where:
+\[(x,y,z)\mapsto (u_1,u_2,u_3)=\begin{cases}
+    x=x(u_1,u_2,u_3) \\
+    y=y(u_1,u_2,u_3) \\
+    z=z(u_1,u_2,u_3)
+\end{cases}\]
+Throughout this chapter and the remainder of the module we are going to consider curvilinear coordinates. The analogous idea to axis in curvilinear coordinates is coordinate curves which are created by allowing one coordinate to vary and keeping the others fixed. Coordinate surfaces are created by allowing two coordinates to vary and keeping the other fixed.
+\subsection{Unit Vectors}
+Unit vectors for curvilinear coordinates are denoted \(\underline{e}_1,\cdots,\underline{e}_n\). They need not be constant nor orthogonal. To consider unit vectors we need to consider what direction you move along one axis - this is defined as the tangent curve:
+\[\underline{h}_i=\pf{\underline{r}}{u_i}\]
+\[\underline{e}_i=\frac{\underline{h}_i}{h_i}\]
+\subsection{Handedness}
+Note that curvilinear coordinates don't need to be orthogonal but if they are:
+\[\underline{e}_i\cdot\underline{e}_j=\delta_{ij}\]
+The triad \((\underline{e}_1,\underline{e}_2,\underline{e}_3)\) is called right-handed if:
+\[\underline{e}_1\times\underline{e}_2=\underline{e}_3\]
+It is called left-handed if:
+\[\underline{e}_1\times \underline{e}_2=-\underline{e}_3\]
+Down to cyclic permutations. Most of the coordinate systems we will study will be right-handed.
+\subsection{Integration Factors}
+When considering regions of integration, for an orthogonal system then locally we have a rectangle that has been stretched according to the axis scaling factors:
+\[\underline{\text{d}r}=\pf{\underline{r}}{u_1}\text{d}u_1+\pf{\underline{r}}{u_2}\text{d}u_2+\pf{\underline{r}}{u_3}\text{d}u_3\]
+\[\underline{\text{d}r}\cdot\underline{\text{d}r}=\text{d}S^2=h_1^2\text{d}u_1^2+h_2^2\text{d}u_2^2+h_3^2\text{d}u_3^2\]
+\[\text{d}S=\left|\pf{\underline{r}}{u_1}\times \pf{\underline{r}}{u_2}\right|\text{d}u_1\text{d}u_2=h_1h_2|\underline{e}_1\times \underline{e}_2|\text{d}u_1\text{d}u_2=h_1h_2\text{d}u_1\text{d}u_2\]
+\subsubsection{Curvilinear coordinates example}
+Consider the mapping \((x_1,x_2,x_3)\mapsto(u,v,w)\), where:
+\begin{align*}
+    &x_1=2uv && x_2=u^2-v^2 && x_3=w
+\end{align*}
+We wish to plot the coordinate curves and find the unit vectors in each direction. Let \(u=c\) be constant. Then \(v=\frac{x_1}{2c}\) and \(x_2=c^2-\frac{x_1^2}{4c^2}\). Then let \(v=d\) be constant, then \(u=\frac{x_1}{2d}\) and \(x_2=\frac{x_1^2}{4d^2}-d^2\) 
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\linewidth]{Year 2/Images/curvilinear.png}
+    \caption{The given coordinate curves plotted against the Cartesian axis.}
+\end{figure}
+\[\underline{r}=(2uv,u^2-v^2,w)\]
+\[h_u=|\underline{h}_u|=\left|\pf{\underline{r}}{u}\right|=|(2v,2u,0)|=2\sqrt{u^2+v^2}\]
+\[h_v=|\underline{h}_v|=|(2u,-2v,0)|=2\sqrt{u^2+v^2}\]
+\[h_w=|\underline{h}_w|=1\]
+Then the unit vectors are:
+\begin{align*}
+    &\underline{e}_u=\frac{1}{\sqrt{u^2+v^2}}(v,u,0) && \underline{e}_2=\frac{1}{\sqrt{u^2+v^2}}(u,-v,0) && \underline{e}_3=(0,0,1)
+\end{align*}
+We can show that this system is orthogonal by taking scalar products between the unit vectors. We can also take vector products to show that this coordinate system is left-handed.
+\subsection{Div, Curl, and Grad}
+In a right-handed orthogonal curvilinear system:
+\[\grad{f}=\left(\frac{1}{h_1}\pf{\underline{r}}{u_1},\,\frac{1}{h_2}\pf{\underline{r}}{u_2},\,\frac{1}{h_3}\pf{\underline{r}}{u_3}\right)\]
+Note that this makes intuitive sense since we are essentially just scaling the normal definition. Divergence, curl and the Laplacian are also defined for curvilinear coordinates on the formula sheet but you will not be expected to derive or remember them since they are quite complicated.
 \end{document}

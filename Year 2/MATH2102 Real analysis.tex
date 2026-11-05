@@ -303,4 +303,76 @@ If \(-f\) is convex, then \(f\) is called concave. Here, the \(t\) helps paramet
     \caption{Left: Convex function. Right: Concave function}
 \end{figure}
 Note that if a function is both convex and concave then it must be affine linear.
+\subsection{Convexity for Twice Differentiable Functions}
+If \(I\subseteq\mathbb{R}\) is an open interval and \(f:I\to\mathbb{R}\) is twice differentiable on \(I\). Then \(f\) is convex if and only if \(f''(x)\geq 0\). If \(f''(x)>0\), then \(f\) is strictly convex.
+\subsubsection{Notable examples}
+The function \(f(x)=\exp(x)\) is strictly convex for all \(x\in\mathbb{R}\). The function \(\log(x)\) is strictly concave for \(x\in (0,\infty)\).
+\subsection{Young's Inequality}
+Let \(p,q>1\) with \(\frac{1}{p}+\frac{1}{q}=1\). Then for any \(x,y>0\) we have:
+\[xy\leq \frac{1}{p}x^p+\frac{1}{q}y^q\]
+With equality only when \(x^p=y^q\).
+\subsection{H\"older's Inequality}
+Let \(x_1,\dots,x_n,y_1,\dots,y_n\in\mathbb{R}\) and \(p,q>1\) with \(\frac{1}{p}+\frac{1}{q}=1\). Then:
+\[\sum^n_{j=1}|x_jy_j|\leq \left(\sum^n_{j=1}|x_j|^p\right)^{\frac{1}{p}}\left(\sum^n_{j=1}|y_j|^q\right)^{\frac{1}{q}}\]
+\subsubsection{Corollary: Cauchy-Schwartz}
+Let \(x_1,\dots,x_n,y_1,\dots,y_n\in\mathbb{R}\). Then:
+\[\sum^n_{j=1}x_jy_j\leq \left(\sum^n_{j=1}x_j^2\right)^{\frac{1}{2}}\left(\sum^n_{j=1}y_j^2\right)^{\frac{1}{2}}\]
+\subsection{Minkowski's Inequality}
+Let \(p\geq 1\) and \(x_1,\dots,x_n,y_1,\dots,y_n\in\mathbb{R}\). Then:
+\[\left(\sum^n_{j=1}|x_j+y_j|^p\right)^{\frac{1}{p}}\leq\left(\sum^n_{j=1}|x_j|^p\right)^{\frac{1}{p}}+\left(\sum^n_{j=1}|y_j|^p\right)^{\frac{1}{p}}\]
+\subsection{Arithmetic, Geometric and Harmonic Mean}
+Let \(x_1,\dots,x_n>0\), then the arithmetic mean (A) of these numbers is:
+\[\frac{1}{n}\sum^n_{i=1}x_i\]
+The geometric mean (G) is:
+\[\left(\prod^n_{i=1}x_i\right)^{\frac{1}{n}}\]
+And the harmonic mean (H) is:
+\[\frac{n}{\sum^n_{i=1}\frac{1}{x_i}}\]
+These means satisfy the inequality:
+\[H\leq G\leq A\]
+\clearpage
+\section{Analysis in \(\mathbb{R}^d\)}
+\subsection{Notation and Basic Properties}
+For \(d\in\mathbb{N}\), the set \(\mathbb{R}^d\) is given as:
+\[\mathbb{R}^d=\{(x_1,x_2,\dots,x_d):x_1,\dots,x_d\in\mathbb{R}\}\]
+We will often shorten this to vector notation \(\underline{x}=(x_1,\dots,x_d)\). All of the properties of vector spaces we have seen before in MATH1101 apply here as well.
+\subsubsection{Decomposition}
+For \((x_1,\dots,x_d)\in\mathbb{R}^d\) we have \(x_j=(\underline{x}\cdot\underline{e}_j)\) and:
+\[\underline{x}=\sum^d_{i=1}(\underline{x}\cdot\underline{e}_j)\underline{e}_j\]
+\subsubsection{Cauchy-Schwartz}
+For \(\underline{x}, \underline{y}\in\mathbb{R}^d\) we have:
+\[|\underline{x}\cdot \underline{y}|\leq \|\underline{x}\|\|\underline{y}\|\]
+\subsection{Norms and Convergence in \(\mathbb{R}^d\)}
+The Euclidean norm of \(\underline{x}\in\mathbb{R}^d\) is:
+\[\|\underline{x}\|=\sqrt{\underline{x}\cdot\underline{x}}=\left(\sum^d_{i=1}|x_j|^2\right)^{\frac{1}{2}}\]
+The Euclidean distance between \(\underline{x}\) and \(\underline{y}\) is \(\|\underline{x}-\underline{y}\|\)
+\subsubsection{Properties}
+The Euclidean norm satisfies the following properties:
+\begin{itemize}
+    \item Definiteness: \(\|\underline{x}\|\geq 0\) for all \(\underline{x}\in\mathbb{R}^d\) with \(\|\underline{x}\|=0\iff \underline{x}=\underline{0}\).
+    \item Homogeneity: For all \(\lambda\in\mathbb{R}\) and \(\underline{x}\in\mathbb{R}^d\), \(\|\lambda \underline{x}\|=|\lambda|\|\underline{x}\|\).
+    \item Triangle inequality: For all \(\underline{x}, \underline{y}\in\mathbb{R}^d,\ \|\underline{x}+\underline{y}\|\leq  \|\underline{x}\|+\|\underline{y}\|\)
+\end{itemize}
+\subsubsection{Reverse triangle property}
+For all \(\underline{x},\underline{y}\in\mathbb{R}^d\), we have:
+\[\|\underline{x}-\underline{y}\|\geq |\|\underline{x}\|-\|\underline{y}\||\]
+\subsection{Sequences in \(\mathbb{R}^d\) and Convergence}
+A sequence of vectors in \(\mathbb{R}^d\) is a map from \(\mathbb{N}\) to \(\mathbb{R}^d\). We usually write \(\seq{x}{n}=(\underline{x}_1,\underline{x}_2,\dots)\). Let \(\underline{a}, \underline{x}_n\in\mathbb{R}^d\) for \(n\in\mathbb{N}\), then the sequence \(\seq{x}{n}\) is called convergent to \(\underline{a}\) if:
+\[\|\underline{x}_n-\underline{a}\|\to0\ \text{as }n\to\infty\]
+We write:
+\[\lim_{n\to\infty}\underline{x}_n=\underline{a}\]
+Alternatively, we can view convergence as a property each component of \(\underline{x}_n\) has. It turns out our norm convergence criteria is the same as finding that all of the components of \(\underline{x}_n\), each converge to the corresponding component of \(\underline{a}\).
+\subsection{Cauchy Sequences}
+A sequence \(\seq{\underline{x}}{n}\) is called a Cauchy sequence if \(\forall \varepsilon>0\), there exists \(N\in\mathbb{N}\) such that for all \(n,m\geq N\) we have:
+\[\|\underline{x}_n-\underline{x}_m\|<\varepsilon\]
+A sequence in \(\mathbb{R}^d\) is a Cauchy sequence if and only if it is convergent. This is a consequence of \(\mathbb{R}^d\) being complete.
+\subsection{Uniqueness of Limits}
+If \(\underline{x}_n\to \underline{a}\) and \(\underline{x}_n\to\underline{b}\) as \(n\to\infty\), then \(\underline{a}=\underline{b}\).
+\subsection{The Family of \(p\)-norms}
+For \(1\leq p<\infty\) and \(\underline{x}\in\mathbb{R}^d\) we have:
+\[\|\underline{x}\|_p=\left(\sum^d_{j=1}|x_j|^p\right)^{\frac{1}{p}}\]
+We define:
+\[\|\underline{x}\|_\infty=\max\{|x_1|,\dots,|x_d|\}\]
+\(\|\cdot\|_p\) is called the \(p\)-norm or sometimes the \(\ell^p\) norm. For \(p=1\):
+\[\|\underline{x}-\underline{y}\|_1=\sum^d_{j=1}|x_j-y_j|\]
+This is sometimes called the taxicab distance. Other families of norms exist and as well will see later in this chapter, whatever norm you use it will provide the same properties.
 \end{document}
