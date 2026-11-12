@@ -493,4 +493,45 @@ We can show that this system is orthogonal by taking scalar products between the
 In a right-handed orthogonal curvilinear system:
 \[\grad{f}=\left(\frac{1}{h_1}\pf{\underline{r}}{u_1},\,\frac{1}{h_2}\pf{\underline{r}}{u_2},\,\frac{1}{h_3}\pf{\underline{r}}{u_3}\right)\]
 Note that this makes intuitive sense since we are essentially just scaling the normal definition. Divergence, curl and the Laplacian are also defined for curvilinear coordinates on the formula sheet but you will not be expected to derive or remember them since they are quite complicated.
+\clearpage
+\section{Index Notation}
+\subsection{Introduction}
+Index notation is sometimes known as suffix notation. It is a way of writing and manipulating vectors and matrices via their elements:
+\[\underline{c}=\textbf{A}\underline{b}\longrightarrow c_i=\sum^n_{j=1}A_{ij}b_j\]
+In an nutshell this is all index notation is. Basically index notation breaks down our vector equation into \(n\) equations which are a set of scalar equations identified via label called a "free index". The labels do not matter as long as they are consistent.
+\subsection{Einstein Summation}
+Consider the dot product:
+\[\underline{a}\cdot \underline{b}=\sum^3_{j=1}a_jb_j\]
+In Einstein summation notation this is represented as:
+\[\underline{a}\cdot\underline{b}=a_ib_i=a_jb_j=\cdots\]
+The convention involves dropping the summation simple. We identify a summation by matching pairs of indices. In this part of the module we usually set \(n=3\) since that is the dimension in which all our vectors live. We call the index being summed over a "dummy" index because it does not affect the result. Going back example from the start we could instead write this as:
+\[c_i=A_{ij}b_j\]
+\subsection{Two Important Objects}
+\subsubsection{The Kronecker-delta}
+The Kronecker-delta is defined as:
+\[\delta_{ij}=\begin{cases}
+    1 & i=j \\
+    0 & \text{otherwise}
+\end{cases}\]
+The Kronecker-delta is sometimes called the "substituion tensor" because of it's sifting property in sums.
+\subsubsection{Alternating tensor (Levi-Civita)}
+The Levi-Civita symbol is defined as:
+\[\epsilon_{ijk}=\begin{cases}
+    0 & \text{any }i,j,k \text{ are equal} \\
+    1 & (i,j,k)=(1,2,3) \text{ up to cyclic permutations} \\
+    -1 & (i,j,k)=(3,2,1) \text{ up to cyclic permutations}
+\end{cases}\]
+\begin{align*}
+    &\epsilon_{ijk}=-\epsilon_{jik} && \text{(exchange indices)} \\
+    &\epsilon_{ijk}=\epsilon_{jki} && \text{(cyclic permutation)}
+\end{align*}
+\subsubsection{Relationship}
+\[\epsilon_{ijk}\epsilon_{klm}=\delta_{il}\delta_{jm}-\delta_{im}\delta_{jl}\]
+Proof: Ask a toddler on the street.
+\subsubsection{Examples}
+\[(\underline{a}\cdot\underline{b})(\underline{c}\cdot\underline{d})=a_ib_ic_jd_j\]
+\[a_{j}b_ic_j=(\underline{a}\cdot\underline{c})b_i\equiv (\underline{a}\cdot \underline{c})\underline{b}\]
+\[\delta_{ij}a_j=a_i\equiv\underline{a}\]
+\[\epsilon_{ijk}a_jb_k=\sum^3_{j=1}\sum^3_{k=1}\epsilon_{ijk}a_jb_k=(\underline{a}\times\underline{b})_i\equiv \underline{a}\times \underline{b}\]
+The best way to get familiar with the notation is to use it lots.
 \end{document}

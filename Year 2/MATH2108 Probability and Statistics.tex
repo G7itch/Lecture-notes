@@ -894,4 +894,167 @@ We can find the mle's \(\hat{\mu}\) and \(\hat{\sigma^2}\) by jointly maximising
     &\hat{\mu}=\bar{x}=\frac{1}{n}\sum^n_{i=1}x_i \\
     &\hat{\sigma^2}=\frac{1}{n}\sum^n_{i=1}(x_i-\bar{x})^2
 \end{align*}
+\clearpage
+\section{Asymptotic Properties of MLEs}
+Throughout this chapter we will assume a sample of size \(n\) has been taken of the iid random variables \(X_1,\dots,X_n\). We have asymptotic behaviour as \(n\to\infty\). Recall that given observations \(x_1,\dots,x_n\) from \(X_1,\dots,X_n\) we have:
+\[\mathcal{L}(\theta;\, \underline{x})=f_{\underline{X}}(\underline{x}\mid \theta)\]
+\[\ell(\theta;\, \underline{x})=\log\mathcal{L}(\theta;\, \underline{x})\]
+Maximising this log likelihood function for \(\theta\) gives us the mle of \(\theta\), \(\hat{\theta}(\underline{x})\). Note that this value is a statistic.
+\subsection{Fisher Information}
+Let:
+\[\mathcal{I}(\theta)=\mathbb{E}\left[-\pf{^2\ell(\theta;\,\underline{x})}{\theta^2}\right]\]
+be the Fisher information (sometimes called the expected information. Recall that the second derivative of a function encodes curvature and that we can place a threshold on \(\ell(\theta)\) to get a range of plausible values for \(\theta\). A lower Fisher information refers to a larger range of "plausible" values of \(\theta\). \(\mathcal{I}(\theta)\) measures how much information we expect the data to contain about \(\theta\).
+\subsection{Asymptotic}
+These occur in the case when \(n\to\infty\), it can be shown that under suitable regularity conditions we get the following:
+\[\hat{\theta}\sim\mathcal{N}(\theta,\, \mathcal{I}(\theta)^{-1})\]
+as \(n\to\infty\). What this means in words is that our estimator \(\hat{\theta}\) is approximately normal for large enough \(n\). Notice that \(\hat{\theta}\) is unbiased.
+\subsubsection{Poisson example}
+Let \(X_1,\dots,X_n\iid\text{Po}(\mu)\). We wish to find the mle of \(\mu\) and its distribution as \(n\to\infty\):
+\[\mathcal{L}(\mu;\, \underline{X})=\prod^n_{i=1}\frac{\mu^{X_i}e^{-\mu}}{X_i!}=\frac{\mu^{\sum_iX_i}e^{-n\mu}}{\prod^n_iX_i!}\]
+\[\ell(\mu;\, \underline{X})=\left(\sum_iX_i\right)\log(\mu)-n\mu+c\]
+Where \(c\) is some constant.
+\[\pf{\ell}{\theta}=\frac{1}{\mu}\sum_iX_i-n\]
+Setting this equation to 0 gives us the score equation that we need to solve to get our mle of \(\mu\).
+\[\ell'=0\implies \hat{\mu}=\frac{1}{n}\sum_iX_i=\bar{X_i}\]
+We can verify that this is indeed a maximum by checking the second derivative:
+\[\pf{^2\ell}{\theta^2}=-\frac{\sum_iX_i}{\mu^2}<0\]
+So \(\hat{\mu}\) is a maximum. The Fisher information is:
+\[\mathcal{I}(\theta)=\mathbb{E}_{X}\left[-\ell''\right]=\frac{1}{\mu^2}\mathbb{E}_X\left[\sum_iX_i\right]=\frac{n}{\mu}\]
+Finally we can construct the distribution of \(\hat{\mu}\) as the sample size gets larger:
+\[\hat{\mu}\sim\mathcal{N}\left(\mu,\, \frac{\mu}{n}\right)\]
+\subsection{Confidence Intervals}
+Consider \(X_1,\dots,X_n\sim f_{\underline{X}}(\underline{x};\, \theta)\) and an estimator of \(\theta,\ T(\underline{X})\). Since our estimator is a random variable, we can examine its sampling distribution and claim:
+\[P[a(\theta)\leq T(\underline{X})\leq b(\theta)]=1-\alpha\]
+Where \(a,b\) are functions of \(\theta\) and \(\alpha\in(0,1)\). Often we will choose \(\alpha=0.05\). Combining the inequalities:
+\begin{align*}
+    &T(\underline{X})\leq b(\theta) \\
+    &T(\underline{X})\geq a(\theta)
+\end{align*}
+In terms of \(\theta\), we can obtain the random variables:
+\begin{align*}
+    \theta_L(\underline{X}) && \theta_U(\underline{X})
+\end{align*}
+such that:
+\[P[\theta_L(\underline{X})\leq \theta\leq \theta_U(\underline{X})]=1-\alpha\]
+Given an observed sample, \(x_1,\dots,x_n\) the observed confidence interval is:
+\[(\theta_L(\underline{x}),\ \theta_U(\underline{x}))\]
+under repeated sampling of \(T(\underline{X})\), \(100(1-\alpha)\%\) of observed intervals contain the true value \(\theta\). It is not true to say,
+\[P[\theta\in(\theta_L(\underline{x}),\ \theta_U(\underline{x}))]=1-\alpha\]
+\subsubsection{Normal intervals}
+When dealing with the normal distribution there are multiple ways to choose the area such that it is \(1-\alpha\). In particular there are two useful ones that we use all the time:
+\begin{enumerate}
+    \item Equal tail areas.
+    \item Narrowest interval.
+\end{enumerate}
+Usually we choose an equal tail interval. Let \(z_{\alpha}\) be such that \(P[z>z_{\alpha}]=\alpha\). We can construct the confidence interval:
+\[P\left[-z_{\alpha/2}<\frac{\bar{X}-\theta}{\sigma/\sqrt{n}}<z_{\alpha/2}\right]\]
+\[P\left[\bar{X}-z_{\alpha/2}\frac{\sigma}{\sqrt{n}}<\theta<\bar{X}+z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\right]=1-\alpha\]
+So:
+\[(\theta_L(\underline{X}),\theta_U(\underline{X}))=\left(\bar{X}-z_{\alpha/2}\frac{\sigma}{\sqrt{n}},\ \bar{X}+z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\right)\]
+is the random interval. Given \(\underline{x}=x_1,\dots,x_n\) is an observed sample then the confidence interval is:
+\[\bar{x}\pm z_{\alpha/2}\frac{\sigma}{\sqrt{n}}\]
+\subsection{Confidence intervals using MLEs}
+We have seen that \(\hat{\theta}\sim\mathcal{N}(\theta, \mathcal{I}(\theta)^{-1})\) as \(n\to\infty\). Hence:
+\[\left(\hat{\theta}-\frac{z_{\alpha/2}}{\sqrt{\mathcal{I}(\theta)}},\, \hat{\theta}+\frac{z_{\alpha/2}}{\sqrt{\mathcal{I}(\theta)}}\right)\]
+is an approximate \(100(1-\alpha)\%\) confidence interval for \(\theta\). A caveat is that \(\theta\) usually appears in these expressions but is unknown. In this case we can either replace it with \(\mathcal{I}(\hat{\theta})\) or with the "observed" information:
+\[\mathcal{J}(\hat{\theta})=-\pf{^2\ell}{\theta^2}|_{\theta=\hat{\theta}}\]
+\subsubsection{Bernoulli Example}
+Let \(X_1,\dots,X_n\iid\text{Bernoulli}(\theta)\). Then:
+\[\mathcal{L}(\theta;\, \underline{X})=\prod^n_{i=1}\theta^{X_i}(1-\theta)^{1-X_i}=\theta^{\sum_i X_i}(1-\theta)^{n-\sum_i X_i}\]
+Then the log likelihood function is:
+\[\ell=\sum_i X_i\log\theta + (n-\sum X_i)\log(1-\theta)\]
+\[\pf{\ell}{\theta}=\frac{1}{\theta}\sum_iX_i-\frac{n-\sum_iX_i}{1-\theta}\]
+\[\ell'=0\implies (1-\theta)\sum_{i}X_i=n\theta+\theta\sum X_i\implies \hat{\theta}=\bar{X}\]
+We verify that this is indeed a maximum:
+\[\ell''=-\frac{\sum X_i}{\theta^2}-\frac{(n-\sum X_i)}{(1-\theta)^2}<0\]
+So \(\hat{\theta}=\bar{X}\) is our MLE. We can now calculate the Fisher information:
+\[\mathcal{I}(\theta)=\mathbb{E}[-\ell'']=\mathbb{E}\left[\frac{\sum X_i}{\theta^2}+\frac{(n-\sum X_i)}{(1-\theta)^2}\right]\]
+\[\mathcal{I}(\theta)=\frac{n}{\theta(1-\theta)}\]
+So \(\hat{\theta}\sim \mathcal{N}\left(\theta,\ \frac{\theta(1-\theta)}{n}\right)\) as \(n\to\infty\). Now if \(\bar{x}\) is the observed estimate for \(\theta\):
+\[\hat{\theta}\sim \mathcal{N}\left(\theta,\frac{\bar{x}(1-\bar{x})}{n}\right)\]
+and for a \(95\%\) confidence interval we have \(\alpha=0.05\).
+\[\bar{x}\pm 1.96\,\sqrt{\frac{\bar{x}(1-\bar{x})}{n}}\]
+is observed \(95\%\) confidence interval for \(\theta\).
+\subsection{Pivotal Quantities}
+A random variable \(T(\underline{X};\theta)\) is called a pivotal quantity if the distribution of \(T(\underline{X}; \theta)\) is independent of \(\theta\). In other words, if \(\underline{X}\sim \mathcal{D}(\theta)\) then \(T(\underline{X}; \theta)\) has the same distribution for all \(\theta\). For example:
+\[\frac{\bar{X}-\theta}{\sigma/\sqrt{n}}\sim\mathcal{N}(0,1)\]
+does not depend on \(\theta\).
+\subsubsection{Standard pivotal quantities}
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Quantity} & \textbf{Distribution} \\ \hline
+        \(\frac{\bar{X}-\theta}{\sigma/\sqrt{n}}\) & \(\mathcal{N}(0,1)\) \\ \hline
+        \(\frac{\bar{X}-\mu}{S/\sqrt{n}}\) & \(t_{n-1}\) \\ \hline
+        \(\frac{(n-1)S^2}{\sigma^2}\) & \(\chi^2_{n-1}\) \\ \hline
+    \end{tabular}
+    \caption{A table of standard pivotal quantities and what distributions they are associated with.}
+\end{table}
+Where:
+\[S^2=\frac{1}{n-1}\sum^n_{i=1}(X_i-\bar{X})^2\]
+\subsubsection*{Example}
+Define the set \(\mathcal{A}\) such that:
+\[P[T(\underline{X};\theta)\in\mathcal{A}]=1-\alpha\]
+Then \(\{\theta: T(\underline{X};\theta)\in\mathcal{A}\}\) is a \(100(1-\alpha)\%\) confidence interval/set for \(\theta\). Suppose \(X_1,\dots,X_n\iid\mathcal{N}(\mu,\sigma^2)\) where \(\mu\) and \(\sigma^2\) are unknown. We wish to find a confidence interval for \(\sigma^2\) under some fixed \(\alpha\in(0,1)\). We know:
+\[\frac{(n-1)S^2}{\sigma^2}\sim\chi^2_{n-1}\]
+\[P\left[\chi^2_{n-1}\left(1-\frac{\alpha}{2}\right)\leq\frac{(n-1)S^2}{\sigma^2}\leq\chi^2_{n-1}\left(\frac{\alpha}{2}\right)\right]=1-\alpha\]
+\[P\left[\frac{(n-1)S^2}{\chi^2_{n-1}\left(\frac{\alpha}{2}\right)}\leq\sigma^2\leq\frac{(n-1)S^2}{\chi^2_{n-1}\left(1-\frac{\alpha}{2}\right)}\right]=1-\alpha\]
+Note that this is still a random interval since \(S^2\) is a random variable. If we had sample data we could actually calculate a confidence interval for a given alpha. Because it is a random expression it still makes sense to talk about probabilities.
+\clearpage
+\section{Hypothesis Testing}
+\subsection{Definitions}
+\subsubsection{Hypotheses}
+\begin{itemize}
+    \item (Null hypothesis) \(H_0\): Current or default behaviour.
+    \item (Alternative hypothesis) \(H_1\): Some departure of interest from \(H_0\).
+    \item Simple hypothesis: Concentrated on one value of \(\theta\), e.g. \(\theta=1\).
+    \item Composite hypothesis: Concentrated on multiple values or a range of \(\theta\), e.g. \(\theta>0\).
+\end{itemize}
+\subsubsection{Errors}
+\begin{itemize}
+    \item Type I error: Reject \(H_0\) when it is true - "False positive".
+    \item Type II error: Accept \(H_0\) when it is false - "False negative".
+\end{itemize}
+\subsubsection{Significance levels and power}
+We choose a significance level \(\alpha\) such that:
+\[P[\text{Type I error}]=\alpha\]
+The power of the test is:
+\[P[\text{Reject }H_0\mid H_0\text{ false}]=1-P[\text{Type II error}]\]
+\subsection{General Process}
+\begin{enumerate}
+    \item Construct a test statistic \(T(\underline{X})\) and find it's sampling distribution.
+    \item Assume \(H_0\) is true.
+    \item Given sample data, compute the observed statistic \(T(\underline{x})\).
+    \item If \(T(\underline{x})\) is "too unusual" under \(H_0\) then reject \(H_0\)
+\end{enumerate}
+\subsubsection{Multi-stage example}
+Let \(X\) be a single observation from the distribution with:
+\[f_X(x\mid\theta)=\frac{\theta}{x^{\theta+1}},\quad x>1\]
+Where \(\theta>0\) is an unknown parameter. Consider the hypothesis test:
+\begin{align*}
+    &H_0: \theta=1 \\
+    &H_1:\theta<1
+\end{align*}
+that rejects \(H_0\) if \(X\geq k\) for some constant \(k\). Note that this is a sensible rejection criteria since smaller \(\theta\) favour larger \(X\). Fix \(\alpha\in(0,1)\)
+\begin{enumerate}
+    \item[a)] We require:
+    \[P[X\geq k\mid H_0]=\alpha\]
+    The CDF of \(X\) is:
+    \[P[X\leq x]=\int^x_1\frac{\theta}{y^{\theta+1}}\,\text{d}y=1-\frac{1}{x^\theta}\]
+    Under \(H_0\), we have \(\theta=1\). Then:
+    \[P[X\geq k\mid \theta=1]=1-\left(1-\frac{1}{k^1}\right)=\frac{1}{k}=\alpha\]
+    Hence:
+    \[k=\frac{1}{\alpha}\]
+    So once \(\alpha\) is fixed we have the critical region:
+    \[X\geq \frac{1}{\alpha}\]
+    \item[b)] Suppose \(\alpha=0.1\) and we have \(x=8\) as our observed sample. We reject \(H_0\) if \(x\geq 1/\alpha=10\). \(x=8<10\) so we do not reject \(H_0\). Our p-value for this test is:
+    \[p=P[X\geq 8\mid\theta=1]=1-\left(1-\frac{1}{8}\right)=\frac{1}{8}\]
+    Notice that this p-value is bigger than \(\alpha\). This is another way of deciding whether to reject \(H_0\) or not. Since \(p>\alpha\) we do not reject \(H_0\).
+    \item[c)] We have that the power of the test is:
+    \[P[\text{Reject }H_0\mid H_1]=P[X\geq k\mid \theta<1]\]
+    \[=1-\left(1-\frac{1}{k^{\theta}}\right)=\frac{1}{k^\theta}=\alpha^\theta\]
+    \(\alpha\) is fixed so lets consider what happens as \(\theta\) changes. We can plot the power function and notice that the power goes to \(1\) as \(\theta\) goes to 0, away from \(H_0:\theta=1\).
+    
+\end{enumerate}
 \end{document}

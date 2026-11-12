@@ -375,4 +375,62 @@ We define:
 \(\|\cdot\|_p\) is called the \(p\)-norm or sometimes the \(\ell^p\) norm. For \(p=1\):
 \[\|\underline{x}-\underline{y}\|_1=\sum^d_{j=1}|x_j-y_j|\]
 This is sometimes called the taxicab distance. Other families of norms exist and as well will see later in this chapter, whatever norm you use it will provide the same properties.
+\subsection{Norms on \(\mathbb{R}^d\)}
+A function \(N:\mathbb{R}^d\to\mathbb{R}\) is called a norm on \(\mathbb{R}^d\) if it holds that:
+\begin{itemize}
+    \item \(N(\underline{x})\geq 0\) for all \(\underline{x}\in\mathbb{R}^d\) and in particular \(N(\underline{x})=0\) if and only if \(\underline{x}=\underline{0}\).
+    \item \(\forall\lambda\in\mathbb{R}\) and \(\underline{x}\in\mathbb{R}^d\) we have \(N(\lambda \underline{x})=|\lambda|N(\underline{x})\).
+    \item \(\forall \underline{x}, \underline{y}\in\mathbb{R}^d\) we have: \(N(\underline{x}+\underline{y})\leq N(\underline{x})+N(\underline{y})\).
+\end{itemize}
+\subsection{Bounded Sequences}
+A set \(A\subseteq \mathbb{R}^d\) is called bounded if there exists \(M>0\) such that for all \(\underline{x}\in A\):
+\[\|\underline{x}\|\leq M\]
+A sequence \(\seq{\underline{x}}{n}\) in \(\mathbb{R}^d\) is called bounded if the set \(\{\underline{x}_n:n\in\mathbb{N}\}\) is bounded.
+\subsubsection{Bolzano-Weierstrau\ss}
+Any bounded sequence in \(\mathbb{R}^d\) has a convergent subsequence.
+\subsection{Comparing Norms}
+For all \(\underline{x}\in\mathbb{R}^d\):
+\[\|\underline{x}\|_\infty\leq \|\underline{x}\|\leq \sqrt{d}\|\underline{x}\|_{\infty}\]
+In fact, in general if \(N_1\) and \(N_2\) are two norms on \(\mathbb{R}^d\), there are constants such that:
+\[AN_1(\underline{x})\leq N_2(\underline{x})\leq BN_2(\underline{x})\]
+\subsubsection{Corollary}
+If \(N\) is any norm on \(\mathbb{R}^d\), then the sequence \(\seq{\underline{x}}{n}\) converges to \(\underline{a}\) if and only if:
+\[N(\underline{x}_n-\underline{a})\to 0\]
+as \(n\to\infty\). The most popular norms for testing convergence are the taxicab distance, the Euclidean norm and the p-\(\infty\) norm.
+\subsection{Open Balls}
+For \(\underline{a}\in\mathbb{R}^d\) and \(r>0\) we define the open ball \(B_r(\underline{a})\) of radius \(r\) around the point \(\underline{a}\) as:
+\[B_r(\underline{a})=\{\underline{x}\in\mathbb{R}^d: \|\underline{x}-\underline{a}\|<r\}\]
+Another notation for this is \(B(\underline{a}, r)\). Note that if we set \(d=1\), then \(B_r(p)=(p-r, p+r)\) is an open interval.
+\subsection{Open Sets}
+A set \(U\subseteq\mathbb{R}^d\) is called open if for every \(\underline{a}\in U\), there exists an \(r>0\) such that \(B_r(\underline{a})\subseteq U\). Usually \(r\) will depend on \(\underline{a}\).
+\subsubsection*{Examples}
+\begin{itemize}
+    \item The empty set, \(\emptyset\), is open.
+    \item \(\mathbb{R}^d\) is open.
+    \item \(U=B_s(\underline{p})\) for \(s>0\) and \(\underline{p}\in\mathbb{R}^d\) is open.
+    \item Half spaces are open, e.g. \(U=\{(x_1,x_2,\dots,x_d)\in\mathbb{R}^d:x_1>0,\, x_2\dots,x_d\in\mathbb{R}\}\).
+\end{itemize}
+\subsection{Closed Sets}
+A set \(A\subseteq\mathbb{R}^d\) is called closed if \(\mathbb{R}^d\,\backslash A\) is open. Alternatively, a set \(A\) is closed if and only if for every sequence \(\seq{\underline{x}}{n}\) with \(\underline{x}_n\in A\) and \(\underline{x}_n\to \underline{x}_0\in\mathbb{R}^d\), then the limit \(\underline{x}_0\in A\).
+\subsubsection{Examples}
+\begin{itemize}
+    \item Any finite subset of \(\mathbb{R}^d\) is closed.
+    \item \(\emptyset\) and \(\mathbb{R}^d\) are closed,
+\end{itemize}
+\subsubsection{An important note}
+Note that sets are not exclusive whether they are open or closed. Sets can be open and closed, one or the other, or neither. For example consider \(A=\mathbb{R}\times\{0\}=\{(x,0):x\in\mathbb{R}\}\) - \(A\) is closed and not open in \(\mathbb{R}^2\), despite \(\mathbb{R}\) being both open and closed in \(\mathbb{R}\). \(\mathbb{Q}^2\) is neither open nor closed.
+\subsection{Properties of Open and Closed Sets}
+\begin{itemize}
+    \item The union of arbitrarily many open sets is open. If \(U_i\subseteq\mathbb{R}^d\) is open for \(i\in I\), then \(\bigcup_{i\in I}U_i\) is open.
+    \item The intersection to two open sets is open. If \(U_1,U_2\subseteq\mathbb{R}^d\) are open then \(U_1\cap U_2\) is open.
+    \item The intersection of many open sets does not need to be open.
+    \item The intersection of arbitrarily closed sets is closed.
+    \item The union of two closed sets is closed.
+\end{itemize}
+\subsection{Closure \& Interior}
+Let \(S\subseteq\mathbb{R}^d\) be a set. We define the closure of \(S\) as:
+\[\bar{S}=\{\underline{x}\in\mathbb{R}^d:\exists\underline{x}_n\in S \text{ with }\underline{x}_n\to\underline{x}\text{ and }n\to\infty\}\]
+In words we can think of this as the smallest closed set that contains \(S\). The interior of \(S\) is:
+\[\text{int}(S)=\{\underline{x}\in S:\exists r>0\text{ s.t.} B_r(\underline{x})\subseteq S\}\]
+The interior is the largest open set that \(S\) contains.
 \end{document}

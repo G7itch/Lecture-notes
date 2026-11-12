@@ -1,5 +1,5 @@
 \documentclass[12pt]{article}
-\usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float}
+\usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float, changepage}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -699,4 +699,80 @@ This last result comes from the sifting property of the Kronecker-delta. Then we
 Where:
 \[\alpha_n=\frac{2}{L}\int^L_0f(x)\sin\left(\frac{n\pi x}{L}\right)\,\text{d}x\]
 The final step involved a small notation change but we can do this because \(m\) was just acting as a dummy variable.
+\subsection{Laplace's Equation}
+Laplace's equation is used to model steady states of a system after longer periods of time. It has different forms depending on the coordinate system you are working with and it is expected that you remember the Cartesian form:
+\[\nabla^2u=\underbrace{u_{xx}+u_{yy}}_\text{2D Cartesian}=\underbrace{u_{rr}+\frac{1}{r}u_{r}+\frac{1}{r^2}u_{\theta\theta}}_{\text{2D Polar}}\]
+Note that this is an elliptic PDE so we only prescribe boundary conditions not initial conditions..
+\subsubsection{Solution}
+We wish to solve \(\nabla^2u=0\) on a \(L\times L\) square with the following boundary conditions:
+\begin{align*}
+    &u(0,y)=0 && u(x,0)=0 \\
+    &\pf{u}{y}|_{y=L}=0 && u(L,y)=f(y)
+\end{align*}
+Note that we have 3 HBCs but in particular our HBC pair is:
+\begin{align*}
+    &u(x,0)=0 && u_y(L)=0
+\end{align*}
+Now we can apply the separation principle. Let \(u(x,y)=X(x)Y(y)\):
+\[\nabla^2u=u_{xx}+u_{yy}=X''Y+Y''X=0\]
+\[\frac{X''}{X}=-\frac{Y''}{Y}=\lambda\]
+Notice that here we have set the equations equal to a positive \(\lambda\). We do this because we want exactly one negative sign in our expression and this has already been absorbed by the \(\frac{Y''}{Y}\) term. We have chosen to base our constant off of this equation because it is the equation that corresponds to our HBC pair. Notice that this recovers us the same form as in the heat equation:
+\begin{align*}
+    Y''(y)=-\lambda Y(y) && \underbrace{\overbrace{Y(0)=0}^{\text{Dirichlet}}\quad \overbrace{Y'(L)=0}^{\text{Neumann}}}_{\text{Mixed-pair DBC/NBC}}
+\end{align*}
+We know that \(\lambda>0\) is the only interesting case from before so using the general solution to a constant coefficient ODE with real distinct roots we get:
+\[Y(y)=A\cos(\sqrt{\lambda}y)+B\sin(\sqrt{\lambda}y)\]
+We now need to apply our boundary conditions to this solution:
+\[Y(0)=0\implies A=0\]
+\[Y'(L)=0\implies B\sqrt{\lambda}\cos(\sqrt{\lambda}L)=0\]
+Then \(B=0,\ \sqrt{\lambda}=0\) or \(\cos(\sqrt{\lambda}L)=0\). Notice that the first two are non-solutions, then:
+\[\cos(\sqrt{\lambda}L)=0\implies \sqrt{\lambda}L=\frac{\pi}{2}+n\pi\quad n\in\mathbb{N}_0\]
+
+\begin{equation*}
+    \implies \lambda_n=\frac{\pi^2}{4L^2}(1+2n)^2\quad n\in\mathbb{N}_0 \tag{\(*\)}   
+\end{equation*}l
+Then:
+\[Y_n(y)=B_n\sin(\sqrt{\lambda_n}y)\]
+where \(\lambda_n=\frac{\pi^2}{4L^2}(1+2n)^2\) for \(n\in\mathbb{N}_0\). Now:
+\[X''(x)=\lambda_nX(x)\]
+\[\implies X(x)=C\cosh(\sqrt{\lambda_n}x)+D\sinh(\sqrt{\lambda_n}x)\]
+Applying the boundary condition (since there is only one HBC for \(x\)):
+\[X(0)=0=C\]
+\[X_n(x)=D_n\sinh(\sqrt{\lambda_n}x)\]
+We can now combine our solutions by the principle of superposition:
+\[u_n(x,y)=\sum^\infty_{n=0}b_n\sin(\sqrt{\lambda_n}y)\sinh(\sqrt{\lambda_n}y)\]
+Where \(\lambda_n\) is defined as in \((*)\). Applying the final boundary condition:
+\[u_n(L,y)=f(y)=\sum^\infty_{n=0}\underbrace{b_n\sinh(\sqrt{\lambda_n}L)}_{\text{acts as a constant in y}}\sin(\sqrt{\lambda_n}y)\]
+Multiply by \(Y_m(y)=\sin(\sqrt{\lambda_m}y)\) and integrate from \(0\) to \(L\):
+\[\int^L_0f(y)Y_m\, \text{d}y=\sum^\infty_{n=0}b_n\sinh(\sqrt{\lambda_n}L)\int^L_0Y_nY_m\,\text{d}y\]
+\[=\sum^\infty_{n=0}b_n\sinh(\sqrt{\lambda_n}L)\frac{L}{2}\delta_{nm}\]
+\[=\frac{L}{2}b_m\sinh(\sqrt{\lambda_m}L)\]
+\begin{equation*}
+    b_n=\frac{2}{L\sinh(\sqrt{\lambda_n}L)}\int^L_0f(y)Y_n(y)\,\text{d}y\tag{\(\dagger\)}
+\end{equation*}
+Then we can construct the final solution:
+\[u(x,y)=\sum^\infty_{n=0}b_n\sin(\sqrt{\lambda_n}y)\sinh(\sqrt{\lambda_n}x)\]
+Where \(b_n\) is defined as in \((\dagger)\)
+\subsection{Really Important Point}
+Notice that the eigenpair problems have been the same with the previous two examples, albeit with slightly different resulting forms due to boundary conditions. In general we can just remember the solutions to equations of the form:
+\[Z''=-\lambda Z\]
+These results are stated in the notes and reproduced here but not they will not be available in the exam. You can also freely quote the integral result:
+\[\int^L_0Y_nY_m\,\text{d}y=\frac{L}{2}\delta_{nm}\]
+\begin{table}[H]
+    \centering
+    \begin{adjustwidth}{-2cm}{}
+    \begin{tabular}{|c|c|c|c|}
+    \hline
+        \textbf{HBC name} & \textbf{BC Statement} & \(\lambda_n\) & \(\sum Z_n(z)\)  \\ \hline
+         Dirichlet BCs & \(Z(0)=Z(L)=0\) & \(\frac{n^2\pi^2}{L^2},\ n\in\mathbb{N}\) & \(\sum^\infty_{n=1}b_n\sin\left(\frac{n\pi z}{L}\right)\) \\ \hline
+         Neumann BCs & \(Z'(0)=Z'(L)=0\) & \(\frac{n^2\pi^2}{L^2},\ n\in\mathbb{N}_0\) & \(\frac{a_0}{2}+\sum^\infty_{n=1}a_n\cos\left(\frac{n\pi z}{L}\right)\) \\ \hline
+         Mixed DBC/NBC & \(Z(0)=Z'(L)=0\) & \(\frac{(1+2n)^2\pi^2}{4L^2},\ n\in\mathbb{N}_0\) & \(\sum^\infty_{n=0}b_n\sin\left(\frac{(1+2n)\pi z}{2L}\right)\) \\ \hline
+         Mixed NBC/DBC & \(Z'(0)=Z(L)=0\) & \(\frac{(1+2n)^2\pi^2}{4L^2},\ n\in\mathbb{N}_0\) & \(\sum^\infty_{n=0}a_n\cos\left(\frac{(1+2n)\pi z}{2L}\right)\) \\ \hline
+         Periodic BC & \(Z(x+2L)=Z(z),\ \forall z\) & \(\frac{n^2\pi^2}{L^2},\ n\in\mathbb{N}_0\) & \(\frac{a_0}{2}+\sum^\infty_{n=1}a_n\cos\left(\frac{n\pi z}{L}\right)+b_n\sin\left(\frac{n\pi z}{L}\right)\) \\ \hline
+    \end{tabular}
+    \end{adjustwidth}
+    \caption{Solutions to the BVP with eigenpair problem: \(Z''=-\lambda Z\)}
+\end{table}
+\clearpage
+\section{Inhomogeneities in PDEs}
 \end{document}
