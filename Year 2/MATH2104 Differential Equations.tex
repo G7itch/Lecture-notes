@@ -1,5 +1,5 @@
 \documentclass[12pt]{article}
-\usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float, changepage}
+\usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float, changepage, cancel}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -775,4 +775,175 @@ These results are stated in the notes and reproduced here but not they will not 
 \end{table}
 \clearpage
 \section{Inhomogeneities in PDEs}
+\subsection{Introduction}
+The general 2nd order form of a PDE is:
+\[a(x,y)+u_{xx}+b(x,y)u_{xy}+c(x,y)u_{yy}=f(u,u_x,u_y)+g(x,y)\]
+Where \(g(x,y)\ne 0\) means that the PDE is inhomogeneous. Alternatively we can also have inhomogeneous BCs that would mean that we cannot apply the principle of superposition. There are 3 main ways that we can use to try and deal with inhomogeneities in IBVPs and which method we use will depend on the type of inhomogeneity. All three methods rely on solving HBC PDEs so we need to be able to solve these well.
+\subsection{Steady-State Method}
+To use this method we require that all inhomogeneities to be time independent. The way we solve these PDEs is by decomposing our solutions due to linearity. If our main solution is \(u(x,t)\), then we can decompose this into:
+\[u(x,t)=\mathcal{U}(x)+v(x,t)\]
+We choose the boundary conditions such that \(\mathcal{U}(x)\) addresses all inhomogeneities. \(v(x,t)\) is solved as in chapter 4. In particular notice that we can always add \(0\) to a solution to help our decomposition, additionally:
+\[\pf{\mathcal{U}(x)}{t}=0\]
+\subsubsection{Constant Inhomogeneous Heat Equation}
+Solve the IBVP:
+\[u_t=u_{xx}+2,\quad 0<x<1,\ t>0\]
+With boundary conditions:
+\begin{align*}
+    &u_x(0,t) && u(1,t)=
+\end{align*}
+and initial condition:
+\[u(x,0)=-x^2\]
+This PDE is inhomogeneous and also has an inhomogeneous boundary condition. Neither of these inhomogeneities depend on time so we can use the steady state method. Let:
+\[u(x,t)=\mathcal{U}(x)+v(x,t)\]
+The PDE formulation is then:
+\[v_t=\mathcal{U}''(x)+v_{xx}+2\]
+We need to decompose this into two sub-problems.
+\subsubsection{Sub-problem 1: \(\mathcal{U}\) ODE}
+\[0=\mathcal{U}''(x)+2\implies \mathcal{U}''(x)=-2\]
+\[\mathcal{U}'(0)=0\]
+\[\mathcal{U}(1)=1\]
+Note that we need to solve this ODE before we solve the \(v(x,t)\) sub-problem since the initial condition relies on \(\mathcal{U}\).
+\[\mathcal{U}''(x)=-2\implies \mathcal{U}(x)=-x^2+ax+b\]
+\[\mathcal{U}'(0)=0\implies a=0\]
+\[\mathcal{U}(1)=1\implies b=2\]
+\[\mathcal{U}(x)=-x^2+2\]
+This represents the steady-state solution - essentially the temperature profile of the rod after a asymptotic amount of time. Now we can try and solve the second sub-problem.
+\subsubsection{Sub-problem 2: \(v(x,t)\) PDE}
+The decomposed PDE comes out to:
+\[v_t=v_{xx}\]
+This is just the homogeneous heat equation in 2D! We also have a HBC pair:
+\begin{align*}
+    &v_{x}(0,t)=0 && v(1,t)=0
+\end{align*}
+And an initial condition that does not depend on time.
+\[v(x,0)=-x^2-\mathcal{U}(x)=-2\]
+We solve the PDE using separation of variables:
+\[v(x,t)=X(x)T(t)\]
+\[\frac{X''}{X}=\frac{T'}{T}=-\lambda\]
+This breaks down into two problems as per usual:
+\begin{align*}
+    &X''(x)=-\lambda X(x) && \underbrace{X'(0)=0 \quad X(1)=0}_{\text{Mixed NBC/DBC}}
+\end{align*}
+From class notes, solving this equation for mixed DBC/NBC gives us the eigenpairs:
+\begin{align*}
+    \tag{\(*\)}
+    &\lambda_n=\frac{(1+2n)^2\pi^2}{4} && n\in\mathbb{N}_0\\
+    \tag{\(**\)}
+    &X_n(x)=\cos\left(\frac{\pi}{2}(1+2n)x\right)
+\end{align*}
+Now we can move on to solving the second problem:
+\[T'=-\lambda_nT\implies T=C\exp\left(-\frac{(1+2n)^2\pi^2}{4}t\right)\]
+Then since we have a homogeneous PDE and a pair of HBCs we can apply the principle of superposition to construct our solution for \(v(x,t)\):
+\[v(x,t)=\sum^\infty_{n=0}C_n\exp\left(-\lambda_nt\right)\cos\left(\sqrt{\lambda_n}x\right)\]
+Where \(\lambda_n\) is defined in \((*)\). We now need to find \(C_n\) using our initial condition:
+\[v(x,0)=\sum^\infty_{n=0}C_n\cos\left(\sqrt{\lambda_n}x\right)=-2\]
+From class notes we have that:
+\[C_n=\frac{2}{1}\int^1_0(-2)\cos\left(\sqrt{\lambda_n}x\right)\,\text{d}x\]
+Noting that \(L=1\) in the solution table.
+\[C_n=-4\int^1_0\cos\left(\sqrt{\lambda_n}x\right)\,\text{d}x=-\frac{4}{\lambda_n}\sin(\sqrt{\lambda_n})\]
+From symmetries of trigonometric functions note that \(\sqrt{\lambda_n}\) are the roots of cosine and so we can simplify this term:
+\[C_n=-4\cdot\frac{2}{\pi(1+2n)}\sin\left(\frac{\pi}{2}(1+2n)\right)=-4\cdot\frac{2(-1)^n}{\pi(1+2n)}\]
+Then finally we can combine all of our solutions we have worked out into one final solution for the inhomogeneous PDE:
+\[u(x,t)=\mathcal{U}(x)+v(x,t)\]
+\[u(x,t)=2-x^2+\sum^\infty_{n=0}\frac{8(-1)^{n+1}}{\pi(1+2n)}\exp(-\lambda_nt)\cos(\sqrt{\lambda_n}x)\]
+Where:
+\[\lambda_n=\frac{(1+2n)^2\pi^2}{4},\quad n\in\mathbb{N}_0\]
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/PDE_heat.png}
+    \caption{The constant-inhomogeneous heat PDE we just solved looks remarkably uninteresting.}
+\end{figure}
+\subsection{Eigenfunction Expansion Method}
+\begin{itemize}
+    \item This method is used for time-dependant inhomogeneities in the PDE only.
+    \item We seek a solution that incorporates the eigenfunctions of the underlying BVP (e.g. \(X_n(x)\))
+    \item Note that there are lots of parallels between the eigenfunction expansion method and series solution methods.
+\end{itemize}
+The essence of the EE method using using HBCs to motivate the overall form of the solution \(u(x,t)\):
+\[u(x,t)=\sum_nX_n(x)b_n(t)\]
+\subsubsection{Non-dimensional Wave Equation}
+Consider the non-dimensional wave equation with an external forcing term:
+\begin{align*}
+    &u_{tt}=u_{xx}+\cos(t)&&0<x<L,\ t>0 \\
+    &u(0,t)=0 && u(L,t)=0 \\
+    &u(x,0)=0 && u_t(x,0)=0
+\end{align*}
+\subsubsection{Case I: \(L\ne m\pi,\ m\in\mathbb{N}\)}
+From class notes, the DBCs give the form of the eigenfunctions:
+\[X_n(x)=\sin\left(\frac{n\pi x}{L}\right)\qquad n\in\mathbb{N}\]
+Using the eigenfunction expansion method we write:
+\[u(x,t)=\sum_{n=1}^\infty X_n(x)b_n(t)\]
+\[u_{tt}=\sum^\infty_{n=1}X_n(x)b''_n(t)\]
+\[u_{xx}=\sum^\infty_{n=1}X''_n(x)b_n(t)=-\sum^\infty_{n=1}\frac{n^2\pi^2}{L^2}X_n(x)b_n(t)\]
+Note that this last result is by construction, from \(X''=-\lambda_nX\). We need to address the inhomogeneity by finding a \(C_n\) such that:
+\[\cos(t)=\sum^\infty_{n=1}C_n(t)X_n(x)\]
+Using sifting properties / Fourier series:
+\[C_n(t)=\frac{2}{L}\int^L_0X_n(x)\cos(t)\,\text{d}x=\cos(t)\cdot\underbrace{\frac{2[(-1)^n-1]}{n\pi}}_{d_n}\]
+Putting it altogether by plugging into the PDE:
+\[\sum^\infty_{n=1}X_n(x)b_n''(t)=\sum^\infty_{n=1}-\frac{n^2\pi^2}{L^2}X_n(x)b_n(t)+\sum^\infty_{n=1}d_n\cos(t)X_n(x)\]
+\[\sum^\infty_{n=1}X_n(x)b_n''(t)=\sum^\infty_{n=1}X_n(x)\left[d_n\cos(t)-\frac{n^2\pi^2}{L^2}b_n(t)\right]\]
+From comparing coefficients, we are looking to solve the ODE:
+\[b_n''(t)=-\frac{n^2\pi^2}{L^2}b_n(t)+d_n\cos(t),\quad n\in\mathbb{N}\]
+We couple this ODE with associated initial conditions:
+\begin{align*}
+    &b_n(0)=0 \\
+    &b_n'(0)=0
+\end{align*}
+First we need to solve the homogeneous ODE component:
+\[b_{n,h}(t)=e^{rt}\implies r^2=-\frac{n^2\pi^2}{L^2}\]
+\[\implies b_{n,h}(t)=A_n\cos\left(\frac{n\pi x}{L}\right)+B_n\sin\left(\frac{n\pi x}{L}\right)\]
+Now we can address the particular solution. When \(L\ne m\pi,\ m\notin\mathbb{N}\):
+\[b_{n,p}(t)=E_n\cos(t)+F_n\sin(t)\]
+from the ODE:
+\[-E_n\cos(t)-F_n\sin(t)=-\frac{n^2\pi^2}{L^2}\left[E_n\cos(t)+F_n\sin(t)\right]+d_n\cos(t)\]
+Matching terms:
+\[-F_n=-\frac{n^2\pi^2}{L^2}F_n\implies F_n=0\]
+\[-E_n=-\frac{n^2\pi^2}{L^2}+d_n\implies E_n=\frac{d_n}{\frac{n^2\pi^2}{L^2}-1}=\frac{L^2d_n}{n^2\pi^2-L^2}\]
+Combing solutions gives us:
+\[b_n(t)=A_n\cos\left(\frac{n\pi x}{L}\right)+B_n\sin\left(\frac{n\pi x}{L}\right)+E_n\cos(t)\]
+\begin{align*}
+    &b_n(0)=0\implies A_n=-E_n \\
+    &b_n'(0)=0\implies B_n=0
+\end{align*}
+Our final solution for the case \(L\ne m\pi\) is then:
+\begin{equation*}
+    \boxed{u(x,t)=\sum^\infty_{n=1}X_n(x)b_n(t)}
+\end{equation*}
+Where:
+\begin{align*}
+    &X_n(x)=\sin\left(\frac{n\pi x}{L}\right) \\
+    &b_n(t)=E_n\left[\cos(t)-\cos\left(\frac{n\pi t}{L}\right)\right] \\
+    &E_n=\frac{L^2d_n}{n^2\pi^2-L^2} \\
+    &d_n=\frac{2[(-1)^{n+1}-1]}{n\pi}
+\end{align*}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/PDE_wave_inhomo.png}
+    \caption{The PDE solution above, plotted for \(L=2\)}
+\end{figure}
+\subsubsection{Case II: \(L=m\pi,\ \exists m\in\mathbb{N}\)}
+For this case we wish to show that a term in \(u(x,t)\) grows without bound and then find a complete solution for \(u(x,t)\). Note that for \(n\ne m\) the solution stays the same as in case I. For \(n=m\):
+\[b_{m}''(t)=-\lambda_mb_m(t)+d_m\cos(t)=-b_m(t)+d_m\cos(t)\]
+\[b_{m,h}(t)=A_m\cos(t)+B_m\cos(t)\]
+\[b_{m,p}(t)=t[E_m\cos(t)+F_m\sin(t)]\]
+\[b_m''(t)=E_m(-2\sin(t)-t\cos(t))+F_m(2\cos(t)-t\sin(t))\]
+Matching terms:
+\[-2E_m=0\implies E_m=0\]
+\[2F_m=d_m\implies F_m=\frac{d_m}{2}\]
+Note that the terms involving \(t\cos(t)\) and \(t\sin(t)\) do not provide us any novel information about the inhomogeneity which is expected. Then:
+\[b_m(t)=A_m\cos(t)+B_m\sin(t)+\frac{d_m}{2}t\sin(t)\]
+\begin{align*}
+    &b_m(0)=0\implies A_m=0 \\
+    &b'_m(0)=0\implies B_m=0
+\end{align*}
+\[b_m(t)=\frac{d_m}{2}t\sin(t)\]
+And note that this is clearly an unbounded growth term. Then for \(n\ne m\) we can use our case I solution and in general:
+\[u(x,t)=\sum^\infty_{n=1}X_n(x)b_n(t)\]
+Where:
+\[b_n(t)=\begin{cases}
+    \frac{L^2d_n}{n^2\pi^2-L^2}\left[\cos(t)-\cos\left(\frac{n\pi t}{L}\right)\right] & n\ne m \\
+    \frac{d_m}{2}t\sin(t) & n=m
+\end{cases}\]
+\[d_m=\frac{2[(-1)^{n}-1]}{n\pi}\]
+Noting that \(d_{2m}=0\) so the resonant term only appears for odd multiple of \(\pi\).
 \end{document}
