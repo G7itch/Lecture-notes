@@ -534,4 +534,32 @@ Proof: Ask a toddler on the street.
 \[\delta_{ij}a_j=a_i\equiv\underline{a}\]
 \[\epsilon_{ijk}a_jb_k=\sum^3_{j=1}\sum^3_{k=1}\epsilon_{ijk}a_jb_k=(\underline{a}\times\underline{b})_i\equiv \underline{a}\times \underline{b}\]
 The best way to get familiar with the notation is to use it lots.
+\subsection{Gradient Operators in Index Notation}
+Recall that:
+\[\grad{f}=\left(\pf{f}{x_1},\,\pf{f}{x_2},\,\pf{f}{x_3}\right)=\pf{f}{x_i}\underline{e}_i\]
+Using index notation we can write this operator in shorthand as:
+\[\underline{\nabla}_i=\pf{}{x_i}:=\partial_i\]
+Then:
+\[(\grad{f})_i=\partial_if_i\]
+Divergence is easy to write using the Einstein summation convention:
+\[\dive{u}=\partial_iu_i\]
+Note that the order does matter since \(\partial_i\) is an operator and not a scalar. We can also calculate the curl using our Levi-Civita symbol:
+\[\curl{u}=\left(\partial_1,\partial_2,\partial_3\right)\times(u_1,u_2,u_3)\]
+\[(\curl{u})_i=\epsilon_{ijk}\partial_ju_k\]
+\subsection{Combinations of Gradient Operators}
+\subsubsection{Laplacian}
+\[\dive{\nabla}f=\partial_j(\grad{f})_j\]
+\[=\partial_j\partial_jf=\pf{^2}{j\partial j}f\equiv \nabla^2f\]
+\subsubsection{Curl of a gradient field}
+\[(\curl{\nabla}f)_i=\epsilon_{ijk}\partial_j\partial_kf=\epsilon_{ikj}\partial_k\partial_jf\]
+Due to the anti-symmetry of \(\epsilon_{ijk}\) we have:
+\[\epsilon_{ijk}\partial_j\partial_kf=-\epsilon_{ikj}\partial_j\partial_kf\]
+This implies that:
+\[(\curl{\nabla}f)_i=0\equiv \curl{\nabla}f=\underline{0}\]
+\subsubsection{Curl of a curl vector field}
+\[[\curl{}(\curl{u})]_i=\epsilon_{ijk}\partial_j(\epsilon_{klm}\partial_lu_m)\]
+\[=\epsilon_{ijk}\epsilon_{klm}\partial_j\partial_lu_m\]
+\[=(\delta_{il}\delta_{jm}-\delta_{im}\delta_{jl})\partial_j\partial_lu_m\]
+\[=\delta_{il}\delta_{jm}\partial_{j}\partial_{l}u_m-\delta_{im}\delta_{jl}\partial_{j}\partial_lu_m\]
+\[=\delta_{il}\pf{}{u_l}\left(\pf{}{u_j}u_j\right)-\delta_{jl}\pf{}{u_j\partial u_l}u_i\]
 \end{document}

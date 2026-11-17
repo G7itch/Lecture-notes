@@ -878,7 +878,7 @@ Using the eigenfunction expansion method we write:
 Note that this last result is by construction, from \(X''=-\lambda_nX\). We need to address the inhomogeneity by finding a \(C_n\) such that:
 \[\cos(t)=\sum^\infty_{n=1}C_n(t)X_n(x)\]
 Using sifting properties / Fourier series:
-\[C_n(t)=\frac{2}{L}\int^L_0X_n(x)\cos(t)\,\text{d}x=\cos(t)\cdot\underbrace{\frac{2[(-1)^n-1]}{n\pi}}_{d_n}\]
+\[C_n(t)=\frac{2}{L}\int^L_0X_n(x)\cos(t)\,\text{d}x=\cos(t)\cdot\underbrace{\frac{2[1-(-1)^n]}{n\pi}}_{d_n}\]
 Putting it altogether by plugging into the PDE:
 \[\sum^\infty_{n=1}X_n(x)b_n''(t)=\sum^\infty_{n=1}-\frac{n^2\pi^2}{L^2}X_n(x)b_n(t)+\sum^\infty_{n=1}d_n\cos(t)X_n(x)\]
 \[\sum^\infty_{n=1}X_n(x)b_n''(t)=\sum^\infty_{n=1}X_n(x)\left[d_n\cos(t)-\frac{n^2\pi^2}{L^2}b_n(t)\right]\]
@@ -914,7 +914,7 @@ Where:
     &X_n(x)=\sin\left(\frac{n\pi x}{L}\right) \\
     &b_n(t)=E_n\left[\cos(t)-\cos\left(\frac{n\pi t}{L}\right)\right] \\
     &E_n=\frac{L^2d_n}{n^2\pi^2-L^2} \\
-    &d_n=\frac{2[(-1)^{n+1}-1]}{n\pi}
+    &d_n=\frac{2[1-(-1)^{n+1}]}{n\pi}
 \end{align*}
 \begin{figure}[H]
     \centering
@@ -944,6 +944,158 @@ Where:
     \frac{L^2d_n}{n^2\pi^2-L^2}\left[\cos(t)-\cos\left(\frac{n\pi t}{L}\right)\right] & n\ne m \\
     \frac{d_m}{2}t\sin(t) & n=m
 \end{cases}\]
-\[d_m=\frac{2[(-1)^{n}-1]}{n\pi}\]
+\[d_m=\frac{2[1-(-1)^{n}]}{n\pi}\]
 Noting that \(d_{2m}=0\) so the resonant term only appears for odd multiple of \(\pi\).
+\subsection{Time-Dependant BCs}
+\begin{enumerate}
+    \item This method combines elements of methods 1 and 2.
+    \item We need to decompose our solution into two functions.
+    \item We transform the resolving PDE in terms of the solution then use the EE method of the resulting BVP.
+    \[u(x,t)=\underbrace{v(x,t)}_{\text{Use EE method}}+\underbrace{\psi(x,t)}_{\text{Resolves BCs}}\]
+\end{enumerate}
+We assume the function \(\psi\) is linear affine in space so that:
+\[\psi(x,t)=A(t)+x\cdot B(t)\implies \psi_{xx}(x,t)=0\]
+\subsubsection{Heat Equation with Inhomogeneous BCs}
+We wish to solve the IBVP:
+\begin{align*}
+    &u_t=u_{xx}&& 0<x<1,\ t>0 \\
+    &u(0,t)=0 && u(1,t)=e^{-t} \\
+    &u(x,0)=x
+\end{align*}
+Let \(u(x,t)=v(x,t)+\psi(x,t)\) where \(\psi(x,t)=A(t)+xB(t)\). Then:
+\[\psi(0,t)=0=A(t)\]
+\[\psi(1,t)=B(t)=e^{-t}\]
+Then:
+\[\psi(x,t)=-xe^{-t}\]
+Plugging into our PDE gives us the new form:
+\[v_t=v_{xx}+xe^{-t}\]
+We solve this using the EE method. Our BCs must also be put in terms of the decomposed solution:
+\[u(0,t)=v(0,t)+\psi(0,t)=v(0,t)=0\]
+\[u(1,t)=v(1,t)+e^{-t}\implies v(1,t)=0\]
+From class notes DBCs provide the eigenfunctions:
+\[X_n(x)=\sin\left(\frac{n\pi x}{L}\right),\quad n\in\mathbb{N}\]
+Then we need to consider our initial condition. In this case we get lucky with it evaluating to \(0\), but in general this will not be the case:
+\[u(x,0)=x=v(x,0)+\psi(x,0)=v(x,0)+x\]
+\[v(x,0)=0\]
+Use EE to write the solution in the form:
+\[v(x,t)=\sum^\infty_{n=1}X_n(x)b_n(t)\]
+\[v_t=v_{xx}+e^{-t}\]
+\[v(x,0)=0\]
+\[v_t=\sum^\infty_{n=1}X_n(x)b_n'(t)\]
+\[v_{xx}=\sum^\infty_{n=1}-n^2\pi^2X_n(x)b_n(t)\]
+We also need to decompose the inhomogeneity, using a different constant:
+\[xe^{-t}=\sum^\infty_{n=1}C_n(t)X_n(x)\]
+Where the constants \(C_n\) are determined via Fourier series methods:
+\[C_n(t)=2\int^1_0xe^{-t}X_n(x)\,\text{d}x\]
+\[C_n(t)=2e^{-t}\left(\frac{(-1)^{n+1}}{n\pi}+\frac{1}{n\pi}\int^1_0\cos(n\pi x)\,\text{d}x\right)\]
+\[C_n(t)=d_ne^{-t}\]
+Where:
+\[d_n=\frac{2(-1)^{n+1}}{n\pi}\]
+Plugging these series into our PDE gives us:
+\[\sum^\infty_{n=1}b_n'(t)X_n(x)=\sum^\infty_{n=1}[-n^2\pi^2b_n(t)+d_ne^{-t}]X_n(x)\]
+We are then left with an IVP by comparing coefficients:
+\[b_n'(t)=-n^2\pi^2b_n(t)+d_ne^{-t}\]
+\[v(x,0)=0\implies b_n(0)=0\]
+Since this is a first order ODE we can solve it using the method of integrating factors:
+\[b_n'(t)+n^2\pi^2b_n(t)=d_ne^{-t}\]
+Multiply by \(r(t)=\exp(\int n^2\pi^2\,\text{d}t)\):
+\[\df{}{t}\left[b_n(t)e^{n^2\pi^2t}\right]=d_n\exp(t[n^2\pi^2-1])\]
+\[b_ne^{n^2\pi^2t}=\frac{d_n\exp(t[n^2\pi^2-1])}{n^2\pi^2-1}+E_n\]
+At the initial condition \(t=0\):
+\[0=\frac{d_n\exp(0)}{n^2\pi^2-1}+\frac{E_n}{\exp(0)}\]
+\[E_n=-\frac{d_n}{n^2\pi^2-1}\]
+Therefore:
+\[b_n(t)=\frac{d_n(e^{-t}-e^{n^2\pi^2t}}{n^2\pi^2-1}\]
+Finally we can write out our full solution:
+\begin{equation*}
+    \boxed{u(x,t)=xe^{-t}+\sum^\infty_{n=1}X_n(x)b_n(t)}
+\end{equation*}
+Where:
+\begin{align*}
+    &X_n(x)=\sin(n\pi x) \\
+    &b_n(t)=\frac{d_n(e^{-t}-e^{-n^2\pi^2t})}{n^2\pi^2-1} \\
+    &d_n=\frac{2(-1)^{n+1}}{n\pi}
+\end{align*}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/PDE_timedep_BC.png}
+    \caption{The above PDE solution plotted.}
+\end{figure}
+\clearpage
+\section{Sturm-Liouville Theory}
+\subsection{Introduction and Motivating Example}
+The central question behind Sturm-Liouville theory is what if our underlying BVP is not of the form:
+\[Z''=-\lambda Z\]
+and/or different HBCs are used. For example consider what would happen if we tried to apply separation of variables to the heat equation with some advection term:
+\[u_t=u_{xx}+2u_x\]
+\[u_x(0,t)=u_{x}(L,t)=0\]
+\[u(x,0)=f(x)\]
+\[u(x,t)=X(x)T(x)\]
+\[\implies XT'=X''T+2X'T\]
+\[\implies \frac{T'}{T}=\frac{X''+2X'}{X}=-\lambda\]
+This yields the following BVP:
+\[\begin{cases}
+    X''+2X'=-\lambda X \\
+    X'(0)=X'(L)=0 & [\text{NBCs}]
+\end{cases}\]
+Now the underlying ODE is not of the form that features in our table of common eigenpairs and so we are stuck.
+\subsection{The Regular Sturm-Liouville (SL) Problem}
+The regular SL problem is the following BVP:
+\[\df{}{x}\left[p(x)\df{y}{x}\right]+q(x)y=-\lambda \omega(x)y,\qquad a<x<b\]
+Coupled with the HBCs:
+\[\begin{cases}
+    A_1y(a)+B_1y'(a)=0 \\
+    A_2y(b)+B_2y'(b)=0
+\end{cases}\]
+Where \((A_1,B_1)\ne (0,0)\), \((A_2,B_2)\ne(0,0)\). Furthermore, \(p(x),\,q(x),\,\omega(x),\,p'(x)\) must all be continuous on \([a,b]\) and \(p(x),\,\omega(x)>0\) for all \(x\in[a,b]\). \(\omega(x)\) is an important function known as the weight function that will change the way we form eigenfunctions for the ODE. We will denote this problem \((\dagger)\).
+\subsection{Transforming ODEs into SL Form}
+Note that the BVPs we have been looking at already are in a special case of SL form:
+\[Z''(z)=-\lambda Z(z)\implies p(z)=1,\, q(z)=0,\,\omega(z)=1\]
+In general, when we have an ODE in the form:
+\[F(x)y''+Q(x)y'+R(x)y=-\lambda S(x)y\]
+we want to bundle the terms \(y''\) and \(y'\). To do this we multiply by an "integrating factor":
+\[p(x)=\exp\left(\int\frac{Q(x)}{F(x)}\right)\]
+\[p'(x)=p(x)\frac{Q(x)}{F(x)}\]
+\[\df{}{x}\left[p(x)\df{y}{x}\right]=p(x)y''+p'(x)y'\]
+\[p(x)\left[y''+\frac{Q}{F}y'+\frac{R}{F}y\right]=-\frac{\lambda p(x)S(x)}{F(x)}y\]
+\[\df{}{x}\left[p(x)\df{y}{x}\right]+p(x)\frac{R(x)}{F(x)}y=-\lambda\frac{p(x)S(x)}{F(x)}y\]
+Let \(q(x)=p(x)\frac{R(x)}{F(x)}\) and \(\omega(x)=\frac{p(x)S(x)}{F(x)}\). Then we recover the form:
+\[\df{}{x}\left[p(x)\df{y}{x}\right]+q(x)y=-\lambda \omega(x)y\]
+\subsubsection*{Example}
+Consider the ODE we recovered from the advection heat equation:
+\[X''+2X'=-\lambda X\]
+We calculate the integrating factor:
+\[p(x)=\exp\left(\int \frac{2}{1}\,\text{d}x\right)=e^{2x}\]
+Now we multiply through by \(p(x)\) and match it to SL form:
+\[e^{2x}X''+2e^{2x}X'=-\lambda e^{2x}X\]
+\[\implies \df{}{x}\left[e^{2x}\df{y}{x}\right]=-\lambda e^{2x}y\]
+Note that the independent variable has changed to \(y\), simply to denote that this is a single variable ODE. The notation doesn't really matter here.
+\subsection{Properties of Regular SL Problems}
+For the problem \((\dagger)\):
+\begin{itemize}
+    \item There are infinite eigenvalues \(\{\lambda_n\}_{n=0}^\infty\) that satisfy the problem and they are all real. Furthermore \(\{\lambda_n\}_{n=0}^\infty\) form a strictly increasing sequence:
+    \[\lambda_0<\lambda_1<\cdots<\lambda_n<\cdots\]
+    \item For each eigenvalue \(\lambda_n\) there is exactly one eigenfunction \(y_n(x)\) up to a constant multiple.
+    \item All the eigenfunctions \(\{y_n\}_{n=0}^\infty\) are linearly independent.
+    \item \(y_n(x)\) has exactly \(n\) distinct roots in \((a,b)\).
+    \item The eigenfunctions \(\{y_n\}_{n=0}^\infty\) form an orthogonal basis with respect to the weighted inner product:
+    \[\langle y_n(x),\,y_m(x)\rangle_{\omega(x)}:=\int^b_ay_n(x)y_m(x)\omega(x)\,\text{d}x=\delta_{nm}\cdot\alpha_n\]
+    \(\alpha_n=\alpha_m\) is some real constant. This is known as an orthogonality condition.
+\end{itemize}
+\subsubsection*{Applied example}
+We are going to revisit the Dirichlet BVP:
+\[\begin{cases}
+    y''(x)=-\lambda y(x) \\
+    y(0)=y(L)=0
+\end{cases}\]
+From class notes we have:
+\[\lambda_k=\frac{k^2\pi^2}{L^2}\qquad y_k(x)=A_k\sin\left(\frac{k\pi x}{L}\right)\qquad k\in\mathbb{N}\]
+In particular this implies:
+\[\lambda_n=\frac{(n+1)^2\pi^2}{L^2}\qquad y_n(x)=\sin\left(\frac{(n+1)\pi x}{L}\right)\qquad n\in\mathbb{N}_0\]
+with this change of index being made to more easily match up the eigenfunctions with their roots as per the forth property of SL problems.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/sin_eigenfunctions.png}
+    \caption{The eigenfunctions \(\{y_n\}_{n=0}^2\) for the above SL problem plotted.}
+\end{figure}
 \end{document}
