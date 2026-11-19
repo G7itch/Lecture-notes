@@ -562,4 +562,45 @@ This implies that:
 \[=(\delta_{il}\delta_{jm}-\delta_{im}\delta_{jl})\partial_j\partial_lu_m\]
 \[=\delta_{il}\delta_{jm}\partial_{j}\partial_{l}u_m-\delta_{im}\delta_{jl}\partial_{j}\partial_lu_m\]
 \[=\delta_{il}\pf{}{u_l}\left(\pf{}{u_j}u_j\right)-\delta_{jl}\pf{}{u_j\partial u_l}u_i\]
+\[=\partial_{i}\partial_ju_j-\partial_j\partial_ju_i\]
+\[=[\underline{\nabla}(\dive{u})]_i-(\nabla^2\underline{u})_i\equiv\underline{\nabla}(\dive{u})-\nabla^2\underline{u}\]
+\subsection{Products of Functions and Further Examples}
+\begin{enumerate}
+    \item 
+    \[[\underline{\nabla}(fg)]_i=\partial_i(fg)=f\partial_ig+g\partial_if\equiv f\grad{g}+g\grad{f}\]
+    \item
+    \[[\underline{\nabla}\cdot(\psi\grad{\phi})]_i=\partial_i(\psi\grad{\phi})_i\]
+    \[=\partial_i(\psi\partial_i\phi)\]
+    \[=\partial_i\psi\partial_i\phi+\psi\partial_i\partial_i\phi\]
+    \[=[\grad{\psi}\cdot\grad{\phi}]_i+[\psi\nabla^2\phi]_i\]
+    \[\equiv\grad{\psi}\cdot\grad{\phi}+\psi\nabla^2\phi\]
+    \item
+    \[[\underline{\nabla}\times(\psi\grad{\phi})]_i=\epsilon_{ijk}\partial_j(\psi,\grad{\phi})_k\]
+    \[=\epsilon_{ijk}\partial_j(\psi\partial_k\phi)\]
+    \[=\epsilon_{ijk}\partial_j\psi\partial_k\phi+\psi\epsilon_{ijk}\partial_j\partial_k\phi\]
+    \[=[\grad{\psi}\times\grad{\phi}]_i+[\psi(\underline{\nabla}\times(\grad{\phi}))]_i\]
+    \[\equiv\grad{\psi}\times\grad{\phi}\]
+    \item Let \(\underline{a}\) be a constant vector and \(\underline{r}=(x_1,x_2,x_3)\), then:
+    \[[\underline{\nabla}\cdot(\underline{a}\times\underline{r})]_i=\partial_i(\underline{a}\times\underline{r})_i\]
+    \[=\partial_i[\epsilon_{ijk}a_jx_k]\]
+    \[=\epsilon_{ijk}a_j\delta_{ik}\]
+    \[=a_j\epsilon_{iji}=0\]
+    \[\equiv\underline{\nabla}\cdot(\underline{a}\times\underline{r})=\underline{0}\]
+    \item 
+    \[[\underline{\nabla}(\underline{a}\cdot\underline{r})]_i=\partial_i(\underline{a}\cdot\underline{r})\]
+    \[=\partial_ia_jx_j\]
+    \[=a_j\partial_ix_j\]
+    \[=a_j\partial_{ij}\]
+    \[=a_i\equiv \underline{a}\]
+    \item Define a new operator \(\underline{D}:=\underline{r}\times\underline{\nabla}\).
+    \[[\underline{D}f]_i=[(\underline{r}\times\underline{\nabla})f]_i\]
+    \[=\epsilon_{ijk}x_j\partial_kf\]
+    Then \(\dive{D}f\) is:
+    \[\partial_i\epsilon_{ijk}x_j\partial_kf\]
+    \[=\epsilon_{ijk}(\partial_{i}x_j\partial_kf+x_j\partial_i\partial_kf)\]
+    \[=\epsilon_{ijk}\delta_{ij}\partial_kf+\epsilon_{ijk}x_j\partial_i\partial_kf\]
+    \[=\epsilon_{ijk}x_j\partial_i\partial_kf\]
+    \[=\epsilon_{kji}x_j\partial_k\partial_if\]
+    \[=-\epsilon_{ijk}x_j\partial_i\partial_kf=0\equiv\underline{0}\]
+\end{enumerate}
 \end{document}

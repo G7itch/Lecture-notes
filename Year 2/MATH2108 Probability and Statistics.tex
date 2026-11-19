@@ -1,5 +1,5 @@
 \documentclass[12pt]{article}
-\usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float}
+\usepackage{amsmath,setspace,graphicx,amssymb,amsthm,float,multirow,listings}
 \usepackage{hyperref}
 \hypersetup{
     colorlinks,
@@ -1103,4 +1103,155 @@ Where \(\Theta_0\cap\Theta_1=\emptyset\) and \(\Theta_1=\Theta\backslash\Theta_0
 \[2\log\left[\frac{\sup_{\theta\in\Theta_1}\mathcal{L}(\theta;\,\underline{X})}{\sup_{\theta\in\Theta_0}\mathcal{L}(\theta;\,\underline{X})}\right]=2[\ell(\hat{\theta}_1;\,\underline{X})-\ell(\hat{\theta}_2;\,\underline{X})]\]
 Where \(\hat{\theta}_0\) is the MLE of \(\theta\) under \(H_0\) and \(\hat{\theta}_1\) is the MLE of \(\theta\) under \(H_1\). Under regularity conditions and for large \(n\):
 \[2[\ell(\hat{\theta}_1;\,\underline{X})-\ell(\hat{\theta}_2;\,\underline{X})]\sim\chi^2_1\]
+\clearpage
+\section{Contingency Tables and Goodness of Fit}
+\subsection{Contingency Tables: Motivation}
+Suppose we have multiple variables (factors) and we wish to determine if there is an association between them. We can place them into a table where each factor can have any number of "levels".
+\subsubsection{Notation}
+The general form of a contingency table is:
+\begin{table}[H]
+\centering
+\begin{tabular}{l|lll}
+\multicolumn{1}{c|}{Y}       & \multicolumn{1}{c}{\(B_1\)} & \multicolumn{1}{c}{\(\cdots\)} & \multicolumn{1}{c}{\(B_{K'}\)} \\ \hline
+\multicolumn{1}{c|}{\(A_1\)} & \(Y_{11}\)                  & \(\cdots\)                     & \(Y_{1K'}\)                    \\
+\(\vdots\)                   & \(\vdots\)                  & \(\ddots\)                     & \(\vdots\)                     \\
+\(A_{J'}\)                   & \(Y_{J'1}\)                 & \(\cdots\)                     & \(Y_{J'K'}\)                  
+\end{tabular}
+\end{table}
+We will make some definitions to help us with the upcoming derivation:
+\begin{itemize}
+    \item \(Y_{jk}\) is the number in the cell \((j,k)\).
+    \item \(Y_{\bullet k}=\sum^{J'}_{j=1}Y_{jk}\) is the column total.
+    \item \(Y_{j\bullet}=\sum^{K'}_{k=1}Y_{jk}\) is the row total.
+    \item \(Y_{\bullet\bullet}=\sum^{K'}_{k=1}\sum^{J'}_{j=1}Y_{jk}\) is the grand total.
+    \item \(p_j^A=P(A=A_j),\ p_k^B=P(B=B_k)\) are marginal probabilities.
+    \item \(p_{jk}=P(A=A_j,\,B=B_k)\) are joint probabilities.
+    \item \(\underline{p}^A=(p_1^A,\,p_2^A,\,\dots,p_{J'}^A\) is the vector of probabilities for factor \(A\).
+    \item \(\underline{p}^B=(p_1^B,\,p_2^B,\,\dots,p_{K'}^B\) is the vector of probabilities for factor \(B\).
+    \item \(\underline{p}=(p_{11},\,p_{12},\dots,p_{J'K'})\) is the vector of joint probabilities.
+    \item \(\underline{Y}=(Y_{11},\,Y_{12},\dots,Y_{J'K'})\) is the vector of observed data.
+\end{itemize}
+\subsection{Deriving a Model and Test}
+Since we have a list of data and a list of categories for it to fit into we have:
+\[\underline{Y}\sim\text{Multinomial}(N;\, \underline{p})\]
+Which is just a generalisation of a binomial model for more categories. Then our likelihood function is given:
+\[\mathcal{L}(\underline{p};\, \underline{y})\propto p_{11}^{y_{11}}p_{12}^{y_{12}}\cdots p_{J'K'}^{y_{J'K'}}\]
+and our test will have hypotheses:
+\begin{align*}
+    &H_0:p_{jk}=p_j^Ap_k^B && \text{(independence)} \\
+    &H_1: p_{jk} \text{ unrestricted}
+\end{align*}
+Let \(\underline{\hat{p}}^A,\, \underline{\hat{p}}^B\) be the MLEs for \(\underline{p}^A\) and \(\underline{\hat{p}}^B\) under \(H_0\). Let \(\underline{\hat{p}}\) be the MLE for \(\underline{p}\) under \(H_1\). To test \(H_0\) vs. \(H_1\) we want to use a generalised likelihood ratio test:
+\[2\log\left[\frac{\mathcal{L}(\underline{\hat{p}};\, \underline{y})}{\mathcal{L}(\underline{\hat{p}}^A,\,\underline{\hat{p}}^B;\, \underline{y})}\right]\sim\chi^2_{(J'-1)(K'-1)}\]
+Where the degrees of freedom come from:
+\[\nu=\underbrace{(J'K'-1)}_{H_1}-\underbrace{[(J'-1)(K'-1)]}_{H_0}=(J'-1)(k'-1)\]
+Under \(H_0\), \(p_{jk}=p_j^Ap_k^B\) and so we can substitute into \(\mathcal{L}\) and maximise:
+\[\ell(\underline{p};\, \underline{Y})=\sum^{J'}_{j=1}Y_{j\bullet}\log(p_j^A)+\sum^{K'}_{k=1}Y_{\bullet k}\log(p_k^B)\]
+We need to maximise this function subject to the conditions imposed by \(H_0\), namely that:
+\begin{align*}
+    &\sum_jp_j^A=1 \\
+    &\sum_kp_k^B=1
+\end{align*}
+To do this we can use the method of Lagrange multipliers with the objective function:
+\[\ell(\underline{p};\, \underline{Y})-\lambda_A\underbrace{\left(\sum_jp_j^A-1\right)}_{0}-\lambda_B\underbrace{\left(\sum_kp_k^B-1\right)}_{0}\]
+Then:
+\[\underline{\hat{p}}_j^A=\frac{Y_{j\bullet}}{\lambda_A}\]
+\[\frac{N}{\lambda_A}=1\implies\lambda_A=N\]
+\[\implies\underline{\hat{p}}^A_j=\frac{Y_{j\bullet}}{N}\]
+Similarly for \(B\):
+\[\underline{\hat{Y}}_k^B=\frac{Y_{\bullet k}}{N}\]
+Then we have found the MLEs under \(H_0\). We repeat the process under \(H_1\) with the objective function:
+\[\ell(\underline{p};\, \underline{Y})-\lambda\left(\sum_j\sum_kp_{jk}-1\right)\]
+\[\pf{\ell}{p_{jk}}=0\implies \frac{Y_{jk}}{p_{jk}}-\lambda=0\implies\hat{p}_{jk}=\frac{Y_{jk}}{N}\]
+Finally we can construct the test statistic for the generalised likelihood ratio test:
+\[2[\ell(\underline{\hat{p}};\, \underline{Y})-\ell(\underline{\hat{p}}_j^A,\,\underline{\hat{p}}_k^B;\, \underline{Y})]\]
+Which simplifies to:
+\begin{align*}
+    &2\sum^{J'}_{j=1}\sum^{K'}_{k=1}Y_{jk}\log\left(\frac{Y_{jk}}{E_{jk}}\right) && E_{jk}=N\underline{\hat{p}}_j^A\underline{\hat{p}}_k^B=\frac{Y_{j\bullet}Y_{\bullet k}}{N}
+\end{align*}
+\(E_{jk}\) is the expected value in cell \((j,k)\) under \(H_0\). There is a slightly easier statistic that we can use to avoid calculating a logarithm. Note that this is just an approximation of the above where the formula above is also a slight approximation since it makes use of the asymptotic behaviour of likelihood functions.
+\[\sum^{J'}_{j=1}\sum^{K'}_{k=1}\frac{(Y_{jk}-E_{jk})^2}{E_{jk}}\]
+This is known as Pearson's Chi-squared statistic and is commonly used.
+\subsubsection{Numerical example}
+\begin{table}[H]
+\centering
+\begin{tabular}{l|lll|l}
+\multicolumn{1}{c|}{\(o_{jk}\)}        & \multicolumn{1}{c}{\(B_1\)} & \multicolumn{1}{c}{\(B_2\)} & \multicolumn{1}{c|}{\(B_3\)} & Total \\ \hline
+\multicolumn{1}{c|}{\(A_1\)}           & 48                          & 37                          & 58                           & 143   \\
+\multicolumn{1}{c|}{\(A_2\)} & 23                          & 15                          & 10                           & 48    \\ \hline
+Total                                  & 71                          & 52                          & 68                           & 191  
+\end{tabular}
+\end{table}
+We calculate the expected values from the column and row totals being divided by the grand total. For example: \(e_{12}=\frac{143\cdot52}{191}=38.9\). The expected table is:
+\begin{table}[H]
+\centering
+\begin{tabular}{l|lll|l}
+\multicolumn{1}{c|}{\(e_{jk}\)} & \multicolumn{1}{c}{\(B_1\)} & \multicolumn{1}{c}{\(B_2\)} & \multicolumn{1}{c|}{\(B_3\)} & Total \\ \hline
+\multicolumn{1}{c|}{\(A_1\)}    & 53.2                        & 38.9                        & 50.9                         & 143   \\
+\multicolumn{1}{c|}{\(A_2\)}                         & 17.8                        & 13.1                        & 17.1                         & 48    \\ \hline
+Total                           & 71                          & 52                          & 68                           & 191  
+\end{tabular}
+\end{table}
+The test statistic is:
+\[T=2\sum^2_{j=1}\sum^3_{k=1}o_{jk}\log\left(\frac{o_{jk}}{e_{jk}}\right)=6.7\]
+or:
+\[\sum^2_{j=1}\sum^3_{k=1}\frac{(o_{jk}-e_{jk})^2}{e_{jk}}=6.3\qquad \text{(Pearson's)}\]
+Under \(H_0\) we have that \(T\sim\chi^2_{(3-1)(2-1)}\) and for a given significance level \(\alpha=0.05\):
+\[\chi^2_{2}(0.05)=5.99<6.3<6.7\]
+So we reject \(H_0\) at the 5\% significance level with a p-value of \(0.043\). This value was found using R.
+\subsection{Goodness of Fit Tests}
+Suppose that we have \(n\) observations of a random variable \(X\) where \(X\) may take one of \(K\) values/classes. We might assume that each \(X\) falls into class \(K\) with some probability distribution. The question is given some distribution, how likely is it that this is the distribution that \(X\) values come from? Once again we can use the Pearson test statistic:
+\[\sum^{K'}_{k=1}\frac{(o_k-e_k)^2}{e_k}\sim\chi^2_{K'-1}\]
+In general we want to ensure that that the expected frequency for each class is greater than 5 and if they are not we may need to pool classes - this is because the approximation breaks for \(o_k, e_k<5\)
+\subsection{General method}
+In general we have some null hypothesis:
+\[H_0:p_k=p_k(\theta)\]
+for \(p_k=P(X=k)\) and some underlying parameter \(\theta\). We have:
+\[H_1:p_k\text{ unrestricted but subject to }\sum_kp_k=1\]
+Let \(E_k=N\hat{p}_k(\hat{\theta})\) be the expected number in class \(k\) under \(H_0\). Let \(O_k\) be the observed number in class \(k\). Then:
+\[T=\sum^{K'}_{k=1}\frac{(O_k-E_k)^2}{E_k}\]
+is the test statistic with \(T\sim\chi^2_{K'-1-q}\) and \(q\), the number of parameters estimated in \(\theta\). In practice we want:
+\[e_{k}\geq 5\]
+for all \(k\) for the approximation to be valid. We will reject \(H_0\) if \(T\) is too large.
+\subsubsection{Numerical example}
+A biologist has an observed data set and has suggested a model to fit to it. We want to identify if the model is suitable. Let \(k=1,2,3\) denote each genotype class:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c c c}
+        Genotype & \(1\) & \(2\) & \(3\) \\ \hline
+        \(o_k\) & \(10\) & \(53\) & \(46\)
+    \end{tabular}
+    \caption{Observed data}
+\end{table}
+The proposed model fits into the hypotheses as:
+\begin{align*}
+    &H_0:p_1=\theta^2,\ p_2=2\theta(1-\theta),\ p_3=(1-\theta)^2 && \theta \in(0,1) \\
+    &H_1:p_k\text{ unrestricted subject to }\sum_kp_k=1
+\end{align*}
+The likelihood function is:
+\[\mathcal{L}(\underline{p};\, \underline{y})\propto p_1^{y_1}p_2^{y_{2}}p_3^{y_3}\]
+Under \(H_0\), this becomes:
+\[\mathcal{L}(\underline{p};\, \underline{y})\propto [\theta^2]^{y_1}[2\theta(1-\theta)]^{y_2}[(1-\theta)^2]^{y_3}\]
+Maximising this over \(\theta\):
+\[\ell(\theta)=(2y_1+y_2)\log(\theta)+(y_2+2y_3)\log(1-\theta)+const\]
+\[\pf{\ell}{\theta}=0\implies \frac{(2y_1+y_2)}{\theta}+\frac{(y_2+2y_3)}{1-\theta}=0\]
+\[\implies\hat{\theta}=\frac{2y_1+y_2}{2(y_1+y_2+y_3)}=\frac{2y_1+y_2}{2N}\]
+For our observed data this means that:
+\[\hat{\theta}=\frac{73}{218}\]
+Then for each class \(k\):
+\[e_k=N\hat{p}_k(\hat{\theta})\]
+\begin{table}[H]
+    \centering
+    \begin{tabular}{c|c c c}
+        Genotype & \(1\) & \(2\) & \(3\) \\ \hline
+        \(o_k\) & \(10\) & \(53\) & \(46\) \\ 
+        \(e_k\) & \(109\cdot(\hat{\theta})^2=12.2\) & \(2(\hat{\theta})(1-\hat{\theta})=48.2\) & \((1-\hat{\theta})^2=48.9\)
+    \end{tabular}
+    \caption{Observed and expected data}
+\end{table}
+Note that no pooling is necessary since each class has a large enough expected frequency. Then we can calculate our Pearson test statistic:
+\[T=\sum^3_{k=1}\frac{(o_k-e_k)^2}{e_k}=1.05\]
+We reject \(H_0\) if \(T>\chi^2_{3-1-1}(\alpha)\) for some fixed significance level \(\alpha\). For example at \(\alpha=0.05\):
+\[\chi^2_{1}(0.05)=3.84>1.05\]
+So there is insufficient evidence to reject \(H_0\) at this significance level. This suggests that the biologists model is suitable.
 \end{document}

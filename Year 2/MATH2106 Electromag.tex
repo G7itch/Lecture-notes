@@ -289,4 +289,71 @@ This quantity is called work. \(QV\) is called the potential energy of the test 
 This is called the Poisson equation. If we are at a point where \(\rho=0\) we have:
 \[\nabla^2V=0\]
 Which is called the Laplace equation.
+\subsection{Electric Dipole Example}
+Consider an electric dipole with a charge \(q\) at \(\underline{r}_+=R\underline{\hat{z}}\) and a charge \(-q\) at \(r_-=-R\underline{\hat{z}}\). The potential of this is:
+\[V(\underline{r})=\frac{q}{4\pi\varepsilon_0}\left(\frac{1}{|\underline{r}-\underline{r}_+|}-\frac{1}{|\underline{r}-\underline{r}_-|}\right)\]
+We are going to use spherical coordinates:
+\[\underline{r}-\underline{r}_{\pm}=r\sin\theta\cos\phi \underline{\hat{x}}+r\sin\theta\sin\phi\underline{\hat{y}}+(r\cos\theta\mp R)\]
+\[|\underline{r}-\underline{r}_{\pm}|^2=r^2\sin^2\theta\cos^2\phi+r^2\sin^2\theta\sin^2\phi+(r\cos\theta\mp R)^2\]
+\[=r^2\sin^2\theta+r^2\cos^2\theta+R^2\mp 2Rr\cos\theta\]
+\[=r^2+R^2\mp 2Rr\cos\theta\]
+The potential is now:
+\[V(\underline{r})=\frac{q}{4\pi\varepsilon_0}\left(\frac{1}{\sqrt{r^2+R^2-2Rr\cos\theta}}-\frac{1}{\sqrt{r^2+R^2+2Rr\cos\theta}}\right)\]
+Consider \(\frac{R}{r}\ll 1\):
+\[V(\underline{r})=\frac{q}{4\pi\varepsilon_0r}\left(\frac{1}{\sqrt{1+\frac{R^2}{r^2}-2\frac{R}{r}\cos\theta}}-\frac{1}{\sqrt{1+\frac{R^2}{r^2}+2\frac{R}{r}\cos\theta}}\right)\]
+Introduce \(u=\frac{R}{r}\):
+\[V(\underline{r})=\frac{q}{4\pi\varepsilon_0r}\left(\frac{1}{\sqrt{1+u^2-2u\cos\theta}}-\frac{1}{\sqrt{1+u^2+2u\cos\theta}}\right)\]
+Since \(u\) is so small we can do a Maclaurin expansion at \(u=0\):
+\[\df{V}{u}=-\frac{q}{4\pi\varepsilon_0r}\left(\frac{2u-2\cos\theta}{2(1+u^2-2u\cos\theta)^{\frac{3}{2}}}-\frac{2u+2\cos\theta}{2(1+u^2+2u\cos\theta)^{\frac{3}{2}}}\right)\]
+\[V|_{u=0}=\frac{q}{4\pi\varepsilon_0r}\left(\frac{1}{1}-\frac{1}{1}\right)=0\]
+\[\df{V}{u}|_{u=0}=-\frac{q}{4\pi\varepsilon_0r}\left(-\cos\theta-\cos\theta\right)=\frac{q}{2\pi\varepsilon_0r}\cos\theta\]
+Then:
+\[V\approx0+\frac{q}{2\pi\varepsilon_0r}u\cos\theta\]
+\[V\approx\frac{q}{2\pi\varepsilon_0r^2}R\cos\theta=\frac{q}{2\pi\varepsilon_0r^3}Rr\cos\theta\]
+However note that this last term looks like a dot product of a two vectors. Introduce \(\underline{d}=\underline{r}_+-\underline{r}_-\) where \(\underline{d}\) is the distance between the charges. Then notice that \(R=\frac{1}{2}|\underline{d}|\) and \(Rr\cos\theta=\frac{1}{2}\underline{d}\cdot\underline{r}\):
+\[V(\underline{r})\approx\frac{q}{4\pi\varepsilon_0r^3}\underline{d}\cdot\underline{r}\]
+Now we can introduce \(\underline{p}=q\underline{d}\), the "dipole moment". Finally we can write our potential in terms of this dipole moment:
+\[V(\underline{r})\approx\frac{\underline{p}\cdot\underline{r}}{4\pi\varepsilon_0r^3}=\frac{\underline{p}\cdot\underline{\hat{r}}}{4\pi\varepsilon_0r^2}\]
+In general these charges can go wherever we want and are not forced to be on the \(z-\)axis so we can introduce \(\underline{r}'\) as the midpoint of the dipole and:
+\[\underline{\scriptr}=\underline{r}-\underline{r}'\]
+\[V(\underline{r})\approx\frac{\underline{p}\cdot\underline{\hat{\scriptr}}}{4\pi\varepsilon_0\scriptr^2}\]
+That was a lot of work but finally we have a form of the potential that was can reasonably use as a good enough approximation.
+\subsection{Electric Fields in Matter}
+So far we have only considered electric fields in a vacuum. In this module we will consider dielectric matter which contains atoms of a positive charge nucleus \(q\), surrounded by an electron cloud of negative charge \(-q\). The total charge of the atom is \(0\). If an external electric field is present then the cloud centre shifts slightly, which creates a dipole between the centre and the nucleus of the atom. This dipole has a dipole potential \(\underline{p}\). As we have just seen the additional potential present is:
+\[V_{1-atom}(\underline{r})=\frac{\underline{p}\cdot\underline{\hat{\scriptr}}}{4\pi\varepsilon_0\scriptr^2}\]
+As our dielectric material almost certainly contains multiple atoms:
+\[V(\underline{r})=\frac{1}{4\pi\varepsilon_0}\sum_j\frac{\underline{p}_j\cdot\underline{\scriptr}_j}{\scriptr^2_j}\]
+As the number of atoms in a given material sample is very large we can approximate the sum using an integral:
+\[V(\underline{r})=\frac{1}{4\pi\varepsilon_0}\int_\mathcal{V}\frac{\underline{P}(\underline{r}')\cdot\underline{\scriptr}}{\scriptr^2}\,\text{d}\tau'\]
+Where \(\mathcal{V}\) is the volume containing our dielectric material. \(\underline{P}\) is called the polarisation density. Let \(\underline{\nabla}'=\left(\partial/\partial x',\, \partial/\partial y',\,\partial/\partial z'\right)\), then:
+\[\underline{\nabla}'\left(\frac{1}{\scriptr}\right)=\frac{\underline{\scriptr}}{\scriptr^3}\]
+and:
+\[V(\underline{r})=\frac{1}{4\pi\varepsilon_0}\int_\mathcal{V}\underline{\nabla}'\cdot\left(\frac{\underline{P}}{\scriptr}\right)\,\text{d}\tau'-\frac{1}{4\pi\varepsilon_0}\int_{\mathcal{V}}\frac{1}{\scriptr}\underline{\nabla'}\cdot\underline{P}(\underline{r}')\,\text{d}\tau'\]
+We can simplify this using the divergence theorem:
+\[V(\underline{r})=\frac{1}{4\pi\varepsilon_0}\oint_{\partial\mathcal{V}}\frac{\underline{P}\cdot\underline{\hat{n}}}{\scriptr}\,\text{d}a'-\frac{1}{4\pi\varepsilon_0}\int_{\mathcal{V}}\frac{1}{\scriptr}\underline{\nabla'}\cdot\underline{P}(\underline{r}')\,\text{d}\tau'\]
+This potential is equivalent to:
+\[V(\underline{r})=\frac{1}{4\pi\varepsilon_0}\oint_{\partial\mathcal{V}}\frac{\sigma_b(\underline{r}')}{\scriptr}\,\text{d}a'+\int_\mathcal{V}\frac{\rho_b(\underline{r}')}{\scriptr}\,\text{d}\tau'\]
+with the bound surface density:
+\[\sigma_b=\underline{P}\cdot\underline{\hat{n}}\]
+and the bound charge density:
+\[\rho_b=-\underline{\nabla}\cdot\underline{P}=-\underline{\nabla}'\cdot\underline{P}(\underline{r}')\]
+Then away from the boundary we have a total charge density:
+\[\rho=\rho_f+\rho_b\]
+Where \(\rho_f\) is the free charge density that generates the field. The electric field still satisfies Gauss' law but now with the total charge density:
+\[\underline{\nabla}\cdot(\varepsilon_0\underline{E}+\underline{P})=\rho_f\]
+We write;
+\[\underline{D}=\varepsilon_0\underline{E}+\underline{P}\]
+which is called the electric displacement and Gauss' law is:
+\[\underline{\nabla}\cdot\underline{D}=\rho_f\]
+\subsection{What is \(\rho\)?}
+In many materials, the relationship between the polarisation and the electric field is linear:
+\[\underline{P}=\varepsilon_0\chi_{e}\underline{E}\]
+Where \(\chi_e\) is called the electric susceptibility and depends on the material. in a question this value may be given to you if required. Then:
+\[\underline{D}=\varepsilon_0(1+\chi_e)\underline{E}\]
+This quantity \(1+\chi_e\) is called the relative permittivity or dielectric constant.
+\clearpage
+\section{Magnetostatics}
+Consider a wire as a curve in \(\mathbb{R^3}\). Wires are typically made of from conductors - the current, \(I\), through a point on the ave is the charge that flows through it per unit time and is measured in amp\`eres:
+\[1\text{A}=1\frac{\text{C}}{\text{s}}\]
+If you place a magnetic compass near a wire with charge flowing through it, then the compass points tangent to a circle around the wire. This motivates the magnetic field \(\underline{B}\) pointing in the direction of the magnetic compass.
 \end{document}
