@@ -772,6 +772,7 @@ These results are stated in the notes and reproduced here but not they will not 
     \end{tabular}
     \end{adjustwidth}
     \caption{Solutions to the BVP with eigenpair problem: \(Z''=-\lambda Z\)}
+    \label{tab:HBC-Solutions}
 \end{table}
 \clearpage
 \section{Inhomogeneities in PDEs}
@@ -1098,4 +1099,68 @@ with this change of index being made to more easily match up the eigenfunctions 
     \includegraphics[width=1\linewidth]{Year 2/Images/sin_eigenfunctions.png}
     \caption{The eigenfunctions \(\{y_n\}_{n=0}^2\) for the above SL problem plotted.}
 \end{figure}
+\subsection{Orthonormal Eigenfunctions}
+Recall that for eigenfunctions satisfying the regular SL problem we have that:
+\[\langle y_n(x),y_m(x)\rangle_{\omega(x)}=\int^b_ay_n(x)y_m(x)\omega(x)\,\text{d}x=\delta_{nm}\alpha_n\]
+Additionally note that we can scale \(y_n\) by any constant factor \(A_n\) due to linearity. We wish to chose \(A_n\) such that:
+\[Y_n(x)=A_ny(x)\]
+has a weighted inner product of \(1\).
+\[\langle Y_n,\,Y_n\rangle_{\omega}=\langle A_ny_n,\,A_ny_n\rangle_{\omega}=1\]
+\[\iff A_n^2\langle y_n,\,y_n\rangle_{\omega}=1\]
+\[\iff \langle y_n,\,y_n\rangle_{\omega}=\frac{1}{A_n^2}=\alpha_n\]
+\[\implies A_n=\frac{1}{\sqrt{\alpha_n}}=\frac{1}{\sqrt{\langle y_n,\,y_n\rangle_{\omega}}}\]
+We can scale each function to make them orthonormal:
+\[Y_n(x)=\frac{1}{\sqrt{\langle y_n,\,y_n\rangle_{\omega}}}y_n(x)\]
+\subsubsection{Worked example}
+We wish to find the eigenfunctions associated with:
+\[y''(x)=-\lambda y(x)\qquad 0<x<L\]
+with Robin boundary conditions:
+\begin{align*}
+    &y'(0)=-y(0) \\
+    &y'(L)=-y(L)
+\end{align*}
+This is already in SL form. What this means is that we have a strictly increasing sequence of eigenvalues which will come in handy later. This is a second order constant coefficient ODE so we use an exponential ansatz:
+\[y(x)=e^{rx}\]
+\[r^2=-\lambda\]
+\[r=\pm\sqrt{-\lambda}\]
+Now lets assume that \(\lambda\) is negative. Previously when we did this all we got were trivial solutions, however with our new boundary conditions we get different behaviour.
+\subsubsection{Case I: \(\lambda<0\implies \sqrt{-\lambda}\in\mathbb{R}\backslash\{0\}\) }
+\[y(x)=A\cosh(\sqrt{-\lambda}x)+B\sinh(\sqrt{-\lambda}x)\]
+Applying the first boundary condition gives us:
+\[y'(0)=\left[\sqrt{-\lambda}(A\sinh(\sqrt{-\lambda}x)+B\cosh(\sqrt{-\lambda}x))\right]_{x=0}\]
+\[y'(0)=\sqrt{-\lambda}B\]
+\[\sqrt{-\lambda}B=-y(0)=-A\]
+\[y(x)=-\sqrt{-\lambda}B\cosh(\sqrt{-\lambda}x)+B\sinh(\sqrt{-\lambda}x)\]
+Notice that instead of our boundary condition setting one of the free parameters to \(0\), instead it relates one to another. Applying the second boundary condition:
+\[y'(L)=B\sqrt{-\lambda}(-\sqrt{-\lambda}\sinh(\sqrt{-\lambda}L)+\cosh(\sqrt{-\lambda}L))=-y(L)\]
+\[-y(L)=B(-\sqrt{-\lambda}\cosh(\sqrt{-\lambda})+\sinh(\sqrt{-\lambda}))\]
+If we want a non-trivial solution then \(B\ne 0\):
+\[-(-\lambda)\sinh(\sqrt{-\lambda}L)+\sqrt{-\lambda}\cosh(\sqrt{-\lambda}L)=\sqrt{-\lambda}\cosh(\sqrt{-\lambda}L)-\sinh(\sqrt{-\lambda}L)\]
+\[\implies \lambda\sinh(\sqrt{-\lambda}L)=-\sinh(\sqrt{-\lambda}L)\]
+Then either \(\sinh(\sqrt{-\lambda}L)=0\) or \(\lambda+1=0\). However notice that the \(\sinh\) does not lead to any solutions. Therefore the only solution in this case is:
+\[\lambda=-1\]
+is the eigenvalue. We can then find the corresponding eigenfunction:
+\[y(x)=-B\cosh(x)+B\sinh(x)\]
+\[y_0(x)=-Be^{-x}\]
+This is an eigenfunction for a negative eigenvalue. We know that this is the first eigenfunction since it has no roots inside the boundary. This means that \(\lambda_0=-1\) is the first eigenvalue. The general form can be found by considering the other two cases: \(\lambda=0\) has no eigenfunctions. For \(\lambda>0\) we have infinite eigenfunctions of the form:
+\[y_n(x)=B_n\left[\sin\left(\frac{n\pi x}{L}\right)-\frac{n\pi}{L}\cos\left(\frac{n\pi x}{L}\right)\right],\quad n\in\mathbb{N}\]
+\[\lambda_n=\frac{n^2\pi^2}{L^2},\quad n\in\mathbb{N}\]
+Notice that the Robin boundary conditions force the form of the combination of sines and cosines.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/robinboundary.png}
+    \caption{The first few eigenfunctions of the above SL problem plotted.}
+\end{figure}
+\subsection{Generalised Fourier Series}
+Suppose that we wish to express a function \(f(x)\) in terms of SL eigenfunctions:
+\[f(x)\sim \sum^\infty_{n=0}C_ny_n(x)\]
+We can multiply both sides by \(y_m(x)\omega(x)\) and integrate over the domain \([a,b]\):
+\[\int^b_af(x)y_m(x)\omega(x)\,\text{d}x\sim\sum^\infty_{n=0}C_n\int^b_ay_n(x)y_m(x)\omega(x)\,\text{d}x\]
+From proof by magic this is equal to:
+\[\int^b_af(x)y_m(x)\omega(x)\,\text{d}x=\sum^\infty_{n=0}C_n\cdot\alpha_n\delta_{nm}=C_m\alpha_m\]
+\[\implies C_m=\frac{1}{\alpha_m}\int^b_af(x)y_m(x)\omega(x)\,\text{d}x\]
+\[\implies C_n=\frac{\langle f(x),\,y_n\rangle_{\omega}}{\langle y_n,\, y_n\rangle_{\omega}}\]
+In particular note that for all eigenfunctions on the table from chapter 4, \eqref{tab:HBC-Solutions}, we have:
+\[\langle y_n,y_n\rangle_{\omega}=\frac{L}{2}\]
+\[\implies C_n=\frac{2}{L}\int^b_af(x)X_n(x)\,\text{d}x\]
 \end{document}
