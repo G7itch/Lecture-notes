@@ -1254,4 +1254,113 @@ Note that no pooling is necessary since each class has a large enough expected f
 We reject \(H_0\) if \(T>\chi^2_{3-1-1}(\alpha)\) for some fixed significance level \(\alpha\). For example at \(\alpha=0.05\):
 \[\chi^2_{1}(0.05)=3.84>1.05\]
 So there is insufficient evidence to reject \(H_0\) at this significance level. This suggests that the biologists model is suitable.
+\clearpage
+\section{Alternate Hypothesis Testing Methods}
+\subsection{Method of Moments Estimation}
+Maximum likelihood estimation is not the only estimation method we can use. Another common one is the method of moments. Suppose we have some sample data, then for the method of moments we equate sample moments with theoretical population moments and solve for our parameter(s) \(\theta\).
+\[\mathbb{E}[X^r]=\mu_r=M_r=\frac{1}{n}\sum^n_{i=1}x_i^r\]
+This method relies on \(\mu_r\), the population moments, existing. For example if we had:
+\[X\sim\text{Cauchy}(\theta)\]
+Then this method would fail.
+\subsubsection{Single parameter example}
+Let \(X_1,\dots,X_n\iid\text{Bin}(n,p)\). We wish to estimate \(p\):
+\[\mathbb{E}[X]=\bar{x}\]
+\[\implies np=\bar{x}\]
+\[\implies \tilde{p}=\frac{\bar{x}}{n}=\frac{\#\, Successes}{\#\, Trials}\]
+Note that in this case this is the same as the MLE for \(p\), although this is not true generally.
+\subsubsection{Multiple parameter example}
+Sometimes we may need to use multiple moments to evaluate each parameter:
+\[X_i\iid\mathcal{N}(\mu,\sigma^2)\]
+\[\mathbb{E}[X]=\mu=\bar{x}\]
+\[\mathbb{E}[X^2]=\sigma^2+\mu^2=\frac{1}{n}\sum^n_{i=1}x_i^2\]
+\[\implies\begin{cases}
+    \tilde{\mu}=\bar{x} \\
+    \tilde{\sigma}^2=\frac{1}{n}\sum^n_{i=1}x_i^2\  -\bar{x} & \text{(Biased sample variance)}
+\end{cases}\]
+Note that the method of moments estimator is not generally unique. Using different moments will generally give different estimators.
+\subsection{Non-Parametric Hypothesis Testing Introduction}
+Suppose we have random variables \(X_1,\dots,X_m\) and \(Y_1,\dots,Y_n\) giving rise to the observed data:
+\begin{align*}
+    &x_1,\dots,x_m \\
+    &y_1,\dots,y_n
+\end{align*}
+So far we have assumed a parametric model \(X_1,\dots,X_m\sim f(x\mid \theta)\) fully specified up to the unknown parameter(s) \(\theta\). In the non-parametric case:
+\[X_1,\dots,X_m\sim F\]
+\[Y_1,\dots,Y_n\sim G\]
+Where \(F,G\) are arbitrary probability distributions.
+\subsection{Paired Data}
+With paired data we assume we have observations from:
+\[(X_1,Y_1),\dots,(X_n,Y_n)\]
+Where each pair is independent to each other. Consider the difference of each pair:
+\[Z_i=X_i-Y_i\]
+We assume \(Z_i\iid F\) where \(F\) is some unspecified probability distribution. We are interested in whether \(Z_i\) is equally likely to be positive/negative. Under \(H_0\) we want \(F\) to be symmetric about \(0\):
+\begin{align*}
+    &H_0:\text{median } Z=0 \\
+    &H_1: \text{median } Z\ne0
+\end{align*}
+Note that in this non-parametric case we are testing against some property of the distribution itself rather than a value of a parameter.
+\subsubsection{Wilcoxon Signed-rank Test}
+We consider the differences in each pair and their modulus \(|Z_i|\). We then place these values in increasing order and assign them a rank \(r_i\) (ignoring any zeros). For example:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{lrrrrr}
+        \multicolumn{1}{l|}{\(X\)} & \(3\) & \(-3\) & \(2\) & \(2\) & \(8\) \\
+        \multicolumn{1}{l|}{\(Y\)} & \(5.5\) & \(1\) & \(2\) & \(1\) & \(4\) \\ \hline
+        \multicolumn{1}{l|}{\(Z\)}  & \(-2.5\) & \(-4\) & \(0\) & \(1\) & \(4\) \\
+        \multicolumn{1}{l|}{\(|Z|\)} & \(2.5\) & \(4\) & \(0\) & \(1\) & \(4\) \\
+        \multicolumn{1}{l|}{\(r\)}  & \(2\) & \(3.5\) & \(-\) & \(1\) & \(3.5\)
+    \end{tabular}
+    \caption{Table of numerical data for Wilcoxon Signed-rank test.}
+\end{table}
+Notice that ties in the data took the average rank over the range they were tied for. Let \(w^+\) be the sum of all of the ranks of positive \(Z_i\) and \(w^-\) be the sum of the all the ranks of negative \(Z_i\). For the above table:
+\begin{align*}
+    &w^+=1+3.5=4.5 \\
+    &w^-=2+3.5=5.5
+\end{align*}
+Our test statistic is:
+\[w=\min(w^+,w^-)\]
+We reject \(H_0\) if \(w\) is too extreme \((w\leq k)\) for some value dependant on significance level and sample size.
+\subsection{Independent Samples}
+Consider two independent samples coming from random variables:
+\begin{align*}
+    &X_1,\dots,X^m\iid F \\
+    &Y_1,\dots,Y_n\iid G
+\end{align*}
+For the CDFs \(F,G\). We construct a hypothesis test of the form:
+\begin{align*}
+    &H_0:F=G \\
+    &H_1:F\ne G
+\end{align*}
+Then under \(H_0\) we need \(F(x)=G(x)\) for all \(x\). Under \(H_1\), \(F(x)\ne G(x)\) for at least one \(x\).
+\subsubsection{Mann-Whitney U Test}
+The general steps of conducting a Mann-Whitney U test are as follows:
+\begin{itemize}
+    \item Combine \(X\) and \(Y\) and place them into increasing order.
+    \item Assign ranks to combined sample and assign an average rank over any ties.
+    \item Let \(r_X\) be the sum of \(X\) ranks and \(r_Y\) be the sum of \(Y\) ranks.
+    \item Define:
+    \begin{align*}
+        &U_X=r_X-\frac{m(m+1)}{2} && U_Y=r_Y-\frac{n(n+1)}{2}
+    \end{align*}
+    To normalise against sample size.
+    \item Construct the test statistic:
+    \[U=\min(U_X,U_Y)\]
+    \item Reject \(H_0\) if \(U\leq k\) for some \(k\) dependent on significance level and sample sizes.
+\end{itemize}
+\subsubsection*{Example}
+Consider a data set that has already been pooled and has ranks assigned as follows:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l|rrrrrrrrrr}
+        Standard \(X\) & \(1\) & \(2\) & \(3\) & \(4\) & \(5\) & \(6\) & \(8\) & \(11\) & \(12\) & \(15.5\) \\
+        Treated \(Y\) & \(7\) & \(9\) & \(10\) & \(13\) & \(14\) & \(15.5\)
+    \end{tabular}
+    \caption{Table showing strength ranks for samples of treated and untreated steel. Ties have been averaged over.}
+\end{table}
+\begin{align*}
+    &r_X=67.5 \implies U_X=67.5-\frac{10(10+1)}{2}=12.5\\
+    &r_Y=68.5\implies U_Y=68.5-\frac{6(6+1)}{2}=47.5
+\end{align*}
+\[U=\min(U_X,U_Y)=12.5\]
+From tables the critical region at a \(5\%\) significance level is \(U\leq 11\). Therefore, insufficient evidence to reject \(H_0\).
 \end{document}

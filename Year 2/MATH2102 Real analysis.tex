@@ -415,7 +415,8 @@ A set \(A\subseteq\mathbb{R}^d\) is called closed if \(\mathbb{R}^d\,\backslash 
 \subsubsection{Examples}
 \begin{itemize}
     \item Any finite subset of \(\mathbb{R}^d\) is closed.
-    \item \(\emptyset\) and \(\mathbb{R}^d\) are closed,
+    \item \(\emptyset\) and \(\mathbb{R}^d\) are closed.
+    \item Sets of single points, i.e. \(\{p\}\) are closed.
 \end{itemize}
 \subsubsection{An important note}
 Note that sets are not exclusive whether they are open or closed. Sets can be open and closed, one or the other, or neither. For example consider \(A=\mathbb{R}\times\{0\}=\{(x,0):x\in\mathbb{R}\}\) - \(A\) is closed and not open in \(\mathbb{R}^2\), despite \(\mathbb{R}\) being both open and closed in \(\mathbb{R}\). \(\mathbb{Q}^2\) is neither open nor closed.
@@ -427,10 +428,43 @@ Note that sets are not exclusive whether they are open or closed. Sets can be op
     \item The intersection of arbitrarily closed sets is closed.
     \item The union of two closed sets is closed.
 \end{itemize}
+The properties, along with \(\emptyset\) and \(\mathbb{R}^d\) mean that \(\mathbb{R}^d\) is a so called "topological space".
 \subsection{Closure \& Interior}
 Let \(S\subseteq\mathbb{R}^d\) be a set. We define the closure of \(S\) as:
 \[\bar{S}=\{\underline{x}\in\mathbb{R}^d:\exists\underline{x}_n\in S \text{ with }\underline{x}_n\to\underline{x}\text{ and }n\to\infty\}\]
 In words we can think of this as the smallest closed set that contains \(S\). The interior of \(S\) is:
 \[\text{int}(S)=\{\underline{x}\in S:\exists r>0\text{ s.t.} B_r(\underline{x})\subseteq S\}\]
 The interior is the largest open set that \(S\) contains.
+\subsubsection*{Examples}
+\[\bar{(0,1)}=[0,1]\]
+\[\text{int}([0,1])=(0,1)\]
+\subsubsection{Properties of interior and closure}
+For any set \(S\subseteq\mathbb{R}^d\):
+\begin{itemize}
+    \item \(\bar{S}\) is closed and int\((S)\) is open.
+    \item int\((S)\subseteq S\subseteq\bar{S}\).
+    \item We have that:
+    \[S\text{ open}\iff \text{int}(S)=S\]
+    \[S\text{ closed}\iff S=\bar{S}\]
+\end{itemize}
+\subsubsection{Interior Points}
+If \(x\in\text{int}(S)\) then \(x\) is called an interior point of \(S\).
+\subsection{Abstract Closure and Interior}
+We have an alternative way to define the closure and interior:
+\[\text{int}(S)=\bigcup_{\substack{V\subseteq S\\V \text{ open}}}V\]
+\[\bar{S}=\bigcap_{\substack{S\subseteq A\\A\text{ closed}}}A\]
+\subsubsection{Notes on interior and closure}
+The interior is the largest open set contained within the set and the closure is the smallest closed set contained in the set. Then for any \(S\subseteq\mathbb{R}^d\):
+\[\text{int}(S)=\mathbb{R}^d\backslash\bar{(\mathbb{R}^d\backslash S)}\]
+\[\bar{S}=\mathbb{R}^d\,\backslash\,\text{int}(\mathbb{R}^d\backslash S)\]
+\subsubsection{Examples}
+\begin{itemize}
+    \item \(\bar{B_r(\underline{x})}=\{\underline{y}\in\mathbb{R}^d: \|\underline{y}-\underline{x}\|\leq r\}\)
+    \item For any finite set \(A\), \(\text{int}(A)=\emptyset\).
+    \item In \(\mathbb{R}^2\) we have \(\bar{\mathbb{Q}_2}=\mathbb{R}^2\) and \(\text{int}(\mathbb{Q}^2)=\emptyset\).
+\end{itemize}
+\subsection{Boundary of a Set}
+For any set \(S\) we define the boundary as:
+\[\partial S=\bar{S}\cap\bar{(\mathbb{R}^d\backslash S})\]
+This is sort of like the closure without the interior.
 \end{document}
