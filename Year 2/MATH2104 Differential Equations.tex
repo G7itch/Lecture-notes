@@ -1163,4 +1163,100 @@ From proof by magic this is equal to:
 In particular note that for all eigenfunctions on the table from chapter 4, \eqref{tab:HBC-Solutions}, we have:
 \[\langle y_n,y_n\rangle_{\omega}=\frac{L}{2}\]
 \[\implies C_n=\frac{2}{L}\int^b_af(x)X_n(x)\,\text{d}x\]
+\subsection{Sturm-Liouville \& PDEs}
+Solve the IBVP:
+\[u_t=u_{xx}\qquad t>0,\ 0<x<1\]
+With BCs:
+\[u(0,t)=0,\qquad u_x(1,t)=-u(1,t)\]
+And IC:
+\[u(x,0)=x\]
+Leaving eigenvalues in terms of solutions to a transcendental equation.
+\subsubsection{Solution}
+Using separation of variables:
+\[u(x,t)=X(x)T(t)\]
+\[\frac{T'}{T}=\frac{X''}{X}=-\lambda\]
+Then we have the BVP:
+\[\begin{cases}
+    X''(x)=-\lambda X(x) \\
+    X(0)=0,\ X'(1)=-X(1)
+\end{cases}\]
+Solving this BVP as a constant coefficient ODE gives us:
+\subsubsection{Case 1: \(\lambda<0\)}
+\[X(x)=A\cosh(\sqrt{-\lambda}x)+B\sinh(\sqrt{-\lambda}x)\]
+\[X(0)=0\implies A=0\]
+\[X'(1)=-X(1)\implies\sqrt{-\lambda}B\cosh(\sqrt{-\lambda})=-B\sinh(\sqrt{-\lambda})\]
+For a non-trivial solution we require \(B\ne 0\):
+\[\sqrt{-\lambda}\cosh(\sqrt{-\lambda})+\sinh(\sqrt{-\lambda})=0\]
+\[\implies -z=\tanh(z),\ z=\sqrt{-\lambda}>0\]
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=1\linewidth]{Year 2/Images/noroots.png}
+    \caption{Graphically we can see that there are no solutions to this equation.}
+\end{figure}
+No roots of this equation imply there are no eigenfunctions in this case.
+\subsubsection{Case 2: \(\lambda=0\)}
+\[X(x)=A+Bx\]
+\[X(0)=0\implies A=0\]
+\[X'(1)=-X(1)\implies B=-B\implies B=0\]
+So there are no eigenvalues in this case either. Then Sturm-Liouville tells us that case \(3\) must have infinite eigenfunctions.
+\subsubsection{Case 3: \(\lambda>0\)}
+\[X(x)=A\cos(\sqrt{\lambda}x)+B\sin(\sqrt{\lambda}x)\]
+\[X(0)=0\implies A=0\]
+\[X'(1)=-X(1)\implies B\sqrt{\lambda}\cos(\sqrt{\lambda})=-B\sin(\sqrt{\lambda})\]
+We need \(B\ne0\) for a non-trivial solution (of which, infinite must exist). Let \(z=\sqrt{\lambda}>0\):
+\[-z=\tan(z),\ z>0\]
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\linewidth]{Year 2/Images/yippee_eigenfunctions.png}
+    \caption{Infinite eigenvalues satisfy this transcendental equation.}
+\end{figure}
+Then \(-z=\tan(z)\) is the transcendental equation and all eigenvalues \(\lambda_n>0\) satisfy:
+\begin{equation}
+    -\lambda_n=\tan(\sqrt{\lambda_n}),\quad \sqrt{\lambda_n}>0
+    \tag{\(\dagger\)}
+    \label{eq:SL_eigenvalues}
+\end{equation}
+Despite not having an explicit form for the eigenvalues this is as good as we are going to be able to get. Revisiting the ODE for \(T\):
+\[\frac{T'}{T}=-\lambda_n\implies T=Ce^{-\lambda_nt}\]
+The principle of superposition says we can construct our full solution as:
+\[u(x,t)=\sum^\infty_{n=0}b_n\exp(-\lambda_nt)\sin(\sqrt{\lambda_n}x)\]
+Applying our initial condition:
+\[u(x,0)=x=\sum^\infty_{n=0}b_n\underbrace{\sin(\sqrt{\lambda_n}x)}_{X_n(x)}\]
+Generalised Fourier series states that:
+\[b_n=\frac{\langle x,\,X_n\rangle_\omega}{\langle X_n,\,X_n\rangle_\omega}\]
+Where \(\omega(x)=1\) from our SL BVP.
+\[b_n=\int^1_0xX_n(x)\,\text{d}x\cdot\frac{1}{\int^1_0X_n^2(x)\,\text{d}x}\]
+The denominator solves to:
+\[\int^1_0[X_n(x)]^2\,\text{d}x=\int^1_0\sin^2(\sqrt{\lambda_n}x)\,\text{d}x\]
+\[=\frac{1}{2}\int^1_01-\cos(2\sqrt{\lambda_n}x)\,\text{d}x\]
+\[=\frac{1}{2}\left[1-\frac{\sin(2\sqrt{\lambda_n})}{2\sqrt{\lambda_n}}\right]\]
+\[=\frac{1}{2\sqrt{\lambda_n}}[\sqrt{\lambda_n}-\sin(\sqrt{\lambda_n})\cos(\sqrt{\lambda_n})]\]
+Using our transcendental equation we can simplify this:
+\[\frac{1}{2\sqrt{\lambda_n}}[\sqrt{\lambda_n}(1+\cos^2(\sqrt{\lambda_n}))]\]
+\[=\frac{1+\cos^2(\sqrt{\lambda_n})}{2}\]
+This is good because this is definitely not zero! Now we can consider the numerator:
+\[\int^1_0x\sin(\sqrt{\lambda_n}x)\,\text{d}x=\frac{-x\cos(\sqrt{\lambda_n}x)}{\sqrt{\lambda_n}}\bigl|^1_0+\frac{1}{\sqrt{\lambda_n}}\int^1_0\cos(\sqrt{\lambda_n}x)\,\text{d}x\]
+\[=-\frac{\cos(\sqrt{\lambda_n})}{\sqrt{\lambda_n}}+\frac{\sin(\sqrt{\lambda_n})}{\sqrt{\lambda_n}}\]
+Once again we can simplify this using our transcendental equation:
+\[\frac{-\sqrt{\lambda_n}\cos(\sqrt{\lambda_n})+\sin(\sqrt{\lambda_n})}{\lambda_n}\]
+\[=\frac{2\sin(\sqrt{\lambda_n})}{\lambda_n}\]
+Then we finally have our constants:
+\begin{equation}
+    b_n=\frac{2\sin(\sqrt{\lambda_n})}{\lambda_n}\cdot\frac{2}{1+\cos^2(\sqrt{\lambda_n})}=\frac{4\sin(\sqrt{\lambda_n})}{\lambda_n(1+\cos^2(\sqrt{\lambda_n}))}
+    \tag{\(\ddagger\)}
+    \label{eq:SL_eigenconstants}
+\end{equation}
+Then our full solution is:
+\[u(x,t)=\sum^\infty_{n=0}b_n\exp(-\lambda_nt)\sin(\sqrt{\lambda_n}x)\]
+Where \(b_n\) defined in \eqref{eq:SL_eigenconstants} and with \(\lambda_n\) subject to \eqref{eq:SL_eigenvalues}.
+\subsection{Further Sturm-Liouville}
+Whilst not appearing in this module, you should be aware that there are 3 main types of SL problem:
+\begin{itemize}
+    \item Singular
+    \item Regular
+    \item Periodic
+\end{itemize}
+For these problem classes the main properties of SL still hold.
+\clearpage
+\section{The Laplace Transform}
 \end{document}

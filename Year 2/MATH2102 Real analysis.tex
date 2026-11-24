@@ -466,5 +466,30 @@ The interior is the largest open set contained within the set and the closure is
 \subsection{Boundary of a Set}
 For any set \(S\) we define the boundary as:
 \[\partial S=\bar{S}\cap\bar{(\mathbb{R}^d\backslash S})\]
-This is sort of like the closure without the interior.
+This is sort of like the closure without the interior. These are the points that we can reach as the limit of a sequence of the interior and the limit of a sequence of the closure.
+\subsubsection{Examples}
+\begin{itemize}
+    \item Let \(S=\{(x,y)\in\mathbb{R}^2:xy>0\}\). Then \(\partial S=\mathbb{R}\times\{0\}\cup \{0\}\times \mathbb{R}\).
+    \item \(\partial B_r(\underline{a})=\{\underline{x}\in\mathbb{R}^d:\|\underline{x}-\underline{a}\|=r\}\).
+    \item \(\partial(\mathbb{Q}\times\{0\})=\mathbb{R}\times\{0\}\).
+    \item \(\partial\mathbb{R}^d=\emptyset\).
+\end{itemize}
+\subsection{Linking the Boundary, Interior and Closure}
+For \(S\subseteq\mathbb{R}^d\) note that:
+\[\text{int}(S)=S\backslash \partial S\implies S\text{ open} \iff \partial S\cap S=\emptyset\]
+\[\bar{S}=S\cup\partial S\implies S\text{ closed}\iff \partial S\subseteq S\]
+\subsection{Compact Sets}
+A set is sequentially compact if every sequence \(\seq{\underline{x}}{n}\) with \(x_n\in A\) has a convergence subsequence whose limit lies in \(A\). In the space \(\mathbb{R}^d\), being sequentially compact is the same as being compact. Then a set is compact if and only if it is closed and bounded.
+\subsection{Cantor's Intersection Theorem 1}
+For \(n\in\mathbb{N}\), let \(E_n\in\mathbb{R}^d\) be closed and bounded with \(E_n\ne\emptyset\). If:
+\[E_!\supseteq E_2\supseteq\cdots\]
+Then:
+\[\bigcap^\infty_{n=1}E_n\ne\emptyset\]
+\subsubsection{Diameter of a set}
+Let \(A\subseteq \mathbb{R}^d\) be a set. We define the diameter of \(A\) as:
+\[\text{diam }A=\sup\{\|\underline{x}-\underline{y}\|:\underline{x},\underline{y}\in A\}\in[0,\infty]\]
+For example, the diameter of \(B_r(\underline{a})\) is \(2r\).
+\subsection{Cantor's Intersection Theorem 2}
+For \(n\in\mathbb{N}\), let \(E_n\) be closed, bounded and with \(E_n\ne \emptyset\). If \(E_1\supseteq E_2\supseteq\cdots\) and \(\text{diam }A\to 0\) as \(n\to\infty\) then there exists \(\underline{p}\in\mathbb{R}^d\) with:
+\[\bigcap^\infty_{n=1}E_n=\{\underline{p}\}\]
 \end{document}
