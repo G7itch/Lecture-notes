@@ -13,6 +13,7 @@
 \newcommand{\df}[2]{\frac{\text{d}#1}{\text{d}#2}}
 \newcommand{\seq}[2]{(#1_#2)_{#2\in\mathbb{N}}}
 \newcommand{\pf}[2]{\frac{\partial #1}{\partial #2}}
+\newcommand{\lapl}[1]{\mathcal{L}\{#1\}}
 \begin{document}
 \maketitle
 \hrulefill
@@ -1259,4 +1260,84 @@ Whilst not appearing in this module, you should be aware that there are 3 main t
 For these problem classes the main properties of SL still hold.
 \clearpage
 \section{The Laplace Transform}
+\subsection{Motivation}
+We wish to transform a DE into a different variable space where it is easier to solve. Generally we wish to put the problem into a transformed space, solve the equation in this space and then convert back into the original space. Generally we use Laplace transforms for ODEs and Fourier transforms for PDEs.
+\subsection{Definition}
+The Laplace transform of a function \(f(t)\) is defined as:
+\[\mathcal{L}\{f(t)\}=F(s):=\int^\infty_0f(t)e^{-st}\,\text{d}t\]
+Notice that \(t\) is a dummy variable since we integrate over it, we will make great use of this. \(s\) is some complex variable. Throughout our calculations we assume that the integral decays as it goes to infinity and the value of \(s\) is such that this happens.
+\subsubsection{Example}
+\[\lapl{1}=\int^\infty_0e^{-st}\,\text{d}t\]
+\[=\frac{e^{-st}}{-s}\bigl|_{0}^\infty=0-\frac{1}{-s}=\frac{1}{s}\]
+Where the top limit falls to \(0\) due to our decay condition. It is not necessary to state the domain of \(s\) in a question but you should be aware of when it is and isn't valid. The Laplace transform is a global mapping and we do not care about the function when it is not positive.
+\subsection{The Heaviside Step Function}
+Since the Laplace transform only takes values \(t\in[0,\infty)\) we can think of the function as "switching on" at \(t=0\).
+\[\tilde{f}(t)=\begin{cases}
+    f(t)&t\geq 0 \\
+    0 & t<0
+\end{cases}\]
+Then:
+\[\lapl{\tilde{f}(t)}=\lapl{f(t)}\]
+Instead of defining our functions in a piecewise manner, it could be helpful to consider a "step function" to indicate switching on.
+\[H(t-t_0)=\begin{cases}
+    1 & t\geq t_0 \\
+    0 & t<0
+\end{cases}\]
+So:
+\[\tilde{f}(t)=H(t)f(t)\]
+Notice that the step function is neither even or odd. We can also construct a "switch off" function:
+\[H(t_0-t)=1=H(t-t_0)\]
+\subsection{Properties of Laplace Transforms}
+\begin{itemize}
+    \item We require \(\exists \gamma,M:|f(t)|\leq Me^{\gamma t},\quad \forall t\geq0\). Then a consequence is that we cannot take transforms of functions with discontinuities at \(t=0\).
+    \item Linearity:
+    \[\lapl{\alpha f(t)+\beta g(t)}=\alpha\lapl{f(t)}+\beta\lapl{g(t)}\]
+    But note that:
+    \[\lapl{f(t)g(t)}\ne\lapl{f(t)}\lapl{g(t)}\]
+    \item Time derivatives:
+    \[\lapl{f'(t)}=\int^\infty_0f'(t)e^{-st}\,\text{d}t\]
+    Then from integration by parts:
+    \[=f(t)e^{-st}\bigl|^\infty_0+s\int^\infty_0f(t)e^{-st}\,\text{d}t\]
+    \[=0-f(0)+S\lapl{f(t)}\]
+    \[=SF(s)-f(0)\]
+    Where the \(0\) comes from the first condition we enforced. Similarly:
+    \[\lapl{f''(t)}=S^2F(s)-sf(0)-f'(0)\]
+    \item Transform derivatives:
+    \[\df{F}{s}=\df{}{s}\left[\int^\infty_0f(t)e^{-st}\,\text{d}t\right]\]
+    \[=\int^\infty_0f(t)\df{}{s}(e^{-st})\,\text{d}t\]
+    \[=\int^\infty_0f(t)\cdot(-t)e^{-st}\,\text{d}t\]
+    \[-\lapl{tf(t)}\]
+    \[\implies \lapl{tf(t)}=-\df{F}{s}\]
+    Similarly:
+    \[\lapl{t^nf(t)}=(-1)^n\df{^nF}{s^n}\]
+    For example, consider:
+    \[\lapl{t}=\lapl{1\cdot t}=-\df{}{s}\left(\frac{1}{s}\right)=\frac{1}{s^2}\]
+    \[\implies \lapl{t^n}=\frac{n!}{s^{n+1}}\]
+    \item Time dilation: For \(\alpha>0\):
+    \[\lapl{f(\alpha t)}=\int^\infty_0f(\alpha t)e^{-st}\,\text{d}t\]
+    \[=\frac{1}{\alpha}\int^\infty_0f(u)e^{-\frac{s}{\alpha}u}\,\text{d}u\]
+    \[=\frac{1}{\alpha}F\left(\frac{s}{\alpha}\right)\]
+    \item Periodic functions: For \(f(t+T)=f(t)\):
+    \[\lapl{f(t)}=\int^T_0f(t)e^{-st}\,\text{d}t+\int^\infty_Tf(t)e^{-st}\,\text{d}t\]
+    We want the lower limit of this second integral to be \(0\), so that we can relate it to the Laplace transform.
+    \[=\int^T_0f(t)e^{-st}\,\text{d}t+\int^\infty_{u=0}f(u+T)e^{-s(u+T)}\,\text{d}u\]
+    \[=\int^T_0f(t)e^{-st}\,\text{d}t+e^{-sT}\int^\infty_0f(u)e^{-su}\,\text{d}u\]
+    \[=\int^T_0f(t)e^{-st}\,\text{d}t+e^{-sT}F(s)\]
+    Now we can solve for \(F(s)\):
+    \[F(s)=\frac{1}{1-e^{-sT}}\int^T_0f(t)e^{-st}\,\text{d}t\]
+\end{itemize}
+\subsubsection{Example: exponential and sinusoidal functions}
+First consider the Laplace transform of an exponential function:
+\[\lapl{e^{\alpha t}}=F(s)=\int^\infty_0e^{\alpha t}e^{-st}\,\text{d}t\]
+\[=\int^\infty_0e^{(\alpha-s)t}\,\text{d}t\]
+\[=\frac{e^{(\alpha -s)t}}{\alpha-s}\bigl|^\infty_0\]
+When \(\Re(s)>\Re(\alpha)\):
+\[0-\frac{1}{\alpha -s}=\frac{1}{s-\alpha}\]
+We can now use Euler's formula to find the Laplace transforms of \(\sin\) and \(\cos\) terms:
+\[\lapl{e^{i\omega t}}=\lapl{\cos(\omega t)+i\sin(\omega t)}\]
+\[=\lapl{\cos(\omega t)}+i\lapl{\sin(\omega t)}\]
+\[=\frac{1}{s-i\omega}=\frac{s+i\omega}{s^2+\omega^2}\]
+Then we can compare real and imaginary components:
+\[\Re\left(\frac{s+i\omega}{s^2+\omega^2}\right)=\frac{s}{s^2+\omega^2}=\lapl{\cos(\omega t)}\]
+\[\Re\left(\frac{s+i\omega}{s^2+\omega^2}\right)=\frac{\omega}{s^2+\omega^2}=\lapl{\sin(\omega t)}\]
 \end{document}

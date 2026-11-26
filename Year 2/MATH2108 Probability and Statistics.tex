@@ -1363,4 +1363,130 @@ Consider a data set that has already been pooled and has ranks assigned as follo
 \end{align*}
 \[U=\min(U_X,U_Y)=12.5\]
 From tables the critical region at a \(5\%\) significance level is \(U\leq 11\). Therefore, insufficient evidence to reject \(H_0\).
+\subsection{Empirical Distribution Function}
+Suppose \(X_i\) are iid random variables with the same probability distribution as some \(X\). Then the empirical distribution function of \(X\) is:
+\[F_n(x)=\frac{1}{n}\sum^n_{i=1}I(X_i\leq x)\]
+Where \(I(U\le x)\) is an indicator function:
+\[I(U\leq x)=\begin{cases}
+    1 & U\leq x \\
+    0 & \text{otherwise}
+\end{cases}\]
+So informally:
+\[F_n(x)=\frac{1}{n}\times(\# \text{ of }X_i\leq x)\]
+For each fixed \(x\):
+\[I(X_i\leq x)=1\]
+With probability \(P[X_i\leq x]=F(x)\). Then as a random variable:
+\[\lim_{n\to\infty}F_n(x)=\lim_{n\to\infty}\frac{1}{n}\sum^n_{i=1}I(X_i\leq x)=F(x)\]
+Where \(F(x)\) is the true CDF. This is by the law of large numbers since:
+\[\mathbb{E}[I(X_i\leq x)]=P[X_i\leq x]=F(x),\ \forall i\in\{1,\dots,n\}\]
+So \(F_n(x)\) becomes "close to" \(F(x)\) for each \(x\). Also:
+\[\sup_x|F_n(x)-F(x)|\to0\]
+as \(n\to\infty\) so overall \(F_n(x)\) becomes "close to" \(F(x)\) for all \(x\).
+\subsection{Kolmogorov-Smirnov One Sample Test}
+Given \(X_1,\dots,X_n\), we want to test whether the \(X_i\) are from some specified distribution \(F=F_0\):
+\begin{align*}
+    &H_0:F(x)=F_0(x),\ \forall x \\
+    &H_1:\exists x:F(x)\ne F_0(x)
+\end{align*}
+Under \(H_0\) we expect our test statistic:
+\[D_n=\sup_x|F_n(x)-F_0(x)|\]
+to be small. Given a sample \(x_1,\dots,x_n\) the observed empirical CDF is:
+\[F_n(x)=\frac{1}{n}\sum^n_{i=1}I(x_i\leq x)\]
+And we reject \(H_0\) if \(D_n\) is "too large". The critical regions can be found in tables or R and depend on sample size and significance level. Note that since \(F_n(x)\) is a step function (which has jump discontinuities at observed sample points) and \(F_0\) is continuous and strictly increasing, then:
+\[\sup_x|F_n-F_0|\]
+will either be at or "just before" a sample point. We need to consider the maximum difference at sample points and their left limit points.
+\subsubsection{K-S one sample example}
+Consider values between \(0\) and \(1\), supposedly taken from a \(\mathcal{U}(0,1)\) distribution. Then \(X\sim F\) where under \(H_0\):
+\[F(x)=F_0(x)=P[X\leq x]=x\]
+The empirical CDF is:
+\[F_{10}(x)=\frac{1}{10}\sum^{10}_{i=1}I(X_i\leq x)\]
+Walking through just one calculation, at \(x=0.05\):
+\[F_{10}(0.05)=\frac{1}{10}\sum^{10}_{i=1}I(X_i\leq 0.05)=\frac{1}{10}\]
+\[F_{10}(0.05^-)=\lim_{x\to 0.05^-}\frac{1}{10}\sum^{10}_{i=1}I(X_i\leq 0.05)=0\]
+\[F_0(x)=F_0(x^-)=x=0.05\]
+Tabulating all results:
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l|rrrr}
+        \(x\) & \(F_{10}(x)\) & \(F_0(x)\) & \(|F_{10}(x)-F_0(x)|\) & \(|F_{10}(x^-)-F_0(x)|\)  \\ \hline
+        \(0.05\) & \(0.1\) & \(0.05\) & \(0.05\) & \(0.05\) \\
+        \(0.25\) & \(0.2\) & \(0.25\) & \(0.05\) & \(0.15\) \\
+        \(0.36\) & \(0.3\) & \(0.36\) & \(0.06\) & \(0.16\) \\
+        \(0.47\) & \(0.4\) & \(0.47\) & \(0.07\) & \(0.17\) \\
+        \(0.48\) & \(0.5\) & \(0.48\) & \(0.02\) & \(0.08\) \\
+        \(0.50\) & \(0.6\) & \(0.50\) & \(0.10\) & \(0\) \\
+        \(0.56\) & \(0.7\) & \(0.56\) & \(0.14\) & \(0.04\) \\
+        \(0.60\) & \(0.8\) & \(0.60\) & \(0.20\) & \(0.10\) \\
+        \(0.69\) & \(0.9\) & \(0.69\) & \(0.21\) & \(0.11\) \\
+        \(0.70\) & \(1\) & \(0.70\) & \(0.30\) & \(0.20\) \\
+    \end{tabular}
+    \caption{Differences at and before jump discontinuities.}
+\end{table}
+Then:
+\[D_n=0.3\]
+For \(n=10\), we reject \(H_0\) at a \(5\%\) significance level if \(D>0.4092\):
+\[0.3<0.4092\]
+So we do not reject \(H_0\). There is no evidence that our data did not come from a \(\mathcal{U}(0,1)\) distribution.
+\subsection{Two-Sample Kolmogorov-Smirnov Test}
+Suppose we have two independent samples:
+\begin{align*}
+    &X_1,\dots,X_m\sim F \\
+    &Y_1,\dots,Y_n\sim G
+\end{align*}
+We wish to consider the empirical CDFS:
+\begin{align*}
+    F_m(x)&&G_n(x)
+\end{align*}
+and test:
+\begin{align*}
+    &H_0:F(u)=G(u),\ \forall u \\
+    &H_1:\exists u: F(u)\ne G(u)
+\end{align*}
+Then under \(H_0\) our test statistic is:
+\[D_{m,n}=\sup_x|F_m(x)-G_n(x)|\]
+We reject \(H_0\) if \(D_{m,n}\) is "too large". The critical region depends on \(m,n\) and the significance level. Note that in this case we do not need to worry about what happens at the jump discontinuities.
+\subsubsection{K-S two sample example}
+Consider two groups of exam results. Let group \(A\sim F\) and group \(B\sim G\). We need to consider their empirical distributions and the test statistic \(D_{m,n}\).
+\begin{table}[H]
+    \centering
+    \begin{tabular}{l|rrr}
+        \(x\) & \(F_{10}(x)\) & \(G_{10}(x)\) & \(|F_{10}(x)-G_{10}(x)|\)  \\ \hline
+        \(42\) & \(0.0\) & \(0.1\) & \(0.1\) \\
+        \(50\) & \(0.0\) & \(0.2\) & \(0.2\) \\
+        \(60\) & \(0.0\) & \(0.3\) & \(0.3\) \\
+        \(65\) & \(0.1\) & \(0.3\) & \(0.2\) \\
+        \(66\) & \(0.1\) & \(0.4\) & \(0.3\) \\
+        \(69\) & \(0.1\) & \(0.5\) & \(0.4\) \\
+        \(70\) & \(0.2\) & \(0.5\) & \(0.3\) \\
+        \(71\) & \(0.3\) & \(0.5\) & \(0.2\) \\
+        \(75\) & \(0.4\) & \(0.6\) & \(0.2\) \\
+        \(78\) & \(0.4\) & \(0.8\) & \(0.4\) \\
+        \(79\) & \(0.4\) & \(0.9\) & \(0.5\) \\
+        \(80\) & \(0.4\) & \(1.0\) & \(0.6\) \\
+        \(81\) & \(0.5\) &  & \(0.5\) \\
+        \(82\) & \(0.6\) &  & \(0.4\) \\
+        \(83\) & \(0.7\) & \(\vdots\) & \(0.3\) \\
+        \(90\) & \(0.8\) &  & \(0.2\) \\
+        \(91\) & \(0.9\) & & \(0.1\) \\
+        \(95\) & \(1.0\) & \(1.0\) & \(0.0\) \\
+    \end{tabular}
+    \caption{When multiple data points are the same, the indicator function adds all of them in the jump.}
+\end{table}
+Therefore:
+\[D_{m,n}=0.6\]
+From tables the critical region at a \(5\%\) significance level is:
+\[D>0.7\]
+Therefore there is no evidence to reject \(H_0\) at a \(5\%\) significance level. There is no evidence to suggest that the distribution of exam scores is different between the two groups. Notice that an M-W U test checks for differences in location but not scale. The K-S test is much more sensitive to differences in the overall distribution.
+\clearpage
+\section{Introduction to Bayesian Statistics}
+\subsection{The Frequentist Model}
+As before, we will model data \(X_1,\dots,X_n\sim\ D(\theta)\) where \(\theta\) is some parameter. Up to now, the methods we have seen are from frequentist inference. \(\theta\) is considered a fixed parameter; inference for \(\theta\) is performed using some statistic \(T(\underline{X};\, \theta)\) and it's sampling distribution. We compare the observed \(T(\underline{x})\) with what we would expect under (hypothetical) repeated sampling.
+\subsection{The Key Idea in Bayesian Statistics}
+In terms of our probability model, the Bayesian considers both \(X\) and \(\theta\) to be random variables. We consider:
+\[\Pi(\theta)\]
+Which is the Prior distribution of \(\theta\) reflecting knowledge about \(\theta\) before seeing any data. We also need:
+\[f_{\underline{X}}(\underline{x}\mid \theta)\]
+Which is the joint probability model for \(\underline{x}\) conditional on \(\theta\). Then Bayes' theorem tells us:
+\[\Pi(\theta\mid \underline{x})=\frac{f_{\underline{X}}(\underline{x},\,\theta)}{\Pi(\underline{x})}=\frac{f_{\underline{X}}(\underline{x}\mid\theta)\Pi(\theta)}{\Pi(\underline{x})}\]
+Where, \(\Pi(\theta\mid \underline{x})\) is called the Posterior distribution and is revised knowledge for \(\theta\) based on the given data.
 \end{document}
